@@ -26,6 +26,37 @@ function g(x, y, s, flip, inner) {
 function shadow(x, y, rx) {
   return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${rx * 0.22}" fill="#00000012"/>`;
 }
+/* ————— painted scenes ————————————————————————————————————————————————————
+   Reza generates these in Gemini and drops the file in art/; this puts one on
+   a page. It returns SVG rather than an <img> on purpose: every page in the
+   reader goes through svgWrap(p.svg()), the thumbnails on the shelf go through
+   the same call, and an <image> inside that viewBox means NOTHING else in the
+   reader has to know whether a scene was drawn or painted. Vector scenes and
+   painted ones can sit in the same book.
+
+   WHY PAINTED AT ALL. The hand-drawn scenes have been the weakest thing on the
+   site every time Reza has looked at them — "the diagrams are really bad" in
+   July, "baba... looks very bad" on 2026-08-31. A painted scene is simply
+   better at the one job rule 2 gives it: carrying the meaning on its own, to a
+   child who cannot read a word of the page.
+
+   The backing rect is the cream the art is painted on, so the letterbox at the
+   sides of a 4:3 image in a 800x520 frame is invisible. preserveAspectRatio is
+   "meet", never "slice": slice would crop, and on these scenes the thing that
+   gets cropped is the top of the window or the toys on the floor — detail a
+   child looks AT. Better a seamless margin than a cropped picture.
+
+   Not in the service worker's CORE list, deliberately, and the same reasoning
+   as the Qur'an audio: the shell must install fast and small. sw.js runtime-
+   caches every same-origin file it serves, so a scene is offline from the
+   first time it is seen, and a shelf of forty paintings never has to be
+   downloaded before a child can open the first book. */
+function artScene(file, alt) {
+  return `<rect width="800" height="520" fill="#EAD7BD"/>
+    <image href="art/${file}" x="0" y="0" width="800" height="520"
+      preserveAspectRatio="xMidYMid meet"><title>${alt}</title></image>`;
+}
+
 function svgWrap(inner) {
   return `<svg viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
 }
@@ -455,11 +486,13 @@ function scene5() {
     adam(450, 486, 'scratch') + maryam(630, 482, 'point', 1, true) +
     qmarks(450, 250);
 }
+/* The first painted scene (2026-08-31). It replaces a vector version that was
+   redrawn once already the same day and still was not good enough. The
+   painting says "asleep on the sofa with the cat on him" instantly, which is
+   the entire job of this page — its words are لُولُو فَوْقَ بَابَا. */
 function scene6() {
-  return room({ win: 620, rug: null, plantAt: [740, 470] }) +
-    shadow(410, 478, 190) + couch(230, 480) + babaOnCouch(230, 480) +
-    adam(690, 486, 'point', 1, true) + maryam(120, 482, 'clap') +
-    sparkle(660, 260, 1, '#E76F51') + sparkle(90, 300, 0.8);
+  return artScene('baba-couch.webp',
+    'Baba asleep on the couch with Lulu the cat curled up on top of him');
 }
 function sceneEnd() {
   return room({ rug: [400, 480], win: 590, plantAt: [90, 470] }) +

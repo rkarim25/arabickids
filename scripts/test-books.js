@@ -289,5 +289,19 @@ yes(swOk, swOk ? "sw.js parses" : `sw.js DOES NOT PARSE — ${swErr}`);
   yes(!hit, hit ? `something asks the child to write ("${hit[0]}") — rule 3 says no writing` : "nothing shown to a child asks them to write");
 }
 
+
+/* ---------- painted scenes exist ----------
+   A scene referencing art/x.webp when the file is not there renders as a blank
+   cream rectangle: no error, no broken-image icon inside SVG, nothing in the
+   console. It silently stops being a picture, on a site whose second rule is
+   that the picture carries the meaning. */
+const artRefs = new Set();
+for (const f of BOOK_FILES) {
+  for (const m of src(f).matchAll(/artScene\(\s*['"]([^'"]+)['"]/g)) artRefs.add(m[1]);
+}
+const artMissing = [...artRefs].filter(a => !fs.existsSync(path.join(ROOT, "art", a)));
+yes(!artMissing.length, artMissing.length
+  ? `painted scenes referenced but missing from art/: ${artMissing.join(", ")}`
+  : `every painted scene resolves (${artRefs.size} in art/)`);
 console.log(fails ? `\n${fails} FAILED` : "\nALL TESTS PASS");
 process.exit(fails ? 1 : 0);
