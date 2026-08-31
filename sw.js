@@ -9,7 +9,7 @@
    completely and silently. scripts/test-shell.js checks every name in CORE
    actually exists. Add a file, add it here, run the test. */
 
-const VERSION = 'hikayat-b4eac1a45f';
+const VERSION = 'hikayat-c2080b49bf';
 const CORE = [
   './',
   'index.html',
@@ -335,6 +335,11 @@ self.addEventListener('fetch', e => {
         caches.open(VERSION).then(c => c.put(req, copy)).catch(() => {});
         return res;
       })
-      .catch(() => caches.match(req).then(hit => hit || caches.match('index.html')))
+      /* ignoreSearch: the page requests sync.js?v=abc123 but install cached
+         plain sync.js, so an exact match would miss and offline would fall all
+         the way through to index.html — handing back HTML for a script request.
+         The ?v= stamp exists to defeat the HTTP cache, not this one. */
+      .catch(() => caches.match(req, { ignoreSearch: true })
+        .then(hit => hit || caches.match('index.html')))
   );
 });

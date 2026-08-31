@@ -44,8 +44,10 @@ sandbox.window = sandbox;
    and not to the test, so the shelf it was meant to fill still looked empty
    and every assertion still passed. The test must see exactly what the browser
    sees. */
+/* strip the ?v= cache-busting stamp that sync-sw.js writes into the URLs */
+const unstamp = u => String(u).split("?")[0];
 const BOOK_FILES = [...src("index.html").matchAll(/<script src="([^"]+)"><\/script>/g)]
-  .map(m => m[1])
+  .map(m => unstamp(m[1]))
   .filter(f => !/^(kids|print)\.js$/.test(f));   // those need a real DOM
 
 let BOOKS, LEVELS, LICONS;
@@ -249,8 +251,8 @@ yes(swOk, swOk ? "sw.js parses" : `sw.js DOES NOT PARSE — ${swErr}`);
       : `all ${files.length} cached files exist`);
     // and every script the page loads must be cached, or offline breaks silently
     const html = src("index.html");
-    const needed = [...html.matchAll(/<script src="([^"]+)"/g)].map(x => x[1])
-      .concat([...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(x => x[1]));
+    const needed = [...html.matchAll(/<script src="([^"]+)"/g)].map(x => unstamp(x[1]))
+      .concat([...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(x => unstamp(x[1])));
     const uncached = needed.filter(n => !files.includes(n));
     yes(!uncached.length, uncached.length
       ? `these are loaded by index.html but NOT cached, so offline would break: ${uncached.join(", ")}`

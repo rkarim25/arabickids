@@ -47,4 +47,24 @@ const stamp = crypto.createHash("sha1").update(
 src = src.replace(/const VERSION = '[^']*';/, "const VERSION = 'hikayat-" + stamp + "';");
 
 fs.writeFileSync(p, src);
-console.log(`sw.js now caches ${assets.length} assets, cache name hikayat-${stamp}`);
+
+/* STAMP THE SCRIPT AND STYLE URLS TOO.
+
+   The cache NAME alone was not enough. GitHub Pages serves assets with
+   Cache-Control: max-age=600, and the service worker's network-first fetch
+   still goes through the browser's own HTTP cache — so for ten minutes after a
+   deploy the browser hands back the previous sync.js and the page runs old
+   code no matter what the worker does. That is what made a shipped fix look
+   broken twice in a row.
+
+   The grown-up site solved this years ago with scripts/bump-version.js. Same
+   trick here: every script and stylesheet URL carries ?v=<hash>, so a new
+   build is a new URL and there is nothing stale to serve. */
+const idx = path.join(ROOT, "index.html");
+let html = fs.readFileSync(idx, "utf8");
+html = html.replace(/(<script src="|<link rel="stylesheet" href="|<link rel="manifest" href=")([^"?]+)(\?v=[^"]*)?"/g,
+  (m, pre, file) => `${pre}${file}?v=${stamp}"`);
+fs.writeFileSync(idx, html);
+
+const stamped = (html.match(/\?v=/g) || []).length;
+console.log(`sw.js caches ${assets.length} assets · cache hikayat-${stamp} · ${stamped} urls stamped`);
