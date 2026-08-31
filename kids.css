@@ -493,3 +493,45 @@ img.tw { display: block; width: 100%; height: 100%; object-fit: contain; }
 #gFallback { display: grid; gap: 12px; }
 #gFallback[hidden] { display: none; }
 .pb-alt summary { font-size: 13px; color: var(--muted); }
+
+/* ————— القَاعِدَة — the reading ladder ————————————————————————————————————— */
+#qaida { max-width: 900px; margin: 0 auto; padding: 20px 16px 48px; }
+.stage-list { display: grid; gap: 10px; }
+.stage-card {
+  border: none; font-family: inherit; cursor: pointer; background: #fff; text-align: right;
+  border-radius: 20px; padding: 14px 16px; box-shadow: 0 3px 0 #0001;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
+}
+.stage-card:active { transform: translateY(2px); }
+.sg-n { background: var(--sun); color: #7A5A12; width: 38px; height: 38px; border-radius: 50%;
+        display: grid; place-items: center; font-weight: 800; font-size: 17px; }
+.sg-ar { display: block; font-size: 24px; font-weight: 800; line-height: 1.7; }
+.sg-en { display: block; font-size: 12px; color: var(--teal); font-weight: 700; direction: ltr; text-align: right; }
+.sg-teach { display: block; font-size: 12px; color: var(--muted); direction: ltr; text-align: right; margin-top: 3px; }
+.sg-done { font-size: 12px; color: var(--coral); font-weight: 700; }
+
+.q-teach { background: #fff; border-radius: 18px; padding: 12px 16px; margin-bottom: 14px;
+           font-size: 14px; color: var(--muted); direction: ltr; text-align: left; line-height: 1.5; }
+.q-sub { font-size: 19px; margin: 16px 2px 8px; }
+.q-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
+.q-grid.wide { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.q-rows { display: grid; gap: 8px; }
+.q-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.q-cell {
+  border: none; font-family: inherit; background: #fff; border-radius: 16px; cursor: pointer;
+  padding: 14px 6px; font-size: 32px; font-weight: 700; line-height: 1.7; box-shadow: 0 3px 0 #0001;
+}
+.q-cell.w { font-size: 26px; }
+.q-cell:active, .q-cell.said { background: var(--sun); transform: translateY(2px); }
+.q-cell.lit, .q-word.lit { background: #D8F3DC; }
+.q-cell.sun { border-bottom: 5px solid var(--coral); }
+.q-cell.moon { border-bottom: 5px solid var(--teal); }
+.q-real { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.q-word {
+  border: none; font-family: inherit; background: #fff; border-radius: 16px; cursor: pointer;
+  padding: 12px 6px; box-shadow: 0 3px 0 #0001; display: grid; gap: 2px;
+  border-bottom: 5px solid #5B8C7B;
+}
+.q-word span { font-size: 26px; font-weight: 700; line-height: 1.8; }
+.q-word small { font-size: 10px; color: var(--muted); }
+.q-word:active, .q-word.said { background: #EAF5F0; }

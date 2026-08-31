@@ -65,6 +65,23 @@ try {
   console.log(`\n1 FAILED`); process.exit(1);
 }
 
+/* ---------- 0. the page loads every module that exists ----------
+   qaida-ui.js was written, wired into the CSS and the service worker, and never
+   added to index.html — the insert matched on `surah-ui.js"` but the URLs now
+   carry a ?v= stamp, so the pattern missed and the file simply never loaded.
+   Nothing failed; the button just did nothing. */
+{
+  const shipped = fs.readdirSync(ROOT)
+    .filter(f => f.endsWith(".js") && !f.startsWith("_"))
+    .filter(f => !["sw.js"].includes(f));
+  const loaded = new Set(BOOK_FILES.concat(
+    [...src("index.html").matchAll(/<script src="([^"]+)"/g)].map(m => unstamp(m[1]))));
+  const orphans = shipped.filter(f => !loaded.has(f));
+  yes(!orphans.length, orphans.length
+    ? `these modules exist but index.html never loads them: ${orphans.join(", ")}`
+    : `index.html loads all ${shipped.length} shipped modules`);
+}
+
 /* ---------- 1. shape ---------- */
 yes(BOOKS.length >= 3, `at least three books on the shelf (got ${BOOKS.length})`);
 /* The bottom rung must not be empty. A ladder whose first step has no book on

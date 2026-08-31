@@ -7,14 +7,14 @@
 <meta name="description" content="Arabic for little readers — listen, look and play. Sounds, picture-book stories and printable cards. No writing.">
 <meta name="theme-color" content="#F09CB1">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
-<link rel="manifest" href="manifest.webmanifest?v=c2080b49bf">
+<link rel="manifest" href="manifest.webmanifest?v=d1882f1a14">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=c2080b49bf">
-<link rel="stylesheet" href="kids.css?v=c2080b49bf">
-<link rel="stylesheet" href="print.css?v=c2080b49bf" media="all">
+<link rel="stylesheet" href="style.css?v=d1882f1a14">
+<link rel="stylesheet" href="kids.css?v=d1882f1a14">
+<link rel="stylesheet" href="print.css?v=d1882f1a14" media="all">
 </head>
 <body>
 
@@ -45,6 +45,9 @@
 <!-- ============ sentence lessons ============ -->
 <div id="sentences" class="hidden"></div>
 
+<!-- ============ the Qaida ============ -->
+<div id="qaida" class="hidden"></div>
+
 <!-- ============ the surahs ============ -->
 <div id="surahs" class="hidden"></div>
 
@@ -61,24 +64,25 @@
 </div>
 
 <!-- order matters: book-bayt.js borrows the Level 0 letter pictures -->
-<script src="audio.js?v=c2080b49bf"></script>
-<script src="app.js?v=c2080b49bf"></script>
-<script src="letters.js?v=c2080b49bf"></script>
-<script src="book-lulu1.js?v=c2080b49bf"></script>
-<script src="book-bayt.js?v=c2080b49bf"></script>
-<script src="kit2.js?v=c2080b49bf"></script>
-<script src="books-more.js?v=c2080b49bf"></script>
-<script src="book-icons.js?v=c2080b49bf"></script>
-<script src="sentences.js?v=c2080b49bf"></script>
-<script src="stories-text.js?v=c2080b49bf"></script>
-<script src="kids.js?v=c2080b49bf"></script>
-<script src="surah-notes.js?v=c2080b49bf"></script>
-<script src="surah-words.js?v=c2080b49bf"></script>
-<script src="sentence-ui.js?v=c2080b49bf"></script>
-<script src="surah-ui.js?v=c2080b49bf"></script>
-<script src="text-story-ui.js?v=c2080b49bf"></script>
-<script src="sync.js?v=c2080b49bf"></script>
-<script src="print.js?v=c2080b49bf"></script>
+<script src="audio.js?v=d1882f1a14"></script>
+<script src="app.js?v=d1882f1a14"></script>
+<script src="letters.js?v=d1882f1a14"></script>
+<script src="book-lulu1.js?v=d1882f1a14"></script>
+<script src="book-bayt.js?v=d1882f1a14"></script>
+<script src="kit2.js?v=d1882f1a14"></script>
+<script src="books-more.js?v=d1882f1a14"></script>
+<script src="book-icons.js?v=d1882f1a14"></script>
+<script src="sentences.js?v=d1882f1a14"></script>
+<script src="stories-text.js?v=d1882f1a14"></script>
+<script src="kids.js?v=d1882f1a14"></script>
+<script src="surah-notes.js?v=d1882f1a14"></script>
+<script src="surah-words.js?v=d1882f1a14"></script>
+<script src="sentence-ui.js?v=d1882f1a14"></script>
+<script src="qaida-ui.js?v=d1882f1a14"></script>
+<script src="surah-ui.js?v=d1882f1a14"></script>
+<script src="text-story-ui.js?v=d1882f1a14"></script>
+<script src="sync.js?v=d1882f1a14"></script>
+<script src="print.js?v=d1882f1a14"></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));

@@ -143,6 +143,36 @@ def wanted():
             out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
         for w in re.findall(r"say:\s*" + JS_STR, src):
             out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
+    # ---- the Qaida ----
+    # Every syllable a child taps. These are REAL syllables (بَ، بًا، بَا، أَبْ،
+    # أَبَّ), which the engine says correctly — unlike a bare consonant, which is
+    # what made the old letter clips a stutter. The last stage is excluded: it
+    # is real Qur'anic words with the real reciter, already in audio/quran/.
+    qp = os.path.join(DATA, "qaida.json")
+    if os.path.exists(qp):
+        Q = json.load(open(qp, encoding="utf-8"))
+        for st in Q.get("stages", []):
+            if st.get("id") == "kalimat":
+                continue
+            def add_cell(c):
+                t = (c or {}).get("say") or (c or {}).get("show")
+                if not t or not t.strip():
+                    return
+                # KEY ON THE EXACT TEXT, NOT norm(). norm() strips tashkeel, so
+                # بَ, بِ and بُ all collapse to "ب" and would share one clip —
+                # which destroys the only thing this stage teaches. A Qaida cell
+                # IS its harakat, so the key has to keep them.
+                out["q:" + t.strip()] = t.strip()
+            for c in st.get("cells", []):
+                add_cell(c)
+            for row in st.get("rows", []):
+                for c in row:
+                    add_cell(c)
+            for pr in st.get("pairs", []):
+                add_cell(pr.get("sun"))
+            for c in st.get("moon", []):
+                add_cell(c)
+
     # ---- the no-picture stories ----
     # These matter more than the picture books: with nothing on the page but
     # words, a line without a clip is a line that says nothing at all.

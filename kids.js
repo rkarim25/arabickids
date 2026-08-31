@@ -80,7 +80,7 @@ function luluSays(i) {
    Four screens, never more (DESIGN.md §2). Everything is display-toggled so a
    child never waits for a page load. */
 
-const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'surahs', 'textStory', 'printView', 'reader'];
+const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'surahs', 'qaida', 'textStory', 'printView', 'reader'];
 function show(id) {
   VIEWS.forEach(v => {
     const el = document.getElementById(v);
@@ -119,7 +119,7 @@ function renderHome() {
       <button class="door" id="doorSounds" style="--d:#F09CB1">
         <span class="door-ic">🔊</span>
         <span class="door-ar">الأَصْوَات</span>
-        <span class="door-en">Sounds — hear it, find it</span>
+        <span class="door-en">Sounds &amp; the Qaida — learning to read</span>
       </button>
       <button class="door" id="doorBooks" style="--d:#7FB0D6">
         <span class="door-ic">📖</span>
@@ -209,13 +209,16 @@ function renderSounds() {
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
     <nav class="mode-row">
+      <button class="mode" id="toQaida">📗 القَاعِدَة<small>Learn to read — all 9 steps</small></button>
       <button class="mode ${soundsMode === 'letters' ? 'on' : ''}" data-m="letters">🔤 الحُرُوف<small>Meet the letters</small></button>
       <button class="mode ${soundsMode === 'quiz' ? 'on' : ''}" data-m="quiz">👂 اِسْمَعْ وَاخْتَرْ<small>Listen &amp; find</small></button>
       <button class="mode ${soundsMode === 'haraka' ? 'on' : ''}" data-m="haraka">✨ الحَرَكَات<small>One letter, three sounds</small></button>
     </nav>
     <div id="soundsBody"></div>`;
   document.getElementById('sBack').addEventListener('click', () => { renderHome(); show('home'); });
-  host.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => {
+  const toQ = document.getElementById('toQaida');
+  if (toQ) toQ.addEventListener('click', openQaida);
+  host.querySelectorAll('.mode[data-m]').forEach(b => b.addEventListener('click', () => {
     soundsMode = b.dataset.m; renderSounds();
   }));
   if (soundsMode === 'letters') renderLetterGrid();

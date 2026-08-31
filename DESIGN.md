@@ -55,7 +55,7 @@ one reasonable addition at a time; this one starts with a hard cap.
 
 | | | |
 |---|---|---|
-| 🔊 **الأَصْوَات** Sounds | hear a sound, tap the picture that has it | the way in to reading |
+| 🔊 **الأَصْوَات** Sounds | the letters, and **القَاعِدَة** — the full 9-step reading ladder | the way in to reading |
 | 📖 **الكُتُب** Books | two shelves on one ladder: **with pictures**, and **without** | the heart of it |
 | 💬 **جُمَل** Sentences | one sentence, five steps, **no pictures** | where it becomes language |
 | 📿 **سُوَر** Surahs | Al-Fatiha + the ten shortest, **real recitation** | the reason for all of it |
@@ -114,12 +114,21 @@ and eye must do**, never by writing.
 
 | | Band | The child can… |
 |---|---|---|
-| ٠ | **Sounds** أَصْوَات | hear a letter's sound and pick the picture that starts with it |
+| ٠ | **Sounds** أَصْوَات + **القَاعِدَة** | the whole Qaida: letters → shapes → harakat → tanween → mudood → **sukoon** → **shadda** → **lam** → real Qur'anic words |
 | ١ | **Pink** وَرْدِيّ | read 2–3 word sentences: harakat + long vowels, اَلْ قمرية only |
 | ٢ | **Red** أَحْمَر | 3–4 words: sukoon arrives; فِي، مِنْ، وَ |
 | ٣ | **Yellow** أَصْفَر | 4–5 words: shadda, tanween, characters speak (قَالَ) |
 | ٤ | **Green** أَخْضَر | 6+ words: اَلْ شمسية, hamzat wasl |
 | ٥ | **Blue** أَزْرَق | real short ayahs and duas — the bridge to the Mushaf |
+
+**The Qaida closes a hole the ladder had all along.** Sukoon gates Level 2,
+shadda gates Level 3 and sun-letter اَلْ gates Level 4 — and until 2026-08-31
+none of the three was taught anywhere on the site. A child could be stopped at a
+band by a mark nobody had shown them. `scripts/gen-qaida.js` generates all nine
+stages so a mis-typed haraka cannot enter by hand, and `test-qaida.js` checks
+every letter carries the right mark **and that no two cells share a recording** —
+`norm()` strips tashkeel, so بَ / بِ / بُ collapse to one key unless the Qaida
+cells are keyed on their exact text.
 
 **A book must respect its band.** No shadda and no sun-letter اَلْ in a Level 1
 book, or the band means nothing. `scripts/test-books.js` enforces this.
@@ -173,9 +182,11 @@ node scripts/test-letters.js    # 28 letters, forms correct, keywords real, sane
 node scripts/test-sentences.js  # bands, one-word swaps, and a clip for EVERY line
 node scripts/test-surahs.js     # Qur'an text vs source, right recitation per ayah
 node scripts/test-stories-text.js  # the no-picture stories: bands, and a clip for every line
+node scripts/test-qaida.js      # the reading ladder: every mark, and one clip per cell
+node scripts/sync-sw.js         # ALWAYS — stamps ?v= urls, or the deploy is invisible
 python scripts/gen-audio.py     # after any new Arabic or English text
 node scripts/sync-sw.js         # after gen-audio, so the offline cache matches
 ```
 
-All five suites must pass. Then check it in a real browser at a phone width — that is
+All six suites must pass. Then check it in a real browser at a phone width — that is
 where it is actually used.
