@@ -61,28 +61,37 @@ function pickVoice() {
 }
 if (window.speechSynthesis) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
 
-function fallback(text) {
+function fallback(text, rate) {
   if (!window.speechSynthesis) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(String(text).replace(/[؟?!،.]/g, ''));
   u.lang = 'ar-SA';
   if (VOICE) u.voice = VOICE;
-  u.rate = 0.7;
+  u.rate = 0.7 * (rate || 1);
   speechSynthesis.speak(u);
 }
 
-/* Play by manifest KEY, falling back to speaking `text` aloud. */
-function playKey(key, text) {
+/* Play by manifest KEY, falling back to speaking `text` aloud.
+
+   `rate` is a real playback rate, not a second recording. "Again, slowly" used
+   to call this with the same key and no rate, so it played the identical file
+   and slow sounded exactly like normal — Reza: "slowly and normal speed seems
+   same". Slowing the element is better than rendering a second clip anyway: no
+   extra megabytes, and preservesPitch keeps the voice from dropping into a
+   growl, which would teach the wrong vowel colour. */
+function playKey(key, text, rate) {
   const go = () => {
     const stem = MANIFEST && MANIFEST[key];
-    if (!stem) return fallback(text != null ? text : key);
+    if (!stem) return fallback(text != null ? text : key, rate);
     const a = el();
     try { a.pause(); } catch (e) {}
     if (window.speechSynthesis) speechSynthesis.cancel();
     a.src = 'audio/' + stem + '.mp3';
     a.currentTime = 0;
+    a.preservesPitch = a.mozPreservesPitch = a.webkitPreservesPitch = true;
+    a.playbackRate = rate || 1;
     const p = a.play();
-    if (p && p.catch) p.catch(() => fallback(text != null ? text : key));
+    if (p && p.catch) p.catch(() => fallback(text != null ? text : key, rate));
   };
   if (MANIFEST) go(); else loadManifest().then(go);
 }
@@ -94,7 +103,10 @@ function playKey(key, text) {
                   "it makes the noise fff" — so the big glyph plays this, not
                   the letter's name.
    sayLetterName() what the letter is CALLED: فَاء */
+const SLOW = 0.62;      // slow enough to hear each vowel, not so slow it slurs
 function say(text) { playKey(normAr(text), text); }
+/* the same clip, genuinely slower — for "again, slowly" and for a tapped word */
+function saySlow(text) { playKey(normAr(text), text, SLOW); }
 
 /* English, spoken. The site has to be listenable end to end — a child of four
    cannot read the meaning line, so it is read TO them. Falls back to the
@@ -122,8 +134,25 @@ function speakEn(text) {
   u.lang = 'en-GB'; u.rate = 0.9;
   speechSynthesis.speak(u);
 }
-function sayLetter(l) { playKey('snd:' + l, l); }
+function sayLetter(l, rate) { playKey('snd:' + l, l, rate); }
+function sayLetterSlow(l) { playKey('snd:' + l, l, SLOW); }
 function sayLetterName(l, name) { playKey('nam:' + l, name || l); }
+
+/* Play a file by PATH. The surah module needs this: its audio is a real
+   reciter stored under audio/quran/, addressed by filename, and it must never
+   fall back to synthesis — a TTS ayah would teach wrong madd and wrong waqf,
+   which is worse than silence. So there is no fallback here on purpose. */
+function playFile(src, rate) {
+  const a = el();
+  try { a.pause(); } catch (e) {}
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  a.src = src;
+  a.currentTime = 0;
+  a.preservesPitch = a.mozPreservesPitch = a.webkitPreservesPitch = true;
+  a.playbackRate = rate || 1;
+  const p = a.play();
+  if (p && p.catch) p.catch(() => {});
+}
 
 /* Warm the clip a tap is about to need, so the first sound is not late. */
 function preload(text) {

@@ -129,6 +129,16 @@ ok("every listening-game picture renders cleanly");
 const SUN = "ت ث د ذ ر ز س ش ص ض ط ظ ل ن".split(" ");
 const SHADDA = "ّ";
 const SUKOON = "ْ";
+/* The definite article is اَلْ at the START of a word, optionally behind one of
+   the prefixes و ف ب ل ك. Searching for "ال" ANYWHERE in the word is wrong and
+   was rejecting perfectly legal Level 3 words: قَالَتْ contains alif-lam as part
+   of its own root, and so do خَالَة and حَالَة. Only word-initial counts. */
+const stripH = w => w.replace(/[ً-ْٰـ]/g, "");
+function sunAl(word) {
+  const m = stripH(word).match(/^[وفبلك]?ال(.)/);
+  return !!m && SUN.includes(m[1]);
+}
+
 
 function sentencesOf(b) {
   return b.pages.filter(p => p.type === "story").map(p => p.ar.map(w => w.t).join(" "));
@@ -155,14 +165,9 @@ for (const b of BOOKS) {
   /* sun-letter اَلْ: not before level 4. اَلْ + sun letter shows as ال + shadda
      on the next letter, so detect the pattern rather than trusting the eye. */
   if (lvl < 4) {
-    const sunAl = words.filter(w => {
-      const i = w.indexOf("ال");
-      if (i === -1) return false;
-      const after = w.slice(i + 2).replace(/[ً-ِْٰ]/g, "")[0];
-      return after && SUN.includes(after);
-    });
-    yes(sunAl.length === 0,
-      `${b.title} (L${lvl}): no sun-letter اَلْ${sunAl.length ? " — found " + sunAl.join(", ") : ""}`);
+    const sunAlWords = words.filter(sunAl);
+    yes(sunAlWords.length === 0,
+      `${b.title} (L${lvl}): no sun-letter اَلْ${sunAlWords.length ? " — found " + sunAlWords.join(", ") : ""}`);
   }
 
   /* sukoon: level 1 is harakat and long vowels only */

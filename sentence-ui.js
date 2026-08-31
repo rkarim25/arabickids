@@ -63,7 +63,10 @@ const STEPS = [
   { ic: '✨', ar: 'كَيْفَ تَعْمَل؟',   en: 'How it works' },
   { ic: '🎤', ar: 'قُلْهَا أَنْتَ',    en: 'Now you say it' },
   { ic: '🔁', ar: 'غَيِّرْ كَلِمَة',   en: 'Change one word' },
+  { ic: '🗝️', ar: 'قُلْ أَيَّ شَيْء',  en: 'Say ANYTHING', frameOnly: true },
 ];
+/* the last step only exists where the lesson has a frame to drill */
+const stepsFor = L => STEPS.filter(s => !s.frameOnly || L.frame);
 
 function renderLesson() {
   const L = sentSet.lessons[sentIdx];
@@ -86,7 +89,7 @@ function renderLesson() {
     </div>
 
     <div class="steps" id="steps">
-      ${STEPS.map((s, i) => `
+      ${stepsFor(L).map((s, i) => `
         <button class="step ${i === sentStep ? 'on' : ''}" data-i="${i}">
           <span class="st-ic">${s.ic}</span>
           <span class="st-ar">${s.ar}</span>
@@ -105,7 +108,7 @@ function renderLesson() {
   document.getElementById('sentPlay').addEventListener('click', () => say(L.ar));
   host.querySelectorAll('.sw').forEach(el => el.addEventListener('click', ev => {
     ev.stopPropagation();
-    say(words[+el.dataset.i]);
+    saySlow(words[+el.dataset.i]);
     el.classList.add('said');
     setTimeout(() => el.classList.remove('said'), 700);
   }));
@@ -134,7 +137,7 @@ function renderStep() {
     body.innerHTML = `<div class="sb">
       <button class="sb-big" id="sbSlow">🐢 مَرَّة أُخْرَى<small>Again, slowly</small></button>
     </div>`;
-    document.getElementById('sbSlow').addEventListener('click', () => say(L.ar));
+    document.getElementById('sbSlow').addEventListener('click', () => saySlow(L.ar));
     return;
   }
 
@@ -178,6 +181,42 @@ function renderStep() {
       document.getElementById('sbStar').classList.add('got');
     });
     setTimeout(() => sayEn('Now you say it.'), 250);
+    return;
+  }
+
+  /* ---- 6. SAY ANYTHING — the frame, and permission to use an English word ----
+     Reza's idea, and the most useful thing here: "if you dont know the word for
+     pen just say urid pen… this should remove some barriers to speaking more."
+     The English slots are not a fallback hidden away in small print, they are
+     shown in the same list as the Arabic ones and spoken aloud, because the
+     point is that using one is ALLOWED and normal, not a failure. */
+  if (sentStep === 5 && L.frame) {
+    const F = L.frame;
+    body.innerHTML = `<div class="sb">
+      <p class="frame-pat">${F.pattern}</p>
+      <p class="frame-say">${F.say}</p>
+      <button class="sb-big" id="fWhy">🗝️<small>Tap to hear the trick</small></button>
+      <p class="sb-en why" id="fBridge">${F.bridge}</p>
+      <div class="vary">
+        ${F.slots.map((v, i) => `<button class="vary-row ${v.english ? 'mix' : ''}" data-i="${i}">
+          <span class="v-ar">${v.ar || v.en}</span>
+          <span class="v-en">${v.ar ? v.en : 'English word — and that is fine!'}</span>
+        </button>`).join('')}
+      </div>
+    </div>`;
+    const bridge = () => sayEn(F.bridge);
+    document.getElementById('fWhy').addEventListener('click', bridge);
+    document.getElementById('fBridge').addEventListener('click', bridge);
+    body.querySelectorAll('.vary-row').forEach(b => b.addEventListener('click', () => {
+      const v = F.slots[+b.dataset.i];
+      b.classList.add('said');
+      setTimeout(() => b.classList.remove('said'), 800);
+      if (v.ar) { say(v.ar); setTimeout(() => sayEn(v.en), 1600); }
+      else sayEn(v.en);            // the mixed one is read as it is actually said
+      addStar('sent:' + sentSet.id);
+      document.querySelector('.star-count b').textContent = totalStars();
+    }));
+    setTimeout(bridge, 250);
     return;
   }
 

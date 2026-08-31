@@ -329,3 +329,68 @@ img.tw { display: block; width: 100%; height: 100%; object-fit: contain; }
 .pb-msg { font-size: 14px; min-height: 20px; }
 .pb-msg.good { color: var(--teal); font-weight: 700; }
 .pb-msg.bad { color: var(--coral); font-weight: 700; }
+
+/* ————— the frame drill ("say ANYTHING") ————————————————————————————————
+   The mixed Arabic-plus-English rows are marked, but marked WARMLY — they are
+   the point of the exercise, not a lesser option. A child who says
+   "ureedu pen" has spoken Arabic today; a child waiting for the perfect
+   sentence has not. */
+.frame-pat { font-size: 34px; font-weight: 800; color: var(--teal); letter-spacing: 2px; }
+.frame-say { font-size: 15px; color: var(--muted); direction: ltr; margin-top: -6px; }
+.vary-row.mix { background: #FFF4DC; border-right: 8px solid var(--sun); }
+.vary-row.mix .v-ar { direction: ltr; text-align: right; color: #7A5A12; }
+.vary-row.mix .v-en { color: #A8862F; font-weight: 700; }
+.steps { grid-template-columns: repeat(auto-fit, minmax(58px, 1fr)); }
+
+/* ————— سُوَر — the surahs ————————————————————————————————————————————————
+   Quieter than the rest of the site on purpose. No cartoon, no confetti: the
+   ayah is the thing on the page and everything else gets out of its way. */
+#surahs { max-width: 900px; margin: 0 auto; padding: 20px 16px 48px; }
+
+.surah-list { display: grid; gap: 10px; }
+.surah-card {
+  border: none; font-family: inherit; cursor: pointer; background: #fff;
+  border-radius: 20px; padding: 14px 16px; box-shadow: 0 3px 0 #0001;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+  text-align: right;
+}
+.surah-card:active { transform: translateY(2px); }
+.sc-n {
+  background: #5B8C7B; color: #fff; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 800; font-size: 15px;
+}
+.sc-ar { display: block; font-size: 26px; font-weight: 800; }
+.sc-en { display: block; font-size: 12px; color: var(--muted); direction: ltr; text-align: right; }
+.sc-prog { text-align: center; min-width: 84px; }
+.sc-bar { display: block; height: 8px; background: #EFE4CE; border-radius: 4px; overflow: hidden; }
+.sc-bar i { display: block; height: 100%; background: #5B8C7B; }
+.sc-prog small { font-size: 11px; color: var(--muted); }
+
+.ayah-card {
+  background: #fff; border-radius: 26px; padding: 26px 18px 18px;
+  box-shadow: 0 4px 0 #0001; text-align: center; margin-bottom: 16px;
+}
+.ayah-ar {
+  font-size: clamp(26px, 6.4vw, 38px); font-weight: 700; line-height: 2.3;
+  cursor: pointer; color: #24352E;
+}
+.ayah-play { display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 10px; }
+
+.qwords { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.qword {
+  border: none; font-family: inherit; background: #FBF3E4; border-radius: 16px;
+  padding: 10px 14px; cursor: pointer; display: grid; gap: 2px; min-width: 92px;
+}
+.qword.said { background: var(--sun); }
+.qw-ar { font-size: 26px; font-weight: 700; line-height: 1.9; }
+.qw-en { font-size: 12px; color: var(--muted); direction: ltr; }
+
+.qprompts { display: grid; gap: 6px; width: 100%; margin-top: 6px; }
+.qprompt {
+  border: none; font-family: inherit; background: #EEF4F1; color: #3C5C50;
+  border-radius: 14px; padding: 11px 14px; font-size: 14px; cursor: pointer;
+  direction: ltr; text-align: left;
+}
+.qprompt:active { transform: scale(.98); }
+.qc-tally { font-size: 13px; color: var(--muted); direction: ltr; }
+.vary-row.correct { background: #D8F3DC; }

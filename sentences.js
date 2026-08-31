@@ -19,6 +19,24 @@
 
    Every sentence obeys its band (see DESIGN.md §3) — scripts/test-sentences.js
    holds them to it, exactly as the storybooks are held.
+
+   BUILT ON FREQUENCY, not on taste. The words come from the grown-up site's
+   measured corpus (data/frequency.json): أنا 80 · هل 47 · أين 43 · مع 36 ·
+   ماذا 30 · أريد 25 · أمي 24 · كيف 22 · عندي 21 · أحب 18. Reza's standing
+   rule, and it applies here more than anywhere: high frequency before
+   completeness.
+
+   THE FRAME, AND SAYING THE ENGLISH WORD ON PURPOSE
+   Reza, 2026-08-31: "you can tell them if you dont know the word for pen just
+   say urid pen and so on. this should remove some barriers to speaking more."
+
+   That is the single most useful thing on this site. A child who has learned
+   أُرِيدُ can ask for ANYTHING the moment they are allowed to put an English
+   word in the hole — أُرِيدُ pen — and the alternative is not better Arabic, it
+   is silence. So `frame` is a first-class field: a pattern, a hole, some Arabic
+   words that fit it, and deliberately some English ones too, with the
+   permission said out loud. Fluency comes from using a small number of frames
+   constantly, not from waiting until the vocabulary is complete.
    ========================================================================= */
 'use strict';
 
@@ -33,6 +51,18 @@ const SENTENCE_SETS = [
         ar: 'هَذَا بَابَا.',
         en: 'This is Baba.',
         why: 'Arabic has no word for is. You just say: this… Baba. Two words, and you are done.',
+        frame: {
+          pattern: 'هَذَا ___',
+          say: 'This is ___',
+          bridge: 'You can point at anything and say hadha. If you do not know the Arabic word yet, say the English one — hadha pen. People understand you, and that is what matters.',
+          slots: [
+            { ar: 'كِتَاب', en: 'a book' },
+            { ar: 'بَاب', en: 'a door' },
+            { ar: 'قَمَر', en: 'the moon' },
+            { en: 'pen', english: true },
+            { en: 'tractor', english: true },
+          ],
+        },
         vary: [
           { ar: 'هَذَا أَدَم.', en: 'This is Adam.' },
           { ar: 'هَذَا كِتَاب.', en: 'This is a book.' },
@@ -59,6 +89,16 @@ const SENTENCE_SETS = [
         ar: 'لُولُو فِي الْبَيْت.',
         en: 'Lulu is in the house.',
         why: 'Fee means in. Put fee between two things and you have said where something is.',
+        frame: {
+          pattern: '___ فِي ___',
+          say: '___ is in ___',
+          bridge: 'Two things and a fee in the middle. Either hole can be an English word if you are stuck — Lulu fee garden works perfectly.',
+          slots: [
+            { ar: 'لُولُو فِي الْمَطْبَخ', en: 'Lulu is in the kitchen' },
+            { ar: 'بَابَا فِي الْبَيْت', en: 'Baba is in the house' },
+            { en: 'Lulu fee garden', english: true },
+          ],
+        },
         vary: [
           { ar: 'لُولُو فِي الْمَطْبَخ.', en: 'Lulu is in the kitchen.' },
           { ar: 'أَدَم فِي الْبَيْت.', en: 'Adam is in the house.' },
@@ -132,6 +172,277 @@ const SENTENCE_SETS = [
         vary: [
           { ar: 'أَدَم وَمَرْيَم فِي الْمَطْبَخ.', en: 'Adam and Maryam are in the kitchen.' },
           { ar: 'بَابَا وَمَرْيَم فِي الْبَيْت.', en: 'Baba and Maryam are in the house.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'me',
+    level: 1,
+    title: 'أَنَا',
+    titleEn: 'Me, and what I want',
+    lessons: [
+      {
+        ar: 'أَنَا هُنَا.',
+        en: 'I am here.',
+        why: 'Ana means I. There is no word for am, so two words make a whole sentence.',
+        frame: {
+          pattern: 'أَنَا ___',
+          say: 'I am ___',
+          bridge: 'Ana plus one word says how you are or where you are. If the word will not come, use the English one. Ana hungry. Keep talking.',
+          slots: [
+            { ar: 'أَنَا سَعِيد', en: 'I am happy' },
+            { ar: 'أَنَا صَغِير', en: 'I am small' },
+            { en: 'ana hungry', english: true },
+            { en: 'ana ready', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'أَنَا سَعِيد.', en: 'I am happy.' },
+          { ar: 'أَنَا صَغِير.', en: 'I am small.' },
+        ],
+      },
+      {
+        ar: 'أُرِيدُ مَاء.',
+        en: 'I want water.',
+        why: 'Ureedu means I want. It is one of the most useful words there is, because you can ask for anything at all with it.',
+        frame: {
+          pattern: 'أُرِيدُ ___',
+          say: 'I want ___',
+          bridge: 'This is the best one. Ureedu, and then anything. You do not know the Arabic for pen? Say ureedu pen. That is a real sentence and everybody will understand it.',
+          slots: [
+            { ar: 'أُرِيدُ مَاء', en: 'I want water' },
+            { ar: 'أُرِيدُ كِتَاب', en: 'I want a book' },
+            { ar: 'أُرِيدُ عَصِير', en: 'I want juice' },
+            { en: 'ureedu pen', english: true },
+            { en: 'ureedu banana', english: true },
+            { en: 'ureedu my teddy', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'أُرِيدُ كِتَاب.', en: 'I want a book.' },
+          { ar: 'أُرِيدُ عَصِير.', en: 'I want juice.' },
+        ],
+      },
+      {
+        ar: 'مَاذَا تُرِيدُ؟',
+        en: 'What do you want?',
+        why: 'Madha means what. Ask it, and let the other person fill in the rest.',
+        vary: [
+          { ar: 'مَاذَا تَقُولُ؟', en: 'What are you saying?' },
+          { ar: 'مَاذَا تَرَى؟', en: 'What do you see?' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'have',
+    level: 2,
+    title: 'عِنْدِي',
+    titleEn: 'I have',
+    lessons: [
+      {
+        ar: 'عِنْدِي كِتَاب.',
+        en: 'I have a book.',
+        why: 'Arabic has no verb for to have. Indee really means at me. So: at me, a book. Baba learned this one in his class too.',
+        frame: {
+          pattern: 'عِنْدِي ___',
+          say: 'I have ___',
+          bridge: 'Indee, and then the thing. An English word in the hole is fine. Indee bicycle. Say it now, and learn the Arabic word later.',
+          slots: [
+            { ar: 'عِنْدِي كِتَاب', en: 'I have a book' },
+            { ar: 'عِنْدِي كُرَة', en: 'I have a ball' },
+            { en: 'indee bicycle', english: true },
+            { en: 'indee two brothers', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'عِنْدِي كُرَة.', en: 'I have a ball.' },
+          { ar: 'عِنْدِي بَيْت.', en: 'I have a house.' },
+        ],
+      },
+      {
+        ar: 'مَا عِنْدِي مَاء.',
+        en: 'I do not have water.',
+        why: 'Put ma in front of it and the whole thing turns into a no. Ma indee: not at me.',
+        vary: [
+          { ar: 'مَا عِنْدِي كِتَاب.', en: 'I do not have a book.' },
+          { ar: 'مَا عِنْدِي كُرَة.', en: 'I do not have a ball.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ask',
+    level: 2,
+    title: 'هَلْ وَكَيْفَ',
+    titleEn: 'Asking things',
+    lessons: [
+      {
+        ar: 'كَيْفَ حَالُكَ؟',
+        en: 'How are you?',
+        why: 'Kayfa means how. This is the question you will say more often than any other in your whole life.',
+        vary: [
+          { ar: 'كَيْفَ حَالُكِ؟', en: 'How are you? To a girl.' },
+          { ar: 'كَيْفَ حَالُهُ؟', en: 'How is he?' },
+        ],
+      },
+      {
+        ar: 'هَلْ عِنْدَكَ مَاء؟',
+        en: 'Do you have water?',
+        why: 'Hal is not a word you translate. Put it at the front and the sentence simply becomes a question.',
+        frame: {
+          pattern: 'هَلْ عِنْدَكَ ___؟',
+          say: 'Do you have ___?',
+          bridge: 'Hal indaka, and then anything. Hal indaka scissors? It works, and asking is always better than staying quiet.',
+          slots: [
+            { ar: 'هَلْ عِنْدَكَ مَاء؟', en: 'Do you have water?' },
+            { ar: 'هَلْ عِنْدَكَ كِتَاب؟', en: 'Do you have a book?' },
+            { en: 'hal indaka scissors', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'هَلْ عِنْدَكَ كِتَاب؟', en: 'Do you have a book?' },
+          { ar: 'هَلْ عِنْدَكَ كُرَة؟', en: 'Do you have a ball?' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'said',
+    level: 3,
+    title: 'قَالَ وَقَالَتْ',
+    titleEn: 'He said, she said',
+    lessons: [
+      {
+        ar: 'قَالَ بَابَا: هَيَّا.',
+        en: 'Baba said: come on.',
+        why: 'Qala is he said. Qalat is she said, with one little t on the end for a girl. Now you can tell anybody what anybody said.',
+        frame: {
+          pattern: 'قَالَ ___: ___',
+          say: '___ said: ___',
+          bridge: 'Qala, then who, then what they said. Anything can go in the second hole, English included. Qala Adam: I want my bike.',
+          slots: [
+            { ar: 'قَالَ بَابَا: هَيَّا', en: 'Baba said: come on' },
+            { ar: 'قَالَتْ مَامَا: لَا', en: 'Mama said: no' },
+            { en: 'qala Adam: I want my bike', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'قَالَ أَدَم: هَيَّا.', en: 'Adam said: come on.' },
+          { ar: 'قَالَ الْفِيل: هَيَّا.', en: 'The elephant said: come on.' },
+        ],
+      },
+      {
+        ar: 'أُحِبُّ أُمِّي.',
+        en: 'I love my mother.',
+        why: 'Uhibbu means I love. The little mark doubles the b, so you hold it a moment: u hib bu.',
+        frame: {
+          pattern: 'أُحِبُّ ___',
+          say: 'I love ___',
+          bridge: 'Uhibbu, and then whoever or whatever you love. Uhibbu chocolate is a perfectly good sentence.',
+          slots: [
+            { ar: 'أُحِبُّ أُمِّي', en: 'I love my mother' },
+            { ar: 'أُحِبُّ لُولُو', en: 'I love Lulu' },
+            { en: 'uhibbu chocolate', english: true },
+            { en: 'uhibbu my school', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'أُحِبُّ بَابَا.', en: 'I love Baba.' },
+          { ar: 'أُحِبُّ لُولُو.', en: 'I love Lulu.' },
+        ],
+      },
+    ],
+  },
+  {
+    /* Reza, 2026-08-31: "even for the sentences make them funny. you can
+       possible even do common child friendly arabic jokes to teach them
+       arabic."
+
+       Wordplay jokes need fluency the child does not have yet, and a joke you
+       have to explain is not a joke. What DOES land at three to six is the
+       absurd: something enormous in the wrong place. So every sentence here is
+       silly on purpose AND is one of the frames they have already met — في،
+       فوق، أريد، قال. The laugh does the drilling. */
+    id: 'funny',
+    level: 2,
+    title: 'مُضْحِك!',
+    titleEn: 'Silly sentences',
+    lessons: [
+      {
+        ar: 'الْفِيل فِي الْبَيْت!',
+        en: 'The elephant is in the house!',
+        why: 'Exactly the same fee you already know. Only now there is an elephant in the living room. Silly sentences stick in your head far better than sensible ones.',
+        frame: {
+          pattern: '___ فِي الْبَيْت!',
+          say: '___ is in the house!',
+          bridge: 'Put anything at all in the front hole and see how silly you can make it. English is allowed. Dinosaur fee al-bayt!',
+          slots: [
+            { ar: 'الْفِيل فِي الْبَيْت', en: 'The elephant is in the house' },
+            { ar: 'الْقَمَر فِي الْبَيْت', en: 'The moon is in the house' },
+            { en: 'dinosaur fee al-bayt', english: true },
+            { en: 'my teacher fee al-bayt', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'الْفِيل فِي الْمَطْبَخ!', en: 'The elephant is in the kitchen!' },
+          { ar: 'الْفِيل فِي الْغُرْفَة!', en: 'The elephant is in the room!' },
+        ],
+      },
+      {
+        ar: 'لُولُو فَوْقَ بَابَا!',
+        en: 'Lulu is on top of Baba!',
+        why: 'Fawqa means on top of. Lulu does this to Baba every single day, so it is worth knowing the word.',
+        vary: [
+          { ar: 'لُولُو فَوْقَ الْكِتَاب!', en: 'Lulu is on top of the book!' },
+          { ar: 'لُولُو فَوْقَ مَامَا!', en: 'Lulu is on top of Mama!' },
+        ],
+      },
+      {
+        ar: 'أُرِيدُ فِيل!',
+        en: 'I want an elephant!',
+        why: 'You already know ureedu. Now ask for something ridiculous with it. The answer will be no, but the sentence is perfect.',
+        vary: [
+          { ar: 'أُرِيدُ قَمَر!', en: 'I want the moon!' },
+          { ar: 'أُرِيدُ بَيْت!', en: 'I want a house!' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'funny3',
+    level: 3,
+    title: 'مَنْ قَالَ ذَلِك؟',
+    titleEn: 'Who said THAT?',
+    lessons: [
+      {
+        ar: 'قَالَ الْفِيل: أُرِيدُ عَصِير!',
+        en: 'The elephant said: I want juice!',
+        why: 'Two things you know, stuck together. Qala for he said, then ureedu for what he wanted. Animals can say anything you like.',
+        frame: {
+          pattern: 'قَالَ ___: أُرِيدُ ___!',
+          say: 'The ___ said: I want ___!',
+          bridge: 'Both holes are yours. Make the animal as silly as you can, and use an English word whenever you need one. Qala the crocodile: ureedu chips!',
+          slots: [
+            { ar: 'قَالَ الْفِيل: أُرِيدُ مَاء', en: 'The elephant said: I want water' },
+            { ar: 'قَالَتْ لُولُو: أُرِيدُ سَمَكَة', en: 'Lulu said: I want a fish' },
+            { en: 'qala the crocodile: ureedu chips', english: true },
+            { en: 'qala the robot: ureedu battery', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'قَالَ الْفِيل: أُرِيدُ مَاء!', en: 'The elephant said: I want water!' },
+          { ar: 'قَالَ الْفِيل: أُرِيدُ كِتَاب!', en: 'The elephant said: I want a book!' },
+        ],
+      },
+      {
+        ar: 'أُحِبُّ الْفِيل الْكَبِير.',
+        en: 'I love the big elephant.',
+        why: 'The describing word comes AFTER the thing in Arabic, the opposite way round from English. Not the big elephant, but the elephant the big.',
+        vary: [
+          { ar: 'أُحِبُّ الْقَمَر الْكَبِير.', en: 'I love the big moon.' },
+          { ar: 'أُحِبُّ الْبَيْت الْكَبِير.', en: 'I love the big house.' },
         ],
       },
     ],

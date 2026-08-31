@@ -50,6 +50,16 @@ ok("no explanation uses grammar jargon, and none is too long to sit through");
 /* ---------- 3. the band rules, same as the storybooks ---------- */
 const SUN = "ت ث د ذ ر ز س ش ص ض ط ظ ل ن".split(" ");
 const SHADDA = "ّ", SUKOON = "ْ";
+/* The definite article is اَلْ at the START of a word, optionally behind one of
+   the prefixes و ف ب ل ك. Searching for "ال" ANYWHERE in the word is wrong and
+   was rejecting perfectly legal Level 3 words: قَالَتْ contains alif-lam as part
+   of its own root, and so do خَالَة and حَالَة. Only word-initial counts. */
+const stripH = w => w.replace(/[ً-ْٰـ]/g, "");
+function sunAl(word) {
+  const m = stripH(word).match(/^[وفبلك]?ال(.)/);
+  return !!m && SUN.includes(m[1]);
+}
+
 const linesOf = L => [L.ar, ...(L.vary || []).map(v => v.ar)];
 
 let before = fails;
@@ -62,13 +72,8 @@ for (const L of ALL_LESSONS) {
     if (L.level < 3 && words.some(w => w.includes(SHADDA)))
       bad(`"${line}" (L${L.level}): shadda is not introduced until Level 3`);
     if (L.level < 4) {
-      const sunAl = words.filter(w => {
-        const i = w.indexOf("ال");
-        if (i === -1) return false;
-        const after = w.slice(i + 2).replace(/[ً-ِْٰ]/g, "")[0];
-        return after && SUN.includes(after);
-      });
-      if (sunAl.length) bad(`"${line}" (L${L.level}): sun-letter اَلْ (${sunAl.join(", ")}) is not until Level 4`);
+      const hits = words.filter(sunAl);
+      if (hits.length) bad(`"${line}" (L${L.level}): sun-letter اَلْ (${hits.join(", ")}) is not until Level 4`);
     }
   }
 }

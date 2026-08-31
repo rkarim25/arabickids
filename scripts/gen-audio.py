@@ -125,6 +125,13 @@ def wanted():
             out["en:" + norm_en(w)] = ("EN", w.replace("\\'", "'"))
         for w in re.findall(r"why:\s*" + JS_STR, src):
             out["en:" + norm_en(w)] = ("EN", w.replace("\\'", "'"))
+        # the FRAME step: the spoken permission line, and the pattern caption.
+        # A mixed slot like "ureedu pen" is read by the ENGLISH voice, because
+        # that is exactly how a child says it out loud.
+        for w in re.findall(r"bridge:\s*" + JS_STR, src):
+            out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
+        for w in re.findall(r"say:\s*" + JS_STR, src):
+            out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
     # spoken instructions, so no screen needs reading
     for line in ["Listen.", "What does it mean?", "How it works.",
                  "Now you say it.", "Change one word.", "Well done!",

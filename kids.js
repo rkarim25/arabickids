@@ -80,7 +80,7 @@ function luluSays(i) {
    Four screens, never more (DESIGN.md §2). Everything is display-toggled so a
    child never waits for a page load. */
 
-const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'printView', 'reader'];
+const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'surahs', 'printView', 'reader'];
 function show(id) {
   VIEWS.forEach(v => {
     const el = document.getElementById(v);
@@ -131,6 +131,11 @@ function renderHome() {
         <span class="door-ar">جُمَل</span>
         <span class="door-en">Sentences — listen, and hear how they work</span>
       </button>
+      <button class="door" id="doorQuran" style="--d:#5B8C7B">
+        <span class="door-ic">📿</span>
+        <span class="door-ar">سُوَر</span>
+        <span class="door-en">Surahs — real recitation, word by word</span>
+      </button>
       <button class="door" id="doorPrint" style="--d:#7BC08F">
         <span class="door-ic">🖨️</span>
         <span class="door-ar">اِطْبَعْ</span>
@@ -143,6 +148,7 @@ function renderHome() {
   document.getElementById('doorSounds').addEventListener('click', () => { openSounds(); });
   document.getElementById('doorBooks').addEventListener('click', () => { show('shelf'); });
   document.getElementById('doorSent').addEventListener('click', () => { openSentences(); });
+  document.getElementById('doorQuran').addEventListener('click', () => { openSurahs(); });
   document.getElementById('doorPrint').addEventListener('click', () => { openPrint(); });
   document.querySelector('.lulu').addEventListener('click', () => luluSays(0));
   setTimeout(() => luluSays(0), 600);
