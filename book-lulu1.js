@@ -26,41 +26,28 @@ function l1Room(extra = '') {
 }
 
 function l1Cover() {
-  return l1Room(`${couch(300, 382)}${catSit(430, 382, 0.95)}
-    ${heart(430, 214, 1.1)}${sparkle(200, 176, 0.9)}${sparkle(640, 200, 0.7, '#2A9D8F')}`);
+  return artScene('lulu1-cover.jpg', 'Lulu the cat sitting happily in the living room');
 }
 function l1a() {   // هَذَا أَدَم.
-  return l1Room(`${adam(400, 382, 'hips', 1.15)}${sparkle(250, 180, 0.85)}`);
+  return artScene('lulu1-1.jpg', 'Adam standing cheerfully in the living room');
 }
 function l1b() {   // هَذَا بَابَا.
-  return `${room({ wall: '#FDF1DE', win: 120, rug: null })}
-    ${couch(380, 382)}${babaOnCouch(380, 382)}${sparkle(660, 190, 0.8)}`;
+  return artScene('lulu1-2.jpg', 'Baba sitting smiling on the couch');
 }
 function l1c() {   // هَذِهِ لُولُو.
-  return l1Room(`${catSit(400, 382, 1.25)}${sparkle(230, 196, 0.9)}${sparkle(590, 214, 0.7, '#F2A5A5')}`);
+  return artScene('lulu1-3.jpg', 'Lulu sitting upright and proud');
 }
 function l1d() {   // لُولُو صَغِيرَة.
-  /* small is only meaningful NEXT TO big — the picture has to carry it,
-     because rule 2 says the English line is not doing this work. */
-  return l1Room(`${couch(250, 382)}${babaOnCouch(250, 382)}
-    ${catSit(600, 382, 0.62)}
-    <path d="M 566,352 L 566,300" stroke="#2A9D8F" stroke-width="6" stroke-linecap="round"/>
-    <path d="M 556,312 L 566,298 L 576,312" fill="none" stroke="#2A9D8F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`);
+  return artScene('lulu1-4.jpg', 'Tiny Lulu next to the big couch and Baba');
 }
 function l1e() {   // بَابَا كَبِير!
-  return `${room({ wall: '#FDF1DE', win: 640, rug: null })}
-    ${couch(300, 382)}${babaOnCouch(300, 382)}
-    ${catSit(640, 382, 0.55)}
-    ${sparkle(180, 170, 1)}${sparkle(500, 190, 0.75, '#FFD166')}`;
+  return artScene('lulu1-5.jpg', 'Baba standing tall with tiny Lulu looking up');
 }
 function l1f() {   // لُولُو جَمِيلَة!
-  return l1Room(`${catSit(400, 382, 1.3)}
-    ${heart(300, 190, 1.05)}${heart(500, 214, 0.8)}${heart(400, 150, 1.3)}
-    ${sparkle(210, 250, 0.7, '#FFD166')}${sparkle(600, 240, 0.7, '#2A9D8F')}`);
+  return artScene('lulu1-6.jpg', 'Lulu looking sweet and lovely');
 }
 function l1End() {
-  return l1Room(`${couch(280, 382)}${babaOnCouch(280, 382)}${catSit(560, 382, 0.85)}
-    ${heart(420, 150, 1.35)}${sparkle(180, 200, 0.8)}${sparkle(680, 210, 0.7, '#F2A5A5')}`);
+  return artScene('lulu1-end.jpg', 'Lulu the cat at home');
 }
 
 /* ---------- small word-card pictures ---------- */

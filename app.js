@@ -451,40 +451,22 @@ function foodBowl(x, y) {
 /* ================= 2. Scenes ================= */
 
 function sceneCover() {
-  return room({ rug: [400, 468], plantAt: [90, 470] }) +
-    box(400, 470) + catPeek(400, 360) +
-    sparkle(250, 250, 1.2) + sparkle(560, 220, 0.9, '#E76F51') + sparkle(620, 320, 0.7, '#2A9D8F') +
-    sparkle(190, 340, 0.8, '#2A9D8F');
+  return artScene('lulu-cover.jpg', 'Lulu the cat peeking out of a toy box in the living room');
 }
 function scene1() {
-  return room({ rug: [430, 470], plantAt: [720, 470] }) +
-    shadow(250, 468, 80) + basket(250, 465) + foodBowl(120, 465) +
-    adam(500, 486, 'wonder') + qmarks(500, 260);
+  return artScene('lulu-1.jpg', 'Adam looking around the living room wondering where Lulu is');
 }
 function scene2() {
-  return room({ wall: C.wallBed, win: 80, rug: null }) +
-    shadow(545, 474, 160) + bed(390, 470) +
-    `<g transform="rotate(16 300 482)">${adam(300, 482, 'reach')}</g>` +
-    `<g ${FONT}><text x="250" y="270" font-size="52" font-weight="800" fill="${C.shirt}" transform="rotate(-8 250 270)">؟</text></g>`;
+  return artScene('lulu-2.jpg', 'Adam looking under the bed in the bedroom');
 }
 function scene3() {
-  return room({ rug: [480, 472], plantAt: [80, 470] }) +
-    shadow(490, 472, 80) + chair(430, 470) + teddy(494, 386, 0.9) +
-    adam(270, 485, 'hips') + maryam(640, 482, 'point', 1, true) +
-    `<g ${FONT}><text x="530" y="240" font-size="46" font-weight="800" fill="${C.dress}">؟</text></g>`;
+  return artScene('lulu-3.jpg', 'Adam and Maryam looking around an armchair with a teddy bear');
 }
 function scene4() {
-  return room({ rug: [390, 474], plantAt: [710, 470] }) +
-    box(400, 470, 1, { ball: true }) +
-    `<g transform="rotate(14 250 483)">${adam(250, 483, 'reach')}</g>` +
-    maryam(590, 482, 'clap') +
-    `<g ${FONT}><text x="430" y="250" font-size="46" font-weight="800" fill="${C.shirt}" transform="rotate(6 430 250)">؟</text></g>`;
+  return artScene('lulu-4.jpg', 'Adam looking inside an open toy box with Maryam');
 }
 function scene5() {
-  return room({ rug: [480, 474], win: 600 }) +
-    tailMystery(66, 400) + couch(-280, 480) +
-    adam(450, 486, 'scratch') + maryam(630, 482, 'point', 1, true) +
-    qmarks(450, 250);
+  return artScene('lulu-5.jpg', 'Adam puzzled and Maryam pointing towards the couch where Lulu is hidden');
 }
 /* The first painted scene (2026-08-31). It replaces a vector version that was
    redrawn once already the same day and still was not good enough. The
@@ -495,9 +477,7 @@ function scene6() {
     'Baba asleep on the couch with Lulu the cat curled up on top of him');
 }
 function sceneEnd() {
-  return room({ rug: [400, 480], win: 590, plantAt: [90, 470] }) +
-    basket(400, 468) + catSleep(400, 436, 0.85) + zzz(470, 330, '#8FA3C7', 0.9) +
-    sparkle(230, 260, 1) + sparkle(580, 240, 0.8, '#E76F51') + sparkle(300, 350, 0.6, '#2A9D8F');
+  return artScene('lulu-end.jpg', 'Lulu the cat curled up asleep in her basket');
 }
 
 /* ————— «أين القمر؟» night scenes ————— */
