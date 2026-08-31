@@ -30,6 +30,11 @@ const sandbox = {
   speechSynthesis: speech,
   localStorage: null,
   setTimeout: () => 0,
+  // sync.js and kids.js register DOMContentLoaded handlers at top level; without
+  // this the whole bundle refuses to run and every book assertion is skipped
+  addEventListener: () => {},
+  fetch: () => Promise.reject(new Error("no network in tests")),
+  Audio: function () { return { play: () => Promise.resolve(), pause() {} }; },
   AudioContext: function () { return { createOscillator: () => ({ connect() {}, start() {}, stop() {}, frequency: {} }), createGain: () => ({ connect() {}, gain: { setValueAtTime() {}, exponentialRampToValueAtTime() {} } }), currentTime: 0, destination: {} }; },
 };
 sandbox.window = sandbox;
@@ -45,10 +50,11 @@ const BOOK_FILES = [...src("index.html").matchAll(/<script src="([^"]+)"><\/scri
 
 let BOOKS, LEVELS, LICONS;
 try {
-  const fn = new Function("window", "document", "location", "speechSynthesis", "setTimeout",
+  const fn = new Function("window", "document", "location", "speechSynthesis", "setTimeout", "fetch", "Audio",
     BOOK_FILES.map(src).join("\n") +
     "\nreturn { BOOKS, LEVELS, LICONS, ICONS };");
-  const out = fn(sandbox, sandbox.document, sandbox.location, sandbox.speechSynthesis, sandbox.setTimeout);
+  const out = fn(sandbox, sandbox.document, sandbox.location, sandbox.speechSynthesis,
+    sandbox.setTimeout, sandbox.fetch, sandbox.Audio);
   ({ BOOKS, LEVELS, LICONS } = out);
   sandbox.ICONS = out.ICONS;
   ok(`the ${BOOK_FILES.length} scripts index.html loads all parse and run together: ${BOOK_FILES.join(", ")}`);
@@ -88,6 +94,12 @@ const PALETTE_KEYS = (src("app.js").match(/const C = \{[\s\S]*?\};/) || [""])[0]
 for (const b of BOOKS) {
   b.words.forEach((w, i) => {
     const svg = String(w.icon || "");
+    const img = svg.match(/<img[^>]+src="([^"]+)"/);
+    if (img) {
+      if (!fs.existsSync(path.join(ROOT, img[1])))
+        bad(`${b.title}: word ${i + 1} (${w.ar}) points at ${img[1]}, which does not exist`);
+      return;
+    }
     if (!/^<svg/.test(svg)) {
       bad(`${b.title}: word ${i + 1} (${w.ar}) has no picture — rule 2, the picture carries the meaning`);
       return;

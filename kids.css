@@ -193,3 +193,139 @@
 .haraka-cell small { text-align: center; }
 .door-en, .lulu-bubble small, .lp-name small { text-align: right; }
 .print-note { text-align: left; }
+
+/* ————— vendored Twemoji pictures ————————————————————————————————————————
+   The picture slots were written for inline <svg>. Twemoji arrives as <img>,
+   so every slot has to size an image the same way — otherwise the file loads
+   at its natural size and blows the card apart. */
+img.tw { display: block; width: 100%; height: 100%; object-fit: contain; }
+.word-card .icon img.tw { width: 62px; height: 62px; }
+.game-card img.tw { width: 100%; height: auto; aspect-ratio: 1; }
+.lc-pic img.tw, .lp-pic img.tw, .qc-pic img.tw { width: 100%; height: 100%; }
+.lulu img.tw { width: 100%; height: 100%; }
+
+/* ————— جُمَل — the sentence lessons ——————————————————————————————————————
+   Picture-free (sentences.js explains why), so the TYPE has to do the work the
+   illustration used to. The Arabic is large, generously line-spaced for the
+   harakat, and every word is its own tap target. */
+
+.set-list { display: grid; gap: 12px; }
+.set-card {
+  border: none; font-family: inherit; cursor: pointer; text-align: right;
+  background: #fff; border-radius: 22px; padding: 16px 20px;
+  border-right: 10px solid var(--band); box-shadow: 0 4px 0 #0001;
+  display: grid; gap: 2px;
+}
+.set-card:active { transform: translateY(3px); box-shadow: 0 1px 0 #0001; }
+.set-ar { font-size: 30px; font-weight: 800; color: var(--ink); }
+.set-en { font-size: 14px; color: var(--muted); direction: ltr; text-align: right; }
+.set-meta { font-size: 13px; color: var(--teal); font-weight: 700; }
+
+.sent-card {
+  background: #fff; border-radius: 26px; padding: 22px 18px 16px;
+  box-shadow: 0 4px 0 #0001; text-align: center; margin-bottom: 16px;
+}
+.sent-ar { font-size: clamp(28px, 7vw, 40px); font-weight: 800; line-height: 2.1; }
+.sent-ar .sw {
+  display: inline-block; padding: 2px 8px; border-radius: 12px; cursor: pointer;
+  transition: background .15s, transform .12s;
+}
+.sent-ar .sw:active, .sent-ar .sw.said { background: var(--sun); transform: scale(1.06); }
+.sent-play {
+  border: none; font-family: inherit; background: var(--teal); color: #fff;
+  border-radius: 20px; padding: 12px 26px; font-size: 22px; font-weight: 700;
+  cursor: pointer; box-shadow: 0 4px 0 #0002; margin-top: 6px;
+}
+.sent-play:active { transform: translateY(3px); box-shadow: 0 1px 0 #0002; }
+.sent-tap { font-size: 15px; color: var(--muted); margin-top: 10px; }
+
+.steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 14px; }
+.step {
+  border: none; font-family: inherit; background: #F1E4CC; color: var(--muted);
+  border-radius: 16px; padding: 10px 2px; cursor: pointer; display: grid; gap: 1px;
+  min-height: 76px; align-content: center;
+}
+.step.on { background: var(--teal); color: #fff; box-shadow: 0 3px 0 #0002; }
+.st-ic { font-size: 22px; }
+.st-ar { font-size: 13px; font-weight: 700; }
+.st-en { font-size: 9px; direction: ltr; opacity: .85; }
+
+.step-body { min-height: 150px; }
+.sb {
+  background: #fff; border-radius: 22px; padding: 18px; box-shadow: 0 3px 0 #0001;
+  display: grid; gap: 12px; justify-items: center; text-align: center;
+}
+.sb-big {
+  border: none; font-family: inherit; background: var(--sun); border-radius: 26px;
+  padding: 16px 30px; font-size: 40px; cursor: pointer; box-shadow: 0 4px 0 #0002;
+  display: grid; gap: 2px; line-height: 1.1;
+}
+.sb-big small { font-size: 13px; font-weight: 600; color: #7A5A12; direction: ltr; }
+.sb-big:active { transform: translateY(3px); box-shadow: 0 1px 0 #0002; }
+.sb-en { font-size: 21px; color: var(--ink); direction: ltr; cursor: pointer; line-height: 1.5; }
+.sb-en.why { font-size: 17px; color: var(--muted); max-width: 44ch; }
+.sb-lead { font-size: 20px; }
+.sb-star {
+  border: none; font-family: inherit; background: var(--teal); color: #fff;
+  border-radius: 22px; padding: 14px 30px; font-size: 24px; font-weight: 700;
+  cursor: pointer; box-shadow: 0 4px 0 #0002; display: grid; gap: 2px;
+}
+.sb-star small { font-size: 12px; font-weight: 500; opacity: .9; direction: ltr; }
+.sb-star.got { background: var(--sun); color: var(--ink); }
+
+.vary { display: grid; gap: 8px; width: 100%; }
+.vary-row {
+  border: none; font-family: inherit; background: #FBF3E4; border-radius: 16px;
+  padding: 12px 16px; cursor: pointer; display: grid; gap: 2px; text-align: right;
+}
+.vary-row.said { background: var(--sun); }
+.v-ar { font-size: 26px; font-weight: 800; line-height: 1.9; }
+.v-en { font-size: 13px; color: var(--muted); direction: ltr; text-align: right; }
+
+.lesson-nav { display: flex; justify-content: center; gap: 16px; margin-top: 18px; }
+.round.big { width: 76px; height: 76px; font-size: 30px; background: var(--coral); }
+.round[disabled] { opacity: .35; }
+
+.set-done { text-align: center; padding: 50px 20px; }
+.sd-star { font-size: 76px; }
+.set-done h2 { font-size: 42px; color: var(--coral); }
+
+/* ————— page arrows —————————————————————————————————————————————————————
+   THE TRAP: ❮ and ❯ (U+276E/U+276F) are Bidi_Mirrored characters. Inside
+   dir="rtl" the browser flips them, so the glyph authored as "left" renders
+   pointing RIGHT. The forward button sits on the left, so it appeared to point
+   back the way it came. Reza: "the arrow is a bit confusing as it points left
+   but arabic goes right to left."
+
+   Fixed twice over: plain ← → arrows instead of the mirroring ornaments, AND
+   direction:ltr on the buttons so nothing here is ever re-pointed by bidi.
+   FORWARD is ← because that is the way an Arabic book turns. */
+.nav, .round { direction: ltr; unicode-bidi: isolate; }
+
+/* ————— the grown-ups' corner ————————————————————————————————————————————
+   Deliberately plain and deliberately dull. A child has no reason to open it,
+   and it is the ONLY place in the site with a text box in it. */
+.grownup {
+  border: none; font-family: inherit; background: transparent; color: var(--muted);
+  font-size: 13px; text-decoration: underline; cursor: pointer; padding: 6px;
+}
+.parent-box {
+  background: #fff; border-radius: 22px; padding: 22px; box-shadow: 0 3px 0 #0001;
+  display: grid; gap: 14px; max-width: 460px; margin: 0 auto; direction: ltr; text-align: left;
+}
+.pb-note, .pb-priv { font-size: 14px; color: var(--muted); line-height: 1.5; }
+.pb-priv { font-size: 12px; border-top: 1px solid #F1E4CC; padding-top: 12px; }
+.pb-on { font-size: 17px; color: var(--teal); font-weight: 700; }
+.pb-l { display: grid; gap: 5px; font-size: 14px; color: var(--muted); font-weight: 700; }
+.pb-l input {
+  font-family: inherit; font-size: 17px; padding: 12px 14px; border-radius: 14px;
+  border: 2px solid #E7D8BC; background: #FBF3E4; color: var(--ink);
+}
+.pb-l input:focus { outline: none; border-color: var(--teal); }
+.pb-out {
+  border: none; font-family: inherit; background: transparent; color: var(--muted);
+  font-size: 14px; text-decoration: underline; cursor: pointer; padding: 6px;
+}
+.pb-msg { font-size: 14px; min-height: 20px; }
+.pb-msg.good { color: var(--teal); font-weight: 700; }
+.pb-msg.bad { color: var(--coral); font-weight: 700; }

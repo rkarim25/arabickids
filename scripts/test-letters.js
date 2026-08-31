@@ -77,15 +77,28 @@ for (const x of LETTERS) {
 }
 ok("keywords carry their harakat");
 
-/* ---------- 6. every letter has a picture, and it is not a stub ---------- */
+/* ---------- 6. every letter has a picture, and the file is really there ----
+   Most pictures are now vendored Twemoji referenced as <img src="pic/x.svg">.
+   A missing file is invisible in the markup and shows as a broken image to a
+   child, so the FILE is checked on disk, not just the tag. */
+const fs = require("fs");
+const ROOT = path.join(__dirname, "..");
 for (const x of LETTERS) {
-  if (!LICONS[x.icon]) { bad(`${x.l}: no picture for icon key "${x.icon}"`); continue; }
-  const svg = LICONS[x.icon];
-  if (!/^<svg/.test(svg)) bad(`${x.l}: picture is not an svg`);
-  if (svg.length < 180) bad(`${x.l}: picture "${x.icon}" is suspiciously small (${svg.length} chars) — a stub?`);
+  const html = LICONS[x.icon];
+  if (!html) { bad(`${x.l}: no picture for icon key "${x.icon}"`); continue; }
+  const img = html.match(/<img[^>]+src="([^"]+)"/);
+  if (img) {
+    if (!fs.existsSync(path.join(ROOT, img[1])))
+      bad(`${x.l}: picture file ${img[1]} does not exist`);
+    if (!/alt="[^"]+"/.test(html))
+      bad(`${x.l}: picture has no alt text`);
+  } else if (!/^<svg/.test(html)) {
+    bad(`${x.l}: picture is neither an <img> nor an <svg>`);
+  } else if (html.length < 180) {
+    bad(`${x.l}: hand-drawn picture "${x.icon}" is suspiciously small — a stub?`);
+  }
 }
-if (LETTERS.every(x => LICONS[x.icon] && LICONS[x.icon].length >= 180))
-  ok("all 28 letters have a real drawn picture, none a placeholder");
+ok("all 28 letters have a picture, and every referenced file exists");
 
 /* pictures must not be silently shared — two letters sharing one picture makes
    the "find the one that starts with this sound" game unwinnable */
@@ -109,6 +122,7 @@ if (LETTERS.every(x => LICONS[x.icon] && LICONS[x.icon].length >= 180))
   const arcRe = /[Aa]\s*([\d.]+)[,\s]+([\d.]+)[,\s]+[\d.]+[,\s]+[01][,\s]*[01][,\s]+(-?[\d.]+)[,\s]+(-?[\d.]+)/g;
   let badArcs = 0;
   for (const [name, svg] of Object.entries(LICONS)) {
+    if (!/^<svg/.test(svg)) continue;   // vendored <img> files are not ours to check
     // track the pen so an arc's start point is known
     const cmds = svg.match(/[MmLlHhVvCcSsQqTtAaZz][^MmLlHhVvCcSsQqTtAaZz]*/g) || [];
     let x = 0, y = 0;

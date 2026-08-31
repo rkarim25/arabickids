@@ -108,3 +108,11 @@
   .pcard { border-color: #999; }
   .pos-cell { border-color: #BBB; }
 }
+
+/* Twemoji pictures on the printables */
+.pc-pic img.tw { width: 100%; height: 100%; object-fit: contain; }
+.pos-pic img.tw { width: 100%; height: 100%; object-fit: contain; }
+@media print {
+  /* the picture is the whole point of the card; never let the printer drop it */
+  img.tw { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

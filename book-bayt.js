@@ -102,15 +102,18 @@ const BOOK_BAYT = {
   title: 'مَنْ فِي الْبَيْت؟',
   titleEn: 'Who is in the house?',
   tag: 'فِي · وَ · سُكُون — joining words',
+  /* These were wrong, not merely ugly: kitchen was a loaf of bread, room was a
+     bed, and "and" was an EYE. The picture carries the meaning here, so a wrong
+     one teaches a wrong word. Fixed 2026-08-31. */
   words: [
-    { ar: 'مَنْ',      en: 'who?',      icon: LICONS.walad },
+    { ar: 'مَنْ',      en: 'who?',      icon: LICONS.rel_who },
     { ar: 'بَيْت',     en: 'a house',   icon: LICONS.dar },
-    { ar: 'مَطْبَخ',   en: 'a kitchen', icon: LICONS.khubz },
-    { ar: 'غُرْفَة',   en: 'a room',    icon: ICONS.bed },
+    { ar: 'مَطْبَخ',   en: 'a kitchen', icon: LICONS.kitchen },
+    { ar: 'غُرْفَة',   en: 'a room',    icon: LICONS.room },
     { ar: 'كِتَاب',    en: 'a book',    icon: LICONS.kitab },
-    { ar: 'فَوْقَ',    en: 'on top of', icon: ICONS.on },
-    { ar: 'فِي',       en: 'in',        icon: ICONS.inside },
-    { ar: 'وَ',        en: 'and',       icon: LICONS.ayn },
+    { ar: 'فَوْقَ',    en: 'on top of', icon: LICONS.rel_on },
+    { ar: 'فِي',       en: 'in',        icon: LICONS.rel_in },
+    { ar: 'وَ',        en: 'and',       icon: LICONS.rel_and },
   ],
   pages: [
     { type: 'cover', svg: bCover },
@@ -125,9 +128,9 @@ const BOOK_BAYT = {
     { type: 'end', svg: bEnd },
   ],
   game: [
-    { say: 'بَيْت',   opts: ['dar', 'kitab', 'khubz'], ans: 0, set: 'L' },
-    { say: 'كِتَاب',  opts: ['khubz', 'kitab', 'dar'], ans: 1, set: 'L' },
-    { say: 'مَطْبَخ', opts: ['kitab', 'dar', 'khubz'], ans: 2, set: 'L' },
+    { say: 'بَيْت',   opts: ['dar', 'kitab', 'kitchen'], ans: 0 },
+    { say: 'كِتَاب',  opts: ['kitchen', 'kitab', 'dar'], ans: 1 },
+    { say: 'مَطْبَخ', opts: ['kitab', 'dar', 'kitchen'], ans: 2 },
   ],
 };
 

@@ -18,13 +18,27 @@ situation rather than from a translation, and they read whole familiar words
 long before they can write a single letter. Everything here follows from that.
 
 1. **Ear first, always.** Every screen makes a sound. Nothing in the child's
-   path requires reading English — or reading anything at all.
+   path requires reading English — or reading anything at all. The audio is
+   **pre-rendered files**, never the browser's live speech: `speechSynthesis`
+   truncates words and changes between devices ("sometimes it tapers off"),
+   which on an ear-first site is a broken feature rather than a rough edge.
+   `scripts/gen-audio.py` renders every string the site can say. A letter's big
+   glyph plays **the sound it makes**, not its name — that is what a pre-reader
+   needs.
 2. **The picture carries the meaning, not a translation.** English exists on
    the page for the grown-up sitting next to them, set small and out of the
    way. A child who cannot read still gets everything.
 3. **No writing. None.** Not tracing, not letter formation, not spelling.
    Recognition and sound only. (This matches Reza's own standing rule on the
    grown-up site: orthography is a tax on comprehension and speech.)
+   **And no transliteration either** — Reza asked, 2026-08-31, whether it
+   "creates dependency". It does. At three to six a child is forming the
+   letter–sound map, and Latin letters compete with Arabic ones at exactly the
+   wrong moment; the eye goes to the script it knows and the Arabic never gets
+   decoded. It is also redundant here, because the sound comes from the ear.
+   This is the OPPOSITE of the grown-up site, where an English-literate adult
+   explicitly wants transliteration in vocab tables. Different learner,
+   opposite rule.
 4. **Repetition with variation.** The same small set of words comes back across
    books, in new pictures. That is what makes a word stick at this age — not a
    longer word list.
@@ -36,14 +50,26 @@ long before they can write a single letter. Everything here follows from that.
 
 ## 2. What the child sees
 
-Three ways in, and no more. The eleven-tab sprawl on the grown-up site happened
+Four ways in, and no more. The eleven-tab sprawl on the grown-up site happened
 one reasonable addition at a time; this one starts with a hard cap.
 
 | | | |
 |---|---|---|
-| 📖 **الكُتُب** Books | the story shelf, by colour band | the heart of it |
 | 🔊 **الأَصْوَات** Sounds | hear a sound, tap the picture that has it | the way in to reading |
+| 📖 **الكُتُب** Books | the story shelf, by colour band, with pictures | the heart of it |
+| 💬 **جُمَل** Sentences | one sentence, five steps, **no pictures** | where it becomes language |
 | 🖨 **اِطْبَعْ** Print | cards and mini-books to cut out | off the screen entirely |
+
+Four, not three. The cap moved once, on purpose: Reza asked for picture-free
+sentence work on 2026-08-31 — *"the same concept as the main website, but
+perhaps more child friendly and more explanation"* — and burying it inside
+Books would have hidden the half of the site where the language actually
+assembles. Four is still four. The next addition has to replace something.
+
+**Pictures are for words, not for sentences.** *"cant put picture in every
+stence dont think"* — correct, and it is now a rule. A picture can show a moon;
+it cannot show "Arabic has no word for is". Word cards get a picture. Sentences
+get the ear: the Arabic spoken, the meaning spoken, and the explanation spoken.
 
 ## 3. The ladder
 
@@ -74,13 +100,22 @@ Nothing is invented to fill a gap. If there is no good Qur'anic word for a
 letter that a small child would recognise, an everyday word is used and marked
 as such, rather than reaching for something obscure.
 
-## 5. Two children, two sets of stars
+## 5. Two children, two sets of stars — and they follow the family
 
 Profiles are a face and a colour, chosen by tapping — never a name typed in.
-Progress is per child and lives in `localStorage`; nothing syncs, nothing is
-uploaded, no account exists. A child's stars are their own and cannot be lost.
-
 Switching child is one tap from the home screen.
+
+**Sync (2026-08-31).** A grown-up signs in once per device, behind the dull
+"⚙ For grown-ups" link on the picker, using the same email and sync code as the
+grown-up site. The children never sign in and never type. Only a face id and a
+star count leave the device — no name, no photo, no recording.
+
+**Stars merge by MAX, never by last-write.** This falls straight out of rule 5.
+If the tablet was used in the car and the phone at home, last-write-wins would
+throw one of those sessions away and a child would watch stars vanish. Taking
+the larger of two counts cannot lose anything, and since stars only ever go up
+it is always right. The merge is done on the SERVER too (`worker /kids`), so two
+devices syncing at once still cannot clobber each other.
 
 ## 6. Print means cut-out-and-play
 
@@ -97,9 +132,12 @@ a browser header eating it.
 ## 7. Before you deploy
 
 ```
-node scripts/test-books.js      # band rules, page shapes, every word has a picture
-node scripts/test-letters.js    # 28 letters, forms correct, keywords real
+node scripts/test-books.js      # band rules, page shapes, pictures that resolve
+node scripts/test-letters.js    # 28 letters, forms correct, keywords real, sane geometry
+node scripts/test-sentences.js  # bands, one-word swaps, and a clip for EVERY line
+python scripts/gen-audio.py     # after any new Arabic or English text
+node scripts/sync-sw.js         # after gen-audio, so the offline cache matches
 ```
 
-Both must pass. Then check it in a real browser at a phone width — that is
+All three suites must pass. Then check it in a real browser at a phone width — that is
 where it is actually used.

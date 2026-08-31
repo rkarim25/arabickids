@@ -636,26 +636,12 @@ const BOOKS = [BOOK_QAMAR, BOOK_LULU];
 let BOOK = BOOKS[0];   // book currently open in the reader
 
 /* ================= 4. Audio ================= */
-
-let VOICE = null;
-function pickVoice() {
-  const vs = (speechSynthesis.getVoices() || []).filter(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
-  VOICE = vs.find(v => /natural|online|neural/i.test(v.name)) || vs[0] || null;
-}
-if ('speechSynthesis' in window) {
-  pickVoice();
-  speechSynthesis.onvoiceschanged = pickVoice;
-}
-function say(text, rate = 0.75) {
-  if (!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'ar-SA';
-  if (VOICE) u.voice = VOICE;
-  u.rate = rate;
-  speechSynthesis.speak(u);
-}
-function stripSay(t) { return t.replace(/[؟?!،.]/g, ''); }
+/* say(), sayLetter() and sayLetterName() now live in audio.js, which plays
+   PRE-RENDERED mp3s instead of asking the browser to speak. speechSynthesis
+   truncated words and varied by device — "sometimes it tapers off" — which on
+   an ear-first site is a broken feature, not a rough edge. audio.js keeps
+   speechSynthesis only as a fallback for a missing clip, and must load first. */
+function stripSay(t) { return String(t).replace(/[؟?!،.]/g, ''); }
 
 let AC = null;
 function tone(freqs, dur = 0.14) {

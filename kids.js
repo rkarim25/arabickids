@@ -51,6 +51,7 @@ function addStar(key, n = 1) {
   if (!kid) return 0;
   kid.stars[key] = (kid.stars[key] || 0) + n;
   saveKids(list);
+  if (typeof syncSoon === 'function') syncSoon();   // quietly, a few seconds later
   return kid.stars[key];
 }
 function starsFor(key) { const k = currentKid(); return (k && k.stars[key]) || 0; }
@@ -79,7 +80,7 @@ function luluSays(i) {
    Four screens, never more (DESIGN.md §2). Everything is display-toggled so a
    child never waits for a page load. */
 
-const VIEWS = ['home', 'shelf', 'sounds', 'printView', 'reader'];
+const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'printView', 'reader'];
 function show(id) {
   VIEWS.forEach(v => {
     const el = document.getElementById(v);
@@ -125,6 +126,11 @@ function renderHome() {
         <span class="door-ar">الكُتُب</span>
         <span class="door-en">Books — stories to read together</span>
       </button>
+      <button class="door" id="doorSent" style="--d:#E8A33D">
+        <span class="door-ic">💬</span>
+        <span class="door-ar">جُمَل</span>
+        <span class="door-en">Sentences — listen, and hear how they work</span>
+      </button>
       <button class="door" id="doorPrint" style="--d:#7BC08F">
         <span class="door-ic">🖨️</span>
         <span class="door-ar">اِطْبَعْ</span>
@@ -136,6 +142,7 @@ function renderHome() {
   document.getElementById('whoBtn').addEventListener('click', renderPicker);
   document.getElementById('doorSounds').addEventListener('click', () => { openSounds(); });
   document.getElementById('doorBooks').addEventListener('click', () => { show('shelf'); });
+  document.getElementById('doorSent').addEventListener('click', () => { openSentences(); });
   document.getElementById('doorPrint').addEventListener('click', () => { openPrint(); });
   document.querySelector('.lulu').addEventListener('click', () => luluSays(0));
   setTimeout(() => luluSays(0), 600);
@@ -160,8 +167,11 @@ function renderPicker() {
           </button>`;
         }).join('')}
       </div>
-      <p class="pick-note">Each face keeps its own stars on this device. Nothing is sent anywhere.</p>
+      <p class="pick-note">Each face keeps its own stars.
+        <button class="grownup" id="grownupBtn">⚙ For grown-ups</button></p>
     </div>`;
+  const gb = document.getElementById('grownupBtn');
+  if (gb) gb.addEventListener('click', ev => { ev.stopPropagation(); renderParent(); });
   host.querySelectorAll('.face-btn').forEach(b => b.addEventListener('click', () => {
     const kid = addKid(b.dataset.f);
     setWho(kid.id);
@@ -220,6 +230,7 @@ function renderLetterGrid() {
     </div>`;
   document.querySelectorAll('.letter-card').forEach(c =>
     c.addEventListener('click', () => openLetter(+c.dataset.i)));
+  LETTERS.slice(0, 4).forEach(x => preload(x.word));
 }
 
 function openLetter(i) {
@@ -230,7 +241,7 @@ function openLetter(i) {
       <button class="back small" id="lBack">↩</button>
       <div class="lp-top">
         <button class="lp-glyph" id="lpGlyph" title="Hear the letter">${x.l}</button>
-        <div class="lp-name"><b>${x.name}</b><small>says “${x.sound}”</small></div>
+        <div class="lp-name"><b>${x.name}</b></div>
       </div>
 
       <button class="lp-word" id="lpWord">
@@ -250,21 +261,29 @@ function openLetter(i) {
       </div>
 
       <div class="lp-nav">
-        <button id="lPrev" class="round">❯</button>
-        <button id="lNext" class="round">❮</button>
+        <button id="lPrev" class="round" aria-label="Previous letter">→</button>
+        <button id="lNext" class="round" aria-label="Next letter">←</button>
       </div>
     </div>`;
 
-  const hearLetter = () => say(x.name);
+  /* The BIG GLYPH says the SOUND (فَ / fff), not the name. Reza, 2026-08-31:
+     "take fiy from the picture. it makes the noise fff." A pre-reader needs the
+     noise the letter makes; the name is what it is called, which is a separate
+     and later fact. The name is still one tap away, on the name itself. */
+  const hearSound = () => sayLetter(x.l);
+  const hearName = () => sayLetterName(x.l, x.name);
   const hearWord = () => say(x.word);
-  document.getElementById('lpGlyph').addEventListener('click', hearLetter);
+  document.getElementById('lpGlyph').addEventListener('click', hearSound);
+  document.querySelector('.lp-name').addEventListener('click', hearName);
   document.getElementById('lpWord').addEventListener('click', hearWord);
   document.getElementById('lBack').addEventListener('click', renderLetterGrid);
   document.getElementById('lPrev').addEventListener('click', () => openLetter((i + 27) % 28));
   document.getElementById('lNext').addEventListener('click', () => openLetter((i + 1) % 28));
-  document.querySelectorAll('.form-box').forEach(b => b.addEventListener('click', hearLetter));
-  // ear first: the page introduces itself without being asked
-  setTimeout(() => { say(`${x.name}. ${x.word}`); }, 350);
+  document.querySelectorAll('.form-box').forEach(b => b.addEventListener('click', hearSound));
+  // ear first: sound, then the word it starts — the page introduces itself
+  setTimeout(hearSound, 300);
+  setTimeout(hearWord, 1500);
+  preload(x.word);
 }
 
 /* ---- listen & find — the actual reading skill at this age --------------- */
@@ -291,7 +310,9 @@ function nextQuiz() {
       <div class="streak">${'⭐'.repeat(Math.min(quiz.streak, 10))}</div>
     </div>`;
 
-  const speak = () => say(`${answer.name}. ${answer.word}`);
+  /* the question is "which picture starts with this NOISE" — so play the noise,
+     then the word it lives in, not the letter's name */
+  const speak = () => { sayLetter(answer.l); setTimeout(() => say(answer.word), 1200); };
   document.getElementById('qSay').addEventListener('click', speak);
   setTimeout(speak, 400);
 
