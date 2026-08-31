@@ -62,14 +62,17 @@ Shared: `audio.js` (all playback), `sync.js` (Google sign-in + star sync),
 
 - **Qaida**: 9 stages, 592 cells, 469 clips.
 - **Picture books**: 7, one at every band L1–L5.
-- **No-picture stories**: 13 — 5 standalone, the 6-episode series
-  **Lulu vs the Crow** L2 to L4, and 2 **Kalila wa Dimna** fables at L4.
-  By level: L1 1, L2 3, L3 3, L4 5, L5 1.
+- **No-picture stories**: 16 — 5 standalone, the 6-episode series
+  **Lulu vs the Crow** L2 to L4, and 5 **Kalila wa Dimna** fables whose ep
+  numbers follow the LADDER (ep1 = L1 … ep5 = L4).
+  By level: L1 2, L2 4, L3 4, L4 5, L5 1.
+  Level 5 has no fable on purpose — that band is ayat and duas (DESIGN.md §3).
 - **Sentences**: 11 sets, 27 lessons, 10 frames, 10 jokes/riddles.
 - **Surahs**: 11, 51 ayat, all with Alafasy recitation; **all 51** now have a
   bespoke child note, plus child meanings and 175 child word-glosses.
 - **Videos**: 7, across 3 topics, every id verified live 2026-08-31.
-- **Audio**: 1,609 TTS clips + 267 real recitation files.
+- **Audio**: 1,695 TTS clips + 267 real recitation files. `data/audio-texts.json`
+  records what every clip actually SAYS — see trap 14.
 
 ---
 
@@ -105,6 +108,24 @@ Shared: `audio.js` (all playback), `sync.js` (Google sign-in + star sync),
 13. **Bash heredocs choke on this repo's Arabic.** Two attempts at
     `cat > file <<'EOF'` with RTL content died with "unexpected EOF". Write the
     file with the Write tool, or a node script, and stop fighting it.
+14. **A clip's filename hashes the KEY, not the text** (`stem = h(key)`), and
+    the render is incremental — so changing WHAT a key says leaves the old
+    audio in place for ever, silently. This file used to claim the opposite.
+    `data/audio-texts.json` now stores every clip's spoken text and gen-audio
+    re-renders anything whose text changed. Without it the alif fix would have
+    done nothing at all.
+15. **Never route a bare SYLLABLE through `say()`.** `say()` normalises with
+    `normAr()`, which strips tashkeel, so `say('بَ')` asks for `'ب'` — which is
+    not in the manifest, so it falls through to live speechSynthesis. That is
+    how the whole الحَرَكَات screen ended up on the browser's voice with nothing
+    failing. Use `playKey('q:' + text, text)`. A whole WORD with harakat is
+    fine and always was: words are keyed by their normalised form.
+    `test-letters.js` enforces both halves of this now.
+16. **Do not put typographic apostrophes (’) in strings gen-audio must read.**
+    A generator wrote `\\u2019` into stories-text.js as literal characters;
+    JS resolves it at runtime but gen-audio.py reads the file as TEXT, so the
+    site asked for one key and the renderer made another. Three clips existed
+    and could never be found. Reword instead of escaping harder.
 
 ---
 
@@ -153,6 +174,10 @@ affected clips** (filenames hash the text, not the voice), re-run.
 2. **No letter audio has actually been RECORDED yet.** The booth that makes it
    possible shipped 2026-08-31 (`record.js`), but it is empty until Reza spends
    three minutes in it, and until then the letters still play the neural voice.
+   He has now reported the machine letter sounds as bad THREE times. The
+   harakat screen had a real bug (trap 15) and alif had wrong text, both fixed
+   — but a neural voice saying an isolated syllable is a weak instrument at
+   best, and his own voice is the only real answer. Push on this one.
    Ask whether he has done a pass. When he has, the clips want committing to
    `audio/rec/` — the booth's Save all writes an `index.json` beside them — so
    they reach every device instead of living in one browser.
