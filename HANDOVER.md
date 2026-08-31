@@ -22,9 +22,10 @@ node scripts/test-sentences.js     # bands, one-word swaps, a clip for every lin
 node scripts/test-surahs.js        # Qur'an text vs source, right recitation per ayah
 node scripts/test-stories-text.js  # no-picture stories
 node scripts/test-qaida.js         # every mark, and one clip per cell
+node scripts/test-videos.js        # the strip embeds nothing until it is tapped
 ```
 
-All six must pass. Then **always**:
+All seven must pass. Then **always**:
 
 ```bash
 node scripts/sync-sw.js
@@ -51,7 +52,9 @@ Five doors, and five is the ceiling (DESIGN.md §2). A sixth replaces one.
 | 🖨 **اِطْبَعْ** | cut-out cards, mini books, poster | `print.js`, `print.css` |
 
 Shared: `audio.js` (all playback), `sync.js` (Google sign-in + star sync),
-`kit2.js` (extra figures), `book-icons.js` (picture corrections).
+`kit2.js` (extra figures), `book-icons.js` (picture corrections),
+`record.js` (the parent recording booth, behind the grown-ups screen),
+`videos.js` (the YouTube strip at the foot of Sounds and Qaida).
 
 ---
 
@@ -59,12 +62,14 @@ Shared: `audio.js` (all playback), `sync.js` (Google sign-in + star sync),
 
 - **Qaida**: 9 stages, 592 cells, 469 clips.
 - **Picture books**: 7, one at every band L1–L5.
-- **No-picture stories**: 11 — 5 standalone + the 6-episode series
-  **«لُولُو وَالْغُرَاب»** (Lulu vs the Crow), L2→L4.
+- **No-picture stories**: 13 — 5 standalone, the 6-episode series
+  **Lulu vs the Crow** L2 to L4, and 2 **Kalila wa Dimna** fables at L4.
+  By level: L1 1, L2 3, L3 3, L4 5, L5 1.
 - **Sentences**: 11 sets, 27 lessons, 10 frames, 10 jokes/riddles.
-- **Surahs**: 11, 51 ayat, all with Alafasy recitation; 20 ayat have bespoke
-  child notes, all 51 have child meanings and 175 child word-glosses.
-- **Audio**: ~1,470 TTS clips + 267 real recitation files.
+- **Surahs**: 11, 51 ayat, all with Alafasy recitation; **all 51** now have a
+  bespoke child note, plus child meanings and 175 child word-glosses.
+- **Videos**: 7, across 3 topics, every id verified live 2026-08-31.
+- **Audio**: 1,609 TTS clips + 267 real recitation files.
 
 ---
 
@@ -89,7 +94,17 @@ Shared: `audio.js` (all playback), `sync.js` (Google sign-in + star sync),
    path for `--screenshot`, and render ≥520px wide or RTL clips.
 10. **Adding a module is three edits**: the file, `index.html`, and `sw.js`.
     `test-books.js` now fails if `index.html` does not load a shipped module —
-    `qaida-ui.js` was written, styled, cached and never loaded.
+    `qaida-ui.js` was written, styled, cached and never loaded. It caught
+    `record.js` the same way on 2026-08-31.
+11. **The `?v=` hash changes every time `sync-sw.js` runs**, so a script that
+    inserts a script tag by matching the literal old hash works once and fails
+    the second time. Match `record\.js\?v=[a-f0-9]+` instead.
+12. **A recorded clip beats a generated one, everywhere.** `playKey()` checks
+    `window.RECORDINGS` first; `playKeyRaw()` is the only way past it and it
+    exists solely so the booth can play what a recording replaces.
+13. **Bash heredocs choke on this repo's Arabic.** Two attempts at
+    `cat > file <<'EOF'` with RTL content died with "unexpected EOF". Write the
+    file with the Write tool, or a node script, and stop fighting it.
 
 ---
 
@@ -132,18 +147,27 @@ affected clips** (filenames hash the text, not the voice), re-run.
 
 ## 7. What is still open
 
-1. **Sync unverified** on two devices (§5).
-2. **Ayah notes cover 20 of 51.** The rest have word-by-word, recitation and the
-   meaning check, but no bespoke note.
-3. **No real recorded letter audio.** No complete, freely-licensed 28-letter set
-   exists (Commons has one 31s clip; Lingua Libre has alif but not baa/taa/jeem;
-   published Qaida audio is copyrighted). Options: Reza records his own, or he
-   points at a set he holds rights to.
-4. **Adapting existing children's books.** Reza asked about Bunny vs Monkey and
-   Peppa Pig — **both refused, and buying a copy does not change it**: a
-   translation is a derivative work and that right stays with the publisher.
-   Legitimate routes offered and not yet chosen: **African Storybook**
-   (africanstorybook.org), **Global Digital Library** (digitallibrary.io),
-   **StoryWeaver** — all CC-licensed, illustrated, published *to be* translated
-   — plus public domain **كليلة ودمنة** and **جحا**.
-5. **Level 3 and 5 picture books** are one each; the text shelf is thin at L1/L5.
+1. **Sync unverified** on two devices (§5). The oldest open item, and it cannot
+   be closed from here — it needs Reza signed in on a phone AND a tablet. Ask
+   every time; do not let it quietly start looking done.
+2. **No letter audio has actually been RECORDED yet.** The booth that makes it
+   possible shipped 2026-08-31 (`record.js`), but it is empty until Reza spends
+   three minutes in it, and until then the letters still play the neural voice.
+   Ask whether he has done a pass. When he has, the clips want committing to
+   `audio/rec/` — the booth's Save all writes an `index.json` beside them — so
+   they reach every device instead of living in one browser.
+3. **The video ids cannot be tested.** All 7 were checked against YouTube's
+   oembed endpoint on 2026-08-31 and every one was live. They will rot: a
+   channel deletes, an upload goes private. `videos.js` records each one's real
+   title and channel so a dead tile is identifiable rather than just grey.
+   Re-check by hand every few months.
+4. **Ayah notes: DONE**, all 51 (2026-08-31). Listed only so nobody
+   reintroduces the gap by trusting an old copy of this file.
+5. **Picture books are now the thin shelf** — 7 of them, one each at L3, L4 and
+   L5, against 13 text stories. The text shelf is thin at L1 (1) and L5 (1).
+6. **More كليلة ودمنة.** The library question is settled (the reasoning is in
+   `stories-text.js`) and two fables are in at L4. The obvious next two are
+   the collared dove and the monkey and the crocodile. African Storybook,
+   Global Digital Library and StoryWeaver stay the CC-licensed fallback if he
+   ever wants illustrated source material; **Bunny vs Monkey and Peppa Pig stay
+   refused**, and buying a copy does not change it.

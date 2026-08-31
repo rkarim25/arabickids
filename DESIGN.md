@@ -71,6 +71,26 @@ family is learning Arabic at all, and burying it would have been dishonest
 about what the site is for. **Five is the ceiling. The next addition replaces
 one of these.**
 
+### Videos are a strip, not a door (2026-08-31)
+Reza: *"maybe insert youtube videos wherever relevant to learn words and
+reading."* Right instinct — a song is how most children actually pick the
+alphabet up, and there was no singing anywhere on this site. But a raw player
+in a three-year-old's tap path would undo things the rest of the site is
+careful about, so it is deliberately **not** a sixth door. A quiet strip sits
+at the FOOT of الأَصْوَات and القَاعِدَة, after the child has done the thing the
+video is about — and not on the listening game, because that screen is a task
+and a video below it is an offer to stop.
+
+Nothing is embedded until somebody taps: no iframe exists in the page until
+then, so no screen talks to Google unasked. Playback is youtube-nocookie.com,
+no autoplay, `rel=0`, `playsinline`. **And `rel=0` does not seal the exit** —
+since 2018 it only holds related videos to the same channel, and the YouTube
+logo still leads out. That is why the strip says *watch together* instead of
+pretending to be a walled garden. Video is also the one thing here that needs
+the internet, so the strip says that too rather than showing a dead grey box.
+`scripts/test-videos.js` enforces every one of those properties, because all of
+them would rot silently.
+
 ### The one place that breaks the site's own rules — and should
 سُوَر is not funny, has no cartoon, and its audio is a real reciter rather than
 the neural voice used everywhere else. Reza: *"while it cannot me made funny"* —
@@ -183,10 +203,11 @@ node scripts/test-sentences.js  # bands, one-word swaps, and a clip for EVERY li
 node scripts/test-surahs.js     # Qur'an text vs source, right recitation per ayah
 node scripts/test-stories-text.js  # the no-picture stories: bands, and a clip for every line
 node scripts/test-qaida.js      # the reading ladder: every mark, and one clip per cell
+node scripts/test-videos.js     # the strip embeds nothing until it is tapped
 node scripts/sync-sw.js         # ALWAYS — stamps ?v= urls, or the deploy is invisible
 python scripts/gen-audio.py     # after any new Arabic or English text
 node scripts/sync-sw.js         # after gen-audio, so the offline cache matches
 ```
 
-All six suites must pass. Then check it in a real browser at a phone width — that is
+All seven suites must pass. Then check it in a real browser at a phone width — that is
 where it is actually used.

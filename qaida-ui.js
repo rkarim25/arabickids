@@ -89,6 +89,11 @@ function renderStageList() {
     qStage = QAIDA.stages.find(s => s.id === b.dataset.id);
     renderStage();
   }));
+
+  /* On the stage LIST, not inside a stage. A stage is a drill with a rhythm to
+     it and a video halfway down would break it; the list is where a child is
+     choosing what to do next, and a song about the marks belongs there. */
+  if (typeof videoStrip === 'function') videoStrip('qaida', ['harakat']);
 }
 
 function renderStage() {

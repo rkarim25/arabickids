@@ -224,6 +224,13 @@ function renderSounds() {
   if (soundsMode === 'letters') renderLetterGrid();
   else if (soundsMode === 'quiz') startQuiz();
   else renderHaraka();
+
+  /* The songs go UNDERNEATH, after the child has met the letters — never
+     instead of them. See videos.js for why this is a strip and not a door.
+     Not on the listening game: that screen is a task with a right answer on
+     it, and a video sitting below would be an offer to stop. */
+  if (soundsMode !== 'quiz' && typeof videoStrip === 'function')
+    videoStrip('sounds', soundsMode === 'haraka' ? ['harakat', 'letters'] : ['letters', 'words']);
 }
 
 function renderLetterGrid() {
