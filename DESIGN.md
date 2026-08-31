@@ -56,7 +56,7 @@ one reasonable addition at a time; this one starts with a hard cap.
 | | | |
 |---|---|---|
 | 🔊 **الأَصْوَات** Sounds | hear a sound, tap the picture that has it | the way in to reading |
-| 📖 **الكُتُب** Books | the story shelf, by colour band, with pictures | the heart of it |
+| 📖 **الكُتُب** Books | two shelves on one ladder: **with pictures**, and **without** | the heart of it |
 | 💬 **جُمَل** Sentences | one sentence, five steps, **no pictures** | where it becomes language |
 | 📿 **سُوَر** Surahs | Al-Fatiha + the ten shortest, **real recitation** | the reason for all of it |
 | 🖨 **اِطْبَعْ** Print | cards and mini-books to cut out | off the screen entirely |
@@ -84,6 +84,23 @@ matters there is silent.
 **The feedback loop is counted, not scored.** An ayah is "understood" after two
 correct answers on separate visits — once is a guess between three. The count
 only rises, so a bad morning cannot take an ayah away.
+
+### Two shelves, one ladder
+Reza, 2026-08-31: *"expand with stories which are non picture as well in each of
+the reading levels."* Inside Books there are now two shelves sharing the same
+colour bands: illustrated picture books, and **قِصَص بِلَا صُوَر** — stories with no
+pictures at all, one at every level.
+
+That is the step where reading actually begins. In a picture book the
+illustration carries the meaning and a child can succeed without decoding a
+word; take it away and the words have to do the work. So these are not the
+picture books with the art stripped off — nothing in them leans on a scene. What
+replaces the picture is the ear: every line plays, every word is its own tap,
+the meaning is read aloud, and ▶️ reads the whole story through, highlighting as
+it goes.
+
+They live inside Books rather than behind a sixth door, because five is the
+ceiling (above) and a sixth door is where the sprawl starts.
 
 **Pictures are for words, not for sentences.** *"cant put picture in every
 stence dont think"* — correct, and it is now a rule. A picture can show a moon;
@@ -155,9 +172,10 @@ node scripts/test-books.js      # band rules, page shapes, pictures that resolve
 node scripts/test-letters.js    # 28 letters, forms correct, keywords real, sane geometry
 node scripts/test-sentences.js  # bands, one-word swaps, and a clip for EVERY line
 node scripts/test-surahs.js     # Qur'an text vs source, right recitation per ayah
+node scripts/test-stories-text.js  # the no-picture stories: bands, and a clip for every line
 python scripts/gen-audio.py     # after any new Arabic or English text
 node scripts/sync-sw.js         # after gen-audio, so the offline cache matches
 ```
 
-All four suites must pass. Then check it in a real browser at a phone width — that is
+All five suites must pass. Then check it in a real browser at a phone width — that is
 where it is actually used.

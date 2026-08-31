@@ -666,6 +666,12 @@ const $ = sel => document.querySelector(sel);
 
 let shelfLevel = 1;
 
+/* Two kinds of book on the same ladder. Reza, 2026-08-31: "expand with stories
+   which are non picture as well in each of the reading levels." They share the
+   colour bands because they are the same reading skill — the difference is only
+   whether an illustration is there to help. */
+let shelfKind = 'pic';        // 'pic' | 'text'
+
 function renderShelf() {
   const lv = LEVELS[shelfLevel - 1];
 
@@ -690,6 +696,19 @@ function renderShelf() {
       <div class="skills">${lv.skills.map(s => `<span class="skill-chip">${s}</span>`).join('')}</div>
     </div>`;
 
+  /* the picture / no-picture switch */
+  const kindRow = document.getElementById('shelfKind');
+  if (kindRow) {
+    kindRow.innerHTML = `
+      <button class="mode ${shelfKind === 'pic' ? 'on' : ''}" data-k="pic">🖼️ مَعَ صُوَر<small>With pictures</small></button>
+      <button class="mode ${shelfKind === 'text' ? 'on' : ''}" data-k="text">📄 بِلَا صُوَر<small>No pictures — just reading</small></button>`;
+    kindRow.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => {
+      shelfKind = b.dataset.k; renderShelf();
+    }));
+  }
+
+  if (shelfKind === 'text') return renderTextShelf(lv);
+
   $('#bookGrid').innerHTML = books.length ? books.map((b, i) => `
     <button class="book-card" data-i="${BOOKS.indexOf(b)}">
       <span class="spine" style="background:${lv.color}"></span>
@@ -704,6 +723,24 @@ function renderShelf() {
     : `<div class="coming-soon">📚 كُتُب هَذَا الْمُسْتَوَى قَرِيبًا!<small>Books for this level are coming soon — finish the earlier shelves first!</small></div>`;
   $('#bookGrid').querySelectorAll('.book-card').forEach(card =>
     card.addEventListener('click', () => openReader(BOOKS[+card.dataset.i])));
+}
+
+/* The no-picture shelf. Deliberately typographic: a card here shows the title,
+   what the story is about, and nothing else, because there is no cover art and
+   pretending otherwise with a big empty box would look broken. */
+function renderTextShelf(lv) {
+  const list = (typeof TEXT_STORIES !== 'undefined' ? TEXT_STORIES : [])
+    .filter(s => s.level === shelfLevel);
+  $('#bookGrid').innerHTML = list.length ? list.map(s => `
+    <button class="text-card" data-id="${s.id}" style="border-right-color:${lv.color}">
+      <div class="tc-t">${s.title}</div>
+      <div class="tc-en">${s.titleEn}</div>
+      <div class="tc-blurb">${s.blurb}</div>
+      <div class="tc-meta">${s.lines.length} سُطُور · no pictures</div>
+    </button>`).join('')
+    : `<div class="coming-soon">📄 قِصَص بِلَا صُوَر قَرِيبًا!<small>No-picture stories for this level are coming soon.</small></div>`;
+  $('#bookGrid').querySelectorAll('.text-card').forEach(c =>
+    c.addEventListener('click', () => openTextStory(c.dataset.id)));
 }
 
 /* ================= 6. Reader ================= */

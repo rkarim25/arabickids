@@ -80,7 +80,7 @@ function luluSays(i) {
    Four screens, never more (DESIGN.md §2). Everything is display-toggled so a
    child never waits for a page load. */
 
-const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'surahs', 'printView', 'reader'];
+const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'surahs', 'textStory', 'printView', 'reader'];
 function show(id) {
   VIEWS.forEach(v => {
     const el = document.getElementById(v);
@@ -124,7 +124,7 @@ function renderHome() {
       <button class="door" id="doorBooks" style="--d:#7FB0D6">
         <span class="door-ic">📖</span>
         <span class="door-ar">الكُتُب</span>
-        <span class="door-en">Books — stories to read together</span>
+        <span class="door-en">Books — with pictures, and without</span>
       </button>
       <button class="door" id="doorSent" style="--d:#E8A33D">
         <span class="door-ic">💬</span>

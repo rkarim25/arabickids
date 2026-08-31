@@ -424,3 +424,36 @@ img.tw { display: block; width: 100%; height: 100%; object-fit: contain; }
   font-size: 34px; font-weight: 800; color: var(--coral); line-height: 2;
   animation: pop .5s ease;
 }
+
+/* ————— the no-picture shelf and reader ————————————————————————————————————
+   Typographic on purpose. There is no cover art to show, and a big empty
+   picture box where one ought to be reads as broken rather than as minimal. */
+.text-card {
+  border: none; font-family: inherit; cursor: pointer; text-align: right;
+  background: #fff; border-radius: 20px; padding: 16px 18px;
+  border-right: 10px solid var(--sun); box-shadow: 0 4px 0 #0001; display: grid; gap: 3px;
+}
+.text-card:active { transform: translateY(3px); box-shadow: 0 1px 0 #0001; }
+.tc-t { font-size: 28px; font-weight: 800; line-height: 1.9; }
+.tc-en { font-size: 13px; color: var(--muted); direction: ltr; text-align: right; }
+.tc-blurb { font-size: 14px; color: var(--ink); direction: ltr; text-align: right; margin-top: 4px; }
+.tc-meta { font-size: 12px; color: var(--teal); font-weight: 700; direction: ltr; text-align: right; }
+
+#textStory { max-width: 900px; margin: 0 auto; padding: 20px 16px 48px; }
+.ts-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.ts-page { background: #fff; border-radius: 26px; padding: 20px 18px; box-shadow: 0 4px 0 #0001; }
+.ts-line { padding: 12px 10px; border-radius: 18px; transition: background .25s; }
+.ts-line + .ts-line { border-top: 2px dashed #F3E8D2; }
+.ts-line.lit { background: #FFF8E6; }
+.ts-ar { font-size: clamp(24px, 5.6vw, 32px); font-weight: 700; line-height: 2.15; cursor: pointer; }
+.ts-ar .tw-w {
+  display: inline-block; padding: 1px 6px; border-radius: 11px; cursor: pointer;
+  transition: background .15s, transform .12s;
+}
+.ts-ar .tw-w:active, .ts-ar .tw-w.said { background: var(--sun); transform: scale(1.05); }
+/* the meaning, under the Arabic, with the gap he asked for */
+.ts-en {
+  direction: ltr; text-align: left; cursor: pointer;
+  font-size: 14px; color: var(--muted); line-height: 1.5; margin-top: 10px;
+}
+.ts-en:active { color: var(--teal); }

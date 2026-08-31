@@ -135,6 +135,24 @@ def wanted():
             out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
         for w in re.findall(r"say:\s*" + JS_STR, src):
             out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
+    # ---- the no-picture stories ----
+    # These matter more than the picture books: with nothing on the page but
+    # words, a line without a clip is a line that says nothing at all.
+    tp = os.path.join(ROOT, "stories-text.js")
+    if os.path.exists(tp):
+        src = open(tp, encoding="utf-8").read()
+        TS = r"'((?:[^'\\]|\\.)*)'"
+        for w in re.findall(r"ar:\s*" + TS, src):
+            out[norm(w)] = w
+            for piece in w.split():
+                k = norm(piece)
+                if k and k not in out:
+                    out[k] = piece
+        for w in re.findall(r"en:\s*" + TS, src):
+            out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
+        for w in re.findall(r"blurb:\s*" + TS, src):
+            out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
+
     # ---- the surahs: every English string the module speaks ----
     # These were falling through to the browser's own voice, which is the very
     # inconsistency the whole file exists to remove. The ARABIC of an ayah is
