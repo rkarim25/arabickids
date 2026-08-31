@@ -13,6 +13,11 @@ does.
 
 ## Start here
 
+**[HANDOVER.md](HANDOVER.md)** — where everything is, the ten traps that have
+already caused real bugs, and what is still open. Read it before touching
+anything. In a fresh chat, run the **`/run-arabic-kids`** skill and it does this
+for you.
+
 **[DESIGN.md](DESIGN.md)** is the contract — six rules, the ladder, and what
 "print" is allowed to mean. Read it before changing anything. The short version:
 
@@ -27,8 +32,10 @@ does.
 
 | | |
 |---|---|
-| 🔊 **الأَصْوَات** | 28 letters, each with a Qur'anic keyword you can draw for a three-year-old. Meet-the-letters, listen-and-find, and one letter making its three haraka noises. |
-| 📖 **الكُتُب** | Four picture books on a five-band ladder, with tap-a-word audio and a listening game. |
+| 🔊 **الأَصْوَات** | 28 letters with Qur'anic keywords, listen-and-find, harakat — **and القَاعِدَة**, the full nine-step reading ladder: letters → shapes → harakat → tanween → mudood → sukoon → shadda → the two lams → real Qur'anic words read by Alafasy. |
+| 📿 **سُوَر** | Al-Fatiha and the ten shortest, 51 ayat, **real recitation** ayah and word by word, with child-written meanings and a counted comprehension check. |
+| 💬 **جُمَل** | Picture-free sentence lessons: hear it, what it means, how it works, say it, change a word — plus frames that let a child slot an English word in, and ten jokes and riddles. |
+| 📖 **الكُتُب** | Two shelves on one ladder: seven **picture books**, and **قِصَص بِلَا صُوَر** — no-picture stories at every level, including the six-episode series «لُولُو وَالْغُرَاب». |
 | 🖨 **اِطْبَعْ** | Picture-word cards (two of each, for pairs), a fold-and-staple mini book of any story, and a wall poster of all 28 sounds. |
 | 🦊 **Children** | Tap a face to be you. Stars are per-child, on the device, and can never be lost. Nothing is uploaded; there is no account. |
 
@@ -52,11 +59,20 @@ sw.js           offline cache — every file the page loads must be listed here
 ## Before you deploy
 
 ```bash
-node scripts/test-books.js     # band rules, page shapes, broken colours, the offline cache
-node scripts/test-letters.js   # 28 letters, correct forms, real keywords, sane geometry
+node scripts/test-books.js         # bands, pictures, offline cache, orphan modules
+node scripts/test-letters.js       # 28 letters, forms, keywords, arc geometry
+node scripts/test-sentences.js     # bands, one-word swaps, a clip for every line
+node scripts/test-surahs.js        # Qur'an text vs source, right recitation per ayah
+node scripts/test-stories-text.js  # the no-picture stories
+node scripts/test-qaida.js         # every mark, and one clip per cell
+node scripts/sync-sw.js            # ALWAYS — or the deploy is invisible
 ```
 
-Both must pass, then look at it in a real browser at phone width.
+All six must pass, then look at it in a real browser at phone width.
+
+**`sync-sw.js` is not optional.** GitHub Pages caches assets for ten minutes, so
+without the `?v=` stamp it writes, your fix is live on the server and invisible
+in the browser — which is indistinguishable from it not working.
 
 These tests are not ceremony. On the day they were written they caught three
 things nobody could see:
