@@ -349,7 +349,23 @@ function nextQuiz() {
   }));
 }
 
-/* ---- the harakat: one letter, three noises ------------------------------ */
+/* ---- the harakat: one letter, three noises ------------------------------
+   THE BUG THAT MADE THIS SCREEN WORTHLESS (2026-08-31). Reza: "the letters
+   arent matched up properly. alif sounds like ba" and "the sounds are really
+   bad and not clear."
+
+   These cells called say('بَ'). say() runs its argument through normAr(), and
+   normAr STRIPS TASHKEEL — so بَ, بِ and بُ all became the key 'ب'. Worse, 'ب'
+   on its own is not in the manifest at all, so every one of the eighteen cells
+   fell through to the browser's speechSynthesis. Live synthesis is banned by
+   rule 1 precisely because it is inconsistent and unclear, which is exactly
+   what he heard; and since all three cells produced the same request, "one
+   letter, three sounds" was demonstrating that a letter makes ONE sound.
+
+   This is trap 2 in HANDOVER, and the Qaida module already solved it: cells are
+   keyed 'q:<exact text>' so a haraka survives. The clips exist — all 469 of
+   them — this screen was simply not asking for them. Never route a syllable
+   that carries a haraka through normAr(). */
 function renderHaraka() {
   const base = ['ب', 'ت', 'م', 'ن', 'س', 'ل'];
   document.getElementById('soundsBody').innerHTML = `
@@ -366,7 +382,8 @@ function renderHaraka() {
         </div>`).join('')}
     </div>`;
   document.querySelectorAll('.haraka-cell').forEach(c => c.addEventListener('click', () => {
-    say(c.dataset.say);
+    /* the EXACT text, not the normalised one — see the note above */
+    playKey('q:' + c.dataset.say, c.dataset.say);
     c.classList.remove('said'); void c.offsetWidth; c.classList.add('said');
   }));
 }

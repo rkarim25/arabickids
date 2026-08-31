@@ -172,6 +172,50 @@ function sayLetter(l, rate) { playKey('snd:' + l, l, rate); }
 function sayLetterSlow(l) { playKey('snd:' + l, l, SLOW); }
 function sayLetterName(l, name) { playKey('nam:' + l, name || l); }
 
+/* ————— HOW you listen ——————————————————————————————————————————————————
+   Reza, 2026-08-31, two reports in a row: "listen to whole sura, repeats every
+   ayat twice" and "have option of listening to arabic only or english only."
+
+   Both are the same underlying mistake — the read-through modes had ONE shape
+   baked into them, chosen by whoever wrote them, and no way out. Repeating
+   every ayah twice was a real decision ("twice is what makes it stick") and it
+   is genuinely right for memorising; it is wrong when you already know the
+   surah and want to hear it through. Same with the English: a child who is
+   getting it does not need the meaning after every single line, and a child
+   who is lost needs nothing else.
+
+   So it is a setting, it lives here because both the surah reader and the
+   story reader need it, and it is remembered. Default stays BOTH and ONCE:
+   both, because rule 2 says the meaning has to reach a child who cannot read
+   it; once, because that is what he asked for and repeating is now one tap.  */
+const LISTEN_KEY = 'hk:listen', REPEAT_KEY = 'hk:repeat';
+const LISTEN_ORDER = ['both', 'ar', 'en'];
+const LISTEN_LABEL = {
+  both: { ar: 'عَرَبِيّ + English', en: 'Arabic, then the meaning' },
+  ar:   { ar: 'عَرَبِيّ فَقَط',      en: 'Arabic only' },
+  en:   { ar: 'English only',    en: 'The meaning only' },
+};
+function listenMode() {
+  try { const v = localStorage.getItem(LISTEN_KEY); return LISTEN_ORDER.includes(v) ? v : 'both'; }
+  catch (e) { return 'both'; }
+}
+function cycleListen() {
+  const next = LISTEN_ORDER[(LISTEN_ORDER.indexOf(listenMode()) + 1) % LISTEN_ORDER.length];
+  try { localStorage.setItem(LISTEN_KEY, next); } catch (e) {}
+  return next;
+}
+const sayArabicToo = () => listenMode() !== 'en';
+const sayEnglishToo = () => listenMode() !== 'ar';
+/* how many times a line is read before moving on: 1 or 2 */
+function repeatCount() {
+  try { return localStorage.getItem(REPEAT_KEY) === '2' ? 2 : 1; } catch (e) { return 1; }
+}
+function cycleRepeat() {
+  const next = repeatCount() === 1 ? 2 : 1;
+  try { localStorage.setItem(REPEAT_KEY, String(next)); } catch (e) {}
+  return next;
+}
+
 /* Play a file by PATH. The surah module needs this: its audio is a real
    reciter stored under audio/quran/, addressed by filename, and it must never
    fall back to synthesis — a TTS ayah would teach wrong madd and wrong waqf,

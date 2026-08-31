@@ -254,10 +254,84 @@ TEXT_STORIES.push(...SERIES_LULU);
    is what classical Arabic story-telling is made of, and it is exactly the
    band it lands in. Level 5 stays what DESIGN.md promised it would be — ayat
    and duas — rather than being quietly filled with whatever came next.
+
+   THREE MORE, ONE PER BAND (2026-08-31). Two fables at Level 4 made a shelf,
+   not a collection — a child at Level 1 could see that كليلة ودمنة existed and
+   could not read a word of it. So the collection now climbs: ep numbers follow
+   the LADDER (1=L1 … 5=L4), which is why the first two were renumbered to 4
+   and 5 rather than staying 1 and 2. A number on a card is a promise about
+   what comes next, and it pointed the wrong way.
+
+   LEVEL 1 IS THE HARD ONE and it shaped which fable could go there. No sukoon
+   at Level 1 means NO اَلْ AT ALL — the article carries a sukoon on its lam —
+   so an entire fable has to be told without one definite article in it. That
+   rules out most of the book: الأَسَد وَالثَّوْر cannot even be named. What CAN be
+   told is a scene with indefinite animals in it, so Level 1 gets the opening
+   image of the Level 3 fable: an elephant, some water, and a moon that is not
+   really there.
+
+   AND THAT REPETITION IS THE POINT, not an accident — rule 4, repetition with
+   variation. A three-year-old meets the elephant and the moon as eight tiny
+   sentences; two bands later the same moon comes back with the hare who put it
+   there, and the child already knows how that scene looks. It is the same trick
+   the Lulu series uses, played across the ladder instead of across episodes.
+
+   LEVEL 5 IS DELIBERATELY STILL EMPTY OF FABLES. DESIGN.md §3 promises that
+   band is real ayat and duas — the bridge to the Mushaf — and filling it with
+   a story because a story was what came next would quietly break the promise.
+   That is Reza's rule to change, not this file's.
    ========================================================================= */
 const KALILA = [
   {
-    id: 'kd-arnab', level: 4, series: 'kalila', ep: 1,
+    id: 'kd-feel', level: 1, series: 'kalila', ep: 1,
+    title: 'فِيل وَقَمَر',
+    titleEn: 'An elephant and a moon',
+    blurb: 'The biggest animal there is, frightened by something that is not there.',
+    lines: [
+      { ar: 'جَاءَ فِيل كَبِير.', en: 'A big elephant came.' },
+      { ar: 'هُنَا مَاء قَلِيل.', en: 'Here there is a little water.' },
+      { ar: 'شَرِبَ فِيل مَاء.', en: 'The elephant drank some water.' },
+      { ar: 'نَظَرَ فِيل فِي مَاء.', en: 'The elephant looked into the water.' },
+      { ar: 'رَأَى قَمَر صَغِير!', en: 'He saw a little moon!' },
+      { ar: 'خَافَ فِيل كَبِير.', en: 'The big elephant was frightened.' },
+      { ar: 'ذَهَبَ فِيل بَعِيدًا.', en: 'The elephant went far away.' },
+      { ar: 'مَا كَانَ هُنَاكَ قَمَر.', en: 'There was no moon there at all.' },
+    ],
+  },
+  {
+    id: 'kd-hamama', level: 2, series: 'kalila', ep: 2,
+    title: 'حَمَامَة وَفَأْر',
+    titleEn: 'A dove and a mouse',
+    blurb: 'Caught in a net, and let out by the smallest animal in the story.',
+    lines: [
+      { ar: 'طَارَتْ حَمَامَات كَثِيرَة.', en: 'Many doves were flying.' },
+      { ar: 'نَزَلَتْ عَلَى حُبُوب.', en: 'They came down onto some grain.' },
+      { ar: 'وَقَعَتْ فِي شَبَكَة!', en: 'They fell into a net!' },
+      { ar: 'جَاءَ فَأْر صَغِير.', en: 'A little mouse came.' },
+      { ar: 'قَطَعَ فَأْر شَبَكَة.', en: 'The mouse cut through the net.' },
+      { ar: 'طَارَتِ الحَمَامَات مِنْ جَدِيد.', en: 'The doves flew away again.' },
+      { ar: 'صَدِيق صَغِير يَنْفَعُ كَثِيرًا.', en: 'A small friend helps a great deal.' },
+    ],
+  },
+  {
+    id: 'kd-arnabfeel', level: 3, series: 'kalila', ep: 3,
+    title: 'الأَرْنَب وَالفِيل',
+    titleEn: 'The hare and the elephants',
+    blurb: 'The elephants drank the whole spring. One hare sent them home.',
+    lines: [
+      { ar: 'جَاءَتِ الفِيَلَة إِلَى عَيْنِ الأَرَانِب.', en: 'The elephants came to the spring where the hares drink.' },
+      { ar: 'شَرِبَتْ كُلَّ المَاء وَكَسَرَتْ كُلَّ شَيْء.', en: 'They drank all the water and broke everything.' },
+      { ar: 'قَالَ أَرْنَب صَغِير: سَأَذْهَبُ إِلَيْهِمْ.', en: 'A little hare said: I will go to them.' },
+      { ar: 'قَالَ لِلْفِيل: أَنَا رَسُولُ القَمَر!', en: 'He said to the elephant: I am the messenger of the moon!' },
+      { ar: 'القَمَر غَاضِب، فَأَنْتُمْ شَرِبْتُمْ مَاءَهُ.', en: 'The moon is angry, because you drank his water.' },
+      { ar: 'نَظَرَ الفِيل فِي المَاء فَرَأَى القَمَر.', en: 'The elephant looked in the water and saw the moon.' },
+      { ar: 'لَمَسَ المَاءَ فَتَحَرَّكَ القَمَر.', en: 'He touched the water, and the moon moved.' },
+      { ar: 'خَافَ الفِيل وَذَهَبَ بَعِيدًا.', en: 'The elephant was frightened and went far away.' },
+      { ar: 'عَقْلُ أَرْنَبٍ غَلَبَ قُوَّةَ فِيل.', en: 'A clever hare beat a strong elephant.' },
+    ],
+  },
+  {
+    id: 'kd-arnab', level: 4, series: 'kalila', ep: 4,
     title: 'الأَرْنَبُ وَالأَسَد',
     titleEn: 'The hare and the lion',
     blurb: 'The smallest animal in the forest has the biggest idea.',
@@ -274,7 +348,7 @@ const KALILA = [
     ],
   },
   {
-    id: 'kd-sulahfa', level: 4, series: 'kalila', ep: 2,
+    id: 'kd-sulahfa', level: 4, series: 'kalila', ep: 5,
     title: 'السُّلَحْفَاةُ وَالْبَطَّتَان',
     titleEn: 'The tortoise and the two ducks',
     blurb: 'She was told not to say a word. She said a word.',

@@ -52,6 +52,7 @@ function renderTextStory() {
       <span class="band-chip" style="background:${lv.color};color:${lv.ink}">
         المستوى ${AR_NUM[s.level]} · ${lv.nameEn}</span>
       <button class="round" id="tsAuto" title="Read the whole story">▶️</button>
+      <button class="round sm" id="tsMode" title="${LISTEN_LABEL[listenMode()].en}">${listenMode() === 'ar' ? '🇸🇦' : listenMode() === 'en' ? '🌍' : '🔁'}</button>
     </div>
 
     <div class="ts-page" id="tsPage">
@@ -69,6 +70,12 @@ function renderTextStory() {
 
   document.getElementById('tsBack').addEventListener('click', () => { stopTextAuto(); show('shelf'); });
   document.getElementById('tsAuto').addEventListener('click', () => TAUTO.on ? stopTextAuto() : startTextAuto());
+  document.getElementById('tsMode').addEventListener('click', () => {
+    cycleListen();
+    const was = TAUTO.on;
+    stopTextAuto(); renderTextStory();
+    if (was) startTextAuto();
+  });
   document.getElementById('tsDone').addEventListener('click', finishTextStory);
 
   /* a whole line */
@@ -93,7 +100,10 @@ function litLine(i) {
   if (el) { el.classList.add('lit'); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
 }
 
-/* Read the whole thing: Arabic, then its meaning, then the next line. */
+/* Read the whole thing: Arabic, then its meaning, then the next line — unless
+   the 🌍 button says otherwise. Reza asked for Arabic only and English only
+   (2026-08-31); the setting is shared with the surah reader and lives in
+   audio.js, because a family that wants Arabic only wants it everywhere. */
 function startTextAuto() {
   TAUTO.on = true; tsLine = 0;
   const b = document.getElementById('tsAuto');
@@ -103,12 +113,16 @@ function startTextAuto() {
     if (tsLine >= tsStory.lines.length) { stopTextAuto(); finishTextStory(); return; }
     const l = tsStory.lines[tsLine];
     litLine(tsLine);
-    say(l.ar);
-    TAUTO.timer = setTimeout(() => {
+    const meaningThenOn = () => {
       if (!TAUTO.on) return;
+      if (!sayEnglishToo()) { tsLine++; return step(); }
       sayEn(l.en);
       TAUTO.timer = setTimeout(() => { tsLine++; step(); }, 3200);
-    }, 3200);
+    };
+    if (sayArabicToo()) {
+      say(l.ar);
+      TAUTO.timer = setTimeout(meaningThenOn, 3200);
+    } else meaningThenOn();
   };
   step();
 }

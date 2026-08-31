@@ -520,10 +520,18 @@ const SENTENCE_SETS = [
       {
         ar: 'أَيْنَ بَابَا؟',
         en: 'Where is Baba?',
-        why: 'You know ayna already. Now listen to the silly answer, and see if you can guess it before it comes.',
+        why: 'You know ayna already. The answer is funny because you have SEEN it: Lulu sits on Baba in the books, and he keeps telling her he is not a table.',
+        /* Reza, 2026-08-31: "how is this a joke?" — and he was right. The old
+           punchline was "under the elephant", which is not a joke, it is a
+           non-sequitur. Random is not funny; a three-year-old laughs when
+           something they ALREADY KNOW turns up where it should not be.
+           Lulu sitting on Baba is the site's own running gag — it happens in
+           «يَوْم فِي الْبَيْت» and Baba's line there is "I am not a table!" — so the
+           punchline now lands on something the child has met, which is the
+           whole difference between a joke and a random answer. */
         joke: {
           setup: { ar: 'أَيْنَ بَابَا؟', en: 'Where is Baba?' },
-          punch: { ar: 'تَحْتَ الْفِيل!', en: 'Under the elephant!' },
+          punch: { ar: 'تَحْتَ لُولُو!', en: 'Underneath Lulu! (again)' },
         },
         vary: [
           { ar: 'أَيْنَ مَامَا؟', en: 'Where is Mama?' },

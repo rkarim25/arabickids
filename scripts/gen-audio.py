@@ -56,7 +56,11 @@ VOICE = "ar-SA-HamedNeural"
 # on the site (delete audio/ first — the filenames are keyed on text, not voice).
 EN_VOICE = "en-GB-MaisieNeural"
 RATE_WORD = "-25%"     # storybook words: slow enough to copy
-RATE_SOUND = "-35%"    # single letter sounds: slower still
+RATE_SOUND = "-15%"    # single letter sounds. Was -35%, which was too far:
+                       # a two-character syllable stretched that much slurs
+                       # rather than clarifies, and Reza reported the letter
+                       # sounds as "really bad and not clear". Slow enough to
+                       # copy, not so slow the vowel smears into the consonant.
 RATE_EN = "+2%"        # chirpy means lively; slowing it made it dreary
 
 TASHKEEL = re.compile(r"[\u064B-\u0652\u0670\u0640]")
@@ -103,7 +107,11 @@ def wanted():
         # produced the mess. What a Qaida teacher actually says is the letter
         # WITH a fatha — فَ — and that is a real syllable, which the engine says
         # correctly. The three harakat together live in the الحَرَكَات mode.
-        out[f"snd:{l}"] = l + FATHA
+        # ALIF IS NOT A CONSONANT and cannot take a fatha as its own sound.
+        # "\u0627\u064e" is not a syllable any engine can say, so alif was coming out as
+        # noise — Reza, 2026-08-31: "alif sounds like ba". What a Qaida actually
+        # teaches for alif's sound is the hamza carrying the fatha: \u0623\u064e.
+        out[f"snd:{l}"] = ("\u0623" if l == "\u0627" else l) + FATHA
         out[f"nam:{l}"] = name
         out[norm(word)] = word
     # every word and sentence in the books
@@ -236,16 +244,40 @@ def wanted():
 async def render(text, path, rate, voice=VOICE):
     await edge_tts.Communicate(text, voice, rate=rate).save(path)
 
+# THE FILENAME HASHES THE KEY, NOT THE TEXT — and that is a trap, because the
+# render is incremental. Change WHAT a key says (as the alif fix above does) and
+# the file for that key already exists, so it is skipped and the old, wrong
+# audio is served forever. HANDOVER used to claim filenames hash the text; they
+# do not, and believing that cost a round of "why is this still wrong".
+#
+# So the spoken text of every clip is recorded beside the manifest, and a clip
+# whose text has CHANGED is re-rendered even though its file is there.
+TEXTS = os.path.join(DATA, "audio-texts.json")
+
+def previous_texts():
+    try:
+        with open(TEXTS, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
 async def main():
     os.makedirs(AUDIO, exist_ok=True)
     os.makedirs(DATA, exist_ok=True)
     todo = wanted()
-    manifest, made, skipped = {}, 0, 0
+    was = previous_texts()
+    spoken_now = {}
+    manifest, made, skipped, restated = {}, 0, 0, 0
     for key, text in sorted(todo.items()):
         stem = h(key)
         manifest[key] = stem
+        said = text[1] if isinstance(text, tuple) else text
+        spoken_now[key] = said
+        changed = key in was and was[key] != said
+        if changed:
+            restated += 1
         path = os.path.join(AUDIO, stem + ".mp3")
-        if os.path.exists(path) and os.path.getsize(path) > 400:
+        if os.path.exists(path) and os.path.getsize(path) > 400 and not changed:
             skipped += 1
             continue
         if isinstance(text, tuple):          # ("EN", "the words")
@@ -264,7 +296,10 @@ async def main():
             manifest.pop(key, None)
     with open(os.path.join(DATA, "audio-manifest.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=0, sort_keys=True)
-    print(f"\n{made} new, {skipped} already there, {len(manifest)} clips in the manifest")
+    with open(TEXTS, "w", encoding="utf-8") as f:
+        json.dump(spoken_now, f, ensure_ascii=False, indent=0, sort_keys=True)
+    print(f"\n{made} new ({restated} because their TEXT changed), "
+          f"{skipped} already there, {len(manifest)} clips in the manifest")
 
 if __name__ == "__main__":
     asyncio.run(main())

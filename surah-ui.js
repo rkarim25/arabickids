@@ -113,9 +113,15 @@ function ayahWordsHTML(a) {
 
 /* ---- autoplay ------------------------------------------------------------
    Reza: "allow auto play for surahs rather than always click." For memorising
-   by ear this matters more than any button: it plays the ayah, waits, plays it
-   AGAIN (twice is what makes it stick), then moves on by itself and stops at
-   the end of the surah. */
+   by ear this matters more than any button.
+
+   It USED to play every ayah twice, always, because twice is what makes it
+   stick. Reza, 2026-08-31: "listen to whole sura, repeats every ayat twice" —
+   reported as a fault, and fair: that is right when you are memorising and
+   wrong when you already know it and want to hear the surah through. The
+   repeat is now a 1×/2× button, it defaults to once, and it is remembered.
+   Same for the English: the 🌍 button switches to Arabic only or meaning only
+   (see audio.js). Nothing here decides for him any more. */
 const AUTO = { on: false, timer: null, pass: 0 };
 function toggleAuto() { AUTO.on ? stopAuto() : startAuto(); }
 function startAuto() { AUTO.on = true; AUTO.pass = 0; renderAyah(); }
@@ -128,18 +134,31 @@ function stopAuto() {
 function autoPlayThis() {
   const a = surah.ayat[ayahIdx];
   AUTO.pass = 0;
+  const times = repeatCount();
+  const onward = () => {
+    if (!AUTO.on) return;
+    if (ayahIdx < surah.ayat.length - 1) { ayahIdx++; sStep = 0; renderAyah(); }
+    else stopAuto();
+  };
   const run = () => {
     if (!AUTO.on) return;
-    playAyah(a);
+    /* Arabic-only or both: play the reciter. Meaning-only: skip straight to it,
+       because a child who wants the meaning read to them is not waiting out an
+       ayah they have chosen not to hear. */
+    if (sayArabicToo()) {
+      playAyah(a);
+      const el = document.querySelector('.ayah-ar');
+      if (el) { el.classList.add('lit'); setTimeout(() => el.classList.remove('lit'), 1200); }
+    }
     AUTO.pass++;
-    const el = document.querySelector('.ayah-ar');
-    if (el) { el.classList.add('lit'); setTimeout(() => el.classList.remove('lit'), 1200); }
     AUTO.timer = setTimeout(() => {
       if (!AUTO.on) return;
-      if (AUTO.pass < 2) return run();                 // hear it twice
-      if (ayahIdx < surah.ayat.length - 1) { ayahIdx++; sStep = 0; renderAyah(); }
-      else stopAuto();
-    }, 5200);
+      if (AUTO.pass < times) return run();
+      if (sayEnglishToo()) {
+        sayEn(kidEn(a));
+        AUTO.timer = setTimeout(onward, 3400);
+      } else onward();
+    }, sayArabicToo() ? 5200 : 200);
   };
   setTimeout(run, 500);
 }
@@ -163,6 +182,8 @@ function renderAyah() {
         <button class="sent-play" id="qPlay">🔊 <span>اِسْمَعْ</span></button>
         <button class="round" id="qSlow" title="Slowly">🐢</button>
         <button class="round ${AUTO.on ? 'on' : ''}" id="qAuto" title="Play the whole surah">${AUTO.on ? '⏸' : '▶️'}</button>
+        <button class="round sm" id="qMode" title="${LISTEN_LABEL[listenMode()].en}">${listenMode() === 'ar' ? '🇸🇦' : listenMode() === 'en' ? '🌍' : '🔁'}</button>
+        <button class="round sm" id="qRep" title="How many times each ayah is read">${repeatCount()}×</button>
       </div>
       <p class="ayah-tap">اِلْمَسْ أَيَّ كَلِمَة<span class="hint-en">Tap any word to hear the reciter say just that word</span></p>
     </div>
@@ -197,6 +218,8 @@ function renderAyah() {
     else sayEn(kidWord(w));
   }));
   document.getElementById('qAuto').addEventListener('click', toggleAuto);
+  document.getElementById('qMode').addEventListener('click', () => { cycleListen(); renderAyah(); });
+  document.getElementById('qRep').addEventListener('click', () => { cycleRepeat(); renderAyah(); });
   host.querySelectorAll('.step').forEach(b => b.addEventListener('click', () => {
     sStep = +b.dataset.i;
     host.querySelectorAll('.step').forEach(x => x.classList.toggle('on', x === b));
