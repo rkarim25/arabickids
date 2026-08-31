@@ -95,7 +95,15 @@ def wanted():
     """every string the site will ever ask to say -> the text actually spoken"""
     out = {}
     for (l, name, sound, word) in letters():
-        out[f"snd:{l}"] = (l + FATHA) * (3 if l in CONTINUANT else 1)
+        # ONE clean syllable, not three. This used to render (letter+fatha) x3
+        # for the continuants, so ف came out as "fa-fa-fa" — a stutter, not a
+        # held sound. Reza: "the letters sounds are all wrong."
+        #
+        # A speech engine cannot hold a bare consonant; asking it to is what
+        # produced the mess. What a Qaida teacher actually says is the letter
+        # WITH a fatha — فَ — and that is a real syllable, which the engine says
+        # correctly. The three harakat together live in the الحَرَكَات mode.
+        out[f"snd:{l}"] = l + FATHA
         out[f"nam:{l}"] = name
         out[norm(word)] = word
     # every word and sentence in the books

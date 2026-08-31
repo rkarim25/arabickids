@@ -196,7 +196,7 @@ function renderStep() {
      The English slots are not a fallback hidden away in small print, they are
      shown in the same list as the Arabic ones and spoken aloud, because the
      point is that using one is ALLOWED and normal, not a failure. */
-  if (sentStep === 5 && L.frame) {
+  if (L.frame && (stepsFor(L)[sentStep] || {}).en === 'Say ANYTHING') {
     const F = L.frame;
     body.innerHTML = `<div class="sb">
       <p class="frame-pat">${F.pattern}</p>
@@ -230,7 +230,7 @@ function renderStep() {
      The pause is the whole thing. A punchline delivered instantly is not a
      punchline, so the setup plays, then its meaning, and the answer stays
      hidden behind a button until the child asks for it. */
-  if (L.joke && (stepsFor(L)[sStep] || {}).en === 'The joke') {
+  if (L.joke && (stepsFor(L)[sentStep] || {}).en === 'The joke') {
     const J = L.joke;
     body.innerHTML = `<div class="sb">
       <p class="joke-setup" id="jSetup">${J.setup.ar}</p>

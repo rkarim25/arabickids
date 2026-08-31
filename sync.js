@@ -24,6 +24,91 @@
 const SYNC_URL = 'https://arabic-sync.rkarim88.workers.dev';
 const SESS_KEY = 'hikayat-session';
 const SYNC_AT = 'hikayat-synced-at';
+const GID_KEY = 'hikayat-gclient';
+
+/* ---- Sign in with Google -------------------------------------------------
+   Reza asked for an emailed one-time code instead of a typed sync code, and
+   then asked the better question: "can i not sign in with my google account,
+   can we do that?"
+
+   Emailed OTP turned out to need a DOMAIN. Cloudflare Email Sending only sends
+   from a domain onboarded to the account, and the account has zero zones, so a
+   Worker cannot send any mail at all today. Google needs no domain, no mail
+   server and no money, and both grown-ups are already signed in to Google on
+   their phones.
+
+   The server half already existed and had never been used. The worker's /login
+   verifies the ID token with Google, requires email_verified, refuses any
+   address outside ALLOWED_EMAILS, and pins the client id on first success so
+   every other device configures itself. Only the button was missing.
+
+   THE CLIENT ID IS NOT A SECRET. It is public by design and sits in the page of
+   every site that uses Google sign-in. What decides who actually gets in is the
+   ALLOWED_EMAILS check on the server. So it is safe to paste in, or to commit. */
+const GOOGLE_CLIENT_ID = '';        // fill this in and the paste box disappears
+
+function gClientId() { return GOOGLE_CLIENT_ID || readJSON(GID_KEY, null) || null; }
+function setGClientId(id) { writeJSON(GID_KEY, (id || '').trim() || null); }
+
+/* Ask the worker first: once ANY device has signed in the id is pinned there,
+   so every later device needs no typing at all. */
+async function discoverClientId() {
+  if (gClientId()) return gClientId();
+  try {
+    const r = await fetch(SYNC_URL + '/config');
+    const j = await r.json();
+    if (j && j.clientId) { setGClientId(j.clientId); return j.clientId; }
+  } catch (e) {}
+  return null;
+}
+
+let gisReady = null;
+function loadGIS() {
+  if (gisReady) return gisReady;
+  gisReady = new Promise((res, rej) => {
+    if (window.google && window.google.accounts) return res();
+    const el = document.createElement('script');
+    el.src = 'https://accounts.google.com/gsi/client';
+    el.async = true; el.defer = true;
+    el.onload = res;
+    el.onerror = () => rej(new Error('gis-blocked'));
+    document.head.appendChild(el);
+  });
+  return gisReady;
+}
+
+/* Hand Google's ID token to the worker, which is what actually checks it. */
+async function signInWithGoogle(credential) {
+  const r = await fetch(SYNC_URL + '/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ credential }),
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || 'sign-in-failed');
+  writeJSON(SESS_KEY, { token: j.session, email: j.email, via: 'google' });
+  return j;
+}
+
+async function mountGoogleButton(host, onDone, onError) {
+  if (!host) return false;
+  const id = await discoverClientId();
+  if (!id) return false;
+  try { await loadGIS(); } catch (e) { return false; }
+  try {
+    window.google.accounts.id.initialize({
+      client_id: id,
+      callback: async resp => {
+        try { await signInWithGoogle(resp.credential); await syncNow(); onDone(); }
+        catch (e) { onError(e); }
+      },
+    });
+    window.google.accounts.id.renderButton(host, {
+      theme: 'outline', size: 'large', shape: 'pill', text: 'signin_with', width: 260,
+    });
+    return true;
+  } catch (e) { return false; }
+}
 
 const session = () => readJSON(SESS_KEY, null);
 const syncedAt = () => readJSON(SYNC_AT, 0);
@@ -89,22 +174,35 @@ function renderParent() {
     </header>
     <div class="parent-box">
       ${s ? `
-        <p class="pb-on">✅ Syncing as <b>${s.email}</b></p>
+        <p class="pb-on">✅ Syncing as <b>${s.email}</b>${s.via === 'google' ? ' <small>(Google)</small>' : ''}</p>
         <p class="pb-note">Both children's stars are backed up and follow you to any
           device you sign in on. Last synced: ${syncedAt() ? new Date(syncedAt()).toLocaleString() : 'not yet'}.</p>
         <button class="big-btn" id="pSync">🔄 Sync now</button>
         <button class="pb-out" id="pOut">Sign out of this device</button>
       ` : `
         <p class="pb-note">Sign in once on each device and the children's stars follow
-          them around. Use the same email and sync code as the grown-up Arabic site.
-          <b>The children never sign in and never type anything.</b></p>
-        <label class="pb-l">Email
-          <input id="pEmail" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com">
-        </label>
-        <label class="pb-l">Sync code
-          <input id="pCode" type="password" autocomplete="current-password" placeholder="your sync code">
-        </label>
-        <button class="big-btn" id="pIn">Sign in</button>
+          them around. <b>The children never sign in and never type anything.</b></p>
+
+        <div id="gbtn" class="gbtn-host"></div>
+
+        <p class="pb-gnote" id="gNote" hidden>
+          Google sign-in is not set up yet. A grown-up can paste the Google client ID
+          in once — it is public, not a password, and every other device will pick it
+          up by itself afterwards.
+          <input id="pGid" type="text" placeholder="...apps.googleusercontent.com">
+          <button class="pb-out" id="pGidSave">Save client ID</button>
+        </p>
+
+        <details class="pb-alt">
+          <summary>Or use the sync code instead</summary>
+          <label class="pb-l">Email
+            <input id="pEmail" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com">
+          </label>
+          <label class="pb-l">Sync code
+            <input id="pCode" type="password" autocomplete="current-password" placeholder="your sync code">
+          </label>
+          <button class="big-btn" id="pIn">Sign in with the code</button>
+        </details>
       `}
       <p class="pb-msg" id="pMsg"></p>
       <p class="pb-priv">Only a face and a star count ever leave this device — no name,
@@ -116,6 +214,29 @@ function renderParent() {
     const m = document.getElementById('pMsg');
     m.textContent = t; m.className = 'pb-msg ' + (good ? 'good' : 'bad');
   };
+
+  if (!s) {
+    /* Google first. The sync code stays, folded away, for when Google is
+       blocked or not yet configured. */
+    mountGoogleButton(
+      document.getElementById('gbtn'),
+      () => { msg('Signed in - stars will now follow you.', true); renderParent(); },
+      e => msg(e.message === 'email-not-allowed' ? 'That Google account is not enabled on this site.'
+             : e.message === 'aud-mismatch' ? 'That client ID does not match the one already in use.'
+             : 'Google sign-in did not finish. You can use the sync code instead.')
+    ).then(okGoogle => {
+      const note = document.getElementById('gNote');
+      if (!okGoogle && note) note.hidden = false;
+    });
+    const save = document.getElementById('pGidSave');
+    if (save) save.addEventListener('click', () => {
+      const v = document.getElementById('pGid').value.trim();
+      if (!/apps\.googleusercontent\.com$/.test(v)) return msg('That does not look like a Google client ID.');
+      setGClientId(v);
+      msg('Saved - the Google button should appear now.', true);
+      renderParent();
+    });
+  }
 
   if (s) {
     document.getElementById('pSync').addEventListener('click', async () => {

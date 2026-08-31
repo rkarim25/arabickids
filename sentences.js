@@ -437,6 +437,58 @@ const SENTENCE_SETS = [
         ],
       },
       {
+        ar: 'مَاذَا قَالَ الْجِدَار لِلْجِدَار؟',
+        en: 'What did the wall say to the wall?',
+        why: 'A proper joke, and children tell this one in Arabic and in English. Qala means he said. Lil-jidar means to the wall.',
+        joke: {
+          setup: { ar: 'مَاذَا قَالَ الْجِدَار لِلْجِدَار؟', en: 'What did the wall say to the wall?' },
+          punch: { ar: 'نَلْتَقِي عِنْدَ الزَّاوِيَة!', en: 'See you at the corner!' },
+        },
+        vary: [
+          { ar: 'مَاذَا قَالَ الْوَلَد لِلْجِدَار؟', en: 'What did the boy say to the wall?' },
+          { ar: 'مَاذَا قَالَ الْفِيل لِلْجِدَار؟', en: 'What did the elephant say to the wall?' },
+        ],
+      },
+      {
+        ar: 'لِمَاذَا الْفِيل كَبِير؟',
+        en: 'Why is the elephant big?',
+        why: 'Limadha means why. It is madha, what, with a li stuck on the front. Ask it about anything at all.',
+        joke: {
+          setup: { ar: 'لِمَاذَا الْفِيل كَبِير؟', en: 'Why is the elephant big?' },
+          punch: { ar: 'لِأَنَّهُ أَكَلَ كَثِيرًا!', en: 'Because he ate a LOT!' },
+        },
+        vary: [
+          { ar: 'لِمَاذَا الْقَمَر كَبِير؟', en: 'Why is the moon big?' },
+          { ar: 'لِمَاذَا الْفِيل صَغِير؟', en: 'Why is the elephant small?' },
+        ],
+      },
+      {
+        ar: 'لَهُ أَوْرَاق وَلَيْسَ نَبَاتًا.',
+        en: 'It has leaves and it is not a plant.',
+        why: 'Awraaq means leaves — and in Arabic, just like in English, the pages of a book are called leaves too. That is the whole trick.',
+        joke: {
+          setup: { ar: 'لَهُ أَوْرَاق وَلَيْسَ نَبَاتًا. مَا هُوَ؟', en: 'It has leaves and is not a plant. What is it?' },
+          punch: { ar: 'الْكِتَاب!', en: 'A book!' },
+        },
+        vary: [
+          { ar: 'لَهُ أَوْرَاق وَلَيْسَ كِتَابًا.', en: 'It has leaves and is not a book.' },
+          { ar: 'لَهُ أَبْوَاب وَلَيْسَ نَبَاتًا.', en: 'It has doors and is not a plant.' },
+        ],
+      },
+      {
+        ar: 'يَبْكِي بِلَا عُيُون.',
+        en: 'It cries without any eyes.',
+        why: 'Yabki means it cries. Something up in the sky cries all over you and has no eyes at all.',
+        joke: {
+          setup: { ar: 'يَبْكِي بِلَا عُيُون. مَا هُوَ؟', en: 'It cries without eyes. What is it?' },
+          punch: { ar: 'سَحَاب!', en: 'A cloud!' },
+        },
+        vary: [
+          { ar: 'يَبْكِي بِلَا صَوْت.', en: 'It cries without a sound.' },
+          { ar: 'يَمْشِي بِلَا عُيُون.', en: 'It walks without eyes.' },
+        ],
+      },
+      {
         ar: 'أُحِبُّ الْفِيل الْكَبِير.',
         en: 'I love the big elephant.',
         why: 'The describing word comes AFTER the thing in Arabic, the opposite way round from English. Not the big elephant, but the elephant the big.',
@@ -489,6 +541,32 @@ const SENTENCE_SETS = [
         vary: [
           { ar: 'مَاذَا فِي الْبَيْت؟', en: 'What is in the house?' },
           { ar: 'مَاذَا فِي الْغُرْفَة؟', en: 'What is in the room?' },
+        ],
+      },
+      {
+        ar: 'بَيْت بِلَا بَاب.',
+        en: 'A house with no door.',
+        why: 'A riddle. Bila means without. A house with no door at all — what could it possibly be?',
+        joke: {
+          setup: { ar: 'بَيْت بِلَا بَاب. مَا هُوَ؟', en: 'A house with no door. What is it?' },
+          punch: { ar: 'الْبَيْضَة!', en: 'An egg!' },
+        },
+        vary: [
+          { ar: 'بَيْت بِلَا نَافِذَة.', en: 'A house with no window.' },
+          { ar: 'كِتَاب بِلَا بَاب.', en: 'A book with no door.' },
+        ],
+      },
+      {
+        ar: 'يَكْتُب وَلَا يَقْرَأ.',
+        en: 'It writes and it does not read.',
+        why: 'Yaktub means it writes. Yaqra means it reads. Something writes all day long and has never read a single word.',
+        joke: {
+          setup: { ar: 'يَكْتُب وَلَا يَقْرَأ. مَا هُوَ؟', en: 'It writes and does not read. What is it?' },
+          punch: { ar: 'الْقَلَم!', en: 'A pen!' },
+        },
+        vary: [
+          { ar: 'يَكْتُب وَلَا يَأْكُل.', en: 'It writes and does not eat.' },
+          { ar: 'يَكْتُب وَلَا يَنَام.', en: 'It writes and does not sleep.' },
         ],
       },
       {
