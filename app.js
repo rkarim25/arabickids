@@ -330,22 +330,66 @@ function couch(x, y, s = 1) { // baseline y, local x 0..360
     <rect x="36" y="-124" width="44" height="44" rx="11" fill="${C.cushion}" transform="rotate(-8 58 -102)"/>
   `);
 }
-function babaOnCouch(x, y, s = 1) { // layered over couch(x,y): head rests on RIGHT armrest
+/* Baba asleep on the couch, head on the RIGHT armrest.
+
+   Reza, 2026-08-31: "cabn we not make baba a bit clear, looks very bad." He
+   was right, and the reason is worth writing down because it is the same fault
+   as the icons he rejected in July: the drawing had all the PARTS and none of
+   the READING. A white bar, a disc of face floating clear of it, and two skin
+   blobs at the far end that could have been anything. Nothing connected, so the
+   eye had to assemble a man out of components instead of just seeing one.
+
+   What fixes it is not more detail, it is the things that say ASLEEP ON A SOFA
+   before you look at any of it: a pillow under the head, a blanket over the
+   legs, feet sticking out of the end of the blanket, and a neck actually
+   joining the head to a body. A three-year-old reads that shape instantly and
+   never has to be told, which is rule 2 — the picture carries the meaning.
+
+   Drawn back-to-front on purpose: pillow, then body, then head over the top of
+   both, so every seam is hidden by the piece in front of it. */
+function babaOnCouch(x, y, s = 1) {
   return g(x, y, s, false, `
-    <rect x="70" y="-120" width="230" height="46" rx="23" fill="${C.thobe}"/>
-    <circle cx="178" cy="-120" r="37" fill="${C.thobe}"/>
-    <ellipse cx="64" cy="-104" rx="13" ry="9" fill="${C.skin}"/>
-    <ellipse cx="62" cy="-122" rx="13" ry="9" fill="${C.skin}"/>
-    <circle cx="322" cy="-140" r="30" fill="${C.skin}"/>
-    <path d="M 298,-134 q 0,24 24,24 q 24,0 24,-24 q -10,7 -24,7 q -14,0 -24,-7 z" fill="${C.beard}"/>
-    <path d="M 294,-150 q 4,-26 28,-26 q 24,0 28,26 q -14,-9 -28,-9 q -14,0 -28,9 z" fill="#F4F1DE"/>
-    <path d="M 306,-144 q 4,4 9,0 M 331,-144 q 4,4 9,0" stroke="${C.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <circle cx="322" cy="-134" r="5" fill="#B87F5A"/>
-    <path d="M 311,-127 q 11,7 22,0" stroke="${C.beard}" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <ellipse cx="322" cy="-118" rx="4" ry="5" fill="#6B3F33"/>
-    ${catSleep(178, -165, 0.62)}
-    ${zzz(360, -210, '#8FA3C7')}
-    ${zzz(210, -205, C.catD, 0.7)}
+    <!-- pillow on the armrest, so the head has something to rest ON -->
+    <rect x="292" y="-128" width="78" height="34" rx="16" fill="${C.pillow}"/>
+    <path d="M 300,-112 q 30,7 62,0" stroke="#E8CE93" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- feet first, poking out of the blanket at the far end -->
+    <ellipse cx="106" cy="-110" rx="16" ry="12" fill="${C.skin}"/>
+    <ellipse cx="104" cy="-88" rx="16" ry="12" fill="${C.skin}"/>
+    <path d="M 96,-116 q 5,-5 11,0 M 94,-94 q 5,-5 11,0" stroke="#A9744F" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- the body: one unbroken shape from shoulder to ankle -->
+    <rect x="108" y="-124" width="186" height="52" rx="26" fill="${C.thobe}"/>
+    <circle cx="278" cy="-108" r="29" fill="${C.thobe}"/>
+
+    <!-- blanket over the legs. Also hides the join at the ankles, which is the
+         hardest thing to draw and the least worth drawing -->
+    <rect x="118" y="-126" width="112" height="56" rx="18" fill="${C.blanket}"/>
+    <rect x="118" y="-126" width="112" height="13" rx="6" fill="#9CC4E2"/>
+    <path d="M 150,-70 v -56 M 190,-70 v -56" stroke="#6E9EC4" stroke-width="3" fill="none" opacity=".5"/>
+
+    <!-- an arm lying along him, hand resting next to the cat -->
+    <path d="M 276,-92 Q 258,-74 236,-78" stroke="${C.thobe}" stroke-width="21" fill="none" stroke-linecap="round"/>
+    <circle cx="233" cy="-79" r="11" fill="${C.skin}"/>
+
+    <!-- the cat, asleep on him, which is the joke the story keeps making -->
+    ${catSleep(243, -137, 0.55)}
+
+    <!-- neck, then head over the top of it -->
+    <rect x="292" y="-120" width="20" height="22" rx="9" fill="${C.skin}"/>
+    <circle cx="326" cy="-110" r="30" fill="${C.skin}"/>
+    <!-- hair: a cap over the crown, on the pillow side -->
+    <path d="M 300,-118 q 4,-24 27,-24 q 25,0 28,25 q -13,-11 -28,-11 q -17,0 -27,10 z" fill="${C.hair}"/>
+    <!-- beard along the jaw -->
+    <path d="M 302,-104 q 2,26 24,26 q 24,0 26,-26 q -12,9 -25,9 q -13,0 -25,-9 z" fill="${C.beard}"/>
+    <!-- closed eyes, and eyebrows above them, so it reads as SLEEPING -->
+    <path d="M 309,-112 q 6,6 12,0 M 331,-112 q 6,6 12,0" stroke="${C.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 309,-122 q 6,-4 12,-1 M 331,-123 q 6,-3 12,1" stroke="${C.hair}" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>
+    <circle cx="326" cy="-103" r="4.5" fill="#B87F5A"/>
+    <path d="M 317,-94 q 9,6 18,0" stroke="${C.beard}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+    ${zzz(368, -170, '#8FA3C7')}
+    ${zzz(250, -178, C.catD, 0.65)}
   `);
 }
 function zzz(x, y, color, s = 1) {
