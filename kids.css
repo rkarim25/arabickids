@@ -486,3 +486,10 @@ img.tw { display: block; width: 100%; height: 100%; object-fit: contain; }
   border-radius: 50%; display: grid; place-items: center;
   font-size: 13px; font-weight: 800;
 }
+
+/* the Google button sits alone when Google is configured */
+.gbtn-host { display: flex; justify-content: center; min-height: 44px; margin: 4px 0; }
+.gbtn-host:empty { min-height: 0; }
+#gFallback { display: grid; gap: 12px; }
+#gFallback[hidden] { display: none; }
+.pb-alt summary { font-size: 13px; color: var(--muted); }

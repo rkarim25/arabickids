@@ -185,24 +185,29 @@ function renderParent() {
 
         <div id="gbtn" class="gbtn-host"></div>
 
-        <p class="pb-gnote" id="gNote" hidden>
-          Google sign-in is not set up yet. A grown-up can paste the Google client ID
-          in once — it is public, not a password, and every other device will pick it
-          up by itself afterwards.
-          <input id="pGid" type="text" placeholder="...apps.googleusercontent.com">
-          <button class="pb-out" id="pGidSave">Save client ID</button>
-        </p>
-
-        <details class="pb-alt">
-          <summary>Or use the sync code instead</summary>
+        <div id="gFallback" hidden>
           <label class="pb-l">Email
             <input id="pEmail" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com">
           </label>
           <label class="pb-l">Sync code
             <input id="pCode" type="password" autocomplete="current-password" placeholder="your sync code">
           </label>
-          <button class="big-btn" id="pIn">Sign in with the code</button>
-        </details>
+          <button class="big-btn" id="pIn">Sign in</button>
+          <details class="pb-alt">
+            <summary>Set up “Sign in with Google”</summary>
+            <p class="pb-gnote">
+              Google needs a client ID for this site before it will show its button —
+              every site that offers Google sign-in has one. Make it once at
+              console.cloud.google.com (Credentials → OAuth client ID → Web
+              application → add <b>https://rkarim25.github.io</b> as an authorised
+              JavaScript origin), then paste it here. It is public, not a password,
+              and once one device has signed in every other device picks it up by
+              itself.
+            </p>
+            <input id="pGid" type="text" placeholder="...apps.googleusercontent.com">
+            <button class="pb-out" id="pGidSave">Save client ID</button>
+          </details>
+        </div>
       `}
       <p class="pb-msg" id="pMsg"></p>
       <p class="pb-priv">Only a face and a star count ever leave this device — no name,
@@ -225,8 +230,12 @@ function renderParent() {
              : e.message === 'aud-mismatch' ? 'That client ID does not match the one already in use.'
              : 'Google sign-in did not finish. You can use the sync code instead.')
     ).then(okGoogle => {
-      const note = document.getElementById('gNote');
-      if (!okGoogle && note) note.hidden = false;
+      /* When Google IS configured the screen is one button and nothing else —
+         which is what Reza asked for: "i want an option like sign in with google
+         account, rather than this". The sync code and the client-ID setup only
+         appear when Google cannot be offered at all. */
+      const fb = document.getElementById('gFallback');
+      if (!okGoogle && fb) fb.hidden = false;
     });
     const save = document.getElementById('pGidSave');
     if (save) save.addEventListener('click', () => {
