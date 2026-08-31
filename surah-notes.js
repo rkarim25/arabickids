@@ -14,10 +14,16 @@
    suffix. "The naa at the end means us" is the same fact and a five-year-old
    can hold it.
 
-   COVERAGE IS HONEST. Notes exist for Al-Fatiha and the four shortest surahs
-   (20 ayat). The other seven surahs have the full word-by-word breakdown, the
-   real recitation and the meaning check, but no bespoke note yet, and the UI
-   simply does not offer the ✨ step for them rather than inventing filler.
+   COVERAGE. All 51 ayat, all 11 surahs (the last 31 written 2026-08-31). The
+   first 20 — Al-Fatiha and the four shortest — came first; the remaining 31
+   deliberately BUILD on them rather than starting over. A note will say "you
+   met that ending in yadkhuloona", because meeting the same naa or hum or oona
+   a second time, somewhere new, is the thing that actually teaches it.
+   Between them the notes now cover the fronts (bi, li, wa, fa, sa, a-, ta-,
+   na-, lam, maa) and the backs (naa, ka, kum, hum, him, hu, haa, ee, oo, oona,
+   aat, tum, tanween), plus the dual, the sun letters and what a shadda is for.
+   The UI still hides the ✨ step wherever a note is missing, so nothing will
+   ever invent filler if one is removed.
    ========================================================================= */
 'use strict';
 
@@ -51,6 +57,49 @@ const AYAH_NOTES = {
   '112:2': 'Listen carefully: you say as Samad, not al Samad. The lam vanishes into the s. That happens with some letters and not others.',
   '112:3': 'Lam yalid. That little lam in front turns the whole thing into DID NOT. He did not have a child.',
   '112:4': 'Walam yakun. The same lam doing the same job. And ahad on the end means one, or anyone at all.',
+
+  /* ---- Al-Falaq ---- */
+  '113:1': 'Bi rabbi. There is that same little bi you met in bismillah, and it does the same thing: it means with, and it pulls the next word to end in ee. Rabbu becomes rabbi.',
+  '113:2': 'Khalaqa ends in a. That a at the end means HE did it, and he finished doing it. Everything He made is already made.',
+  '113:3': 'Ghaasiqin. Hear the little n right at the end? That n means A dark night. Any dark night, not one special one.',
+  '113:4': 'An naffaathaat. The aat on the end means lots of them, and they are all women. One ending, and you already know how many people the ayah is talking about.',
+  '113:5': 'Haasid and hasada are the same three letters. Hasada is the doing. Stretch the first bit into haaa and it turns into the PERSON who does it. Arabic makes people out of doings that way.',
+
+  /* ---- Quraysh ---- */
+  '106:1': 'This ayah does not finish. Li ilaafi means because of, and then it stops and waits. You have to go all the way to ayah three to find out what happens because of it.',
+  '106:2': 'Ilaafihim. The him on the end means their. It is the same little him you met at the end of alayhim in Al Fatiha.',
+  '106:3': 'Fal ya budoo. That tiny la tucked inside means LET THEM. It is an order, but aimed at people who are not here. And the oo on the end is them, many of them.',
+  '106:4': 'At amahum, and then aamanahum. Hum on the end of both words means them. He fed them, He kept them safe, and the them is stuck onto the back of the word each time.',
+
+  /* ---- Al-Fil ---- */
+  '105:1': 'A lam tara. There is a whole question hiding in the first letter. That little a at the front means did you? And lam right behind it means not. Did you not see?',
+  '105:2': 'Kaydahum. You have met hum meaning them. Stuck onto a thing instead of a person, it means THEIR. Their plan.',
+  '105:3': 'Wa arsala. One word that means AND He sent. The and is a single letter, glued to the front. Arabic loves to do that.',
+  '105:4': 'Tarmeehim starts with ta. That ta at the front means SHE is doing it, right now, while you watch. A flock of birds is a she in Arabic.',
+  '105:5': 'Fa ja alahum. Fa at the front means and then, straight away. Not later. It is the fastest little word in Arabic.',
+
+  /* ---- An-Nas ---- */
+  '114:1': 'A oodhu begins with a. That a at the front means I. Remember na budu, where na at the front meant we? Same place, different person. Here it is one child asking.',
+  '114:2': 'Maliki. It ends in ee for exactly the reason maaliki did in Al Fatiha: it is leaning on the word after it. King, of the people.',
+  '114:3': 'Look at ilaahi an naasi, then listen to it: ilaahin naas. The lam disappears into the n, just like al Samad became as Samad. Some letters swallow the lam.',
+  '114:4': 'Al khannaas has a shadda on the n, so you hold it: khan naas. Holding a letter often means doing the thing over and over. He hides, and hides, and hides again.',
+  '114:5': 'Yuwaswisu. Say it out loud. The word sounds like the thing it means: a whisper, going on and on. Arabic makes words out of sounds.',
+  '114:6': 'Min turned into mina here, with an a on the end, only to make it easy to say before the next word. Arabic bends its words a little so the ayah runs smoothly.',
+
+  /* ---- Al-Kafirun ---- */
+  '109:1': 'Al kaafiroona ends in oona. You met that ending in yadkhuloona: many people, and they are the ones doing it.',
+  '109:2': 'A budu and ta buduna are the same word with different fronts. A at the front means I. Ta at the front means YOU. That one letter is what this whole surah is about.',
+  '109:3': 'Antum means you, and more than one of you. Arabic has a different word for one person and for a crowd, and it never mixes them up.',
+  '109:4': 'Abadtum. Now the you has moved to the END, as tum, and there it means you already did it, finished. Front for happening now, back for done.',
+  '109:5': 'This ayah is exactly the same as ayah three, word for word. Arabic repeats things on purpose. Saying it twice is how you say: I really mean it.',
+  '109:6': 'Lakum deenukum wa liya deeni. Kum on the end means your. Ee on the end means my. Two tiny endings carry the whole ayah.',
+
+  /* ---- Al-Masad ---- */
+  '111:1': 'Yadaa means two hands. Not one hand, not lots of hands. Arabic has an ending it uses only when there are exactly two of something.',
+  '111:2': 'Maa aghnaa. Maa at the front turns it into DID NOT. Lam did that job in Al Ikhlas; maa does it too. Arabic has more than one way to say no.',
+  '111:3': 'Sa yaslaa. That sa stuck on the front means it is GOING to happen, later. One letter, and the word moves into the future.',
+  '111:4': 'Imra atuhu. Hu on the end means his. You heard hu meaning he in innahu; stuck onto a thing it means his. His wife.',
+  '111:5': 'Jeedihaa. Haa on the end means her. You have just had hu for his, and now haa for her. Two small sounds, and you know who the ayah means.',
 };
 
 /* Prompts: small variations that make a child THINK about the meaning rather

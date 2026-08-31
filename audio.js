@@ -79,7 +79,41 @@ function fallback(text, rate) {
    same". Slowing the element is better than rendering a second clip anyway: no
    extra megabytes, and preservesPitch keeps the voice from dropping into a
    growl, which would teach the wrong vowel colour. */
+/* A PARENT'S RECORDING WINS. record.js loads whatever has been recorded on
+   this device into window.RECORDINGS — a Map of the same manifest key to an
+   object URL — and it is consulted first, here, in the one place every Arabic
+   sound on the site already goes through. Nothing else had to change.
+
+   It is deliberately a plain global read and not an import: audio.js is the
+   first script on the page and must keep working with record.js absent, which
+   is exactly what happens on a device where nothing has been recorded. */
+function recordedURL(key) {
+  const R = window.RECORDINGS;
+  return (R && R.get) ? R.get(key) : null;
+}
+
 function playKey(key, text, rate) {
+  const mine = recordedURL(key);
+  if (mine) {
+    const a = el();
+    try { a.pause(); } catch (e) {}
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    a.src = mine;
+    a.currentTime = 0;
+    a.preservesPitch = a.mozPreservesPitch = a.webkitPreservesPitch = true;
+    a.playbackRate = rate || 1;
+    const p = a.play();
+    /* if the blob URL has gone stale, fall through to the generated clip
+       rather than leaving the child with silence */
+    if (p && p.catch) p.catch(() => playKeyRaw(key, text, rate));
+    return;
+  }
+  playKeyRaw(key, text, rate);
+}
+
+/* The generated clip, ignoring any recording. The booth uses this for its
+   "hear what it replaces" button; everything else should call playKey. */
+function playKeyRaw(key, text, rate) {
   const go = () => {
     const stem = MANIFEST && MANIFEST[key];
     if (!stem) return fallback(text != null ? text : key, rate);

@@ -210,11 +210,19 @@ function renderParent() {
         </div>
       `}
       <p class="pb-msg" id="pMsg"></p>
+      <button class="big-btn alt" id="pRec">🎙 Record your voice <small>the letters, in a voice they know</small></button>
       <p class="pb-priv">Only a face and a star count ever leave this device — no name,
         no photo, no recording.</p>
     </div>`;
 
   document.getElementById('pBack2').addEventListener('click', () => { renderHome(); show('home'); });
+  /* The booth sits here rather than behind sign-in: recording your own voice is
+     nothing to do with syncing stars, and a parent with no Google account
+     should still be able to give their children a real voice. */
+  const rec = document.getElementById('pRec');
+  if (rec) rec.addEventListener('click', () => {
+    if (typeof renderBooth === 'function') renderBooth();
+  });
   const msg = (t, good) => {
     const m = document.getElementById('pMsg');
     m.textContent = t; m.className = 'pb-msg ' + (good ? 'good' : 'bad');

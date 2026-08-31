@@ -223,10 +223,84 @@ const SERIES_LULU = [
 /* the series joins the shelf, in episode order after the standalone stories */
 TEXT_STORIES.push(...SERIES_LULU);
 
+/* ————— كَلِيلَة وَدِمْنَة — the library, finally chosen ————————————————————————
+   Reza has asked twice about adapting books he already owns — Bunny vs Monkey,
+   Peppa Pig — and the answer both times was no, and buying a copy does not
+   change it: a translation is a derivative work and that right belongs to the
+   publisher. So the open question was never "may we adapt something", it was
+   "adapt WHAT". Chosen 2026-08-31: **كليلة ودمنة**.
+
+   Why this and not African Storybook or StoryWeaver, which are also free:
+
+   1. It is PUBLIC DOMAIN outright — Ibn al-Muqaffaʿ, eighth century. Not a
+      licence to comply with, not an attribution string to keep correct
+      forever, nothing that can be revoked. The CC libraries are excellent and
+      remain the fallback, but every one of them carries obligations that a
+      family site will eventually get wrong.
+   2. It was WRITTEN IN ARABIC. Everything on those other shelves is a
+      translation INTO Arabic, and it reads like one. These fables are the
+      register the language actually tells stories in.
+   3. The children will meet it again. It is the شَاهِد of Arabic prose the way
+      Aesop is of English, and a child who already knows الأَرْنَب وَالأَسَد has
+      somewhere to stand when they meet it at twelve.
+
+   THE ADAPTATION RULE: the fable is kept, the sentences are ours. Ibn
+   al-Muqaffaʿ's actual prose is far beyond Level 4 — long, subordinated, and
+   unvowelled — so retelling is not laziness, it is the only way it fits a
+   band. What is preserved is the plot, the animals and the moral, and the
+   moral is always the last line, because that is how the book itself works.
+
+   Level 4 for both: past-tense narration, sun-letter اَلْ, hamzat wasl. That
+   is what classical Arabic story-telling is made of, and it is exactly the
+   band it lands in. Level 5 stays what DESIGN.md promised it would be — ayat
+   and duas — rather than being quietly filled with whatever came next.
+   ========================================================================= */
+const KALILA = [
+  {
+    id: 'kd-arnab', level: 4, series: 'kalila', ep: 1,
+    title: 'الأَرْنَبُ وَالأَسَد',
+    titleEn: 'The hare and the lion',
+    blurb: 'The smallest animal in the forest has the biggest idea.',
+    lines: [
+      { ar: 'كَانَ فِي الْغَابَةِ أَسَدٌ كَبِيرٌ يَأْكُلُ الْحَيَوَانَاتِ كُلَّ يَوْمٍ.', en: 'In the forest there was a big lion who ate the animals every day.' },
+      { ar: 'قَالَتِ الْحَيَوَانَاتُ: نُرْسِلُ لَكَ وَاحِدًا كُلَّ يَوْمٍ وَاتْرُكْنَا.', en: 'The animals said: we will send you one every day, and leave us alone.' },
+      { ar: 'وَفِي يَوْمٍ جَاءَ دَوْرُ أَرْنَبٍ صَغِيرٍ.', en: 'And one day it was a little hare’s turn.' },
+      { ar: 'تَأَخَّرَ الْأَرْنَبُ فَغَضِبَ الْأَسَدُ غَضَبًا شَدِيدًا.', en: 'The hare came late, and the lion became very angry.' },
+      { ar: 'قَالَ الْأَرْنَبُ: فِي الْبِئْرِ أَسَدٌ آخَرُ أَخَذَ طَعَامِي!', en: 'The hare said: there is another lion in the well and he took my food!' },
+      { ar: 'نَظَرَ الْأَسَدُ فِي الْبِئْرِ فَرَأَى أَسَدًا يَنْظُرُ إِلَيْهِ.', en: 'The lion looked into the well and saw a lion looking back at him.' },
+      { ar: 'قَفَزَ عَلَيْهِ فَوَقَعَ فِي الْمَاءِ.', en: 'He jumped at him, and fell into the water.' },
+      { ar: 'رَجَعَ الْأَرْنَبُ الصَّغِيرُ وَفَرِحَتِ الْحَيَوَانَاتُ كُلُّهَا.', en: 'The little hare went back, and all the animals were happy.' },
+      { ar: 'الْعَقْلُ أَقْوَى مِنَ الْقُوَّةِ.', en: 'A mind is stronger than strength.' },
+    ],
+  },
+  {
+    id: 'kd-sulahfa', level: 4, series: 'kalila', ep: 2,
+    title: 'السُّلَحْفَاةُ وَالْبَطَّتَان',
+    titleEn: 'The tortoise and the two ducks',
+    blurb: 'She was told not to say a word. She said a word.',
+    lines: [
+      { ar: 'كَانَتْ سُلَحْفَاةٌ تَعِيشُ فِي بِرْكَةٍ مَعَ بَطَّتَيْنِ.', en: 'A tortoise lived in a pond with two ducks.' },
+      { ar: 'جَفَّتِ الْبِرْكَةُ فَقَالَتِ الْبَطَّتَانِ: سَنَذْهَبُ إِلَى مَاءٍ آخَرَ.', en: 'The pond dried up, and the two ducks said: we are going to another water.' },
+      { ar: 'قَالَتِ السُّلَحْفَاةُ: خُذَانِي مَعَكُمَا!', en: 'The tortoise said: take me with you!' },
+      { ar: 'حَمَلَتَا عُودًا وَأَمْسَكَتْهُ السُّلَحْفَاةُ بِفَمِهَا وَطَارَتَا.', en: 'They carried a stick, the tortoise held it in her mouth, and they flew.' },
+      { ar: 'قَالَتَا لَهَا: لَا تَتَكَلَّمِي أَبَدًا!', en: 'They said to her: do not speak, ever!' },
+      { ar: 'رَآهَا النَّاسُ وَقَالُوا: اُنْظُرُوا! سُلَحْفَاةٌ تَطِيرُ!', en: 'People saw her and said: look! A flying tortoise!' },
+      { ar: 'فَتَحَتِ السُّلَحْفَاةُ فَمَهَا لِتَرُدَّ عَلَيْهِمْ.', en: 'The tortoise opened her mouth to answer them.' },
+      { ar: 'وَقَعَتْ عَلَى الْأَرْضِ.', en: 'She fell to the ground.' },
+      { ar: 'مَنْ لَا يَسْمَعُ النَّصِيحَةَ يَقَعْ.', en: 'Whoever does not listen to good advice falls.' },
+    ],
+  },
+];
+TEXT_STORIES.push(...KALILA);
+
 /* what a series is called, for the shelf heading */
 const SERIES_META = {
   'lulu-ghurab': { title: 'لُولُو وَالْغُرَاب', titleEn: 'Lulu and the Crow', icon: '🐱🐦‍⬛' },
+  /* label overrides "a series" — Kalila is a BOOK of separate fables, not six
+     episodes of one running joke, and calling it a series would be a small lie
+     to a child who later picks the real thing up. */
+  'kalila': { title: 'كَلِيلَة وَدِمْنَة', titleEn: 'Kalila wa Dimna', icon: '🦁🐇', label: 'old fables, retold' },
 };
 
 if (typeof module !== 'undefined' && module.exports)
-  module.exports = { TEXT_STORIES, SERIES_LULU, SERIES_META };
+  module.exports = { TEXT_STORIES, SERIES_LULU, KALILA, SERIES_META };

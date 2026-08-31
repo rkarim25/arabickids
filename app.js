@@ -760,7 +760,7 @@ function renderTextShelf(lv) {
     html += `<div class="series-head">
         <span class="sh-ic">${m.icon}</span>
         <span class="sh-t">${m.title}</span>
-        <span class="sh-en">${m.titleEn} · a series</span>
+        <span class="sh-en">${m.titleEn} · ${m.label || 'a series'}</span>
       </div>` + eps.map(card).join('');
   }
 
