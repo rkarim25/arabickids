@@ -9,7 +9,7 @@
    completely and silently. scripts/test-shell.js checks every name in CORE
    actually exists. Add a file, add it here, run the test. */
 
-const VERSION = 'hikayat-v1';
+const VERSION = 'hikayat-b4eac1a45f';
 const CORE = [
   './',
   'index.html',

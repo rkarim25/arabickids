@@ -45,7 +45,7 @@ const GID_KEY = 'hikayat-gclient';
    THE CLIENT ID IS NOT A SECRET. It is public by design and sits in the page of
    every site that uses Google sign-in. What decides who actually gets in is the
    ALLOWED_EMAILS check on the server. So it is safe to paste in, or to commit. */
-const GOOGLE_CLIENT_ID = '';        // fill this in and the paste box disappears
+const GOOGLE_CLIENT_ID = '958505787875-g5nfbudjoembmlfves8c794mvb3udqdr.apps.googleusercontent.com';
 
 function gClientId() { return GOOGLE_CLIENT_ID || readJSON(GID_KEY, null) || null; }
 function setGClientId(id) { writeJSON(GID_KEY, (id || '').trim() || null); }
