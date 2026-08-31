@@ -729,16 +729,43 @@ function renderShelf() {
    what the story is about, and nothing else, because there is no cover art and
    pretending otherwise with a big empty box would look broken. */
 function renderTextShelf(lv) {
-  const list = (typeof TEXT_STORIES !== 'undefined' ? TEXT_STORIES : [])
+  const all = (typeof TEXT_STORIES !== 'undefined' ? TEXT_STORIES : [])
     .filter(s => s.level === shelfLevel);
-  $('#bookGrid').innerHTML = list.length ? list.map(s => `
+  const meta = (typeof SERIES_META !== 'undefined') ? SERIES_META : {};
+
+  /* Standalone stories first, then each SERIES under its own heading with the
+     episodes numbered. A series only works if it looks like one — a child has
+     to be able to see that there is an episode 4 and that they have not read
+     it yet. */
+  const solo = all.filter(s => !s.series);
+  const bySeries = new Map();
+  for (const s of all.filter(x => x.series)) {
+    if (!bySeries.has(s.series)) bySeries.set(s.series, []);
+    bySeries.get(s.series).push(s);
+  }
+
+  const card = s => `
     <button class="text-card" data-id="${s.id}" style="border-right-color:${lv.color}">
+      ${s.ep ? `<span class="tc-ep">${s.ep}</span>` : ''}
       <div class="tc-t">${s.title}</div>
       <div class="tc-en">${s.titleEn}</div>
       <div class="tc-blurb">${s.blurb}</div>
       <div class="tc-meta">${s.lines.length} سُطُور · no pictures</div>
-    </button>`).join('')
-    : `<div class="coming-soon">📄 قِصَص بِلَا صُوَر قَرِيبًا!<small>No-picture stories for this level are coming soon.</small></div>`;
+    </button>`;
+
+  let html = solo.map(card).join('');
+  for (const [key, eps] of bySeries) {
+    const m = meta[key] || { title: key, titleEn: '', icon: '📚' };
+    eps.sort((a, b) => (a.ep || 0) - (b.ep || 0));
+    html += `<div class="series-head">
+        <span class="sh-ic">${m.icon}</span>
+        <span class="sh-t">${m.title}</span>
+        <span class="sh-en">${m.titleEn} · a series</span>
+      </div>` + eps.map(card).join('');
+  }
+
+  $('#bookGrid').innerHTML = html ||
+    `<div class="coming-soon">📄 قِصَص بِلَا صُوَر قَرِيبًا!<small>No-picture stories for this level are coming soon.</small></div>`;
   $('#bookGrid').querySelectorAll('.text-card').forEach(c =>
     c.addEventListener('click', () => openTextStory(c.dataset.id)));
 }

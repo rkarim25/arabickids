@@ -112,4 +112,121 @@ const TEXT_STORIES = [
   },
 ];
 
-if (typeof module !== 'undefined' && module.exports) module.exports = { TEXT_STORIES };
+
+/* ————— THE SERIES: «لُولُو وَالْغُرَاب» ————————————————————————————————————————
+   Reza, 2026-08-31: "i want something like bunny versus money series."
+
+   He means Bunny vs Monkey — a recurring comic rivalry, one short escalating
+   episode at a time, the same two characters losing their minds at each other
+   forever. That FORMAT is a genre and worth stealing; the characters are not,
+   so none of them appear here.
+
+   The rivalry is built from two characters the site already owns: Lulu, the cat
+   from the picture books, and الغُرَاب the crow, who is a Level 0 keyword and a
+   Qur'anic word (Surah Al-Ma'idah). A cat who cannot fly against a bird who can
+   is a rivalry that writes itself, and it needs no new vocabulary at all.
+
+   THE RUNNING GAG, which is what makes a series a series: the crow always gets
+   away, and Lulu always ends up somewhere ridiculous. Six episodes, climbing
+   the bands, so a child who wants the next one has to read a slightly harder
+   book to get it. That is the whole trick of a reading series.
+   ========================================================================= */
+const SERIES_LULU = [
+  {
+    id: 'lg-1', level: 2, series: 'lulu-ghurab', ep: 1,
+    title: 'الْغُرَاب وَالْخُبْز',
+    titleEn: 'The crow and the bread',
+    blurb: 'Episode 1. Lulu has bread. Lulu had bread.',
+    lines: [
+      { ar: 'لُولُو فِي الْمَطْبَخ.', en: 'Lulu is in the kitchen.' },
+      { ar: 'عَلَى الْمَائِدَة خُبْز.', en: 'There is bread on the table.' },
+      { ar: 'جَاءَ الْغُرَاب مِنَ الْبَاب.', en: 'The crow came in through the door.' },
+      { ar: 'أَخَذَ الْخُبْز وَطَارَ!', en: 'It took the bread and flew off!' },
+      { ar: 'لُولُو تَحْتَ الْمَائِدَة.', en: 'Lulu is under the table.' },
+      { ar: 'وَالْغُرَاب فَوْقَ الْبَيْت.', en: 'And the crow is on top of the house.' },
+    ],
+  },
+  {
+    id: 'lg-2', level: 2, series: 'lulu-ghurab', ep: 2,
+    title: 'لُولُو فَوْقَ الْبَاب',
+    titleEn: 'Lulu on top of the door',
+    blurb: 'Episode 2. A plan. A very bad plan.',
+    lines: [
+      { ar: 'عِنْدَ لُولُو أَكْل.', en: 'Lulu has some food.' },
+      { ar: 'لُولُو فَوْقَ الْبَاب.', en: 'Lulu is on top of the door.' },
+      { ar: 'الْغُرَاب تَحْتَ الْبَاب.', en: 'The crow is under the door.' },
+      { ar: 'نَزَلَتْ لُولُو!', en: 'Lulu came down!' },
+      { ar: 'وَطَارَ الْغُرَاب.', en: 'And the crow flew away.' },
+      { ar: 'لُولُو فِي الْمَاء.', en: 'Lulu is in the water.' },
+    ],
+  },
+  {
+    id: 'lg-3', level: 3, series: 'lulu-ghurab', ep: 3,
+    title: 'قَالَ الْغُرَاب',
+    titleEn: 'The crow said',
+    blurb: 'Episode 3. The crow talks. That is somehow worse.',
+    lines: [
+      { ar: 'قَالَ الْغُرَاب: أُحِبُّ الْخُبْز!', en: 'The crow said: I love bread!' },
+      { ar: 'قَالَتْ لُولُو: هَذَا خُبْزِي!', en: 'Lulu said: that is MY bread!' },
+      { ar: 'قَالَ الْغُرَاب: كَانَ خُبْزَكِ.', en: 'The crow said: it WAS your bread.' },
+      { ar: 'قَفَزَتْ لُولُو فَوْقَ الْمَائِدَة.', en: 'Lulu jumped onto the table.' },
+      { ar: 'طَارَ الْغُرَاب مِنَ الْبَاب.', en: 'The crow flew out of the door.' },
+      { ar: 'وَقَعَتِ الْمَائِدَة عَلَى بَابَا.', en: 'The table fell on Baba.' },
+      { ar: 'ضَحِكَ الْغُرَاب كَثِيرًا.', en: 'The crow laughed a lot.' },
+    ],
+  },
+  {
+    id: 'lg-4', level: 3, series: 'lulu-ghurab', ep: 4,
+    title: 'صَدِيق؟',
+    titleEn: 'A friend?',
+    blurb: 'Episode 4. A truce. It lasts four lines.',
+    lines: [
+      { ar: 'قَالَ الْغُرَاب: هَيَّا نَكُونُ أَصْدِقَاء.', en: 'The crow said: let us be friends.' },
+      { ar: 'قَالَتْ لُولُو: حَقًّا؟', en: 'Lulu said: really?' },
+      { ar: 'قَالَ الْغُرَاب: نَعَمْ! هَذَا لَكِ.', en: 'The crow said: yes! This is for you.' },
+      { ar: 'أَخَذَتْ لُولُو الْهَدِيَّة.', en: 'Lulu took the present.' },
+      { ar: 'كَانَتِ الْهَدِيَّة حَجَرًا.', en: 'The present was a rock.' },
+      { ar: 'وَأَخَذَ الْغُرَاب الْخُبْز.', en: 'And the crow took the bread.' },
+    ],
+  },
+  {
+    id: 'lg-5', level: 4, series: 'lulu-ghurab', ep: 5,
+    title: 'الشَّجَرَة الطَّوِيلَة',
+    titleEn: 'The tall tree',
+    blurb: 'Episode 5. Lulu learns something about trees.',
+    lines: [
+      { ar: 'رَأَتْ لُولُو الْغُرَاب فَوْقَ الشَّجَرَةِ الطَّوِيلَةِ.', en: 'Lulu saw the crow at the top of the tall tree.' },
+      { ar: 'قَالَتْ: الْيَوْمَ سَآخُذُ خُبْزِي!', en: 'She said: today I am getting my bread back!' },
+      { ar: 'صَعِدَتْ لُولُو، وَصَعِدَتْ، وَصَعِدَتْ.', en: 'Lulu climbed, and climbed, and climbed.' },
+      { ar: 'نَظَرَ الْغُرَاب إِلَيْهَا وَطَارَ إِلَى الشَّجَرَةِ الْأُخْرَى.', en: 'The crow looked at her and flew to the other tree.' },
+      { ar: 'الْآنَ لُولُو فَوْقَ الشَّجَرَةِ وَلَا تَسْتَطِيعُ النُّزُولَ.', en: 'Now Lulu is up the tree and cannot get down.' },
+      { ar: 'جَاءَ بَابَا بِالسُّلَّمِ، وَهُوَ لَيْسَ سَعِيدًا.', en: 'Baba came with the ladder, and he is not happy.' },
+    ],
+  },
+  {
+    id: 'lg-6', level: 4, series: 'lulu-ghurab', ep: 6,
+    title: 'الْخُبْزُ الْأَخِير',
+    titleEn: 'The last bread',
+    blurb: 'Episode 6. Somebody finally wins. It is not either of them.',
+    lines: [
+      { ar: 'فِي الْمَطْبَخِ خُبْزَةٌ وَاحِدَةٌ فَقَط.', en: 'In the kitchen there is only one piece of bread.' },
+      { ar: 'نَظَرَتْ لُولُو إِلَى الْغُرَابِ، وَنَظَرَ الْغُرَابُ إِلَى لُولُو.', en: 'Lulu looked at the crow, and the crow looked at Lulu.' },
+      { ar: 'قَفَزَتْ لُولُو وَطَارَ الْغُرَابُ فِي نَفْسِ الْوَقْتِ.', en: 'Lulu jumped and the crow flew at the same moment.' },
+      { ar: 'اِصْطَدَمَا فَوْقَ الْمَائِدَةِ وَوَقَعَا عَلَى الْأَرْضِ.', en: 'They crashed over the table and fell on the floor.' },
+      { ar: 'وَقَفَ أَدَم وَأَكَلَ الْخُبْزَةَ الْأَخِيرَةَ.', en: 'Adam stood up and ate the last piece of bread.' },
+      { ar: 'نَظَرَتْ لُولُو إِلَى الْغُرَابِ مَرَّةً أُخْرَى.', en: 'Lulu looked at the crow one more time.' },
+      { ar: 'وَلِأَوَّلِ مَرَّةٍ، اِتَّفَقَا عَلَى شَيْءٍ.', en: 'And for the first time ever, they agreed about something.' },
+    ],
+  },
+];
+
+/* the series joins the shelf, in episode order after the standalone stories */
+TEXT_STORIES.push(...SERIES_LULU);
+
+/* what a series is called, for the shelf heading */
+const SERIES_META = {
+  'lulu-ghurab': { title: 'لُولُو وَالْغُرَاب', titleEn: 'Lulu and the Crow', icon: '🐱🐦‍⬛' },
+};
+
+if (typeof module !== 'undefined' && module.exports)
+  module.exports = { TEXT_STORIES, SERIES_LULU, SERIES_META };
