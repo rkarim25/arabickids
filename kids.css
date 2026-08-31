@@ -1,0 +1,195 @@
+/* ————— Hikayat · home, children, sounds ——————————————————————————————————
+   Big targets everywhere: the smallest thing a child taps is ~56px, because a
+   four-year-old's aim is not an adult's. DESIGN.md rule 6.
+   ========================================================================= */
+
+#home, #sounds, #printView { max-width: 900px; margin: 0 auto; padding: 20px 16px 48px; }
+
+.back {
+  border: none; background: #fff; color: var(--muted); font-size: 22px; font-family: inherit;
+  width: 48px; height: 48px; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 0 #0001;
+}
+.back:active { transform: scale(.93); }
+.back.small { width: 42px; height: 42px; font-size: 19px; }
+
+/* ————— who is reading ————— */
+.picker { text-align: center; padding: 28px 0; }
+.pick-h { font-size: 40px; font-weight: 800; color: var(--coral); }
+.pick-en { color: var(--muted); font-size: 17px; margin-bottom: 26px; }
+.faces { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 520px; margin: 0 auto; }
+@media (max-width: 480px) { .faces { grid-template-columns: repeat(3, 1fr); } }
+.face-btn {
+  border: none; font-family: inherit; aspect-ratio: 1; border-radius: 26px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  box-shadow: 0 4px 0 #0002; transition: transform .12s;
+}
+.face-btn:active { transform: scale(.94) translateY(2px); box-shadow: 0 2px 0 #0002; }
+.face-btn .fe { font-size: 46px; line-height: 1; }
+.face-btn .fs { font-size: 13px; font-weight: 700; color: #fff; text-shadow: 0 1px 2px #0004; }
+.face-btn.has { outline: 4px solid #fff; outline-offset: -4px; }
+.pick-note { color: var(--muted); font-size: 13px; margin-top: 24px; }
+
+/* ————— home ————— */
+.home-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.home-title { flex: 1; text-align: center; }
+.home-title h1 { font-size: 44px; font-weight: 800; color: var(--coral); line-height: 1.15; }
+.home-title .tag { color: var(--muted); font-size: 14px; }
+.who-btn {
+  border: none; width: 62px; height: 62px; border-radius: 50%; cursor: pointer;
+  box-shadow: 0 3px 0 #0002; font-size: 34px; line-height: 1; flex: none;
+}
+.who-btn:active { transform: scale(.94); }
+.star-count {
+  background: #fff; border-radius: 999px; padding: 8px 14px; font-weight: 800;
+  color: var(--coral); box-shadow: 0 2px 0 #0001; font-size: 16px; flex: none;
+}
+
+.lulu-row { display: flex; align-items: center; gap: 12px; margin: 14px 0 22px; }
+.lulu { width: 76px; height: 76px; flex: none; cursor: pointer; }
+.lulu svg { width: 100%; height: 100%; }
+.lulu:active { transform: scale(.92) rotate(-4deg); }
+.lulu-bubble {
+  background: #fff; border-radius: 20px; padding: 12px 18px; box-shadow: 0 3px 0 #0001; flex: 1;
+}
+.lulu-bubble b { display: block; font-size: 24px; color: var(--teal); }
+.lulu-bubble small { color: var(--muted); font-size: 14px; }
+
+.doors { display: grid; gap: 16px; }
+.door {
+  border: none; font-family: inherit; cursor: pointer; text-align: right;
+  background: var(--d); border-radius: 26px; padding: 22px 24px; color: #fff;
+  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 18px;
+  box-shadow: 0 5px 0 #0002; transition: transform .12s;
+}
+.door:active { transform: translateY(3px); box-shadow: 0 2px 0 #0002; }
+.door-ic { font-size: 46px; grid-row: span 2; }
+.door-ar { font-size: 32px; font-weight: 800; text-shadow: 0 2px 3px #0002; }
+.door-en { font-size: 15px; opacity: .92; grid-column: 2; }
+
+/* ————— sub screens ————— */
+.sub-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.sub-head h2 { flex: 1; text-align: center; font-size: 32px; color: var(--coral); font-weight: 800; }
+.sub-head h2 small { display: block; font-size: 13px; color: var(--muted); font-weight: 500; }
+
+.mode-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+.mode {
+  border: none; font-family: inherit; background: #F1E4CC; color: var(--muted);
+  border-radius: 18px; padding: 10px 16px; font-size: 17px; font-weight: 700; cursor: pointer;
+  min-height: 56px;
+}
+.mode small { display: block; font-size: 11px; font-weight: 500; }
+.mode.on { background: var(--teal); color: #fff; box-shadow: 0 3px 0 #0002; }
+
+.hint { text-align: center; color: var(--ink); font-size: 21px; margin-bottom: 16px; }
+.hint-en { display: block; color: var(--muted); font-size: 13px; font-weight: 500; }
+
+/* ————— the letter grid ————— */
+.letter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 560px) { .letter-grid { grid-template-columns: repeat(3, 1fr); } }
+.letter-card {
+  border: none; font-family: inherit; background: #fff; border-radius: 22px; cursor: pointer;
+  padding: 10px 6px 8px; display: grid; justify-items: center; gap: 2px;
+  box-shadow: 0 4px 0 #0001; border-top: 6px solid var(--lc); min-height: 132px;
+}
+.letter-card:active { transform: translateY(3px); box-shadow: 0 1px 0 #0001; }
+.lc-glyph { font-size: 40px; font-weight: 800; color: var(--ink); line-height: 1; }
+.lc-pic { width: 52px; height: 52px; }
+.lc-pic svg { width: 100%; height: 100%; }
+.lc-word { font-size: 17px; font-weight: 700; color: var(--teal); }
+
+/* ————— one letter ————— */
+.letter-page { background: #fff; border-radius: 26px; padding: 18px; box-shadow: 0 4px 0 #0001; }
+.lp-top { display: flex; align-items: center; gap: 16px; margin: 6px 0 16px; }
+.lp-glyph {
+  border: none; font-family: inherit; background: var(--sun); color: var(--ink);
+  width: 118px; height: 118px; border-radius: 30px; font-size: 74px; font-weight: 800;
+  cursor: pointer; box-shadow: 0 5px 0 #0002; flex: none; line-height: 1;
+}
+.lp-glyph:active { transform: translateY(3px); box-shadow: 0 2px 0 #0002; }
+.lp-name b { font-size: 34px; color: var(--coral); display: block; }
+.lp-name small { color: var(--muted); font-size: 17px; }
+.lp-word {
+  border: none; font-family: inherit; background: #FBF3E4; border-radius: 22px; width: 100%;
+  padding: 14px; cursor: pointer; display: grid; justify-items: center; gap: 4px;
+}
+.lp-word:active { transform: scale(.98); }
+.lp-pic { width: 108px; height: 108px; }
+.lp-pic svg { width: 100%; height: 100%; }
+.lp-ar { font-size: 38px; font-weight: 800; color: var(--teal); }
+.lp-en { font-size: 14px; color: var(--muted); }
+.lp-quran { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+.lp-forms { margin-top: 18px; border-top: 2px dashed #E7D8BC; padding-top: 14px; }
+.forms-h { text-align: center; font-size: 19px; margin-bottom: 10px; }
+.forms-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.form-box { background: #FBF3E4; border-radius: 16px; padding: 12px 4px; text-align: center; cursor: pointer; }
+.form-box:active { transform: scale(.95); }
+.fb-g { display: block; font-size: 34px; font-weight: 800; color: var(--ink); line-height: 1.1; }
+.form-box small { font-size: 12px; color: var(--muted); }
+.lp-note { margin-top: 12px; text-align: center; font-size: 17px; color: var(--coral); }
+
+.lp-nav { display: flex; justify-content: center; gap: 14px; margin-top: 18px; }
+.round {
+  border: none; font-family: inherit; background: var(--teal); color: #fff;
+  width: 64px; height: 64px; border-radius: 50%; font-size: 26px; cursor: pointer; box-shadow: 0 4px 0 #0002;
+}
+.round:active { transform: translateY(3px); box-shadow: 0 1px 0 #0002; }
+
+/* ————— listen and find ————— */
+.quiz { text-align: center; }
+.big-speaker {
+  border: none; font-family: inherit; background: var(--sun); border-radius: 34px;
+  width: 150px; height: 118px; font-size: 46px; cursor: pointer; box-shadow: 0 5px 0 #0002;
+  margin-bottom: 20px; position: relative;
+}
+.big-speaker:active { transform: translateY(3px); box-shadow: 0 2px 0 #0002; }
+.qs-glyph { position: absolute; inset: auto 10px 6px auto; font-size: 30px; font-weight: 800; opacity: .55; }
+.quiz-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.quiz-card {
+  border: none; font-family: inherit; background: #fff; border-radius: 22px; cursor: pointer;
+  padding: 12px 6px; box-shadow: 0 4px 0 #0001; display: grid; justify-items: center; gap: 4px;
+}
+.quiz-card:active { transform: translateY(3px); }
+.qc-pic { width: 88px; height: 88px; }
+.qc-pic svg { width: 100%; height: 100%; }
+.qc-word { font-size: 21px; font-weight: 700; color: var(--teal); }
+.quiz-card.correct { background: #D8F3DC; animation: pop .4s; }
+.quiz-card.wrong { animation: shake .4s; }
+@keyframes pop { 50% { transform: scale(1.1); } }
+@keyframes shake { 25% { transform: translateX(-7px); } 75% { transform: translateX(7px); } }
+.streak { font-size: 24px; margin-top: 18px; min-height: 32px; letter-spacing: 2px; }
+
+/* ————— harakat ————— */
+.haraka-wrap { display: grid; gap: 10px; }
+.haraka-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.haraka-cell {
+  border: none; font-family: inherit; background: #fff; border-radius: 18px; cursor: pointer;
+  padding: 14px 4px; box-shadow: 0 3px 0 #0001;
+}
+.haraka-cell:active { transform: translateY(2px); }
+.haraka-cell.said { background: var(--sun); }
+.hc-g { display: block; font-size: 40px; font-weight: 800; line-height: 1.1; }
+.haraka-cell small { font-size: 12px; color: var(--muted); }
+
+/* the shelf gained a close button, so its header needs to hold one */
+#shelf .site-head { position: relative; }
+#shelf .site-head .back { position: absolute; inset: 0 auto auto 0; }
+
+/* ————— English lines sit inside an RTL page —————————————————————————————
+   Without an explicit direction the bidi algorithm moves trailing punctuation
+   to the wrong end: "Nothing is sent anywhere." rendered as
+   ".Nothing is sent anywhere". Every English-only run is marked LTR.
+   The Arabic around it is unaffected. */
+.pick-en, .pick-note, .hint-en, .door-en, .lp-en, .bp-en, .en, .en-inline,
+.lulu-bubble small, .mode small, .sub-head h2 small, .home-title .tag,
+.form-box small, .haraka-cell small, .lp-name small, .print-note, .site-foot,
+.li-desc-en, .li-title-en, .pc-en {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+/* those that are centred should stay centred; the rest read from the left */
+.pick-en, .pick-note, .hint-en, .lp-en, .bp-en, .en, .en-inline,
+.mode small, .sub-head h2 small, .home-title .tag, .form-box small,
+.haraka-cell small { text-align: center; }
+.door-en, .lulu-bubble small, .lp-name small { text-align: right; }
+.print-note { text-align: left; }

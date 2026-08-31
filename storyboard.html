@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Storyboard — أين لولو؟</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Baloo Bhaijaan 2', sans-serif; background: #FBF3E4; margin: 0; padding: 20px; }
+  .board { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1200px; margin: 0 auto; }
+  .cell { background: #fff; border-radius: 18px; padding: 10px; box-shadow: 0 4px 12px rgba(90,70,40,.12); }
+  .cell svg { width: 100%; height: auto; border-radius: 12px; display: block; }
+  .cap { text-align: center; font-size: 22px; font-weight: 800; color: #3A2E22; padding: 6px 0 2px; }
+  .cap small { display: block; font-size: 12px; color: #9C8D78; font-weight: 500; direction: ltr; }
+</style>
+</head>
+<body>
+<div class="board" id="board"></div>
+<script src="app.js"></script>
+<script>
+  const cells = [
+    [qCover(), 'الغلاف — أين القمر؟', 'Cover — moon behind cloud, Lulu watching'],
+    [q1(), 'لَيْل.', 'Q1 — night falls'],
+    [q2(), 'أَيْنَ الْقَمَر؟', 'Q2 — empty sky'],
+    [q3(), 'هَذَا نَجْم.', 'Q3 — a star'],
+    [q4(), 'هَذَا طَيْر.', 'Q4 — a bird'],
+    [q5(), 'هَذَا سَحَاب!', 'Q5 — a cloud… glowing?'],
+    [q6(), 'الْقَمَر هُنَا!', 'Q6 — the reveal'],
+    [q7(), 'الْقَمَر جَمِيل!', 'Q7 — beautiful moon'],
+    [qEnd(), 'النِّهَايَة', 'The End — asleep under the moon'],
+    [sceneCover(), 'الغلاف', 'Cover — Lulu peeking from the box'],
+    [scene1(), 'أَيْنَ لُولُو؟', 'Page 1 — empty basket'],
+    [scene2(), 'لُولُو تَحْتَ السَّرِيرِ؟ لَا!', 'Page 2 — a shoe under the bed'],
+    [scene3(), 'لُولُو فَوْقَ الْكُرْسِيِّ؟ لَا!', 'Page 3 — a teddy on the chair'],
+    [scene4(), 'لُولُو فِي الصُّنْدُوقِ؟ لَا!', 'Page 4 — a ball in the box'],
+    [scene5(), 'أَيْنَ لُولُو؟ أَيْنَ؟', 'Page 5 — mystery tail behind the couch'],
+    [scene6(), 'لُولُو هُنَا! لُولُو فَوْقَ بَابَا!', 'Page 6 — asleep on snoring Baba'],
+    [sceneEnd(), 'النِّهَايَة', 'The End'],
+  ];
+  document.getElementById('board').innerHTML = cells.map(([svg, ar, en]) =>
+    `<div class="cell">${svgWrap(svg)}<div class="cap">${ar}<small>${en}</small></div></div>`).join('');
+</script>
+</body>
+</html>

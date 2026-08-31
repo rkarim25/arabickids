@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حكايات — Hikayat · Arabic for little readers</title>
+<meta name="description" content="Arabic for little readers — listen, look and play. Sounds, picture-book stories and printable cards. No writing.">
+<meta name="theme-color" content="#F09CB1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="kids.css">
+<link rel="stylesheet" href="print.css" media="all">
+</head>
+<body>
+
+<!-- ============ home: who is reading, then three doors ============ -->
+<div id="home"></div>
+
+<!-- ============ the book shelf ============ -->
+<div id="shelf" class="hidden">
+  <header class="site-head">
+    <button class="back" id="shelfHome">✕</button>
+    <div class="logo">📚🐱</div>
+    <h1>حِكَايَات</h1>
+    <p class="tag">Arabic picture books for little readers</p>
+  </header>
+  <nav class="levels" id="levels"></nav>
+  <section id="levelInfo"></section>
+  <main class="grid" id="bookGrid"></main>
+  <footer class="site-foot">اِقْرَأْ مَعَ طِفْلِكَ كُلَّ يَوْم · Read with your child every day</footer>
+</div>
+
+<!-- ============ level 0 — sounds ============ -->
+<div id="sounds" class="hidden"></div>
+
+<!-- ============ printables ============ -->
+<div id="printView" class="hidden"></div>
+
+<!-- ============ the reader ============ -->
+<div id="reader" class="hidden">
+  <button id="closeBtn" title="Close">✕</button>
+  <div id="pageHost"></div>
+  <button id="nextBtn" class="nav next" title="Next page">❮</button>
+  <button id="prevBtn" class="nav prev" title="Previous page">❯</button>
+  <div id="dots"></div>
+</div>
+
+<!-- order matters: book-bayt.js borrows the Level 0 letter pictures -->
+<script src="app.js"></script>
+<script src="letters.js"></script>
+<script src="book-lulu1.js"></script>
+<script src="book-bayt.js"></script>
+<script src="kids.js"></script>
+<script src="print.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+/* ————— Hikayat · printables ————————————————————————————————————————————————
+   DESIGN.md §6: cut-out-and-play, never worksheets. Nothing here has a line to
+   trace or a box to fill.
+
+   Built to survive a real printer: no background floods (a parent should not
+   pay for a page of ink), a cut line you can actually follow with scissors,
+   and page breaks that never slice a card in half.
+   ========================================================================= */
+
+.print-note {
+  background: #fff; border-radius: 18px; padding: 14px 18px; margin-bottom: 16px;
+  font-size: 15px; line-height: 1.55; box-shadow: 0 3px 0 #0001;
+}
+.print-note b { color: var(--coral); }
+.print-note .tip { display: block; margin-top: 6px; color: var(--muted); font-size: 13px; }
+.print-note .pick-book { display: block; margin-top: 10px; }
+.bpick {
+  border: none; font-family: inherit; background: #F1E4CC; color: var(--muted);
+  border-radius: 12px; padding: 8px 14px; margin: 0 4px 4px 0; font-size: 16px; cursor: pointer;
+}
+.bpick.on { background: var(--teal); color: #fff; }
+.print-go {
+  border: none; font-family: inherit; background: var(--teal); color: #fff; cursor: pointer;
+  border-radius: 16px; padding: 12px 20px; font-size: 17px; font-weight: 700; box-shadow: 0 3px 0 #0002;
+}
+.print-go:active { transform: translateY(2px); box-shadow: 0 1px 0 #0002; }
+
+/* ---- a sheet is an A4 page, previewed on screen at the right proportions --- */
+.sheet {
+  background: #fff; width: 100%; aspect-ratio: 210 / 297; margin: 0 auto 20px;
+  padding: 12mm 10mm; box-shadow: 0 4px 14px #0002; border-radius: 6px;
+  display: grid; gap: 4mm; align-content: start; position: relative;
+}
+.sheet-foot {
+  position: absolute; inset: auto 0 6mm 0; text-align: center;
+  font-size: 9pt; color: #999;
+}
+.no-screen { display: none; }
+
+.cards-sheet  { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; }
+.poster-sheet { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; }
+.book-sheet   { grid-template-columns: 1fr; grid-auto-rows: 1fr; }
+
+/* ---- picture-word card ---- */
+.pcard {
+  border: 1.5px dashed #B9B0A2; border-radius: 4mm; padding: 3mm;
+  display: grid; justify-items: center; align-content: center; gap: 1mm; text-align: center;
+}
+.pc-pic { width: 26mm; height: 26mm; }
+.pc-pic svg { width: 100%; height: 100%; }
+.pc-ar { font-size: 20pt; font-weight: 800; color: #1a1a1a; line-height: 1.2; }
+.pc-sub { display: flex; gap: 3mm; align-items: baseline; }
+.pc-l { font-size: 15pt; font-weight: 800; color: #666; }
+.pc-en { font-size: 9pt; color: #888; }
+
+/* ---- poster cell ---- */
+.pos-cell {
+  border: 1px solid #DDD6C8; border-radius: 3mm; padding: 2mm;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 3mm;
+}
+.pos-l { font-size: 26pt; font-weight: 800; color: #1a1a1a; }
+.pos-pic { width: 16mm; height: 16mm; }
+.pos-pic svg { width: 100%; height: 100%; }
+.pos-w { font-size: 15pt; font-weight: 700; color: #333; }
+
+/* ---- mini-book page: two A5 halves per A4, cut across the middle ---- */
+.book-sheet { gap: 0; }
+.bpage {
+  border-bottom: 1.5px dashed #B9B0A2; padding: 4mm 2mm;
+  display: grid; grid-template-rows: 1fr auto; justify-items: center; position: relative;
+}
+.book-sheet .bpage:last-of-type { border-bottom: none; }
+.bp-art { width: 100%; max-height: 78mm; display: flex; align-items: center; justify-content: center; }
+.bp-art svg { max-width: 100%; max-height: 78mm; }
+.bp-text { text-align: center; }
+.bp-ar { font-size: 22pt; font-weight: 800; color: #1a1a1a; line-height: 1.5; }
+.bp-en { font-size: 10pt; color: #777; }
+.bp-num { position: absolute; inset: auto auto 2mm 4mm; font-size: 9pt; color: #AAA; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THE ACTUAL PRINT
+   ══════════════════════════════════════════════════════════════════════════ */
+@page { size: A4 portrait; margin: 8mm; }
+
+@media print {
+  /* nothing but the sheets */
+  body { background: #fff !important; }
+  #home, #shelf, #sounds, #reader, .no-print { display: none !important; }
+  .no-screen { display: block !important; }
+
+  #printView { max-width: none; margin: 0; padding: 0; }
+
+  .sheet {
+    box-shadow: none; border-radius: 0; margin: 0; padding: 0;
+    width: auto; aspect-ratio: auto; height: auto;
+    break-after: page; page-break-after: always;
+  }
+  .sheet:last-child { break-after: auto; page-break-after: auto; }
+
+  /* a card sliced across a page fold is a wasted sheet of paper */
+  .pcard, .pos-cell, .bpage { break-inside: avoid; page-break-inside: avoid; }
+
+  .cards-sheet  { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 82mm; }
+  .poster-sheet { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 38mm; }
+  .book-sheet   { grid-auto-rows: 138mm; }
+
+  /* ink economy: the drawings keep their colour, the furniture does not */
+  .pcard { border-color: #999; }
+  .pos-cell { border-color: #BBB; }
+}
