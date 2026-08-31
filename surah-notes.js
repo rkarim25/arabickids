@@ -70,6 +70,71 @@ const AYAH_PROMPTS = {
   '110:1': ['Does idha mean if, or when?'],
 };
 
+
+/* ————— the meaning, for a child —————————————————————————————————————————
+   The meanings that came with the text are adult tafsir: 24 words on average
+   and up to 62, full of transliterated terms (al-alamin, iman, dunya). A child
+   cannot hold that by ear, and the check step cannot ask anyone to choose
+   between three paragraphs.
+
+   So every ayah gets ONE short plain sentence. These are meanings, not
+   translations of style: they say what the ayah says, in words a five-year-old
+   already owns. The full adult meaning is still in the data as `en` for a
+   parent who wants it. */
+const AYAH_KID = {
+  '1:1': 'With, or by, the name of Allah, the Most Kind, the Most Merciful.',
+  '1:2': 'All praise is for Allah, the Lord of everything there is.',
+  '1:3': 'The Most Kind, the Most Merciful.',
+  '1:4': 'The Owner of the Day of Judgement.',
+  '1:5': 'You alone we worship, and You alone we ask for help.',
+  '1:6': 'Guide us along the straight path.',
+  '1:7': 'The path of the people You were kind to, not the people who made You angry, and not the people who got lost.',
+  '108:1': 'We have given you so much good.',
+  '108:2': 'So pray to your Lord, and give.',
+  '108:3': 'It is the one who hates you who is cut off.',
+  '103:1': 'By the time!',
+  '103:2': 'People really are losing.',
+  '103:3': 'Except the ones who believe, and do good, and tell each other the truth, and tell each other to be patient.',
+  '110:1': 'When the help of Allah comes, and the winning,',
+  '110:2': 'and you see people coming into the religion of Allah in crowds,',
+  '110:3': 'then praise your Lord and ask Him to forgive you. He always turns back to you.',
+  '112:1': 'Say: He is Allah, the One.',
+  '112:2': 'Allah, who needs nobody, and everybody needs Him.',
+  '112:3': 'He did not have a child, and He was not born.',
+  '112:4': 'And there is nobody at all like Him.',
+  '113:1': 'Say: I ask the Lord of the morning light to keep me safe,',
+  '113:2': 'from anything bad in everything He made,',
+  '113:3': 'and from the bad in the dark when it comes,',
+  '113:4': 'and from the bad of the people who blow on knots,',
+  '113:5': 'and from the bad of a jealous person when he is jealous.',
+  '106:1': 'Because Quraysh are used to their journeys,',
+  '106:2': 'their journey in the winter and their journey in the summer,',
+  '106:3': 'so let them worship the Lord of this House,',
+  '106:4': 'who fed them so they are not hungry, and kept them safe so they are not afraid.',
+  '105:1': 'Did you not see what your Lord did to the people of the elephant?',
+  '105:2': 'Did He not make their plan go all wrong?',
+  '105:3': 'And He sent birds against them, flock after flock,',
+  '105:4': 'throwing stones of hard baked clay at them,',
+  '105:5': 'and He made them like straw that has been eaten up.',
+  '114:1': 'Say: I ask the Lord of the people to keep me safe,',
+  '114:2': 'the King of the people,',
+  '114:3': 'the God of the people,',
+  '114:4': 'from the bad of the whisperer who hides away,',
+  '114:5': 'the one who whispers inside the hearts of people,',
+  '114:6': 'from the jinn, and from people.',
+  '109:1': 'Say: O you who do not believe,',
+  '109:2': 'I do not worship what you worship,',
+  '109:3': 'and you do not worship what I worship,',
+  '109:4': 'and I am never going to worship what you worship,',
+  '109:5': 'and you are never going to worship what I worship.',
+  '109:6': 'You have your religion, and I have mine.',
+  '111:1': 'The hands of Abu Lahab will be ruined, and he is ruined.',
+  '111:2': 'His money and everything he earned did not help him at all.',
+  '111:3': 'He will burn in a fire full of flames,',
+  '111:4': 'and his wife as well, the one who carried the firewood,',
+  '111:5': 'with a rope of twisted fibre around her neck.',
+};
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { AYAH_NOTES, AYAH_PROMPTS };
+  module.exports = { AYAH_NOTES, AYAH_PROMPTS, AYAH_KID };
 }

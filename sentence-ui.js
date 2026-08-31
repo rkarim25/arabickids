@@ -64,9 +64,10 @@ const STEPS = [
   { ic: '🎤', ar: 'قُلْهَا أَنْتَ',    en: 'Now you say it' },
   { ic: '🔁', ar: 'غَيِّرْ كَلِمَة',   en: 'Change one word' },
   { ic: '🗝️', ar: 'قُلْ أَيَّ شَيْء',  en: 'Say ANYTHING', frameOnly: true },
+  { ic: '😂', ar: 'النُّكْتَة',        en: 'The joke', jokeOnly: true },
 ];
 /* the last step only exists where the lesson has a frame to drill */
-const stepsFor = L => STEPS.filter(s => !s.frameOnly || L.frame);
+const stepsFor = L => STEPS.filter(s => (!s.frameOnly || L.frame) && (!s.jokeOnly || L.joke));
 
 function renderLesson() {
   const L = sentSet.lessons[sentIdx];
@@ -84,6 +85,7 @@ function renderLesson() {
       <p class="sent-ar" id="sentAr">
         ${words.map((w, i) => `<span class="sw" data-i="${i}">${w}</span>`).join(' ')}
       </p>
+      <p class="sent-en" id="sentEn">${L.en}</p>
       <button class="sent-play" id="sentPlay">🔊 <span>اِسْمَعْ</span></button>
       <p class="sent-tap">اِلْمَسْ أَيَّ كَلِمَة<span class="hint-en">Tap any single word to hear just that word</span></p>
     </div>
@@ -106,6 +108,10 @@ function renderLesson() {
 
   document.getElementById('jBack').addEventListener('click', renderSentenceHome);
   document.getElementById('sentPlay').addEventListener('click', () => say(L.ar));
+  /* the meaning is on the card now, not hidden behind step 2 — Reza, looking at
+     a lesson: "where is the english here?" It was two taps away, which on an
+     ear-first site may as well be nowhere. */
+  document.getElementById('sentEn').addEventListener('click', () => sayEn(L.en));
   host.querySelectorAll('.sw').forEach(el => el.addEventListener('click', ev => {
     ev.stopPropagation();
     saySlow(words[+el.dataset.i]);
@@ -217,6 +223,38 @@ function renderStep() {
       document.querySelector('.star-count b').textContent = totalStars();
     }));
     setTimeout(bridge, 250);
+    return;
+  }
+
+  /* ---- the joke ----
+     The pause is the whole thing. A punchline delivered instantly is not a
+     punchline, so the setup plays, then its meaning, and the answer stays
+     hidden behind a button until the child asks for it. */
+  if (L.joke && (stepsFor(L)[sStep] || {}).en === 'The joke') {
+    const J = L.joke;
+    body.innerHTML = `<div class="sb">
+      <p class="joke-setup" id="jSetup">${J.setup.ar}</p>
+      <p class="sb-en" id="jSetupEn">${J.setup.en}</p>
+      <button class="sb-big" id="jHear">🔊<small>Hear the question</small></button>
+      <button class="sb-star" id="jReveal">😂 مَا هُوَ؟<small>Tap for the answer</small></button>
+      <div id="jPunch"></div>
+    </div>`;
+    const hear = () => { say(J.setup.ar); setTimeout(() => sayEn(J.setup.en), 2200); };
+    document.getElementById('jHear').addEventListener('click', hear);
+    document.getElementById('jSetup').addEventListener('click', () => say(J.setup.ar));
+    document.getElementById('jSetupEn').addEventListener('click', () => sayEn(J.setup.en));
+    document.getElementById('jReveal').addEventListener('click', () => {
+      const host = document.getElementById('jPunch');
+      if (host.dataset.done) { say(J.punch.ar); return; }
+      host.dataset.done = '1';
+      host.innerHTML = `<p class="joke-punch">${J.punch.ar}</p><p class="sb-en">${J.punch.en}</p>`;
+      chimeGood();
+      say(J.punch.ar);
+      setTimeout(() => sayEn(J.punch.en), 1800);
+      addStar('sent:' + sentSet.id);
+      document.querySelector('.star-count b').textContent = totalStars();
+    });
+    setTimeout(hear, 300);
     return;
   }
 

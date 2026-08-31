@@ -44,6 +44,35 @@ const verses = read("verses.json");
 const ayahAudio = read("ayah-audio.json");
 const wordAudio = read("quran-word-audio.json");
 
+/* ---- make a gloss SAYABLE ------------------------------------------------
+   The word glosses came from the grown-up site and are written to be READ by
+   an adult: "with / by (the) name", "gave / granted (Form IV verb stem)".
+   Spoken aloud that is "with slash by open bracket the close bracket name",
+   which is what Reza heard — "dont just read it out with slash, be name for
+   bism doesnt make sense, it should say by or with the name".
+
+   So: slashes become the word "or"; a bracketed aside is DROPPED when it is a
+   grammar note and KEPT when it is a small function word like "(the)", which
+   is the difference between "with or by name" and "with or by the name";
+   everything after an em-dash is an adult explanation and goes. */
+const FUNCTION_WORDS = new Set("the a an of to for is are his its their and or in on".split(" "));
+function sayable(t) {
+  let s = String(t || "").replace(/‑/g, "-");
+  s = s.split(/\s*[—–]\s*/)[0];                       // drop the adult tail
+  s = s.replace(/\(([^)]*)\)/g, (m, inner) => {
+    const ws = inner.trim().split(/\s+/).filter(Boolean);
+    return ws.length && ws.every(w => FUNCTION_WORDS.has(w.toLowerCase().replace(/[^a-z]/g, "")))
+      ? " " + inner.trim() + " " : " ";
+  });
+  s = s.replace(/\s*\/\s*/g, " or ");
+  s = s.replace(/\s*=\s*/g, " ");
+  s = s.replace(/[«»"'`]/g, "");
+  s = s.replace(/\s+/g, " ").replace(/\s+([,.!?])/g, "$1").trim();
+  const w = s.split(/\s+/);
+  if (w.length > 9) s = w.slice(0, 9).join(" ");        // a gloss, not a lecture
+  return s.replace(/[,;:]+$/, "").trim();
+}
+
 /* the ayah-audio map is keyed by normalised text; match gen-audio.py's norm */
 const norm = s => String(s || "")
   .replace(/[ً-ْٰـ]/g, "")
@@ -112,7 +141,7 @@ async function fetchTo(url, file) {
           try { if ((await fetchTo(wordAudio.base + rel, path.join(OUT_AUDIO, wFile))) === "got") gotW++; }
           catch (e) { missW++; wFile = null; }
         } else missW++;
-        words.push({ ar: w[0], tr: w[1], en: w[2], audio: wFile });
+        words.push({ ar: w[0], tr: w[1], en: w[2], say: sayable(w[2]), audio: wFile });
       }
       ayat.push({ ref: v.ref, ar: v.ar, en: v.en, audio: aFile, words });
     }

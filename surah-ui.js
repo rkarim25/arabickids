@@ -43,6 +43,7 @@ function surahProgress(s) {
 }
 
 function openSurahs() {
+  stopAuto();
   show('surahs');
   document.getElementById('surahs').innerHTML = '<p class="hint">…</p>';
   loadSurahs().then(renderSurahList).catch(() => {
@@ -86,6 +87,9 @@ function renderSurahList() {
 }
 
 /* ---- the five steps on one ayah ---- */
+const kidEn = a => (typeof AYAH_KID !== 'undefined' && AYAH_KID[a.ref]) || a.en;
+const kidWord = w => (typeof qword === 'function' && qword(w.ar)) || w.say || w.en;
+
 const QSTEPS = [
   { ic: '🔊', ar: 'اِسْمَعْ',       en: 'Listen' },
   { ic: '🧩', ar: 'كَلِمَة كَلِمَة', en: 'Word by word' },
@@ -96,6 +100,49 @@ const QSTEPS = [
 const qStepsFor = a => QSTEPS.filter(s => !s.noteOnly || AYAH_NOTES[a.ref]);
 
 function playAyah(a, rate) { playFile('audio/quran/' + a.audio, rate); }
+
+/* The ayah as tappable words. The word list and a plain split on spaces do not
+   always agree — a couple of ayat came out of the source with a ragged split —
+   so the words are only made tappable when the two line up exactly. Otherwise
+   the whole line stays tappable and nothing is mislabelled. */
+function ayahWordsHTML(a) {
+  const parts = a.ar.split(/\s+/).filter(Boolean);
+  if (parts.length !== a.words.length) return a.ar;
+  return parts.map((p, i) => `<span class="aw" data-i="${i}">${p}</span>`).join(' ');
+}
+
+/* ---- autoplay ------------------------------------------------------------
+   Reza: "allow auto play for surahs rather than always click." For memorising
+   by ear this matters more than any button: it plays the ayah, waits, plays it
+   AGAIN (twice is what makes it stick), then moves on by itself and stops at
+   the end of the surah. */
+const AUTO = { on: false, timer: null, pass: 0 };
+function toggleAuto() { AUTO.on ? stopAuto() : startAuto(); }
+function startAuto() { AUTO.on = true; AUTO.pass = 0; renderAyah(); }
+function stopAuto() {
+  AUTO.on = false; AUTO.pass = 0;
+  clearTimeout(AUTO.timer); AUTO.timer = null;
+  const b = document.getElementById('qAuto');
+  if (b) { b.textContent = '▶️'; b.classList.remove('on'); }
+}
+function autoPlayThis() {
+  const a = surah.ayat[ayahIdx];
+  AUTO.pass = 0;
+  const run = () => {
+    if (!AUTO.on) return;
+    playAyah(a);
+    AUTO.pass++;
+    const el = document.querySelector('.ayah-ar');
+    if (el) { el.classList.add('lit'); setTimeout(() => el.classList.remove('lit'), 1200); }
+    AUTO.timer = setTimeout(() => {
+      if (!AUTO.on) return;
+      if (AUTO.pass < 2) return run();                 // hear it twice
+      if (ayahIdx < surah.ayat.length - 1) { ayahIdx++; sStep = 0; renderAyah(); }
+      else stopAuto();
+    }, 5200);
+  };
+  setTimeout(run, 500);
+}
 
 function renderAyah() {
   const a = surah.ayat[ayahIdx];
@@ -110,11 +157,14 @@ function renderAyah() {
     </header>
 
     <div class="ayah-card">
-      <p class="ayah-ar" id="ayahAr">${a.ar}</p>
+      <p class="ayah-ar" id="ayahAr">${ayahWordsHTML(a)}</p>
+      <p class="ayah-en" id="ayahEn">${kidEn(a)}</p>
       <div class="ayah-play">
         <button class="sent-play" id="qPlay">🔊 <span>اِسْمَعْ</span></button>
         <button class="round" id="qSlow" title="Slowly">🐢</button>
+        <button class="round ${AUTO.on ? 'on' : ''}" id="qAuto" title="Play the whole surah">${AUTO.on ? '⏸' : '▶️'}</button>
       </div>
+      <p class="ayah-tap">اِلْمَسْ أَيَّ كَلِمَة<span class="hint-en">Tap any word to hear the reciter say just that word</span></p>
     </div>
 
     <div class="steps">
@@ -131,10 +181,22 @@ function renderAyah() {
       <button class="round big" id="qNext" aria-label="Next">${ayahIdx === surah.ayat.length - 1 ? '🏁' : '←'}</button>
     </div>`;
 
-  document.getElementById('qBack').addEventListener('click', renderSurahList);
+  document.getElementById('qBack').addEventListener('click', () => { stopAuto(); renderSurahList(); });
   document.getElementById('qPlay').addEventListener('click', () => playAyah(a));
   document.getElementById('qSlow').addEventListener('click', () => playAyah(a, 0.6));
-  document.getElementById('ayahAr').addEventListener('click', () => playAyah(a));
+  document.getElementById('ayahEn').addEventListener('click', () => sayEn(kidEn(a)));
+  /* TAP A WORD IN THE AYAH ITSELF — Reza asked for this directly. It is the same
+     real word-by-word recitation the 🧩 step uses, but right here on the line,
+     so a child can poke at whichever word they did not catch. */
+  host.querySelectorAll('.aw').forEach(el => el.addEventListener('click', ev => {
+    ev.stopPropagation();
+    const w = a.words[+el.dataset.i];
+    if (!w) return;
+    el.classList.add('said'); setTimeout(() => el.classList.remove('said'), 900);
+    if (w.audio) { playFile('audio/quran/' + w.audio); setTimeout(() => sayEn(kidWord(w)), 1300); }
+    else sayEn(kidWord(w));
+  }));
+  document.getElementById('qAuto').addEventListener('click', toggleAuto);
   host.querySelectorAll('.step').forEach(b => b.addEventListener('click', () => {
     sStep = +b.dataset.i;
     host.querySelectorAll('.step').forEach(x => x.classList.toggle('on', x === b));
@@ -149,7 +211,7 @@ function renderAyah() {
   });
 
   renderQStep();
-  setTimeout(() => playAyah(a), 400);
+  if (AUTO.on) autoPlayThis(); else setTimeout(() => playAyah(a), 400);
 }
 
 function renderQStep() {
@@ -176,15 +238,15 @@ function renderQStep() {
         <span class="hint-en">Tap each word: the reciter says it, then you hear what it means.</span></p>
       <div class="qwords">
         ${a.words.map((w, i) => `<button class="qword" data-i="${i}">
-          <span class="qw-ar">${w.ar}</span><span class="qw-en">${w.en}</span>
+          <span class="qw-ar">${w.ar}</span><span class="qw-en">${kidWord(w)}</span>
         </button>`).join('')}
       </div>
     </div>`;
     body.querySelectorAll('.qword').forEach(b => b.addEventListener('click', () => {
       const w = a.words[+b.dataset.i];
       b.classList.add('said'); setTimeout(() => b.classList.remove('said'), 900);
-      if (w.audio) { playFile('audio/quran/' + w.audio); setTimeout(() => sayEn(w.en), 1300); }
-      else sayEn(w.en);
+      if (w.audio) { playFile('audio/quran/' + w.audio); setTimeout(() => sayEn(kidWord(w)), 1300); }
+      else sayEn(kidWord(w));
     }));
     return;
   }
@@ -192,9 +254,9 @@ function renderQStep() {
   if (kind === 'The meaning') {
     body.innerHTML = `<div class="sb">
       <button class="sb-big" id="qMean">💭<small>Tap to hear the meaning</small></button>
-      <p class="sb-en" id="qMeanT">${a.en}</p>
+      <p class="sb-en" id="qMeanT">${kidEn(a)}</p>
     </div>`;
-    const go = () => sayEn(a.en);
+    const go = () => sayEn(kidEn(a));
     document.getElementById('qMean').addEventListener('click', go);
     document.getElementById('qMeanT').addEventListener('click', go);
     setTimeout(go, 250);
@@ -225,7 +287,7 @@ function renderQStep() {
      Hear the ayah, choose what it means, from three. The distractors are other
      ayat the child has actually met, so the choice is about meaning and not
      about which option is longest. */
-  const pool = SURAHS.surahs.flatMap(s => s.ayat).filter(x => x.ref !== a.ref && x.en);
+  const pool = SURAHS.surahs.flatMap(s => s.ayat).filter(x => x.ref !== a.ref && kidEn(x));
   const picks = [];
   const seed = (ayahIdx * 7 + surah.n * 13);
   for (let i = 0; picks.length < 2 && i < pool.length; i++) {
@@ -241,7 +303,7 @@ function renderQStep() {
     <button class="sb-big" id="qcPlay">🔊<small>Hear the ayah</small></button>
     <div class="vary">
       ${opts.map((o, i) => `<button class="vary-row qopt" data-i="${i}">
-        <span class="v-en" style="direction:ltr;text-align:left;font-size:15px">${o.en}</span>
+        <span class="v-en" style="direction:ltr;text-align:left;font-size:15px">${kidEn(o)}</span>
       </button>`).join('')}
     </div>
     <p class="qc-tally">${starsFor(UKEY(a))} ✓ ${understood(a) ? '— فَهِمْتُهَا! understood' : '— two right and it is yours'}</p>
@@ -250,7 +312,7 @@ function renderQStep() {
   document.getElementById('qcPlay').addEventListener('click', () => playAyah(a));
   body.querySelectorAll('.qopt').forEach(b => b.addEventListener('click', () => {
     const chosen = opts[+b.dataset.i];
-    sayEn(chosen.en);
+    sayEn(kidEn(chosen));
     if (checkState.answered) return;
     if (chosen.ref === a.ref) {
       checkState.answered = true;

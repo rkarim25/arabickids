@@ -447,6 +447,78 @@ const SENTENCE_SETS = [
       },
     ],
   },
+  {
+    /* Reza asked twice for jokes, so they get their own set rather than being
+       sprinkled about: "in sentences, make some jokes using common words to
+       teach arabic."
+
+       Two kinds, and both are built ONLY from words already met.
+         · silly answers — the humour is that the answer is absurd, which a
+           three-year-old finds funny and an adult does not have to explain;
+         · real Arabic riddles (ألغاز) — "it has teeth and does not eat" is a
+           genuine children's riddle and it is a thousand years older than this
+           website.
+       Every joke reuses أَيْنَ، مَاذَا، فِي، مَا، هُوَ، لَهُ، لَا — top-100 words in the
+       measured corpus. The laugh is the drill. */
+    id: 'jokes',
+    level: 2,
+    title: 'نُكَت وَأَلْغَاز',
+    titleEn: 'Jokes and riddles',
+    lessons: [
+      {
+        ar: 'أَيْنَ بَابَا؟',
+        en: 'Where is Baba?',
+        why: 'You know ayna already. Now listen to the silly answer, and see if you can guess it before it comes.',
+        joke: {
+          setup: { ar: 'أَيْنَ بَابَا؟', en: 'Where is Baba?' },
+          punch: { ar: 'تَحْتَ الْفِيل!', en: 'Under the elephant!' },
+        },
+        vary: [
+          { ar: 'أَيْنَ مَامَا؟', en: 'Where is Mama?' },
+          { ar: 'أَيْنَ لُولُو؟', en: 'Where is Lulu?' },
+        ],
+      },
+      {
+        ar: 'مَاذَا فِي الْمَطْبَخ؟',
+        en: 'What is in the kitchen?',
+        why: 'Madha fee. What is in. The answer should be bread or water. It is not.',
+        joke: {
+          setup: { ar: 'مَاذَا فِي الْمَطْبَخ؟', en: 'What is in the kitchen?' },
+          punch: { ar: 'الْبَحْر!', en: 'The sea!' },
+        },
+        vary: [
+          { ar: 'مَاذَا فِي الْبَيْت؟', en: 'What is in the house?' },
+          { ar: 'مَاذَا فِي الْغُرْفَة؟', en: 'What is in the room?' },
+        ],
+      },
+      {
+        ar: 'لَهُ عَيْن وَلَا يَرَى.',
+        en: 'It has an eye and it does not see.',
+        why: 'This is a real Arabic riddle, and children have been asking each other this one for hundreds of years. Lahu means it has. Think before you tap!',
+        joke: {
+          setup: { ar: 'لَهُ عَيْن وَلَا يَرَى. مَا هُوَ؟', en: 'It has an eye and does not see. What is it?' },
+          punch: { ar: 'الْإِبْرَة!', en: 'A needle!' },
+        },
+        vary: [
+          { ar: 'لَهُ عَيْن وَلَا يَنَام.', en: 'It has an eye and does not sleep.' },
+          { ar: 'لَهُ بَاب وَلَا يَرَى.', en: 'It has a door and does not see.' },
+        ],
+      },
+      {
+        ar: 'لَهُ أَسْنَان وَلَا يَأْكُل.',
+        en: 'It has teeth and it does not eat.',
+        why: 'Another old one. Asnaan means teeth. What has teeth, but never eats anything at all?',
+        joke: {
+          setup: { ar: 'لَهُ أَسْنَان وَلَا يَأْكُل. مَا هُوَ؟', en: 'It has teeth and does not eat. What is it?' },
+          punch: { ar: 'الْمُشْط!', en: 'A comb!' },
+        },
+        vary: [
+          { ar: 'لَهُ أَسْنَان وَلَا يَشْرَب.', en: 'It has teeth and does not drink.' },
+          { ar: 'لَهُ بَيْت وَلَا يَأْكُل.', en: 'It has a house and does not eat.' },
+        ],
+      },
+    ],
+  },
 ];
 
 /* flat list, for the engine and the tests */

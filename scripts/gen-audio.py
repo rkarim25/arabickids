@@ -26,7 +26,7 @@
 #
 # Output: audio/<hash>.mp3 and data/audio-manifest.json  { "<text>": "<hash>" }
 
-import asyncio, hashlib, json, os, re, sys
+import asyncio, hashlib, json, os, re, sys, unicodedata
 
 # Windows consoles default to cp1252 and die on the first Arabic character
 # printed — which turns a working run into a traceback about codecs.
@@ -50,11 +50,14 @@ DATA = os.path.join(ROOT, "data")
 VOICE = "ar-SA-HamedNeural"
 # The English is for the CHILD here, not the parent — Reza, 2026-08-31: "the
 # entire website should be auditory", and a four-year-old cannot read the gloss.
-# A warm British female reads the meanings and the explanations.
-EN_VOICE = "en-GB-SoniaNeural"
+# He then asked for "a female chirpy voice": Maisie is Microsoft's young British
+# voice and is exactly that. Sonia, the previous pick, is a warm adult newsreader
+# and sounded like homework. Swap this one constant to change every English clip
+# on the site (delete audio/ first — the filenames are keyed on text, not voice).
+EN_VOICE = "en-GB-MaisieNeural"
 RATE_WORD = "-25%"     # storybook words: slow enough to copy
 RATE_SOUND = "-35%"    # single letter sounds: slower still
-RATE_EN = "-12%"       # explanations: unhurried, not babyish
+RATE_EN = "+2%"        # chirpy means lively; slowing it made it dreary
 
 TASHKEEL = re.compile(r"[\u064B-\u0652\u0670\u0640]")
 
@@ -132,6 +135,36 @@ def wanted():
             out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
         for w in re.findall(r"say:\s*" + JS_STR, src):
             out["en:" + norm_en(w)] = ("EN", w.replace("\'", "'"))
+    # ---- the surahs: every English string the module speaks ----
+    # These were falling through to the browser's own voice, which is the very
+    # inconsistency the whole file exists to remove. The ARABIC of an ayah is
+    # never rendered here: that is a real reciter, in audio/quran/.
+    sj = os.path.join(DATA, "surahs.json")
+    if os.path.exists(sj):
+        D = json.load(open(sj, encoding="utf-8"))
+        # the CHILD glosses from surah-words.js, not the adult ones in the data
+        kid_words = {}
+        wp = os.path.join(ROOT, "surah-words.js")
+        if os.path.exists(wp):
+            wsrc = open(wp, encoding="utf-8").read()
+            for k, v in re.findall(r"'([^']+)':\s*'((?:[^'\\]|\\.)*)'", wsrc):
+                kid_words[unicodedata.normalize("NFC", k)] = v.replace("\\'", "'")
+        for su in D.get("surahs", []):
+            for a in su.get("ayat", []):
+                for w in a.get("words", []):
+                    g = (kid_words.get(unicodedata.normalize("NFC", w.get("ar", "")))
+                         or w.get("say") or w.get("en"))
+                    if g:
+                        out["en:" + norm_en(g)] = ("EN", g)
+    np = os.path.join(ROOT, "surah-notes.js")
+    if os.path.exists(np):
+        src = open(np, encoding="utf-8").read()
+        JS2 = r"'((?:[^'\\]|\\.)*)'"
+        for w in re.findall(r":\s*" + JS2, src):
+            t = w.replace("\'", "'").strip()
+            if len(t.split()) >= 2 and re.search(r"[A-Za-z]", t):
+                out["en:" + norm_en(t)] = ("EN", t)
+
     # spoken instructions, so no screen needs reading
     for line in ["Listen.", "What does it mean?", "How it works.",
                  "Now you say it.", "Change one word.", "Well done!",

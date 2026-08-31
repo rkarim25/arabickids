@@ -28,6 +28,7 @@ const CORE = [
   'kids.js',
   'sentence-ui.js',
   'surah-notes.js',
+  'surah-words.js',
   'surah-ui.js',
   'data/surahs.json',
   'sync.js',

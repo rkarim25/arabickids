@@ -18,24 +18,28 @@
        "ar": "بِسۡمِ",
        "tr": "bi-ism",
        "en": "with / by (the) name",
+       "say": "with or by the name",
        "audio": "w-001_001_001.mp3"
       },
       {
        "ar": "ٱللَّهِ",
        "tr": "al‑-ilāh",
        "en": "Allah / the only God, the one worshipped",
+       "say": "Allah or the only God, the one worshipped",
        "audio": "w-001_001_002.mp3"
       },
       {
        "ar": "ٱلرَّحۡمَٰنِ",
        "tr": "al‑-raḥmān",
        "en": "the Most Compassionate / Entirely Merciful (mercy over ALL creation)",
+       "say": "the Most Compassionate or Entirely Merciful",
        "audio": "w-001_001_003.mp3"
       },
       {
        "ar": "ٱلرَّحِيمِ",
        "tr": "al‑-raḥīm",
        "en": "the Most Merciful (the special mercy kept for the believers)",
+       "say": "the Most Merciful",
        "audio": "w-001_001_004.mp3"
       }
      ]
@@ -50,24 +54,28 @@
        "ar": "ٱلۡحَمۡدُ",
        "tr": "al‑-ḥamd",
        "en": "all / the praise",
+       "say": "all or the praise",
        "audio": "w-001_002_001.mp3"
       },
       {
        "ar": "لِلَّهِ",
        "tr": "li-‑llāh",
        "en": "to / belonging to Allah",
+       "say": "to or belonging to Allah",
        "audio": "w-001_002_002.mp3"
       },
       {
        "ar": "رَبِّ",
        "tr": "rabb",
        "en": "Lord / Sustainer / Carer — the One who nurtures everything to completeness",
+       "say": "Lord or Sustainer or Carer",
        "audio": "w-001_002_003.mp3"
       },
       {
        "ar": "ٱلۡعَٰلَمِينَ",
        "tr": "al‑-ʿālam-‑īna",
        "en": "the world, realm plural ending",
+       "say": "the world, realm plural ending",
        "audio": "w-001_002_004.mp3"
       }
      ]
@@ -82,12 +90,14 @@
        "ar": "ٱلرَّحۡمَٰنِ",
        "tr": "al‑-raḥmān",
        "en": "the Most Compassionate / Entirely Merciful (mercy over ALL creation)",
+       "say": "the Most Compassionate or Entirely Merciful",
        "audio": "w-001_003_001.mp3"
       },
       {
        "ar": "ٱلرَّحِيمِ",
        "tr": "al‑-raḥīm",
        "en": "the Most Merciful (the special mercy kept for the believers)",
+       "say": "the Most Merciful",
        "audio": "w-001_003_002.mp3"
       }
      ]
@@ -102,18 +112,21 @@
        "ar": "مَٰلِكِ",
        "tr": "mālik",
        "en": "master, owner",
+       "say": "master, owner",
        "audio": "w-001_004_001.mp3"
       },
       {
        "ar": "يَوۡمِ",
        "tr": "yawm",
        "en": "day",
+       "say": "day",
        "audio": "w-001_004_002.mp3"
       },
       {
        "ar": "ٱلدِّينِ",
        "tr": "al‑-dīn",
        "en": "the recompense, judgment",
+       "say": "the recompense, judgment",
        "audio": "w-001_004_003.mp3"
       }
      ]
@@ -128,24 +141,28 @@
        "ar": "إِيَّاكَ",
        "tr": "iyyā-‑ka",
        "en": "You alone (the object ‑ka pulled to the front = You and no one else)",
+       "say": "You alone",
        "audio": "w-001_005_001.mp3"
       },
       {
        "ar": "نَعۡبُدُ",
        "tr": "na‑-ʿbud-‑u",
        "en": "we worship (present tense)",
+       "say": "we worship",
        "audio": "w-001_005_002.mp3"
       },
       {
        "ar": "وَإِيَّاكَ",
        "tr": "wa-iyyā-‑ka",
        "en": "and You alone (object first again)",
+       "say": "and You alone",
        "audio": "w-001_005_003.mp3"
       },
       {
        "ar": "نَسۡتَعِينُ",
        "tr": "na‑-sta‑-ʿīn",
        "en": "we seek / ask for help",
+       "say": "we seek or ask for help",
        "audio": "w-001_005_004.mp3"
       }
      ]
@@ -160,18 +177,21 @@
        "ar": "ٱهۡدِنَا",
        "tr": "ihdi-‑nā",
        "en": "guide! us",
+       "say": "guide! us",
        "audio": "w-001_006_001.mp3"
       },
       {
        "ar": "ٱلصِّرَٰطَ",
        "tr": "al‑-ṣirāṭ",
        "en": "the path, way",
+       "say": "the path, way",
        "audio": "w-001_006_002.mp3"
       },
       {
        "ar": "ٱلۡمُسۡتَقِيمَ",
        "tr": "al‑-mustaqīm",
        "en": "the straight, upright",
+       "say": "the straight, upright",
        "audio": "w-001_006_003.mp3"
       }
      ]
@@ -186,54 +206,63 @@
        "ar": "صِرَٰطَ",
        "tr": "ṣirāṭ",
        "en": "path",
+       "say": "path",
        "audio": "w-001_007_001.mp3"
       },
       {
        "ar": "ٱلَّذِينَ",
        "tr": "alladhīna",
        "en": "those who",
+       "say": "those who",
        "audio": "w-001_007_002.mp3"
       },
       {
        "ar": "أَنۡعَمۡتَ",
        "tr": "anʿam-‑ta",
        "en": "bestowed favor You (did)",
+       "say": "bestowed favor You",
        "audio": "w-001_007_003.mp3"
       },
       {
        "ar": "عَلَيۡهِمۡ",
        "tr": "ʿalay-‑him",
        "en": "upon them",
+       "say": "upon them",
        "audio": "w-001_007_004.mp3"
       },
       {
        "ar": "غَيۡرِ",
        "tr": "ghayr",
        "en": "other than, not",
+       "say": "other than, not",
        "audio": "w-001_007_005.mp3"
       },
       {
        "ar": "ٱلۡمَغۡضُوبِ",
        "tr": "al‑-maghḍūb",
        "en": "the ones brought under wrath",
+       "say": "the ones brought under wrath",
        "audio": "w-001_007_006.mp3"
       },
       {
        "ar": "عَلَيۡهِمۡ",
        "tr": "ʿalay-‑him",
        "en": "upon them",
+       "say": "upon them",
        "audio": "w-001_007_007.mp3"
       },
       {
        "ar": "وَلَا",
        "tr": "wa-lā",
        "en": "and not",
+       "say": "and not",
        "audio": "w-001_007_008.mp3"
       },
       {
        "ar": "ٱلضَّآلِّينَ",
        "tr": "al‑-ḍāll-‑īna",
        "en": "the astray, lost plural ending",
+       "say": "the astray, lost plural ending",
        "audio": "w-001_007_009.mp3"
       }
      ]
@@ -256,18 +285,21 @@
        "ar": "إِنَّآ",
        "tr": "inna--nā",
        "en": "truly / indeed (emphasis particle) we",
+       "say": "truly or indeed we",
        "audio": "w-108_001_001.mp3"
       },
       {
        "ar": "أَعۡطَيۡنَٰكَ",
        "tr": "aʿṭay---nā--ka",
        "en": "gave / granted (Form IV verb stem) we (the doers) you (singular, addressed to the Prophet)",
+       "say": "gave or granted we you",
        "audio": "w-108_001_002.mp3"
       },
       {
        "ar": "ٱلۡكَوۡثَرَ",
        "tr": "al--kawthara",
        "en": "the abundance / overflowing good",
+       "say": "the abundance or overflowing good",
        "audio": "w-108_001_003.mp3"
       }
      ]
@@ -282,18 +314,21 @@
        "ar": "فَصَلِّ",
        "tr": "fa-ṣalli",
        "en": "so / therefore (connecting this to what came before) pray! (perform the ritual prayer)",
+       "say": "so or therefore pray!",
        "audio": "w-108_002_001.mp3"
       },
       {
        "ar": "لِرَبِّكَ",
        "tr": "li-rabbi-ka",
        "en": "to / for (the sake of) Lord, Master, Sustainer your (one male)",
+       "say": "to or for Lord, Master, Sustainer your",
        "audio": "w-108_002_002.mp3"
       },
       {
        "ar": "وَٱنۡحَرۡ",
        "tr": "wa-inḥar",
        "en": "and sacrifice! (slaughter an offering)",
+       "say": "and sacrifice!",
        "audio": "w-108_002_003.mp3"
       }
      ]
@@ -308,24 +343,28 @@
        "ar": "إِنَّ",
        "tr": "inna",
        "en": "indeed / truly (emphatic assertion)",
+       "say": "indeed or truly",
        "audio": "w-108_003_001.mp3"
       },
       {
        "ar": "شَانِئَكَ",
        "tr": "shāniʾa---ka",
        "en": "the one who hates / detractor you (your)",
+       "say": "the one who hates or detractor you",
        "audio": "w-108_003_002.mp3"
       },
       {
        "ar": "هُوَ",
        "tr": "huwa",
        "en": "he (himself), it is he",
+       "say": "he, it is he",
        "audio": "w-108_003_003.mp3"
       },
       {
        "ar": "ٱلۡأَبۡتَرُ",
        "tr": "al--abtaru",
        "en": "the cut off / severed (without lineage or trace)",
+       "say": "the cut off or severed",
        "audio": "w-108_003_004.mp3"
       }
      ]
@@ -348,6 +387,7 @@
        "ar": "وَٱلۡعَصۡرِ",
        "tr": "wa-al-ʿaṣri",
        "en": "by (an oath: 'I swear by…') the time / the passing age (late afternoon)",
+       "say": "by the time or the passing age",
        "audio": "w-103_001_001.mp3"
       }
      ]
@@ -362,24 +402,28 @@
        "ar": "إِنَّ",
        "tr": "inna",
        "en": "indeed / truly (emphasis)",
+       "say": "indeed or truly",
        "audio": "w-103_002_001.mp3"
       },
       {
        "ar": "ٱلۡإِنسَٰنَ",
        "tr": "al--insān--a",
        "en": "the human being, mankind accusative ending",
+       "say": "the human being, mankind accusative ending",
        "audio": "w-103_002_002.mp3"
       },
       {
        "ar": "لَفِي",
        "tr": "la--fī",
        "en": "surely / indeed (emphasis) in / within",
+       "say": "surely or indeed in or within",
        "audio": "w-103_002_003.mp3"
       },
       {
        "ar": "خُسۡرٍ",
        "tr": "khusr--in",
        "en": "loss / ruin genitive + indefinite ending",
+       "say": "loss or ruin genitive + indefinite ending",
        "audio": "w-103_002_004.mp3"
       }
      ]
@@ -394,54 +438,63 @@
        "ar": "إِلَّا",
        "tr": "illā",
        "en": "except / save for",
+       "say": "except or save for",
        "audio": "w-103_003_001.mp3"
       },
       {
        "ar": "ٱلَّذِينَ ءَ",
        "tr": "al-l--dhīna",
        "en": "the (relative marker; its lām is doubled) those who (masc. plural)",
+       "say": "the those who",
        "audio": "w-103_003_002.mp3"
       },
       {
        "ar": "امَنُواْ",
        "tr": "āman--ū",
        "en": "believed / had faith they (masc. plural)",
+       "say": "believed or had faith they",
        "audio": "w-103_003_003.mp3"
       },
       {
        "ar": "وَ",
        "tr": "wa-",
        "en": "and",
+       "say": "and",
        "audio": null
       },
       {
        "ar": "عَمِلُواْ",
        "tr": "ʿamil--ū",
        "en": "did / worked they (masc. plural)",
+       "say": "did or worked they",
        "audio": "w-103_003_004.mp3"
       },
       {
        "ar": "ٱلصَّٰلِحَٰتِ",
        "tr": "al---ṣāliḥā--ti",
        "en": "the righteous / good (deeds) sound feminine plural ending",
+       "say": "the righteous or good sound feminine plural ending",
        "audio": "w-103_003_005.mp3"
       },
       {
        "ar": "وَتَوَاصَوۡاْ",
        "tr": "wa---tawāṣa--w",
        "en": "and mutually advised / urged one another they (masc. plural)",
+       "say": "and mutually advised or urged one another they",
        "audio": "w-103_003_006.mp3"
       },
       {
        "ar": "بِٱلۡحَقِّ",
        "tr": "bi--al---ḥaqqi",
        "en": "with / to / regarding the truth / what is right",
+       "say": "with or to or regarding the truth or what",
        "audio": "w-103_003_007.mp3"
       },
       {
        "ar": "وَتَوَاصَوۡاْ بِٱلصَّبۡرِ",
        "tr": "wa---tawāṣa--w-bi--al---ṣabri",
        "en": "and mutually advised / urged one another they (masc. plural) to / with the patience / steadfast endurance",
+       "say": "and mutually advised or urged one another they to",
        "audio": "w-103_003_008.mp3"
       }
      ]
@@ -464,30 +517,35 @@
        "ar": "إِذَا",
        "tr": "idhā",
        "en": "when (at the time that)",
+       "say": "when",
        "audio": "w-110_001_001.mp3"
       },
       {
        "ar": "جَآءَ",
        "tr": "jāa",
        "en": "came / arrived",
+       "say": "came or arrived",
        "audio": "w-110_001_002.mp3"
       },
       {
        "ar": "نَصۡرُ",
        "tr": "naṣr--u",
        "en": "help / victorious aid (the) — subject marker",
+       "say": "help or victorious aid the",
        "audio": "w-110_001_003.mp3"
       },
       {
        "ar": "ٱللَّهِ",
        "tr": "l-lā--hi",
        "en": "Allah (the divine name) of — possessive ending",
+       "say": "Allah of",
        "audio": "w-110_001_004.mp3"
       },
       {
        "ar": "وَٱلۡفَتۡحُ",
        "tr": "wa--l--fatḥ--u",
        "en": "and the victory / opening, conquest (subject marker)",
+       "say": "and the victory or opening, conquest",
        "audio": "w-110_001_005.mp3"
       }
      ]
@@ -502,42 +560,49 @@
        "ar": "وَرَأَيۡتَ",
        "tr": "wa-ra-ay--ta",
        "en": "and saw / witnessed you (masculine singular)",
+       "say": "and saw or witnessed you",
        "audio": "w-110_002_001.mp3"
       },
       {
        "ar": "ٱلنَّاسَ",
        "tr": "al---nāsa",
        "en": "the people, mankind",
+       "say": "the people, mankind",
        "audio": "w-110_002_002.mp3"
       },
       {
        "ar": "يَدۡخُلُونَ",
        "tr": "ya---dkhulu--ūna",
        "en": "they (he-type, marks present tense) enter, go in they (masculine plural)",
+       "say": "they enter, go in they",
        "audio": "w-110_002_003.mp3"
       },
       {
        "ar": "فِي",
        "tr": "fī",
        "en": "in, into",
+       "say": "in, into",
        "audio": "w-110_002_004.mp3"
       },
       {
        "ar": "دِينِ",
        "tr": "dīni",
        "en": "religion, way of life, obedience to Allah",
+       "say": "religion, way of life, obedience to Allah",
        "audio": "w-110_002_005.mp3"
       },
       {
        "ar": "ٱللَّهِ",
        "tr": "l-lahi",
        "en": "Allah",
+       "say": "Allah",
        "audio": "w-110_002_006.mp3"
       },
       {
        "ar": "أَفۡوَاجٗا",
        "tr": "afwājan",
        "en": "in crowds, in throngs, in troops (groups of people)",
+       "say": "in crowds, in throngs, in troops",
        "audio": "w-110_002_007.mp3"
       }
      ]
@@ -552,42 +617,49 @@
        "ar": "فَسَبِّحۡ",
        "tr": "fa-sabbiḥ",
        "en": "so / then (in response to what came before) glorify! / declare (Him) free of all imperfection",
+       "say": "so or then glorify! or declare free of all",
        "audio": "w-110_003_001.mp3"
       },
       {
        "ar": "بِحَمۡدِ",
        "tr": "bi-ḥamdi",
        "en": "with / by means of the praise (of)",
+       "say": "with or by means of the praise of",
        "audio": "w-110_003_002.mp3"
       },
       {
        "ar": "رَبِّكَ",
        "tr": "rabbi--ka",
        "en": "Lord / Master and Sustainer your (one male)",
+       "say": "Lord or Master and Sustainer your",
        "audio": "w-110_003_003.mp3"
       },
       {
        "ar": "وَٱسۡتَغۡفِرۡهُۚ",
        "tr": "wa-is'taghfir--hu",
        "en": "and seek forgiveness! / ask for pardon Him",
+       "say": "and seek forgiveness! or ask for pardon Him",
        "audio": "w-110_003_004.mp3"
       },
       {
        "ar": "إِنَّهُۥ",
        "tr": "inna--hu",
        "en": "indeed / truly (emphasizing certainty) He (Allah)",
+       "say": "indeed or truly He",
        "audio": "w-110_003_006.mp3"
       },
       {
        "ar": "كَانَ",
        "tr": "kāna",
        "en": "has ever been / is constantly",
+       "say": "has ever been or is constantly",
        "audio": "w-110_003_007.mp3"
       },
       {
        "ar": "تَوَّابَۢا",
        "tr": "tawwāb--an",
        "en": "ever-accepting of repentance / oft-relenting (accusative ending, completing \"He has ever been ___\")",
+       "say": "ever-accepting of repentance or oft-relenting",
        "audio": null
       }
      ]
@@ -610,24 +682,28 @@
        "ar": "قُلۡ",
        "tr": "qul",
        "en": "say! (command)",
+       "say": "say!",
        "audio": "w-112_001_001.mp3"
       },
       {
        "ar": "هُوَ",
        "tr": "huwa",
        "en": "He",
+       "say": "He",
        "audio": "w-112_001_002.mp3"
       },
       {
        "ar": "ٱللَّهُ",
        "tr": "l-lahu",
        "en": "(is) Allah",
+       "say": "is Allah",
        "audio": "w-112_001_003.mp3"
       },
       {
        "ar": "أَحَدٌ",
        "tr": "aḥadun",
        "en": "one / utterly unique",
+       "say": "one or utterly unique",
        "audio": "w-112_001_004.mp3"
       }
      ]
@@ -642,12 +718,14 @@
        "ar": "ٱللَّهُ",
        "tr": "al--lāh",
        "en": "the (definite article, fused into the name) God (the divine Name)",
+       "say": "the God",
        "audio": "w-112_002_001.mp3"
       },
       {
        "ar": "ٱلصَّمَدُ",
        "tr": "al--ṣamad",
        "en": "the the Self-Sufficient One on whom all depend",
+       "say": "the the Self-Sufficient One on whom all depend",
        "audio": "w-112_002_002.mp3"
       }
      ]
@@ -662,24 +740,28 @@
        "ar": "لَمۡ",
        "tr": "lam",
        "en": "did not / has never",
+       "say": "did not or has never",
        "audio": "w-112_003_001.mp3"
       },
       {
        "ar": "يَلِدۡ",
        "tr": "ya--lid",
        "en": "he (does) beget / father",
+       "say": "he beget or father",
        "audio": "w-112_003_002.mp3"
       },
       {
        "ar": "وَلَمۡ",
        "tr": "wa--lam",
        "en": "and did not / has never",
+       "say": "and did not or has never",
        "audio": "w-112_003_003.mp3"
       },
       {
        "ar": "يُولَدۡ",
        "tr": "yu--ū-lad",
        "en": "he (is) — passive root-letter \"w\" of w-l-d (lengthened to ū) born / begotten",
+       "say": "he is",
        "audio": "w-112_003_004.mp3"
       }
      ]
@@ -694,30 +776,35 @@
        "ar": "وَلَمۡ",
        "tr": "wa-lam",
        "en": "and did not / has never",
+       "say": "and did not or has never",
        "audio": "w-112_004_001.mp3"
       },
       {
        "ar": "يَكُن",
        "tr": "ya--kun",
        "en": "he / it (3rd-person masculine prefix) be / exist (from kāna)",
+       "say": "he or it be or exist",
        "audio": "w-112_004_002.mp3"
       },
       {
        "ar": "لَّهُۥ",
        "tr": "la--hu",
        "en": "to / for / belonging to Him",
+       "say": "to or for or belonging to Him",
        "audio": "w-112_004_003.mp3"
       },
       {
        "ar": "كُفُوًا",
        "tr": "kufuw--an",
        "en": "equal / comparable / a match indefinite accusative ending (\"a / an,\" object-case)",
+       "say": "equal or comparable or a match indefinite accusative ending",
        "audio": "w-112_004_004.mp3"
       },
       {
        "ar": "أَحَدُۢ",
        "tr": "aḥad--un",
        "en": "one / anyone indefinite nominative ending (\"a / an,\" subject-case)",
+       "say": "one or anyone indefinite nominative ending",
        "audio": "w-112_004_005.mp3"
       }
      ]
@@ -740,24 +827,28 @@
        "ar": "قُلۡ",
        "tr": "qul",
        "en": "say! (command to one male)",
+       "say": "say!",
        "audio": "w-113_001_001.mp3"
       },
       {
        "ar": "أَعُوذُ",
        "tr": "a--ʿūdhu",
        "en": "I (the doer) seek refuge / take shelter",
+       "say": "I seek refuge or take shelter",
        "audio": "w-113_001_002.mp3"
       },
       {
        "ar": "بِرَبِّ",
        "tr": "bi-rabbi",
        "en": "in / with (taking hold of) Lord, Master and Sustainer",
+       "say": "in or with Lord, Master and Sustainer",
        "audio": "w-113_001_003.mp3"
       },
       {
        "ar": "ٱلۡفَلَقِ",
        "tr": "al--falaqi",
        "en": "the daybreak, the cleaving-open of dawn",
+       "say": "the daybreak, the cleaving-open of dawn",
        "audio": "w-113_001_004.mp3"
       }
      ]
@@ -772,24 +863,28 @@
        "ar": "مِن",
        "tr": "min",
        "en": "from / out of",
+       "say": "from or out of",
        "audio": "w-113_002_001.mp3"
       },
       {
        "ar": "شَرِّ",
        "tr": "sharr--i",
        "en": "evil / harm (genitive ending: \"of\")",
+       "say": "evil or harm",
        "audio": "w-113_002_002.mp3"
       },
       {
        "ar": "مَا",
        "tr": "mā",
        "en": "what / that which",
+       "say": "what or that which",
        "audio": "w-113_002_003.mp3"
       },
       {
        "ar": "خَلَقَ",
        "tr": "khalaqa",
        "en": "He created",
+       "say": "He created",
        "audio": "w-113_002_004.mp3"
       }
      ]
@@ -804,30 +899,35 @@
        "ar": "وَمِن",
        "tr": "wa-min",
        "en": "and from / out of",
+       "say": "and from or out of",
        "audio": "w-113_003_001.mp3"
       },
       {
        "ar": "شَرِّ",
        "tr": "sharri",
        "en": "evil / harm of",
+       "say": "evil or harm of",
        "audio": "w-113_003_002.mp3"
       },
       {
        "ar": "غَاسِقٍ",
        "tr": "ghāsiqin",
        "en": "(a) darkening one / gathering darkness",
+       "say": "a darkening one or gathering darkness",
        "audio": "w-113_003_003.mp3"
       },
       {
        "ar": "إِذَا",
        "tr": "idhā",
        "en": "when / at the time that",
+       "say": "when or at the time that",
        "audio": "w-113_003_004.mp3"
       },
       {
        "ar": "وَقَبَ",
        "tr": "waqaba",
        "en": "it settled in / overspread",
+       "say": "it settled in or overspread",
        "audio": "w-113_003_005.mp3"
       }
      ]
@@ -842,30 +942,35 @@
        "ar": "وَمِن",
        "tr": "wa-min",
        "en": "and from / part of",
+       "say": "and from or part of",
        "audio": "w-113_004_001.mp3"
       },
       {
        "ar": "شَرِّ",
        "tr": "sharr--i",
        "en": "evil / harm (of) — possessive/genitive ending",
+       "say": "evil or harm of",
        "audio": "w-113_004_002.mp3"
       },
       {
        "ar": "ٱلنَّفَّٰثَٰتِ",
        "tr": "al--naffāthāt--i",
        "en": "the women who blow much/repeatedly (of) — genitive ending",
+       "say": "the women who blow much or repeatedly of",
        "audio": "w-113_004_003.mp3"
       },
       {
        "ar": "فِي",
        "tr": "fī",
        "en": "in / into / upon",
+       "say": "in or into or upon",
        "audio": "w-113_004_004.mp3"
       },
       {
        "ar": "ٱلۡعُقَدِ",
        "tr": "al--ʿuqad--i",
        "en": "the knots genitive ending (object of 'in')",
+       "say": "the knots genitive ending",
        "audio": "w-113_004_005.mp3"
       }
      ]
@@ -880,30 +985,35 @@
        "ar": "وَمِن",
        "tr": "wa-min",
        "en": "and from / out of",
+       "say": "and from or out of",
        "audio": "w-113_005_001.mp3"
       },
       {
        "ar": "شَرِّ",
        "tr": "sharri",
        "en": "evil of",
+       "say": "evil of",
        "audio": "w-113_005_002.mp3"
       },
       {
        "ar": "حَاسِدٍ",
        "tr": "ḥāsidin",
        "en": "an envier",
+       "say": "an envier",
        "audio": "w-113_005_003.mp3"
       },
       {
        "ar": "إِذَا",
        "tr": "idhā",
        "en": "when / whenever",
+       "say": "when or whenever",
        "audio": "w-113_005_004.mp3"
       },
       {
        "ar": "حَسَدَ",
        "tr": "ḥasada",
        "en": "he envied / he envies",
+       "say": "he envied or he envies",
        "audio": "w-113_005_005.mp3"
       }
      ]
@@ -926,12 +1036,14 @@
        "ar": "لِإِيلَٰفِ",
        "tr": "li-īlāfi",
        "en": "for / because of (a preposition giving the reason or purpose) making accustomed, habituation, granting settled familiarity (the final '-i' here is the genitive case vowel required by the preposition 'li', not a separate word-part)",
+       "say": "for or because of making accustomed, habituation, granting settled",
        "audio": "w-106_001_001.mp3"
       },
       {
        "ar": "قُرَيۡشٍ",
        "tr": "qurayshin",
        "en": "Quraysh, the tribe of Makkah (the final '-in' is the genitive case ending with nunation, marking it as the possessor of the preceding 'īlāf', not a separate word-part)",
+       "say": "Quraysh, the tribe of Makkah",
        "audio": "w-106_001_002.mp3"
       }
      ]
@@ -946,24 +1058,28 @@
        "ar": "إِۦلَٰفِهِمۡ",
        "tr": "īlāf--i--him",
        "en": "making accustomed / habitual familiarity (the -i ending: 'of', genitive linking vowel) their (them)",
+       "say": "making accustomed or habitual familiarity their",
        "audio": "w-106_002_001.mp3"
       },
       {
        "ar": "رِحۡلَةَ",
        "tr": "riḥlat---a",
        "en": "a journey / caravan trip (feminine noun stem; the ة is pronounced -t- here) (the -a ending on the ة: object marker)",
+       "say": "a journey or caravan trip",
        "audio": "w-106_002_002.mp3"
       },
       {
        "ar": "ٱلشِّتَآءِ",
        "tr": "al--shitā--i",
        "en": "the winter (the -i ending: 'of')",
+       "say": "the winter",
        "audio": "w-106_002_003.mp3"
       },
       {
        "ar": "وَٱلصَّيۡفِ",
        "tr": "wa--al--ṣayf--i",
        "en": "and the summer (the -i ending: 'of')",
+       "say": "and the summer",
        "audio": "w-106_002_004.mp3"
       }
      ]
@@ -978,24 +1094,28 @@
        "ar": "فَلۡيَعۡبُدُواْ",
        "tr": "fa-l-yaʿbudū-(ā)",
        "en": "so / then (a connector drawing a conclusion) let / must (command particle) they worship (silent spelling alif after the plural -ū)",
+       "say": "so or then let or must they worship",
        "audio": "w-106_003_001.mp3"
       },
       {
        "ar": "رَبَّ",
        "tr": "rabba",
        "en": "Lord, Master, Sustainer",
+       "say": "Lord, Master, Sustainer",
        "audio": "w-106_003_002.mp3"
       },
       {
        "ar": "هَٰذَا",
        "tr": "hādhā",
        "en": "this (masculine, near)",
+       "say": "this",
        "audio": "w-106_003_003.mp3"
       },
       {
        "ar": "ٱلۡبَيۡتِ",
        "tr": "al--bayti",
        "en": "the house",
+       "say": "the house",
        "audio": "w-106_003_004.mp3"
       }
      ]
@@ -1010,42 +1130,49 @@
        "ar": "ٱلَّذِيٓ",
        "tr": "alladhī",
        "en": "the One who / He who",
+       "say": "the One who or He who",
        "audio": "w-106_004_001.mp3"
       },
       {
        "ar": "أَطۡعَمَهُم",
        "tr": "aṭʿama-hum",
        "en": "he fed / gave food them",
+       "say": "he fed or gave food them",
        "audio": "w-106_004_002.mp3"
       },
       {
        "ar": "مِّن",
        "tr": "min",
        "en": "from / against",
+       "say": "from or against",
        "audio": "w-106_004_003.mp3"
       },
       {
        "ar": "جُوعٖ",
        "tr": "jūʿ--in",
        "en": "hunger (indefinite, 'a')",
+       "say": "hunger",
        "audio": "w-106_004_004.mp3"
       },
       {
        "ar": "وَءَامَنَهُم",
        "tr": "wa-āmana-hum",
        "en": "and he made safe / gave security them",
+       "say": "and he made safe or gave security them",
        "audio": "w-106_004_005.mp3"
       },
       {
        "ar": "مِّنۡ",
        "tr": "min",
        "en": "from / against",
+       "say": "from or against",
        "audio": "w-106_004_006.mp3"
       },
       {
        "ar": "خَوۡفِۭ",
        "tr": "khawf--in",
        "en": "fear (indefinite, 'a')",
+       "say": "fear",
        "audio": "w-106_004_007.mp3"
       }
      ]
@@ -1068,42 +1195,49 @@
        "ar": "أَلَمۡ",
        "tr": "a-lam",
        "en": "interrogative marker: 'do/did...?' 'not' (negating a past action)",
+       "say": "interrogative marker: do or did...? not",
        "audio": "w-105_001_001.mp3"
       },
       {
        "ar": "تَرَ",
        "tr": "ta---ra",
        "en": "'you' (the doer; masculine singular) the verb stem 'see'; its middle root-letter hamza (ء) and its final weak root-letter ( y) have both dropped out on the surface, leaving just 'ra'",
+       "say": "you the verb stem see; its middle root-letter hamza",
        "audio": "w-105_001_002.mp3"
       },
       {
        "ar": "كَيۡفَ",
        "tr": "kayfa",
        "en": "'how, in what manner'",
+       "say": "how, in what manner",
        "audio": "w-105_001_003.mp3"
       },
       {
        "ar": "فَعَلَ",
        "tr": "faʿala",
        "en": "'he did / acted'",
+       "say": "he did or acted",
        "audio": "w-105_001_004.mp3"
       },
       {
        "ar": "رَبُّكَ",
        "tr": "rabbu--ka",
        "en": "'Lord, Sustainer, Nurturer' 'your' (masculine singular)",
+       "say": "Lord, Sustainer, Nurturer your",
        "audio": "w-105_001_005.mp3"
       },
       {
        "ar": "بِأَصۡحَٰبِ",
        "tr": "bi--aṣḥābi",
        "en": "'with' (a connecting preposition) 'companions / owners / people of'",
+       "say": "with companions or owners or people of",
        "audio": "w-105_001_006.mp3"
       },
       {
        "ar": "ٱلۡفِيلِ",
        "tr": "al--fīli",
        "en": "'the' (the definite article) 'elephant'",
+       "say": "the elephant",
        "audio": "w-105_001_007.mp3"
       }
      ]
@@ -1118,30 +1252,35 @@
        "ar": "أَلَمۡ",
        "tr": "a--lam",
        "en": "a question marker: 'did...?' / 'is it not that...?' 'not' — a particle that negates a verb and shifts it to past meaning",
+       "say": "a question marker: did...? or is it not that...?",
        "audio": "w-105_002_001.mp3"
       },
       {
        "ar": "يَجۡعَلۡ",
        "tr": "ya--jʿal",
        "en": "'he' — the prefix marking a 3rd-person masculine singular subject 'make / place / render / cause to be'",
+       "say": "he",
        "audio": "w-105_002_002.mp3"
       },
       {
        "ar": "كَيۡدَهُمۡ",
        "tr": "kayda--hum",
        "en": "'plot, scheme, cunning stratagem' 'their' — attached pronoun for 'them' (masculine plural)",
+       "say": "plot, scheme, cunning stratagem their",
        "audio": "w-105_002_003.mp3"
       },
       {
        "ar": "فِي",
        "tr": "fī",
        "en": "'in / into / amid'",
+       "say": "in or into or amid",
        "audio": "w-105_002_004.mp3"
       },
       {
        "ar": "تَضۡلِيلٖ",
        "tr": "taḍlīl--in",
        "en": "'causing to go astray / leading into ruin and loss' the '-in' ending: genitive case + nunation (an unspecified 'a state of...')",
+       "say": "causing to go astray or leading into ruin and",
        "audio": "w-105_002_005.mp3"
       }
      ]
@@ -1156,24 +1295,28 @@
        "ar": "وَأَرۡسَلَ",
        "tr": "wa--arsala",
        "en": "and he sent",
+       "say": "and he sent",
        "audio": "w-105_003_001.mp3"
       },
       {
        "ar": "عَلَيۡهِمۡ",
        "tr": "ʿalay-him",
        "en": "upon / against them",
+       "say": "upon or against them",
        "audio": "w-105_003_002.mp3"
       },
       {
        "ar": "طَيۡرًا",
        "tr": "ṭayr--an",
        "en": "birds (an / indefinite object ending)",
+       "say": "birds",
        "audio": "w-105_003_003.mp3"
       },
       {
        "ar": "أَبَابِيلَ",
        "tr": "abābīl--a",
        "en": "flocks / successive swarms (accusative ending)",
+       "say": "flocks or successive swarms",
        "audio": "w-105_003_004.mp3"
       }
      ]
@@ -1188,24 +1331,28 @@
        "ar": "تَرۡمِيهِم",
        "tr": "ta--rmī--him",
        "en": "she / it (feminine subject prefix — referring back to the flock of birds, ṭayr, treated as feminine) throws / pelts / hurls them (object pronoun, masculine plural — the attackers)",
+       "say": "she or it (feminine subject prefix",
        "audio": "w-105_004_001.mp3"
       },
       {
        "ar": "بِحِجَارَةٖ",
        "tr": "bi--ḥijāratin",
        "en": "with / by means of stones",
+       "say": "with or by means of stones",
        "audio": "w-105_004_002.mp3"
       },
       {
        "ar": "مِّن",
        "tr": "min",
        "en": "of / from (origin or material)",
+       "say": "of or from",
        "audio": "w-105_004_003.mp3"
       },
       {
        "ar": "سِجِّيلٖ",
        "tr": "sijjīlin",
        "en": "baked clay (hardened, stone-like clay)",
+       "say": "baked clay",
        "audio": "w-105_004_004.mp3"
       }
      ]
@@ -1220,18 +1367,21 @@
        "ar": "فَجَعَلَهُمۡ",
        "tr": "fa--jaʿala--hum",
        "en": "and so / then (marks the result or sequence of events) He made / turned (into) them (object)",
+       "say": "and so or then He made or turned them",
        "audio": "w-105_005_001.mp3"
       },
       {
        "ar": "كَعَصۡفٖ",
        "tr": "ka--ʿaṣfin",
        "en": "like / as chaff, dry straw, crop husks",
+       "say": "like or as chaff, dry straw, crop husks",
        "audio": "w-105_005_002.mp3"
       },
       {
        "ar": "مَّأۡكُولِۭ",
        "tr": "makū--lin",
        "en": "eaten, devoured (base of the passive participle) final root letter + indefinite genitive ending (-in)",
+       "say": "eaten, devoured final root letter + indefinite genitive ending",
        "audio": "w-105_005_003.mp3"
       }
      ]
@@ -1254,24 +1404,28 @@
        "ar": "قُلۡ",
        "tr": "qul",
        "en": "say!",
+       "say": "say!",
        "audio": "w-114_001_001.mp3"
       },
       {
        "ar": "أَعُوذُ",
        "tr": "a--ʿūdhu",
        "en": "I (do) seek refuge",
+       "say": "I seek refuge",
        "audio": "w-114_001_002.mp3"
       },
       {
        "ar": "بِرَبِّ",
        "tr": "bi-rabbi",
        "en": "in / with Lord / Sustainer",
+       "say": "in or with Lord or Sustainer",
        "audio": "w-114_001_003.mp3"
       },
       {
        "ar": "ٱلنَّاسِ",
        "tr": "al--nāsi",
        "en": "the (of) mankind / people",
+       "say": "the of mankind or people",
        "audio": "w-114_001_004.mp3"
       }
      ]
@@ -1286,12 +1440,14 @@
        "ar": "مَلِكِ",
        "tr": "maliki",
        "en": "King / Sovereign / Master",
+       "say": "King or Sovereign or Master",
        "audio": "w-114_002_001.mp3"
       },
       {
        "ar": "ٱلنَّاسِ",
        "tr": "al-n--āsi",
        "en": "the (definite article 'al-', its 'l' assimilated into the following 'n') people / mankind (the stem 'nās')",
+       "say": "the people or mankind",
        "audio": "w-114_002_002.mp3"
       }
      ]
@@ -1306,12 +1462,14 @@
        "ar": "إِلَٰهِ",
        "tr": "ilāh--i",
        "en": "god / deity (the one worthy of worship) of (genitive ending linking to the next word)",
+       "say": "god or deity of",
        "audio": "w-114_003_001.mp3"
       },
       {
        "ar": "ٱلنَّاسِ",
        "tr": "al- (here pronounced 'an-')-nās--i",
        "en": "the (definite article) people / mankind (genitive ending)",
+       "say": "the people or mankind",
        "audio": "w-114_003_002.mp3"
       }
      ]
@@ -1326,24 +1484,28 @@
        "ar": "مِن",
        "tr": "min",
        "en": "from",
+       "say": "from",
        "audio": "w-114_004_001.mp3"
       },
       {
        "ar": "شَرِّ",
        "tr": "sharr--i",
        "en": "evil / harm (of) — genitive ending",
+       "say": "evil or harm of",
        "audio": "w-114_004_002.mp3"
       },
       {
        "ar": "ٱلۡوَسۡوَاسِ",
        "tr": "al--waswās--i",
        "en": "the constant whisperer (of) — genitive ending",
+       "say": "the constant whisperer of",
        "audio": "w-114_004_003.mp3"
       },
       {
        "ar": "ٱلۡخَنَّاسِ",
        "tr": "al--khannās--i",
        "en": "the one who repeatedly withdraws/slinks away genitive ending",
+       "say": "the one who repeatedly withdraws or slinks away genitive",
        "audio": "w-114_004_004.mp3"
       }
      ]
@@ -1358,30 +1520,35 @@
        "ar": "ٱلَّذِي",
        "tr": "alladhī",
        "en": "who / the one who (relative pronoun)",
+       "say": "who or the one who",
        "audio": "w-114_005_001.mp3"
       },
       {
        "ar": "يُوَسۡوِسُ",
        "tr": "yu---waswisu",
        "en": "he / it (present-tense \"he does\" marker) whisper, insinuate",
+       "say": "he or it whisper, insinuate",
        "audio": "w-114_005_002.mp3"
       },
       {
        "ar": "فِي",
        "tr": "fī",
        "en": "in / within / into",
+       "say": "in or within or into",
        "audio": "w-114_005_003.mp3"
       },
       {
        "ar": "صُدُورِ",
        "tr": "ṣudūr--i",
        "en": "chests / breasts (plural) of (genitive ending, linking to the next word)",
+       "say": "chests or breasts of",
        "audio": "w-114_005_004.mp3"
       },
       {
        "ar": "ٱلنَّاسِ",
        "tr": "an-n---āsi",
        "en": "the (definite article; its \"l\" sound merges into the following n) people / humankind (with genitive -i ending)",
+       "say": "the people or humankind",
        "audio": "w-114_005_005.mp3"
       }
      ]
@@ -1396,18 +1563,21 @@
        "ar": "مِنَ",
        "tr": "mina",
        "en": "from / of",
+       "say": "from or of",
        "audio": "w-114_006_001.mp3"
       },
       {
        "ar": "ٱلۡجِنَّةِ",
        "tr": "l--jinati",
        "en": "the jinn-kind",
+       "say": "the jinn-kind",
        "audio": "w-114_006_002.mp3"
       },
       {
        "ar": "وَٱلنَّاسِ",
        "tr": "wa--l--nāsi",
        "en": "and the mankind / people",
+       "say": "and the mankind or people",
        "audio": "w-114_006_003.mp3"
       }
      ]
@@ -1430,18 +1600,21 @@
        "ar": "قُلۡ",
        "tr": "qul",
        "en": "say! (command to one person)",
+       "say": "say!",
        "audio": "w-109_001_001.mp3"
       },
       {
        "ar": "يَٰٓأَيُّهَا",
        "tr": "yā-ayyu-hā",
        "en": "O! (call to get attention) you/one (the word the call lands on) (particle of alerting; sharpens the call)",
+       "say": "O! you or one",
        "audio": "w-109_001_002.mp3"
       },
       {
        "ar": "ٱلۡكَٰفِرُونَ",
        "tr": "al--kāfirū-na",
        "en": "the ones who reject faith / cover up the truth (plural ending: more than two males)",
+       "say": "the ones who reject faith or cover up the",
        "audio": "w-109_001_003.mp3"
       }
      ]
@@ -1456,24 +1629,28 @@
        "ar": "لَآ",
        "tr": "lā",
        "en": "not",
+       "say": "not",
        "audio": "w-109_002_001.mp3"
       },
       {
        "ar": "أَعۡبُدُ",
        "tr": "a--ʿbudu",
        "en": "I (do) worship / serve",
+       "say": "I worship or serve",
        "audio": "w-109_002_002.mp3"
       },
       {
        "ar": "مَا",
        "tr": "mā",
        "en": "what / that which",
+       "say": "what or that which",
        "audio": "w-109_002_003.mp3"
       },
       {
        "ar": "تَعۡبُدُونَ",
        "tr": "ta--ʿbudu--ūna",
        "en": "you (do) worship / serve (masculine plural) you all",
+       "say": "you worship or serve you all",
        "audio": "w-109_002_004.mp3"
       }
      ]
@@ -1488,30 +1665,35 @@
        "ar": "وَلَآ",
        "tr": "wa-lā",
        "en": "and not",
+       "say": "and not",
        "audio": "w-109_003_001.mp3"
       },
       {
        "ar": "أَنتُمۡ",
        "tr": "antum",
        "en": "you (plural, masculine)",
+       "say": "you",
        "audio": "w-109_003_002.mp3"
       },
       {
        "ar": "عَٰبِدُونَ",
        "tr": "ʿābid--ūna",
        "en": "worshipper / one who worships (masculine plural ending)",
+       "say": "worshipper or one who worships",
        "audio": "w-109_003_003.mp3"
       },
       {
        "ar": "مَآ",
        "tr": "mā",
        "en": "what / that which",
+       "say": "what or that which",
        "audio": "w-109_003_004.mp3"
       },
       {
        "ar": "أَعۡبُدُ",
        "tr": "a--ʿbudu",
        "en": "I (do) worship",
+       "say": "I worship",
        "audio": "w-109_003_005.mp3"
       }
      ]
@@ -1526,30 +1708,35 @@
        "ar": "وَلَآ",
        "tr": "wa-lā",
        "en": "and not",
+       "say": "and not",
        "audio": "w-109_004_001.mp3"
       },
       {
        "ar": "أَنَا۠",
        "tr": "anā",
        "en": "I (am)",
+       "say": "I",
        "audio": "w-109_004_002.mp3"
       },
       {
        "ar": "عَابِدٞ",
        "tr": "ʿābid--un",
        "en": "worshipper / one who worships a (indefinite marker)",
+       "say": "worshipper or one who worships a",
        "audio": "w-109_004_003.mp3"
       },
       {
        "ar": "مَّا",
        "tr": "mā",
        "en": "what / that which (here: the act of)",
+       "say": "what or that which",
        "audio": "w-109_004_004.mp3"
       },
       {
        "ar": "عَبَدتُّمۡ",
        "tr": "ʿabad--tum",
        "en": "worship(ed) you (plural)",
+       "say": "worship you",
        "audio": "w-109_004_005.mp3"
       }
      ]
@@ -1564,30 +1751,35 @@
        "ar": "وَ",
        "tr": "wa",
        "en": "and",
+       "say": "and",
        "audio": null
       },
       {
        "ar": "لَآ",
        "tr": "lā",
        "en": "not",
+       "say": "not",
        "audio": "w-109_005_001.mp3"
       },
       {
        "ar": "أَنتُمۡ",
        "tr": "antum",
        "en": "you (all)",
+       "say": "you",
        "audio": "w-109_005_002.mp3"
       },
       {
        "ar": "عَٰبِدُونَ",
        "tr": "ʿābid--ūna",
        "en": "worshipper / one who worships (masculine plural ending)",
+       "say": "worshipper or one who worships",
        "audio": "w-109_005_003.mp3"
       },
       {
        "ar": "مَآ أَعۡبُدُ",
        "tr": "mā-aʿbud--u",
        "en": "that which / (my) manner of I worship (indicative-mood ending)",
+       "say": "that which or manner of I worship",
        "audio": "w-109_005_004.mp3"
       }
      ]
@@ -1602,24 +1794,28 @@
        "ar": "لَكُمۡ",
        "tr": "la---kum",
        "en": "for / belonging to you (plural, men addressed)",
+       "say": "for or belonging to you",
        "audio": "w-109_006_001.mp3"
       },
       {
        "ar": "دِينُكُمۡ",
        "tr": "dīn--u--kum",
        "en": "religion / way of life / requital (subject-marking ending) your (plural, men addressed)",
+       "say": "religion or way of life or requital your",
        "audio": "w-109_006_002.mp3"
       },
       {
        "ar": "وَلِيَ",
        "tr": "wa--li---ya",
        "en": "and for / belonging to me",
+       "say": "and for or belonging to me",
        "audio": "w-109_006_003.mp3"
       },
       {
        "ar": "دِينِ",
        "tr": "dīn--i",
        "en": "religion / way of life / requital (remnant of \"my\")",
+       "say": "religion or way of life or requital",
        "audio": "w-109_006_004.mp3"
       }
      ]
@@ -1642,30 +1838,35 @@
        "ar": "تَبَّتۡ",
        "tr": "tabba--at",
        "en": "to perish, be ruined, come to nothing feminine-singular subject ending (agreeing with 'hands')",
+       "say": "to perish, be ruined, come to nothing feminine-singular subject",
        "audio": "w-111_001_001.mp3"
       },
       {
        "ar": "يَدَآ",
        "tr": "yadā",
        "en": "two hands (the long -ā ending marks 'two')",
+       "say": "two hands",
        "audio": "w-111_001_002.mp3"
       },
       {
        "ar": "أَبِي",
        "tr": "abī",
        "en": "father of",
+       "say": "father of",
        "audio": "w-111_001_003.mp3"
       },
       {
        "ar": "لَهَبٖ",
        "tr": "lahab--in",
        "en": "flame, blaze the '-in' ending: genitive + indefinite (no 'the')",
+       "say": "flame, blaze the -in ending: genitive + indefinite",
        "audio": "w-111_001_004.mp3"
       },
       {
        "ar": "وَتَبَّ",
        "tr": "wa-tabba",
        "en": "and he perished / was ruined",
+       "say": "and he perished or was ruined",
        "audio": "w-111_001_005.mp3"
       }
      ]
@@ -1680,36 +1881,42 @@
        "ar": "مَآ",
        "tr": "mā",
        "en": "not",
+       "say": "not",
        "audio": "w-111_002_001.mp3"
       },
       {
        "ar": "أَغۡنَىٰ",
        "tr": "aghna--ā",
        "en": "availed / warded off (Form IV) he/it (3rd-person masc. past ending)",
+       "say": "availed or warded off he or it",
        "audio": "w-111_002_002.mp3"
       },
       {
        "ar": "عَنۡهُ",
        "tr": "ʿan--hu",
        "en": "from / on behalf of him (attached pronoun)",
+       "say": "from or on behalf of him",
        "audio": "w-111_002_003.mp3"
       },
       {
        "ar": "مَالُهُۥ",
        "tr": "mālu--hu",
        "en": "wealth / property his (attached possessive pronoun)",
+       "say": "wealth or property his",
        "audio": "w-111_002_004.mp3"
       },
       {
        "ar": "وَمَا",
        "tr": "wa-mā",
        "en": "and what / that which",
+       "say": "and what or that which",
        "audio": "w-111_002_005.mp3"
       },
       {
        "ar": "كَسَبَ",
        "tr": "kasaba",
        "en": "he earned / acquired",
+       "say": "he earned or acquired",
        "audio": "w-111_002_006.mp3"
       }
      ]
@@ -1724,24 +1931,28 @@
        "ar": "سَيَصۡلَىٰ",
        "tr": "sa--ya--ṣlā",
        "en": "shall / will soon (future marker) he (3rd-person masculine prefix) roast / be burned by fire",
+       "say": "shall or will soon he roast or be burned",
        "audio": "w-111_003_001.mp3"
       },
       {
        "ar": "نَارٗا",
        "tr": "nār--an",
        "en": "fire a (indefinite object ending)",
+       "say": "fire a",
        "audio": "w-111_003_002.mp3"
       },
       {
        "ar": "ذَاتَ",
        "tr": "dhāta",
        "en": "possessor of / having (feminine)",
+       "say": "possessor of or having",
        "audio": "w-111_003_003.mp3"
       },
       {
        "ar": "لَهَبٖ",
        "tr": "lahab--in",
        "en": "flame / blaze of (indefinite genitive ending)",
+       "say": "flame or blaze of",
        "audio": "w-111_003_004.mp3"
       }
      ]
@@ -1756,18 +1967,21 @@
        "ar": "وَٱمۡرَأَتُهُۥ",
        "tr": "wa-imraʾatu--hu",
        "en": "and wife (of) his",
+       "say": "and wife of his",
        "audio": "w-111_004_001.mp3"
       },
       {
        "ar": "حَمَّالَةَ",
        "tr": "ḥammālata",
        "en": "constant/zealous carrier (feminine)",
+       "say": "constant or zealous carrier",
        "audio": "w-111_004_002.mp3"
       },
       {
        "ar": "ٱلۡحَطَبِ",
        "tr": "al--ḥaṭabi",
        "en": "the firewood / kindling",
+       "say": "the firewood or kindling",
        "audio": "w-111_004_003.mp3"
       }
      ]
@@ -1782,30 +1996,35 @@
        "ar": "فِي",
        "tr": "fī",
        "en": "in / upon",
+       "say": "in or upon",
        "audio": "w-111_005_001.mp3"
       },
       {
        "ar": "جِيدِهَا",
        "tr": "jīdi-hā",
        "en": "neck her",
+       "say": "neck her",
        "audio": "w-111_005_002.mp3"
       },
       {
        "ar": "حَبۡلٞ",
        "tr": "ḥabl--un",
        "en": "rope a (indefinite, nominative)",
+       "say": "rope a",
        "audio": "w-111_005_003.mp3"
       },
       {
        "ar": "مِّن",
        "tr": "min",
        "en": "of / from",
+       "say": "of or from",
        "audio": "w-111_005_004.mp3"
       },
       {
        "ar": "مَّسَدِۭ",
        "tr": "masad--in",
        "en": "palm-fibre / twisted rope (genitive, indefinite)",
+       "say": "palm-fibre or twisted rope",
        "audio": "w-111_005_005.mp3"
       }
      ]
