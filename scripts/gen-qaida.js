@@ -65,7 +65,10 @@ stages.push({
   id: "harakat", n: 3,
   title: "الحَرَكَات", titleEn: "Fatha, kasra, damma",
   teaches: "One letter, three different noises. This is the whole of early reading.",
-  rows: L.map(l => [cell(l + FATHA), cell(l + KASRA), cell(l + DAMMA)]),
+  rows: L.map(l => {
+    if (l === ALIF) return [cell("أَ"), cell("إِ"), cell("أُ")];
+    return [cell(l + FATHA), cell(l + KASRA), cell(l + DAMMA)];
+  }),
 });
 
 /* ---- 4. tanween ---- */
@@ -73,7 +76,10 @@ stages.push({
   id: "tanween", n: 4,
   title: "التَّنْوِين", titleEn: "Tanween — the doubled marks",
   teaches: "Two marks instead of one, and an n sound appears at the end: an, in, un.",
-  rows: L.map(l => [cell(l + FATHATAN + ALIF), cell(l + KASRATAN), cell(l + DAMMATAN)]),
+  rows: L.map(l => {
+    if (l === ALIF) return [cell("ءً"), cell("ءٍ"), cell("ءٌ")];
+    return [cell(l + FATHATAN + ALIF), cell(l + KASRATAN), cell(l + DAMMATAN)];
+  }),
 });
 
 /* ---- 5. the long vowels ---- */
@@ -81,7 +87,10 @@ stages.push({
   id: "mudood", n: 5,
   title: "المُدُود", titleEn: "The long vowels",
   teaches: "Hold the sound. A fatha with an alif after it becomes aaa, a kasra with a ya becomes eee, a damma with a waw becomes ooo.",
-  rows: L.map(l => [cell(l + FATHA + ALIF), cell(l + KASRA + YA), cell(l + DAMMA + WAW)]),
+  rows: L.map(l => {
+    if (l === ALIF) return [cell("آ"), cell("إِي"), cell("أُو")];
+    return [cell(l + FATHA + ALIF), cell(l + KASRA + YA), cell(l + DAMMA + WAW)];
+  }),
 });
 
 /* ---- 6. sukoon ---- */
@@ -89,10 +98,10 @@ stages.push({
   id: "sukoon", n: 6,
   title: "السُّكُون", titleEn: "Sukoon — the stop",
   teaches: "A little circle means no vowel at all. The letter just stops. This is what Level 2 books are full of.",
-  /* shown after a vowelled alif so it is pronounceable on its own */
-  rows: L.filter(l => l !== ALIF).map(l => [
-    cell("أَ" + l + SUKOON), cell("إِ" + l + SUKOON), cell("أُ" + l + SUKOON),
-  ]),
+  rows: L.map(l => {
+    if (l === ALIF) return [cell("أَأْ"), cell("إِئْ"), cell("أُؤْ")];
+    return [cell("أَ" + l + SUKOON), cell("إِ" + l + SUKOON), cell("أُ" + l + SUKOON)];
+  }),
 });
 
 /* ---- 7. shadda ---- */
@@ -100,9 +109,10 @@ stages.push({
   id: "shadda", n: 7,
   title: "الشَّدَّة", titleEn: "Shadda — hold it twice",
   teaches: "The little w means the letter is said twice, held. Level 3 books need this one.",
-  rows: L.filter(l => l !== ALIF).map(l => [
-    cell("أَ" + l + SHADDA + FATHA), cell("أَ" + l + SHADDA + KASRA), cell("أَ" + l + SHADDA + DAMMA),
-  ]),
+  rows: L.map(l => {
+    if (l === ALIF) return [cell("أَأَّ"), cell("أَأِّ"), cell("أَأُّ")];
+    return [cell("أَ" + l + SHADDA + FATHA), cell("أَ" + l + SHADDA + KASRA), cell("أَ" + l + SHADDA + DAMMA)];
+  }),
 });
 
 /* ---- 8. the two lams ---- */
@@ -111,13 +121,11 @@ stages.push({
   title: "اللَّام الشَّمْسِيَّة وَالقَمَرِيَّة", titleEn: "The two kinds of al-",
   teaches: "Sometimes you hear the l in al-, and sometimes it vanishes into the next letter and doubles it. Say them and listen for the difference. Level 4 books need this.",
   pairs: SUN.map(l => ({
-    sun: cell("اَل" + l + SHADDA + FATHA, null),
+    sun: cell("اَل" + l + SHADDA + FATHA, "اَل" + l + SHADDA + FATHA),
     label: l,
   })),
-  /* alif is NOT in the moon list: اَلْاَ is not a thing anyone says, and the
-     generator produced it as a cell. The moon letters are the ones you can
-     actually hear the lam in front of. */
-  moon: "ب ج ح خ ع غ ف ق ك م ه و ي".split(" ").map(l => cell("اَلْ" + l + FATHA)),
+  moon: ["أ", "ب", "ج", "ح", "خ", "ع", "غ", "ف", "ق", "ك", "م", "ه", "و", "ي"].map(l =>
+    cell("اَلْ" + (l === "أ" ? "أَ" : l + FATHA))),
 });
 
 /* ---- 9. real words, real reciter ---- */

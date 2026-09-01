@@ -231,8 +231,7 @@ def wanted():
         out[norm(extra)] = extra
     return {k: v for k, v in out.items() if (v[1] if isinstance(v, tuple) else v).strip()}
 
-async def render(text, path, rate, voice=VOICE):
-    pitch = "+5Hz" if voice == VOICE else "+0Hz"
+async def render(text, path, rate, voice=VOICE, pitch="+0Hz"):
     await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).save(path)
 
 # THE FILENAME HASHES THE KEY, NOT THE TEXT — and that is a trap, because the
@@ -272,13 +271,17 @@ async def main():
         if not force and os.path.exists(path) and os.path.getsize(path) > 400 and not changed:
             skipped += 1
             continue
+        pitch = "+0Hz"
         if isinstance(text, tuple):          # ("EN", "the words")
-            voice, spoken, rate = EN_VOICE, text[1], RATE_EN
+            voice, spoken, rate, pitch = EN_VOICE, text[1], RATE_EN, "+0Hz"
+        elif key.startswith("q:") or key.startswith("snd:") or key.startswith("nam:"):
+            # Qaida syllables & single letters: clear, precise, authentic Tajweed pronunciation
+            voice, spoken, rate, pitch = VOICE, text, "-10%", "+0Hz"
         else:
-            voice, spoken = VOICE, text
-            rate = RATE_SOUND if key.startswith("snd:") else RATE_WORD
+            # Storybook sentences and lively narration
+            voice, spoken, rate, pitch = VOICE, text, RATE_WORD, "+4Hz"
         try:
-            await render(spoken, path, rate, voice)
+            await render(spoken, path, rate, voice, pitch)
             made += 1
             print(f"  {key:28s} {spoken}")
         except Exception as e:

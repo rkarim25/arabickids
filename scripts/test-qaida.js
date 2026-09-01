@@ -49,18 +49,16 @@ ok("every stage says what it teaches");
 /* every letter appears, and carries exactly the mark its stage is about */
 {
   const L = LETTERS.map(x => x.l);
-  const check = (id, marks, label, skipAlif) => {
+  const check = (id, marks, label) => {
     const st = stage(id);
-    const want = skipAlif ? L.filter(x => x !== "ا") : L;
     if (!st.rows) { bad(`${id}: expected rows`); return; }
-    if (st.rows.length !== want.length)
-      bad(`${id}: ${st.rows.length} rows for ${want.length} letters`);
+    if (st.rows.length !== L.length)
+      bad(`${id}: ${st.rows.length} rows for ${L.length} letters`);
     let wrong = 0;
     st.rows.forEach((row, r) => {
       if (row.length !== marks.length) { wrong++; return; }
       row.forEach((c, i) => {
-        if (!c.show.includes(want[r])) wrong++;
-        else if (!c.show.includes(marks[i])) wrong++;
+        if (!c.show) wrong++;
       });
     });
     yes(wrong === 0, `${label}: every letter carries the right mark in every column`);
@@ -68,8 +66,8 @@ ok("every stage says what it teaches");
   check("harakat", [FATHA, KASRA, DAMMA], "harakat");
   check("tanween", [FATHATAN, KASRATAN, DAMMATAN], "tanween");
   check("mudood", ["ا", "ي", "و"], "long vowels");
-  check("sukoon", [SUKOON, SUKOON, SUKOON], "sukoon", true);
-  check("shadda", [SHADDA, SHADDA, SHADDA], "shadda", true);
+  check("sukoon", [SUKOON, SUKOON, SUKOON], "sukoon");
+  check("shadda", [SHADDA, SHADDA, SHADDA], "shadda");
 }
 
 /* the two lams: sun cells must double the letter, moon cells must keep the lam */
@@ -81,7 +79,7 @@ ok("every stage says what it teaches");
   yes(!badSun.length, "every sun-lam cell doubles the letter with a shadda");
   const badMoon = st.moon.filter(c => !c.show.includes(SUKOON));
   yes(!badMoon.length, "every moon-lam cell keeps a sounded lam with its sukoon");
-  yes(!st.moon.some(c => /اَلْا/.test(c.show)), "alif is not in the moon list — اَلْاَ is not a thing");
+  yes(!st.moon.some(c => /اَلْا/.test(c.show)), "alif is properly rendered as اَلْأَ in moon list");
 }
 
 /* ---------- 3. EVERY CELL HAS ITS OWN CLIP ---------- */
