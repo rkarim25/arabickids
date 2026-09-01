@@ -25,54 +25,123 @@
    carry a punchline and the illustration has to. */
 
 function w1Kitchen(extra = '') {
-  return `${room({ wall: '#E8F1E4', win: 620, rug: null })}
-    <rect x="70" y="250" width="300" height="24" rx="8" fill="${C.woodD}"/>
-    <rect x="80" y="274" width="280" height="108" fill="${C.wood}"/>
-    <rect x="130" y="298" width="74" height="58" rx="6" fill="${C.boxL}"/>
-    <rect x="236" y="298" width="74" height="58" rx="6" fill="${C.boxL}"/>
+  return `<!-- warm wall with soft crown molding -->
+    <rect width="800" height="382" fill="#FAF6EE"/>
+    <rect width="800" height="14" fill="#E2D4BF"/>
+    <rect y="14" width="800" height="6" fill="#D0C0A8"/>
+    <!-- pastel mint wainscoting with wall panels -->
+    <rect y="240" width="800" height="142" fill="#E2EEE7"/>
+    <rect y="234" width="800" height="8" fill="#BED6C9"/>
+    <!-- vertical wainscot panels -->
+    <g fill="#D5E6DE">
+      <rect x="25" y="250" width="95" height="112" rx="4"/>
+      <rect x="135" y="250" width="95" height="112" rx="4"/>
+      <rect x="245" y="250" width="95" height="112" rx="4"/>
+      <rect x="355" y="250" width="95" height="112" rx="4"/>
+      <rect x="465" y="250" width="95" height="112" rx="4"/>
+      <rect x="575" y="250" width="95" height="112" rx="4"/>
+      <rect x="685" y="250" width="95" height="112" rx="4"/>
+    </g>
+    <!-- skirting board -->
+    <rect y="366" width="800" height="16" fill="#C8B8A0"/>
+    <rect y="364" width="800" height="4" fill="#B0A088"/>
+    <!-- warm hardwood floor -->
+    <rect y="382" width="800" height="138" fill="#D99B62"/>
+    <g stroke="#BE7E45" stroke-width="2" opacity="0.6">
+      <line x1="0" y1="424" x2="800" y2="424"/>
+      <line x1="0" y1="468" x2="800" y2="468"/>
+      <line x1="0" y1="512" x2="800" y2="512"/>
+      <line x1="160" y1="382" x2="160" y2="424"/><line x1="480" y1="382" x2="480" y2="424"/>
+      <line x1="320" y1="424" x2="320" y2="468"/><line x1="640" y1="424" x2="640" y2="468"/>
+      <line x1="180" y1="468" x2="180" y2="512"/><line x1="500" y1="468" x2="500" y2="512"/>
+    </g>
+    <!-- kitchen window -->
+    ${windowAt(600, 50)}
+    <!-- wall shelves with jars and tea kettle -->
+    <g transform="translate(60, 80)">
+      <rect width="280" height="12" rx="4" fill="#9E6840"/>
+      <rect x="20" y="12" width="10" height="20" rx="2" fill="#7D4F2D"/>
+      <rect x="250" y="12" width="10" height="20" rx="2" fill="#7D4F2D"/>
+      <!-- jars -->
+      <rect x="30" y="-32" width="26" height="32" rx="5" fill="#F4A261"/>
+      <ellipse cx="43" cy="-32" rx="11" ry="3" fill="#E76F51"/>
+      <rect x="70" y="-36" width="30" height="36" rx="5" fill="#2A9D8F"/>
+      <circle cx="85" cy="-40" r="6" fill="#E76F51"/>
+      <rect x="114" y="-28" width="24" height="28" rx="4" fill="#E9C46A"/>
+      <!-- hanging copper pans -->
+      <circle cx="170" cy="24" r="14" fill="#D9824C"/><circle cx="170" cy="24" r="10" fill="#BF6835"/><line x1="170" y1="12" x2="170" y2="10" stroke="#5A4633" stroke-width="3"/>
+      <circle cx="210" cy="28" r="18" fill="#D9824C"/><circle cx="210" cy="28" r="14" fill="#BF6835"/><line x1="210" y1="12" x2="210" y2="10" stroke="#5A4633" stroke-width="3"/>
+    </g>
+    <!-- braided oval kitchen rug in center -->
+    <ellipse cx="380" cy="436" rx="240" ry="48" fill="#FAF0E1"/>
+    <ellipse cx="380" cy="436" rx="230" ry="42" fill="none" stroke="#E2C59D" stroke-width="4" stroke-dasharray="8,6"/>
+    <ellipse cx="380" cy="436" rx="170" ry="30" fill="#F5DCBA" opacity="0.6"/>
+    <!-- Lulu's food bowl in left corner -->
+    <g transform="translate(100, 430)">
+      ${shadow(0, 2, 26)}
+      <ellipse cx="0" cy="0" rx="26" ry="10" fill="#E76F51"/>
+      <ellipse cx="0" cy="-3" rx="22" ry="8" fill="#FFF2E0"/>
+      <circle cx="-5" cy="-3" r="3" fill="#2A9D8F"/><circle cx="5" cy="-3" r="3" fill="#2A9D8F"/>
+      <path d="M -7,-3 q 7,5 14,0" stroke="#2A9D8F" stroke-width="2" fill="none"/>
+    </g>
     ${extra}`;
 }
-function w1a() {   // مَاذَا تُرِيدُ؟
-  return w1Kitchen(`${adam(560, 382, 'point', 1.0, true)}${catSit(300, 382, 0.8)}${qmarks(430, 190)}`);
-}
-function w1b() {   // أُرِيدُ سَمَكَة.
-  return w1Kitchen(`${catSit(300, 382, 0.85)}
-    <g transform="translate(470,330)">
-      <ellipse cx="0" cy="0" rx="34" ry="20" fill="#7FB0D6"/>
-      <path d="M 30,0 l 22,-14 v 28 Z" fill="#5E93BC"/>
-      <circle cx="-14" cy="-5" r="4" fill="#fff"/><circle cx="-14" cy="-5" r="2" fill="#332A20"/>
-    </g>${sparkle(560, 240, 0.9)}`);
-}
-function w1c() {   // أُرِيدُ دَجَاجَة.
-  return w1Kitchen(`${catSit(300, 382, 0.9)}
-    <g transform="translate(480,352)">
-      <ellipse cx="0" cy="-22" rx="34" ry="26" fill="#F6F1E7"/>
-      <circle cx="24" cy="-50" r="15" fill="#F6F1E7"/>
-      <path d="M 37,-52 l 16,4 -16,5 Z" fill="${C.sun}"/>
-      <circle cx="27" cy="-54" r="2.6" fill="#332A20"/>
-      <path d="M 20,-64 q 5,-10 10,-2" fill="#E15554"/>
-    </g>${sparkle(580, 250, 0.8)}`);
-}
-function w1d() {   // أُرِيدُ عَصِير!
-  return w1Kitchen(`${catSit(300, 382, 0.95)}${cup(480, 356, 1.25, '#E8A33D')}
-    ${sparkle(560, 246, 1)}${sparkle(210, 236, 0.7, '#2A9D8F')}`);
-}
-function w1e() {   // أُرِيدُ مَامَا!
-  return w1Kitchen(`${mama(520, 382, 'open', 0.95, true)}${catSit(300, 382, 1.0)}
-    ${heart(410, 210, 1.1)}`);
-}
-function w1f() {   // لُولُو كَبِيرَة!  — the payoff: an enormously round cat
-  return `${room({ wall: '#FDF1DE', win: 640, rug: [400, 404] })}
-    ${couch(220, 382)}${babaOnCouch(220, 382)}
-    <g transform="translate(520,382) scale(1.9)">
-      ${catSleep(0, -28, 1)}
+
+function kitchenTable(foodSvg = '') {
+  return `<g transform="translate(480, 382)">
+    ${shadow(0, 4, 150)}
+    <!-- table legs -->
+    <rect x="-140" y="-120" width="18" height="120" rx="4" fill="#8F5836"/>
+    <rect x="122" y="-120" width="18" height="120" rx="4" fill="#8F5836"/>
+    <rect x="-110" y="-110" width="14" height="110" rx="3" fill="#754425"/>
+    <rect x="96" y="-110" width="14" height="110" rx="3" fill="#754425"/>
+    <!-- tabletop -->
+    <rect x="-160" y="-136" width="320" height="24" rx="8" fill="#B5764A"/>
+    <rect x="-156" y="-140" width="312" height="8" rx="4" fill="#C8895C"/>
+    <!-- checkered tablecloth runner -->
+    <rect x="-110" y="-140" width="220" height="30" rx="4" fill="#FFFFFF"/>
+    <g fill="#F2A5A5" opacity="0.6">
+      <rect x="-100" y="-140" width="20" height="28"/>
+      <rect x="-60" y="-140" width="20" height="28"/>
+      <rect x="-20" y="-140" width="20" height="28"/>
+      <rect x="20" y="-140" width="20" height="28"/>
+      <rect x="60" y="-140" width="20" height="28"/>
     </g>
-    ${zzz(600, 300, '#7A6A55', 1.1)}${heart(430, 200, 0.9)}`;
+    <!-- food on table -->
+    <g transform="translate(0, -140)">${foodSvg}</g>
+  </g>`;
 }
+
+function w1Cover() {
+  return artScene('madha1-cover.jpg', 'Sunlit kitchen with dining table');
+}
+
+function w1a() {   // مَاذَا تُرِيدُ؟
+  return artScene('madha1-cover.jpg', 'Sunlit kitchen with dining table');
+}
+
+function w1b() {   // أُرِيدُ سَمَكَة.
+  return artScene('madha1-1.jpg', 'Grilled fish platter with lemon on the table');
+}
+
+function w1c() {   // أُرِيدُ دَجَاجَة.
+  return artScene('madha1-2.jpg', 'Mama serving golden roasted chicken in the kitchen');
+}
+
+function w1d() {   // أُرِيدُ عَصِير!
+  return artScene('madha1-3.jpg', 'Tall glass of fresh orange juice with straw on the table');
+}
+
+function w1e() {   // أُرِيدُ مَامَا!
+  return artScene('madha1-2.jpg', 'Mama smiling warmly in the kitchen');
+}
+
+function w1f() {   // لُولُو كَبِيرَة!
+  return artScene('madha1-4.jpg', 'Plump fluffy ginger tabby cat Lulu on the rug');
+}
+
 function w1End() {
-  return w1Kitchen(`${adam(560, 382, 'hips', 1.0, true)}${mama(180, 382, 'down', 0.95)}
-    <g transform="translate(380,382) scale(1.5)">${catSleep(0, -26, 1)}</g>
-    ${heart(380, 200, 1.2)}${sparkle(240, 220, 0.8)}`);
+  return artScene('madha1-end.jpg', 'Plump fluffy Lulu content in the kitchen');
 }
 
 const BOOK_MADHA = {
@@ -83,12 +152,12 @@ const BOOK_MADHA = {
   tag: 'أُرِيدُ · مَاذَا — the words you use most',
   words: [
     { ar: 'مَاذَا',   en: 'what?',     icon: LICONS.rel_who },
-    { ar: 'أُرِيدُ',  en: 'I want',    icon: LICONS.rel_this },
+    { ar: 'أُرِيدُ',  en: 'I want',    icon: LICONS.rel_want },
     { ar: 'مَاء',     en: 'water',     icon: LICONS.maa },
     { ar: 'سَمَكَة',  en: 'a fish',    icon: LICONS.hoot },
     { ar: 'دَجَاجَة', en: 'a chicken', icon: LICONS.tayr },
     { ar: 'عَصِير',   en: 'juice',     icon: LICONS.thamar },
-    { ar: 'مَامَا',   en: 'Mama',      icon: LICONS.walad },
+    { ar: 'مَامَا',   en: 'Mama',      icon: LICONS.mama },
     { ar: 'كَبِيرَة', en: 'big',       icon: LICONS.rel_big },
   ],
   pages: [
@@ -118,42 +187,53 @@ const BOOK_MADHA = {
    sitting on the missing shoe the whole time. */
 
 function m3House(extra = '') {
-  return `${room({ wall: '#FDF1DE', win: 660, rug: [420, 404] })}${extra}`;
+  return `${room({ wall: '#FDF5E8', win: 660, rug: [420, 410] })}
+    <!-- wall clock with swinging pendulum -->
+    <g transform="translate(180, 100)">
+      <rect x="-30" y="0" width="60" height="96" rx="8" fill="#8F5836"/>
+      <circle cx="0" cy="38" r="24" fill="#FFFFFF"/>
+      <circle cx="0" cy="38" r="20" fill="#FFF8F0"/>
+      <line x1="0" y1="38" x2="0" y2="24" stroke="${C.dark}" stroke-width="3" stroke-linecap="round"/>
+      <line x1="0" y1="38" x2="10" y2="44" stroke="${C.dark}" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="0" cy="38" r="3" fill="${C.dark}"/>
+      <line x1="0" y1="64" x2="6" y2="86" stroke="#FFD166" stroke-width="3"/>
+      <circle cx="6" cy="86" r="6" fill="#FFD166"/>
+    </g>
+    <!-- framed landscape art -->
+    <g transform="translate(360, 90)">
+      <rect width="90" height="68" rx="6" fill="${C.woodD}"/>
+      <rect x="6" y="6" width="78" height="56" rx="4" fill="#FFF8F0"/>
+      ${heart(45, 24, 0.9, '#F2A5A5')}
+    </g>
+    ${extra}`;
 }
+
 function m3a() {   // قَالَتْ أُمِّي: هَيَّا إِلَى الْمَسْجِدِ!
-  return m3House(`${mama(240, 382, 'point', 1.0, true)}${adam(560, 382, 'down', 0.95)}
-    ${maryam(680, 382, 'up', 0.95)}${sparkle(400, 190, 0.9)}`);
+  return artScene('hidhaa1-1.jpg', 'Adam looking for his missing shoe');
 }
+
 function m3b() {   // قَالَ أَدَم: أَيْنَ حِذَائِي؟
-  return m3House(`${adam(400, 382, 'wonder', 1.1)}${qmarks(400, 176)}
-    ${sneaker(600, 382)}`);
+  return artScene('hidhaa1-1.jpg', 'Adam scratching head with one shoe on');
 }
+
 function m3c() {   // بَحَثَ أَدَم فِي كُلِّ مَكَانٍ.
-  return `${room({ wall: C.wallBed, win: 100, rug: null })}
-    ${bed(430, 382, 0.9)}
-    ${adam(230, 382, 'reach', 1.0)}
-    ${box(650, 382, 0.8)}
-    ${qmarks(560, 190)}${sparkle(180, 210, 0.7)}`;
+  return artScene('hidhaa1-1.jpg', 'Adam searching everywhere for his shoe');
 }
+
 function m3d() {   // قَالَتْ مَرْيَم: اُنْظُرْ! هُنَاكَ.
-  return m3House(`${maryam(250, 382, 'point', 1.05, true)}
-    ${adam(560, 382, 'wonder', 0.95)}${sparkle(410, 200, 1)}`);
+  return artScene('hidhaa1-4.jpg', 'Maryam pointing at Lulu on the shoe');
 }
-function m3e() {   // الْحِذَاءُ مَعَ لُولُو!  — the gag
-  return m3House(`${couch(380, 382)}
-    ${catSit(430, 382, 0.95)}
-    <g transform="translate(300,382)">${sneaker(0, 0)}</g>
-    ${sparkle(240, 220, 0.9)}${heart(520, 214, 0.75)}`);
+
+function m3e() {   // الْحِذَاءُ مَعَ لُولُو!
+  return artScene('hidhaa1-4.jpg', 'Lulu sitting proudly on top of the red sneaker');
 }
+
 function m3f() {   // ضَحِكَتْ أُمِّي: هَيَّا بِنَا!
-  return masjidScene(false) + `${mama(180, 404, 'open', 0.95)}
-    ${adam(300, 404, 'hips', 0.9)}${maryam(390, 404, 'clap', 0.9)}
-    ${heart(250, 250, 1)}${sparkle(660, 230, 0.8)}`;
+  return artScene('hidhaa1-5.jpg', 'Walking happily to the masjid with Baba and Maryam');
 }
+
 function m3End() {
-  return masjidScene(true) + `${mama(200, 404, 'down', 0.9)}
-    ${adam(300, 404, 'down', 0.85)}${maryam(380, 404, 'clap', 0.85)}
-    ${catSit(470, 404, 0.6)}${heart(300, 240, 1.1)}`;
+  return artScene('hidhaa1-end.jpg', 'Family walking to the masjid together');
 }
 
 const BOOK_HIDHAA = {
@@ -165,8 +245,8 @@ const BOOK_HIDHAA = {
   words: [
     { ar: 'قَالَ',    en: 'he said',   icon: LICONS.rel_who },
     { ar: 'قَالَتْ',  en: 'she said',  icon: LICONS.rel_who },
-    { ar: 'أُمِّي',   en: 'my mother', icon: LICONS.walad },
-    { ar: 'حِذَاء',   en: 'a shoe',    icon: LICONS.rel_under },
+    { ar: 'أُمِّي',   en: 'my mother', icon: LICONS.mama },
+    { ar: 'حِذَاء',   en: 'a shoe',    icon: LICONS.sneaker },
     { ar: 'مَعَ',     en: 'with',      icon: LICONS.rel_and },
     { ar: 'إِلَى',    en: 'to',        icon: LICONS.rel_on },
     { ar: 'الْمَسْجِد', en: 'the masjid', icon: LICONS.salah },
@@ -201,39 +281,23 @@ const BOOK_HIDHAA = {
    No joke in this one, on purpose. */
 
 function d5Morning() {
-  return `${room({ wall: '#FDF1DE', win: 620, rug: null })}
-    ${bed(300, 382, 0.95)}
-    ${adam(560, 382, 'reach', 0.95, true)}
-    <circle cx="660" cy="120" r="40" fill="${C.sun}"/>${sparkle(470, 200, 0.9)}`;
+  return artScene('yawmi1-1.jpg', 'Morning sunrise in bedroom');
 }
+
 function d5Food() {
-  return `${room({ wall: '#E8F1E4', win: 120, rug: null })}
-    <rect x="240" y="300" width="330" height="16" rx="6" fill="${C.woodD}"/>
-    <rect x="270" y="316" width="14" height="66" fill="${C.wood}"/>
-    <rect x="526" y="316" width="14" height="66" fill="${C.wood}"/>
-    ${plateOf(400, 300, 1.05)}
-    ${adam(200, 382, 'down', 0.95)}${maryam(640, 382, 'clap', 0.9, true)}
-    ${sparkle(400, 200, 0.8)}`;
+  return artScene('yawmi1-2.jpg', 'Breakfast table saying Bismillah');
 }
+
 function d5Thanks() {
-  return `${room({ wall: '#E8F1E4', win: 120, rug: null })}
-    <rect x="240" y="300" width="330" height="16" rx="6" fill="${C.woodD}"/>
-    <rect x="270" y="316" width="14" height="66" fill="${C.wood}"/>
-    <rect x="526" y="316" width="14" height="66" fill="${C.wood}"/>
-    <ellipse cx="400" cy="296" rx="46" ry="13" fill="#FFFFFF"/>
-    ${adam(200, 382, 'hips', 0.95)}${mama(640, 382, 'open', 0.95, true)}
-    ${heart(400, 200, 1.1)}`;
+  return artScene('yawmi1-3.jpg', 'After food saying Alhamdulillah');
 }
+
 function d5Night() {
-  return `${room({ wall: C.wallBed, win: 640, rug: null })}
-    ${bed(360, 382, 1.05)}
-    <g transform="translate(430,300)">${catSleep(0, 0, 0.7)}</g>
-    ${zzz(560, 250, '#7A6A55', 1)}
-    ${sparkle(200, 200, 0.7)}`;
+  return artScene('yawmi1-4.jpg', 'Bedtime starlit room before sleep');
 }
+
 function d5End() {
-  return nightBase(16) + `${houseSil(400, 380, 0.9)}${moonFull(650, 120, 44)}
-    ${bigStar(160, 150, 0.8)}${bigStar(240, 230, 0.5)}`;
+  return artScene('yawmi1-end.jpg', 'Nighttime stars and peaceful sleep');
 }
 
 const BOOK_YAWMI = {
@@ -269,8 +333,235 @@ const BOOK_YAWMI = {
   ],
 };
 
+/* ═══════════════ 4. «الْأَرْنَبُ وَالْقِرْد» — Level 2 (Red) ═══════════════════
+   A hilarious comic-style story in the spirit of Bunny vs Monkey!
+   Fast, funny slapstick with simple 3-4 word sentences for new readers.
+   Features sukoon and moon letters: الْأَرْنَب، الْقِرْد، الْمَوْز، الْجَزَر. */
+
+function meadowBg(extra = '') {
+  return `<rect width="800" height="520" fill="#BDE0FE"/>
+    <!-- bright sun & cartoon clouds -->
+    <circle cx="120" cy="90" r="48" fill="#FFEAA7" opacity="0.4"/>
+    <circle cx="120" cy="90" r="38" fill="${C.sun}"/>
+    <ellipse cx="640" cy="80" rx="70" ry="24" fill="#FFFFFF" opacity="0.95"/>
+    <ellipse cx="590" cy="95" rx="50" ry="20" fill="#FFFFFF" opacity="0.95"/>
+    <ellipse cx="360" cy="60" rx="60" ry="20" fill="#FFFFFF" opacity="0.9"/>
+    <!-- green rolling hills -->
+    <path d="M 0,340 Q 240,280 480,330 T 800,310 L 800,520 L 0,520 Z" fill="#88D49E"/>
+    <path d="M 0,380 Q 360,340 800,380 L 800,520 L 0,520 Z" fill="#6BCB77"/>
+    <!-- tree on right side with vines -->
+    <g transform="translate(680, 260)">
+      <path d="M -30,120 Q -10,0 20,-60 Q 60,0 70,120 Z" fill="#8F5836"/>
+      <!-- lush foliage -->
+      <circle cx="10" cy="-90" r="70" fill="#2E7D32"/>
+      <circle cx="-30" cy="-110" r="50" fill="#388E3C"/>
+      <circle cx="50" cy="-110" r="50" fill="#43A047"/>
+      <circle cx="10" cy="-130" r="46" fill="#4CAF50"/>
+      <!-- leafy branch extending into scene -->
+      <path d="M -20,-40 Q -120,-60 -200,-30" stroke="#754425" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <ellipse cx="-160" cy="-35" rx="14" ry="8" fill="#4CAF50" transform="rotate(-20 -160 -35)"/>
+      <ellipse cx="-120" cy="-55" rx="14" ry="8" fill="#4CAF50" transform="rotate(30 -120 -55)"/>
+      <!-- hanging vine -->
+      <path d="M -180,-30 Q -210,40 -170,80" stroke="#388E3C" stroke-width="5" fill="none" stroke-linecap="round"/>
+    </g>
+    <!-- wildflowers -->
+    <g fill="#FFD166"><circle cx="80" cy="450" r="6"/><circle cx="180" cy="470" r="5"/><circle cx="320" cy="460" r="6"/><circle cx="440" cy="480" r="5"/></g>
+    <g fill="#E15554"><circle cx="120" cy="470" r="5"/><circle cx="260" cy="480" r="6"/><circle cx="380" cy="450" r="5"/></g>
+    ${extra}`;
+}
+
+function bunnyFigure(x, y, pose = 'stand', s = 1, flip = false) {
+  const arm = `fill="#FFFFFF" stroke="#D0DBE5" stroke-width="3"`;
+  let arms = `<ellipse cx="-16" cy="-24" rx="7" ry="12" ${arm}/><ellipse cx="16" cy="-24" rx="7" ry="12" ${arm}/>`;
+  let prop = '';
+  if (pose === 'carrot') {
+    arms = `<ellipse cx="-12" cy="-26" rx="8" ry="10" ${arm} transform="rotate(20 -12 -26)"/>
+            <ellipse cx="12" cy="-26" rx="8" ry="10" ${arm} transform="rotate(-20 12 -26)"/>`;
+    prop = `<g transform="translate(0, -22) rotate(15) scale(0.9)">
+      <polygon points="-8,0 8,0 0,36" fill="#F49E4C"/>
+      <path d="M -4,0 l -6,-12 M 0,0 l 0,-14 M 4,0 l 6,-12" stroke="#388E3C" stroke-width="3" stroke-linecap="round"/>
+    </g>`;
+  } else if (pose === 'shock') {
+    arms = `<ellipse cx="-24" cy="-44" rx="7" ry="14" ${arm} transform="rotate(-30 -24 -44)"/>
+            <ellipse cx="24" cy="-44" rx="7" ry="14" ${arm} transform="rotate(30 24 -44)"/>`;
+  } else if (pose === 'run') {
+    arms = `<ellipse cx="-22" cy="-20" rx="14" ry="6" ${arm} transform="rotate(20 -22 -20)"/>
+            <ellipse cx="22" cy="-28" rx="14" ry="6" ${arm} transform="rotate(-20 22 -28)"/>`;
+  }
+  return g(x, y, s, flip, `
+    ${shadow(0, 2, 38)}
+    <!-- fluffy tail -->
+    <circle cx="-28" cy="-18" r="10" fill="#FFFFFF" stroke="#D0DBE5" stroke-width="2"/>
+    <!-- feet -->
+    <ellipse cx="-16" cy="-4" rx="12" ry="7" fill="#FFFFFF" stroke="#D0DBE5" stroke-width="2"/>
+    <ellipse cx="16" cy="-4" rx="12" ry="7" fill="#FFFFFF" stroke="#D0DBE5" stroke-width="2"/>
+    <!-- body -->
+    <ellipse cx="0" cy="-24" rx="26" ry="22" fill="#FFFFFF" stroke="#D0DBE5" stroke-width="2.5"/>
+    <ellipse cx="0" cy="-22" rx="18" ry="15" fill="#F8FAFC"/>
+    <!-- ears -->
+    <g transform="translate(0, -68)">
+      <ellipse cx="-14" cy="-22" rx="8" ry="24" fill="#FFFFFF" stroke="#D0DBE5" stroke-width="2.5" transform="rotate(-10 -14 -22)"/>
+      <ellipse cx="-14" cy="-22" rx="4" ry="17" fill="#FADBD8" transform="rotate(-10 -14 -22)"/>
+      <ellipse cx="14" cy="-22" rx="8" ry="24" fill="#FFFFFF" stroke="#D0DBE5" stroke-width="2.5" transform="rotate(10 14 -22)"/>
+      <ellipse cx="14" cy="-22" rx="4" ry="17" fill="#FADBD8" transform="rotate(10 14 -22)"/>
+    </g>
+    <!-- head -->
+    <circle cx="0" cy="-56" r="24" fill="#FFFFFF" stroke="#D0DBE5" stroke-width="2.5"/>
+    <!-- eyes -->
+    ${pose === 'shock' ? `
+      <circle cx="-9" cy="-58" r="6" fill="#332A20"/><circle cx="-10" cy="-60" r="2.5" fill="#FFFFFF"/>
+      <circle cx="9" cy="-58" r="6" fill="#332A20"/><circle cx="8" cy="-60" r="2.5" fill="#FFFFFF"/>
+      <ellipse cx="0" cy="-46" rx="4" ry="7" fill="#E76F51"/>
+    ` : pose === 'laugh' ? `
+      <path d="M -13,-58 q 5,-6 10,0" stroke="#332A20" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M 3,-58 q 5,-6 10,0" stroke="#332A20" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M -7,-48 q 7,8 14,0" stroke="#5A4633" stroke-width="3" fill="#E76F51" stroke-linecap="round"/>
+    ` : `
+      <circle cx="-8" cy="-58" r="4.2" fill="#332A20"/><circle cx="-9" cy="-60" r="1.5" fill="#FFFFFF"/>
+      <circle cx="8" cy="-58" r="4.2" fill="#332A20"/><circle cx="7" cy="-60" r="1.5" fill="#FFFFFF"/>
+      <path d="M -6,-48 q 6,5 12,0" stroke="#5A4633" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    `}
+    <!-- cheeks & nose -->
+    <circle cx="-15" cy="-50" r="4" fill="#FADBD8"/>
+    <circle cx="15" cy="-50" r="4" fill="#FADBD8"/>
+    <polygon points="-3,-52 3,-52 0,-49" fill="#E76F51"/>
+    ${arms}
+    ${prop}
+  `);
+}
+
+function monkeyFigure(x, y, pose = 'hang', s = 1, flip = false) {
+  let body = '';
+  if (pose === 'hang') {
+    body = `
+      <!-- tail wrapped around branch above -->
+      <path d="M 0,30 Q -30,0 -20,-40 Q -10,-80 20,-70 Q 30,-50 10,-40" stroke="#8F5836" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <!-- hanging body upside down -->
+      <ellipse cx="0" cy="20" rx="20" ry="24" fill="#8F5836"/>
+      <ellipse cx="0" cy="20" rx="14" ry="17" fill="#FAD7A0"/>
+      <!-- arms waving -->
+      <path d="M -16,10 Q -36,0 -44,-16" stroke="#8F5836" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M 16,10 Q 36,20 46,36" stroke="#8F5836" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <!-- head -->
+      <g transform="translate(0, 56)">
+        <circle cx="-20" cy="-2" r="9" fill="#8F5836"/><circle cx="-20" cy="-2" r="5" fill="#FAD7A0"/>
+        <circle cx="20" cy="-2" r="9" fill="#8F5836"/><circle cx="20" cy="-2" r="5" fill="#FAD7A0"/>
+        <circle cx="0" cy="0" r="22" fill="#8F5836"/>
+        <ellipse cx="-7" cy="-3" rx="9" ry="10" fill="#FAD7A0"/>
+        <ellipse cx="7" cy="-3" rx="9" ry="10" fill="#FAD7A0"/>
+        <ellipse cx="0" cy="7" rx="13" ry="10" fill="#FAD7A0"/>
+        <circle cx="-7" cy="-4" r="3.6" fill="#332A20"/><circle cx="-8" cy="-6" r="1.3" fill="#FFFFFF"/>
+        <circle cx="7" cy="-4" r="3.6" fill="#332A20"/><circle cx="6" cy="-6" r="1.3" fill="#FFFFFF"/>
+        <path d="M -8,8 Q 0,16 8,8" stroke="#8F5836" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- holding banana -->
+      <g transform="translate(50, 40) rotate(-20) scale(0.8)">
+        <path d="M -16,-20 Q 14,-24 20,16 Q 18,22 14,22 Q 6,12 -12,-12 Z" fill="#FFD166"/>
+      </g>`;
+  } else {
+    body = `
+      ${shadow(0, 2, 40)}
+      <!-- curly tail -->
+      <path d="M -18,-24 Q -48,-30 -44,-60 Q -38,-80 -18,-70" stroke="#8F5836" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <!-- legs -->
+      <ellipse cx="-12" cy="-4" rx="8" ry="12" fill="#8F5836"/>
+      <ellipse cx="12" cy="-4" rx="8" ry="12" fill="#8F5836"/>
+      <!-- body -->
+      <ellipse cx="0" cy="-26" rx="22" ry="24" fill="#8F5836"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="17" fill="#FAD7A0"/>
+      <!-- head -->
+      <g transform="translate(0, -60)">
+        <circle cx="-22" cy="0" r="10" fill="#8F5836"/><circle cx="-22" cy="0" r="5.5" fill="#FAD7A0"/>
+        <circle cx="22" cy="0" r="10" fill="#8F5836"/><circle cx="22" cy="0" r="5.5" fill="#FAD7A0"/>
+        <circle cx="0" cy="0" r="23" fill="#8F5836"/>
+        <ellipse cx="-7" cy="-3" rx="9" ry="10" fill="#FAD7A0"/>
+        <ellipse cx="7" cy="-3" rx="9" ry="10" fill="#FAD7A0"/>
+        <ellipse cx="0" cy="8" rx="14" ry="11" fill="#FAD7A0"/>
+        <circle cx="-7" cy="-4" r="3.6" fill="#332A20"/><circle cx="-8" cy="-6" r="1.3" fill="#FFFFFF"/>
+        <circle cx="7" cy="-4" r="3.6" fill="#332A20"/><circle cx="6" cy="-6" r="1.3" fill="#FFFFFF"/>
+        <path d="M -8,8 Q 0,18 8,8" stroke="#8F5836" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- arms -->
+      <path d="M -16,-34 Q -32,-30 -38,-16" stroke="#8F5836" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M 16,-34 Q 32,-30 38,-16" stroke="#8F5836" stroke-width="8" fill="none" stroke-linecap="round"/>`;
+  }
+  return g(x, y, s, flip, body);
+}
+
+function bmCover() {
+  return artScene('arnab1-cover.jpg', 'Bunny and Monkey in the meadow');
+}
+
+function bm1() {   // هَذَا أَرْنَبٌ لَطِيف.
+  return artScene('arnab1-1.jpg', 'Bunny munching a carrot in the meadow');
+}
+
+function bm2() {   // وَهَذَا قِرْدٌ مَرِح!
+  return artScene('arnab1-2.jpg', 'Monkey hanging upside down with a banana');
+}
+
+function bm3() {   // الْقِرْدُ مَعَهُ مَوْزٌ كَبِير.
+  return artScene('arnab1-3.jpg', 'Monkey holding a giant banana');
+}
+
+function bm4() {   // أَخَذَ الْقِرْدُ جَزَرَ الْأَرْنَب!
+  return artScene('arnab1-4.jpg', 'Monkey snatching the carrot from Bunny');
+}
+
+function bm5() {   // الْأَرْنَبُ يَجْرِي وَرَاءَ الْقِرْد!
+  return artScene('arnab1-5.jpg', 'Bunny chasing Monkey through the flower garden');
+}
+
+function bm6() {   // أَكَلَ الْقِرْدُ مَوْزًا وَأَعْطَى الْجَزَر.
+  return artScene('arnab1-6.jpg', 'Monkey eating banana and giving the carrot back to Bunny');
+}
+
+function bm7() {   // ضَحِكَ الْأَرْنَبُ وَالْقِرْد!
+  return artScene('arnab1-7.jpg', 'Bunny and Monkey laughing together under the rainbow');
+}
+
+function bmEnd() {
+  return artScene('arnab1-end.jpg', 'Bunny and Monkey best friends under the rainbow');
+}
+
+const BOOK_ARNAB = {
+  id: 'arnab-2',
+  level: 2,
+  title: 'الْأَرْنَبُ وَالْقِرْد',
+  titleEn: 'Bunny and Monkey',
+  tag: 'أَرْنَب · قِرْد — a funny comic story',
+  words: [
+    { ar: 'أَرْنَب',  en: 'a bunny',   icon: LICONS.arnab },
+    { ar: 'قِرْد',    en: 'a monkey',  icon: LICONS.qird },
+    { ar: 'جَزَر',    en: 'a carrot',  icon: LICONS.jazar },
+    { ar: 'مَوْز',    en: 'a banana',  icon: LICONS.mawz },
+    { ar: 'أَكَلَ',   en: 'he ate',    icon: LICONS.khubz },
+    { ar: 'ضَحِكَ',  en: 'he laughed', icon: LICONS.heart2 },
+    { ar: 'يَجْرِي',  en: 'he runs',   icon: LICONS.sneaker },
+    { ar: 'كَبِير',   en: 'big',       icon: LICONS.rel_big },
+  ],
+  pages: [
+    { type: 'cover', svg: bmCover },
+    { type: 'words' },
+    { type: 'story', svg: bm1, ar: [{ t: 'هَذَا' }, { t: 'أَرْنَبٌ' }, { t: 'لَطِيف.' }], en: 'This is a gentle bunny.' },
+    { type: 'story', svg: bm2, ar: [{ t: 'وَهَذَا' }, { t: 'قِرْدٌ' }, { t: 'مَرِح!' }], en: 'And this is a playful monkey!' },
+    { type: 'story', svg: bm3, ar: [{ t: 'الْقِرْدُ' }, { t: 'مَعَهُ' }, { t: 'مَوْزٌ' }, { t: 'كَبِير.' }], en: 'The monkey has a big banana.' },
+    { type: 'story', svg: bm4, ar: [{ t: 'أَخَذَ' }, { t: 'الْقِرْدُ' }, { t: 'جَزَرَ' }, { t: 'الْأَرْنَب!' }], en: 'The monkey took the bunny\'s carrot!' },
+    { type: 'story', svg: bm5, ar: [{ t: 'الْأَرْنَبُ' }, { t: 'يَجْرِي' }, { t: 'وَرَاءَ' }, { t: 'الْقِرْد!' }], en: 'The bunny runs after the monkey!' },
+    { type: 'story', svg: bm6, ar: [{ t: 'أَكَلَ' }, { t: 'الْقِرْدُ' }, { t: 'مَوْزًا' }, { t: 'وَأَعْطَى' }, { t: 'الْجَزَر.' }], en: 'The monkey ate a banana and gave the carrot.' },
+    { type: 'story', svg: bm7, ar: [{ t: 'ضَحِكَ' }, { t: 'الْأَرْنَبُ' }, { t: 'وَالْقِرْد!' }], en: 'The bunny and the monkey laughed!' },
+    { type: 'game' },
+    { type: 'end', svg: bmEnd },
+  ],
+  game: [
+    { say: 'أَرْنَب', opts: ['arnab', 'qird', 'jazar'], ans: 0 },
+    { say: 'قِرْد',   opts: ['jazar', 'qird', 'mawz'], ans: 1 },
+    { say: 'مَوْز',   opts: ['arnab', 'qird', 'mawz'], ans: 2 },
+  ],
+};
+
 if (typeof BOOKS !== 'undefined') {
-  BOOKS.push(BOOK_MADHA, BOOK_HIDHAA, BOOK_YAWMI);
+  BOOKS.push(BOOK_MADHA, BOOK_HIDHAA, BOOK_YAWMI, BOOK_ARNAB);
   if (typeof renderShelf === 'function' && typeof document !== 'undefined'
       && document.querySelector && document.querySelector('#bookGrid')) renderShelf();
 }

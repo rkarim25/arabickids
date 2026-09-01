@@ -63,32 +63,47 @@ function svgWrap(inner) {
 
 function room({ wall = C.wall, win = 570, rug = null, plantAt = null } = {}) {
   let s = `<rect width="800" height="382" fill="${wall}"/>
+  <rect y="0" width="800" height="14" fill="#0000000A"/>
+  <rect y="366" width="800" height="16" fill="#00000008"/>
   <rect y="382" width="800" height="138" fill="${C.floor}"/>
+  <line x1="0" y1="416" x2="800" y2="416" stroke="${C.floorLine}" stroke-width="2" opacity="0.6"/>
+  <line x1="0" y1="456" x2="800" y2="456" stroke="${C.floorLine}" stroke-width="2" opacity="0.6"/>
+  <line x1="0" y1="496" x2="800" y2="496" stroke="${C.floorLine}" stroke-width="2" opacity="0.6"/>
   <rect y="378" width="800" height="8" fill="${C.floorLine}"/>`;
   if (win !== null) s += windowAt(win, 66);
-  if (rug) s += `<ellipse cx="${rug[0]}" cy="${rug[1]}" rx="160" ry="34" fill="${C.rug}"/>
-                 <ellipse cx="${rug[0]}" cy="${rug[1]}" rx="118" ry="23" fill="${C.rugD}"/>`;
+  if (rug) s += `<ellipse cx="${rug[0]}" cy="${rug[1]}" rx="170" ry="36" fill="${C.rug}"/>
+                 <ellipse cx="${rug[0]}" cy="${rug[1]}" rx="162" ry="30" fill="none" stroke="${C.rugD}" stroke-width="3" stroke-dasharray="6,6"/>
+                 <ellipse cx="${rug[0]}" cy="${rug[1]}" rx="124" ry="24" fill="${C.rugD}"/>`;
   if (plantAt) s += plant(plantAt[0], plantAt[1]);
   return s;
 }
 function windowAt(x, y) {
   return `<g transform="translate(${x},${y})">
-    <rect x="-9" y="-9" width="158" height="138" rx="16" fill="#FFFFFF"/>
-    <rect width="140" height="120" rx="10" fill="${C.sky}"/>
-    <circle cx="36" cy="32" r="18" fill="${C.sun}"/>
-    <path d="M 58,74 q 15,-13 30,0 q 15,-13 30,0" stroke="#FFFFFF" stroke-width="9" fill="none" stroke-linecap="round"/>
-    <rect x="66" width="9" height="120" fill="#FFFFFF"/>
-    <rect y="56" width="140" height="9" fill="#FFFFFF"/>
+    <rect x="-18" y="-20" width="176" height="6" rx="3" fill="${C.woodD}"/>
+    <circle cx="-18" cy="-17" r="6" fill="${C.woodD}"/><circle cx="158" cy="-17" r="6" fill="${C.woodD}"/>
+    <path d="M -14,-14 Q 4,50 -10,120 Q -4,50 6,-14 Z" fill="#F09CB1" opacity="0.85"/>
+    <path d="M 154,-14 Q 136,50 150,120 Q 144,50 134,-14 Z" fill="#F09CB1" opacity="0.85"/>
+    <rect x="-8" y="-8" width="156" height="136" rx="14" fill="#FFFFFF"/>
+    <rect width="140" height="120" rx="8" fill="${C.sky}"/>
+    <circle cx="36" cy="32" r="22" fill="#FFEAA7" opacity="0.4"/>
+    <circle cx="36" cy="32" r="17" fill="${C.sun}"/>
+    <path d="M 48,76 q 16,-14 32,0 q 16,-14 32,0" stroke="#FFFFFF" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M 18,92 q 14,-10 28,0" stroke="#FFFFFF" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <rect x="66" width="8" height="120" fill="#FFFFFF"/>
+    <rect y="56" width="140" height="8" fill="#FFFFFF"/>
+    <rect x="-14" y="118" width="168" height="10" rx="4" fill="#FFFFFF"/>
   </g>`;
 }
 function plant(x, y) {
   return `<g transform="translate(${x},${y})">
     ${shadow(0, 2, 34)}
-    <ellipse cx="-14" cy="-64" rx="13" ry="30" fill="#5FA777" transform="rotate(-24 -14 -64)"/>
-    <ellipse cx="14" cy="-64" rx="13" ry="30" fill="#5FA777" transform="rotate(24 14 -64)"/>
-    <ellipse cx="0" cy="-74" rx="13" ry="34" fill="#7BC08F"/>
-    <path d="M -26,-34 h 52 l -7,36 h -38 z" fill="#C96F4A"/>
-    <rect x="-30" y="-40" width="60" height="12" rx="6" fill="#B65E3C"/>
+    <ellipse cx="-16" cy="-64" rx="14" ry="32" fill="#4B8B60" transform="rotate(-26 -16 -64)"/>
+    <ellipse cx="16" cy="-64" rx="14" ry="32" fill="#4B8B60" transform="rotate(26 16 -64)"/>
+    <ellipse cx="-8" cy="-72" rx="12" ry="32" fill="#5FA777" transform="rotate(-12 -8 -72)"/>
+    <ellipse cx="8" cy="-72" rx="12" ry="32" fill="#5FA777" transform="rotate(12 8 -72)"/>
+    <ellipse cx="0" cy="-80" rx="14" ry="36" fill="#7BC08F"/>
+    <path d="M -28,-34 h 56 l -8,38 h -40 z" fill="#C96F4A"/>
+    <rect x="-32" y="-42" width="64" height="12" rx="6" fill="#B65E3C"/>
   </g>`;
 }
 
@@ -108,20 +123,28 @@ function catSit(x, y, s = 1, flip = false) {
 }
 function catFace(awake = true) {
   const eyes = awake
-    ? `<circle cx="-12" cy="-2" r="7.5" fill="#FFFFFF"/><circle cx="-12" cy="-1" r="4" fill="#332A20"/>
-       <circle cx="12" cy="-2" r="7.5" fill="#FFFFFF"/><circle cx="12" cy="-1" r="4" fill="#332A20"/>`
-    : `<path d="M -17,-1 q 5,5 10,0 M 7,-1 q 5,5 10,0" stroke="${C.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    ? `<ellipse cx="-13" cy="-2" rx="7.5" ry="8" fill="#48B38A"/>
+       <ellipse cx="-13" cy="-2" rx="5" ry="7" fill="#1C4B3A"/>
+       <circle cx="-15" cy="-4" r="2.5" fill="#FFFFFF"/>
+       <circle cx="-11" cy="1" r="1.2" fill="#FFFFFF"/>
+       <ellipse cx="13" cy="-2" rx="7.5" ry="8" fill="#48B38A"/>
+       <ellipse cx="13" cy="-2" rx="5" ry="7" fill="#1C4B3A"/>
+       <circle cx="11" cy="-4" r="2.5" fill="#FFFFFF"/>
+       <circle cx="15" cy="1" r="1.2" fill="#FFFFFF"/>`
+    : `<path d="M -18,-1 q 5,6 10,0 M 8,-1 q 5,6 10,0" stroke="${C.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
   return `
-    <path d="M -28,-12 L -40,-40 L -10,-26 Z" fill="${C.cat}"/>
-    <path d="M -26,-16 L -33,-32 L -15,-24 Z" fill="${C.pink}"/>
-    <path d="M 28,-12 L 40,-40 L 10,-26 Z" fill="${C.cat}"/>
-    <path d="M 26,-16 L 33,-32 L 15,-24 Z" fill="${C.pink}"/>
-    <circle r="33" fill="${C.cat}"/>
-    <path d="M -11,-31 q 3,7 0,11 M 1,-33 q 3,8 0,13 M 13,-31 q -3,7 0,11" stroke="${C.catD}" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M -28,-12 L -42,-44 L -10,-26 Z" fill="${C.cat}"/>
+    <path d="M -26,-16 L -35,-36 L -15,-24 Z" fill="${C.pink}"/>
+    <path d="M 28,-12 L 42,-44 L 10,-26 Z" fill="${C.cat}"/>
+    <path d="M 26,-16 L 35,-36 L 15,-24 Z" fill="${C.pink}"/>
+    <circle r="34" fill="${C.cat}"/>
+    <ellipse cx="-10" cy="14" rx="14" ry="11" fill="#FFF2E0"/>
+    <ellipse cx="10" cy="14" rx="14" ry="11" fill="#FFF2E0"/>
+    <path d="M -11,-31 q 3,7 0,11 M 0,-33 q 0,9 0,14 M 11,-31 q -3,7 0,11" stroke="${C.catD}" stroke-width="4.5" fill="none" stroke-linecap="round"/>
     ${eyes}
     <path d="M -4,9 L 4,9 L 0,14 Z" fill="#E37B9B"/>
-    <path d="M 0,14 q -5,7 -11,3 M 0,14 q 5,7 11,3" stroke="${C.dark}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path d="M -30,4 h -15 M -29,10 l -14,5 M 30,4 h 15 M 29,10 l 14,5" stroke="${C.dark}" stroke-width="2" stroke-linecap="round"/>`;
+    <path d="M 0,14 q -4,6 -9,3 M 0,14 q 4,6 9,3" stroke="${C.dark}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M -20,13 h -16 M -19,18 l -15,4 M 20,13 h 16 M 19,18 l 15,4" stroke="${C.dark}" stroke-width="2" stroke-linecap="round"/>`;
 }
 function catSleep(x, y, s = 1, flip = false) {
   return g(x, y, s, flip, `
@@ -132,7 +155,7 @@ function catSleep(x, y, s = 1, flip = false) {
     <g transform="translate(-22,-10) scale(.8)">${catFace(false)}</g>
   `);
 }
-function catPeek(x, y, s = 1) { // y = rim line; head pops above it
+function catPeek(x, y, s = 1) {
   return g(x, y, s, false, `
     <g transform="translate(0,-30)">${catFace()}</g>
     <ellipse cx="-26" cy="2" rx="11" ry="7" fill="${C.cat}"/>
@@ -148,60 +171,70 @@ function tailMystery(x, y) {
 
 /* ————— Night kit (for Quran-word night stories) ————— */
 const N = {
-  sky: '#3D4C7E', ground: '#4A6157', groundLine: '#3E5349',
-  house: '#2B3455', roof: '#232B49', winlit: '#FFD166',
-  cloud: '#D9E2F2', moon: '#F9F0C8', moonD: '#EADFA9', starY: '#FFE28A',
+  sky: '#232D4B', ground: '#3A4D45', groundLine: '#2F3F38',
+  house: '#1C233B', roof: '#151C30', winlit: '#FFD166',
+  cloud: '#CBD6EB', moon: '#FFF4D0', moonD: '#E8DCB0', starY: '#FFE58F',
 };
 function nightBase(stars = 14) {
   let s = `<rect width="800" height="380" fill="${N.sky}"/>
+    <circle cx="200" cy="80" r="140" fill="#2E3A5F" opacity="0.5"/>
+    <circle cx="600" cy="120" r="160" fill="#2E3A5F" opacity="0.4"/>
     <rect y="380" width="800" height="140" fill="${N.ground}"/>
     <rect y="376" width="800" height="8" fill="${N.groundLine}"/>`;
   const pts = [[60,60],[140,120],[220,50],[300,150],[380,80],[460,40],[540,130],[620,70],[700,120],[750,50],[100,220],[500,210],[660,220],[240,230],[420,250],[720,260]];
-  for (let i = 0; i < Math.min(stars, pts.length); i++)
-    s += `<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="${2 + (i % 3)}" fill="#FFFFFF" opacity=".8"/>`;
+  for (let i = 0; i < Math.min(stars, pts.length); i++) {
+    const sz = (i % 3 === 0) ? 3.5 : (i % 2 === 0 ? 2.5 : 1.8);
+    s += `<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="${sz}" fill="#FFFFFF" opacity="0.9"/>`;
+    if (i % 4 === 0) s += sparkle(pts[i][0], pts[i][1], 0.5, N.starY);
+  }
   return s;
 }
 function houseSil(x, y, s = 1) {
   return g(x, y, s, false, `
     <rect x="-90" y="-150" width="180" height="150" rx="8" fill="${N.house}"/>
     <path d="M -104,-150 L 0,-224 L 104,-150 Z" fill="${N.roof}"/>
+    <rect x="-62" y="-122" width="52" height="52" rx="10" fill="#FFEAA7" opacity="0.3"/>
     <rect x="-58" y="-118" width="44" height="44" rx="8" fill="${N.winlit}"/>
-    <path d="M -58,-96 h 44 M -36,-118 v 44" stroke="${N.house}" stroke-width="5"/>
-    <rect x="16" y="-74" width="40" height="74" rx="6" fill="#1D2440"/>
+    <path d="M -58,-96 h 44 M -36,-118 v 44" stroke="${N.house}" stroke-width="4"/>
+    <rect x="16" y="-74" width="40" height="74" rx="6" fill="#151C30"/>
+    <circle cx="24" cy="-36" r="4" fill="${N.winlit}"/>
   `);
 }
 function moonFull(x, y, r = 52) {
-  return `<circle cx="${x}" cy="${y}" r="${r * 1.7}" fill="${N.moon}" opacity=".13"/>
-    <circle cx="${x}" cy="${y}" r="${r * 1.25}" fill="${N.moon}" opacity=".18"/>
+  return `<circle cx="${x}" cy="${y}" r="${r * 2.2}" fill="${N.moon}" opacity="0.08"/>
+    <circle cx="${x}" cy="${y}" r="${r * 1.5}" fill="${N.moon}" opacity="0.16"/>
+    <circle cx="${x}" cy="${y}" r="${r * 1.15}" fill="${N.moon}" opacity="0.25"/>
     <circle cx="${x}" cy="${y}" r="${r}" fill="${N.moon}"/>
-    <circle cx="${x - r * .3}" cy="${y - r * .2}" r="${r * .17}" fill="${N.moonD}"/>
-    <circle cx="${x + r * .25}" cy="${y + r * .3}" r="${r * .12}" fill="${N.moonD}"/>
-    <circle cx="${x + r * .15}" cy="${y - r * .38}" r="${r * .09}" fill="${N.moonD}"/>`;
+    <circle cx="${x - r * .32}" cy="${y - r * .2}" r="${r * .18}" fill="${N.moonD}" opacity="0.7"/>
+    <circle cx="${x + r * .28}" cy="${y + r * .28}" r="${r * .14}" fill="${N.moonD}" opacity="0.7"/>
+    <circle cx="${x + r * .15}" cy="${y - r * .4}" r="${r * .1}" fill="${N.moonD}" opacity="0.7"/>`;
 }
 function cloudP(x, y, s = 1, fill = N.cloud) {
   return g(x, y, s, false, `
-    <ellipse cx="0" cy="0" rx="78" ry="34" fill="${fill}"/>
-    <circle cx="-42" cy="-16" r="30" fill="${fill}"/>
-    <circle cx="6" cy="-28" r="38" fill="${fill}"/>
-    <circle cx="48" cy="-12" r="26" fill="${fill}"/>
+    <ellipse cx="0" cy="0" rx="78" ry="34" fill="${fill}" opacity="0.95"/>
+    <circle cx="-42" cy="-16" r="30" fill="${fill}" opacity="0.95"/>
+    <circle cx="6" cy="-28" r="38" fill="${fill}" opacity="0.95"/>
+    <circle cx="48" cy="-12" r="26" fill="${fill}" opacity="0.95"/>
+    <ellipse cx="-10" cy="-6" rx="60" ry="24" fill="#FFFFFF" opacity="0.4"/>
   `);
 }
 const STAR_PTS = '0,-32 7.6,-10.5 30.4,-9.9 12.4,4 18.8,25.9 0,13 -18.8,25.9 -12.4,4 -30.4,-9.9 -7.6,-10.5';
 function bigStar(x, y, s = 1) {
   return `<g transform="translate(${x},${y}) scale(${s})">
+    <circle cx="0" cy="0" r="36" fill="${N.starY}" opacity="0.2"/>
     <polygon points="${STAR_PTS}" fill="${N.starY}"/>
-    <polygon points="${STAR_PTS}" fill="#FFF6D0" transform="scale(.45)"/>
+    <polygon points="${STAR_PTS}" fill="#FFFBF0" transform="scale(.48)"/>
   </g>`;
 }
 function bird(x, y, s = 1, flip = false) {
   return g(x, y, s, flip, `
-    <path d="M -6,-6 Q -34,-30 -56,-22 Q -36,-8 -22,2 Z" fill="#C8D4EC"/>
+    <path d="M -6,-6 Q -34,-30 -56,-22 Q -36,-8 -22,2 Z" fill="#B8C8E8"/>
     <ellipse cx="0" cy="0" rx="26" ry="15" fill="#E8EEF9"/>
-    <path d="M 8,-8 Q 36,-32 58,-24 Q 38,-10 24,0 Z" fill="#C8D4EC"/>
-    <path d="M -24,2 Q -34,8 -40,6" stroke="#C8D4EC" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M 8,-8 Q 36,-32 58,-24 Q 38,-10 24,0 Z" fill="#B8C8E8"/>
+    <path d="M -24,2 Q -34,8 -40,6" stroke="#B8C8E8" stroke-width="6" fill="none" stroke-linecap="round"/>
     <circle cx="24" cy="-4" r="11" fill="#E8EEF9"/>
     <polygon points="33,-5 44,-1 33,2" fill="#F4A83B"/>
-    <circle cx="27" cy="-6" r="2.4" fill="#333"/>
+    <circle cx="27" cy="-6" r="2.4" fill="#333"/><circle cx="26" cy="-7" r="0.9" fill="#FFF"/>
   `);
 }
 function heart(x, y, s = 1, fill = '#F2A5A5') {
@@ -228,20 +261,30 @@ function adam(x, y, pose = 'down', s = 1, flip = false) {
               <path d="M 20,-96 Q 36,-118 46,-136" ${A}/>${hand(48, -138)}`,
     reach: `<path d="M -18,-92 Q 18,-86 50,-78" ${A}/>${hand(52, -78)}
             <path d="M 20,-96 Q 46,-88 60,-80" ${A}/>${hand(62, -80)}`,
-  }[pose];
+    open: `<path d="M -20,-96 Q -42,-88 -54,-72" ${A}/>${hand(-56, -70)}
+           <path d="M 20,-96 Q 42,-88 54,-72" ${A}/>${hand(56, -70)}`,
+  }[pose] || '';
   return g(x, y, s, flip, `
     ${shadow(0, 2, 40)}
-    <rect x="-21" y="-12" width="20" height="12" rx="6" fill="${C.shoe}"/>
-    <rect x="1" y="-12" width="20" height="12" rx="6" fill="${C.shoe}"/>
-    <rect x="-17" y="-54" width="14" height="46" rx="7" fill="${C.pants}"/>
-    <rect x="3" y="-54" width="14" height="46" rx="7" fill="${C.pants}"/>
+    <rect x="-22" y="-12" width="22" height="12" rx="6" fill="${C.shoe}"/>
+    <rect x="0" y="-12" width="22" height="12" rx="6" fill="${C.shoe}"/>
+    <rect x="-22" y="-4" width="22" height="4" rx="2" fill="#FFFFFF"/>
+    <rect x="0" y="-4" width="22" height="4" rx="2" fill="#FFFFFF"/>
+    <rect x="-18" y="-54" width="15" height="46" rx="7" fill="${C.pants}"/>
+    <rect x="3" y="-54" width="15" height="46" rx="7" fill="${C.pants}"/>
     <rect x="-25" y="-112" width="50" height="64" rx="18" fill="${C.shirt}"/>
+    <path d="M -10,-112 Q 0,-102 10,-112" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.8"/>
     ${arms}
-    <circle cx="0" cy="-134" r="26" fill="${C.skin}"/>
-    <path d="M -26,-136 q 0,-26 26,-26 q 26,0 26,26 q -12,-11 -26,-11 q -14,0 -26,11 z" fill="${C.hair}"/>
-    <circle cx="-9" cy="-136" r="3.6" fill="#332A20"/>
-    <circle cx="9" cy="-136" r="3.6" fill="#332A20"/>
-    <path d="M -8,-124 q 8,8 16,0" stroke="${C.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="0" cy="-134" r="27" fill="${C.skin}"/>
+    <path d="M -27,-136 q 0,-27 27,-27 q 27,0 27,27 q -12,-11 -27,-11 q -14,0 -27,11 z" fill="${C.hair}"/>
+    <circle cx="-16" cy="-154" r="9" fill="${C.hair}"/>
+    <circle cx="0" cy="-160" r="10" fill="${C.hair}"/>
+    <circle cx="16" cy="-154" r="9" fill="${C.hair}"/>
+    <circle cx="-9" cy="-136" r="4.2" fill="#332A20"/><circle cx="-10" cy="-138" r="1.5" fill="#FFFFFF"/>
+    <circle cx="9" cy="-136" r="4.2" fill="#332A20"/><circle cx="8" cy="-138" r="1.5" fill="#FFFFFF"/>
+    <circle cx="-16" cy="-128" r="4" fill="${C.pink}" opacity="0.5"/>
+    <circle cx="16" cy="-128" r="4" fill="${C.pink}" opacity="0.5"/>
+    <path d="M -7,-124 q 7,8 14,0" stroke="${C.dark}" stroke-width="3" fill="none" stroke-linecap="round"/>
   `);
 }
 
@@ -261,24 +304,28 @@ function maryam(x, y, pose = 'clap', s = 1, flip = false) {
     ${shadow(0, 2, 32)}
     <rect x="-14" y="-10" width="13" height="10" rx="5" fill="#B03A2E"/>
     <rect x="1" y="-10" width="13" height="10" rx="5" fill="#B03A2E"/>
+    <rect x="-14" y="-3" width="13" height="3" rx="1.5" fill="#FFFFFF"/>
+    <rect x="1" y="-3" width="13" height="3" rx="1.5" fill="#FFFFFF"/>
     <rect x="-11" y="-26" width="9" height="18" rx="4.5" fill="${C.skin}"/>
     <rect x="2" y="-26" width="9" height="18" rx="4.5" fill="${C.skin}"/>
     <path d="M -15,-64 h 30 l 12,42 q -27,10 -54,0 z" fill="${C.dress}"/>
+    <circle cx="-6" cy="-46" r="2" fill="#FFFFFF" opacity="0.6"/><circle cx="6" cy="-46" r="2" fill="#FFFFFF" opacity="0.6"/>
+    <circle cx="-12" cy="-34" r="2" fill="#FFFFFF" opacity="0.6"/><circle cx="0" cy="-34" r="2" fill="#FFFFFF" opacity="0.6"/><circle cx="12" cy="-34" r="2" fill="#FFFFFF" opacity="0.6"/>
     ${arms}
-    <circle cx="-26" cy="-88" r="10" fill="${C.hair}"/><circle cx="-19" cy="-84" r="4" fill="#E15554"/>
-    <circle cx="26" cy="-88" r="10" fill="${C.hair}"/><circle cx="19" cy="-84" r="4" fill="#E15554"/>
-    <circle cx="0" cy="-82" r="21" fill="${C.skin}"/>
-    <path d="M -21,-84 q 0,-20 21,-20 q 21,0 21,20 q -9,-9 -21,-9 q -12,0 -21,9 z" fill="${C.hair}"/>
-    <circle cx="-8" cy="-84" r="3.2" fill="#332A20"/>
-    <circle cx="8" cy="-84" r="3.2" fill="#332A20"/>
-    <circle cx="-14" cy="-76" r="3.5" fill="${C.pink}" opacity=".7"/>
-    <circle cx="14" cy="-76" r="3.5" fill="${C.pink}" opacity=".7"/>
-    <path d="M -6,-74 q 6,6 12,0" stroke="${C.dark}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <circle cx="-26" cy="-88" r="11" fill="${C.hair}"/><circle cx="-26" cy="-88" r="5" fill="#E15554"/>
+    <circle cx="26" cy="-88" r="11" fill="${C.hair}"/><circle cx="26" cy="-88" r="5" fill="#E15554"/>
+    <circle cx="0" cy="-82" r="22" fill="${C.skin}"/>
+    <path d="M -22,-84 q 0,-22 22,-22 q 22,0 22,22 q -9,-9 -22,-9 q -13,0 -22,9 z" fill="${C.hair}"/>
+    <circle cx="-8" cy="-84" r="3.6" fill="#332A20"/><circle cx="-9" cy="-86" r="1.3" fill="#FFFFFF"/>
+    <circle cx="8" cy="-84" r="3.6" fill="#332A20"/><circle cx="7" cy="-86" r="1.3" fill="#FFFFFF"/>
+    <circle cx="-14" cy="-76" r="4" fill="${C.pink}" opacity=".7"/>
+    <circle cx="14" cy="-76" r="4" fill="${C.pink}" opacity=".7"/>
+    <path d="M -5,-74 q 5,6 10,0" stroke="${C.dark}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
   `);
 }
 
 /* ————— Furniture & props ————— */
-function bed(x, y, s = 1) { // baseline y, local x 0..310, headboard on the right
+function bed(x, y, s = 1) {
   return g(x, y, s, false, `
     <rect x="8" y="-30" width="16" height="30" rx="5" fill="${C.woodD}"/>
     <rect x="286" y="-30" width="16" height="30" rx="5" fill="${C.woodD}"/>
@@ -288,7 +335,12 @@ function bed(x, y, s = 1) { // baseline y, local x 0..310, headboard on the righ
     <rect x="288" y="-176" width="26" height="146" rx="12" fill="${C.wood}"/>
     <rect x="4" y="-88" width="292" height="28" rx="12" fill="#FFFFFF"/>
     <path d="M 6,-88 H 206 V -60 q -10,10 -22,4 q -12,8 -22,0 q -12,8 -22,0 q -12,8 -22,0 q -12,8 -22,0 q -12,8 -22,0 q -12,8 -22,0 q -14,6 -18,-4 z" fill="${C.blanket}"/>
+    <!-- subtle star pattern on blanket -->
+    <path d="M 40,-74 l 2,4 4,1 -3,3 1,4 -4,-2 -4,2 1,-4 -3,-3 4,-1 z" fill="#FFFFFF" opacity="0.5"/>
+    <path d="M 90,-74 l 2,4 4,1 -3,3 1,4 -4,-2 -4,2 1,-4 -3,-3 4,-1 z" fill="#FFFFFF" opacity="0.5"/>
+    <path d="M 140,-74 l 2,4 4,1 -3,3 1,4 -4,-2 -4,2 1,-4 -3,-3 4,-1 z" fill="#FFFFFF" opacity="0.5"/>
     <rect x="220" y="-108" width="66" height="26" rx="13" fill="${C.pillow}"/>
+    <path d="M 230,-96 q 22,6 46,0" stroke="#E8CE93" stroke-width="2" fill="none" opacity="0.6"/>
   `);
 }
 function sneaker(x, y) {
@@ -298,18 +350,19 @@ function sneaker(x, y) {
     <circle cx="18" cy="-6" r="1.8" fill="#fff"/><circle cx="24" cy="-4" r="1.8" fill="#fff"/>
   </g>`;
 }
-function chair(x, y, s = 1) { // front view; baseline y, local x 0..128
+function chair(x, y, s = 1) {
   return g(x, y, s, false, `
     <rect x="14" y="-152" width="13" height="70" rx="6" fill="${C.wood}"/>
     <rect x="101" y="-152" width="13" height="70" rx="6" fill="${C.wood}"/>
     <rect x="18" y="-146" width="92" height="12" rx="6" fill="${C.woodD}"/>
     <rect x="18" y="-122" width="92" height="12" rx="6" fill="${C.woodD}"/>
     <rect x="0" y="-84" width="128" height="16" rx="8" fill="${C.wood}"/>
+    <rect x="6" y="-88" width="116" height="8" rx="4" fill="${C.cushion}"/>
     <rect x="16" y="-68" width="13" height="68" rx="5" fill="${C.wood}"/>
     <rect x="99" y="-68" width="13" height="68" rx="5" fill="${C.wood}"/>
   `);
 }
-function teddy(x, y, s = 1) { // y = seat surface (bum baseline)
+function teddy(x, y, s = 1) {
   return g(x, y, s, false, `
     <ellipse cx="-15" cy="-7" rx="10" ry="7" fill="#8A5A3B"/>
     <ellipse cx="15" cy="-7" rx="10" ry="7" fill="#8A5A3B"/>
@@ -322,17 +375,21 @@ function teddy(x, y, s = 1) { // y = seat surface (bum baseline)
     <circle cx="0" cy="-54" r="17" fill="#9C6B47"/>
     <ellipse cx="0" cy="-48" rx="8" ry="6" fill="#C79A72"/>
     <circle cx="0" cy="-51" r="2.6" fill="#4A3623"/>
-    <circle cx="-6.5" cy="-58" r="2.4" fill="#332A20"/>
-    <circle cx="6.5" cy="-58" r="2.4" fill="#332A20"/>
+    <circle cx="-6.5" cy="-58" r="2.4" fill="#332A20"/><circle cx="-7" cy="-59" r="0.8" fill="#FFF"/>
+    <circle cx="6.5" cy="-58" r="2.4" fill="#332A20"/><circle cx="6" cy="-59" r="0.8" fill="#FFF"/>
+    <rect x="-8" y="-38" width="16" height="4" rx="2" fill="#E15554"/>
   `);
 }
-function box(x, y, s = 1, { ball = false } = {}) { // baseline y, centered, rim at y-110
+function box(x, y, s = 1, { ball = false } = {}) {
   return g(x, y, s, false, `
     ${shadow(0, 4, 105)}
     <polygon points="-90,-112 -118,-134 -108,-148 -78,-126" fill="${C.boxD}"/>
     <polygon points="90,-112 118,-134 108,-148 78,-126" fill="${C.boxD}"/>
     <rect x="-68" y="-130" width="136" height="20" rx="5" fill="${C.boxD}"/>
     <rect x="-88" y="-120" width="176" height="32" rx="6" fill="#6E4E2E"/>
+    <!-- toys peeking out -->
+    <rect x="-40" y="-132" width="22" height="22" rx="4" fill="#2A9D8F"/>
+    <polygon points="20,-118 32,-140 44,-118" fill="#FFD166"/>
     ${ball ? `<circle cx="0" cy="-122" r="30" fill="#E15554"/>
               <path d="M -27,-134 q 27,-16 54,0" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round"/>` : ''}
     <rect x="-95" y="-110" width="190" height="110" rx="9" fill="${C.box}"/>
@@ -340,7 +397,7 @@ function box(x, y, s = 1, { ball = false } = {}) { // baseline y, centered, rim 
     <rect x="-10" y="-74" width="20" height="74" fill="${C.boxD}" opacity=".45"/>
   `);
 }
-function basket(x, y, s = 1) { // baseline y
+function basket(x, y, s = 1) {
   return g(x, y, s, false, `
     ${shadow(0, 3, 82)}
     <path d="M -72,-44 Q -66,2 0,2 Q 66,2 72,-44 Z" fill="#C98A5B"/>
@@ -349,16 +406,19 @@ function basket(x, y, s = 1) { // baseline y
     <rect x="-76" y="-53" width="152" height="14" rx="7" fill="#A8703F"/>
   `);
 }
-function couch(x, y, s = 1) { // baseline y, local x 0..360
+function couch(x, y, s = 1) {
   return g(x, y, s, false, `
     <rect x="14" y="-14" width="22" height="14" rx="5" fill="${C.woodD}"/>
     <rect x="324" y="-14" width="22" height="14" rx="5" fill="${C.woodD}"/>
     <rect x="0" y="-150" width="360" height="140" rx="24" fill="${C.couchD}"/>
     <rect x="18" y="-86" width="158" height="44" rx="17" fill="${C.couch}"/>
     <rect x="184" y="-86" width="158" height="44" rx="17" fill="${C.couch}"/>
+    <!-- cushion buttons -->
+    <circle cx="97" cy="-64" r="4" fill="${C.couchD}"/><circle cx="263" cy="-64" r="4" fill="${C.couchD}"/>
     <rect x="-16" y="-110" width="48" height="100" rx="20" fill="${C.couch}"/>
     <rect x="328" y="-110" width="48" height="100" rx="20" fill="${C.couch}"/>
     <rect x="36" y="-124" width="44" height="44" rx="11" fill="${C.cushion}" transform="rotate(-8 58 -102)"/>
+    <circle cx="58" cy="-102" r="3" fill="#C8842E"/>
   `);
 }
 /* Baba asleep on the couch, head on the RIGHT armrest.
@@ -482,77 +542,81 @@ function sceneEnd() {
 
 /* ————— «أين القمر؟» night scenes ————— */
 function qCover() {
-  return nightBase(16) + moonFull(560, 140, 56) + cloudP(470, 185, 0.9) +
-    houseSil(130, 470, 0.9) + catSit(620, 428, 0.95, true) + sparkle(300, 90, 1, N.starY);
+  return artScene('qamar1-cover.jpg', 'Crescent moon over quiet village at night');
 }
 function q1() { // لَيْل.
-  return nightBase(16) + houseSil(660, 470, 0.95) +
-    adam(280, 486, 'down') + maryam(390, 482, 'clap') + catSit(150, 440, 0.9);
+  return artScene('qamar1-1.jpg', 'Quiet night over village');
 }
 function q2() { // أَيْنَ الْقَمَر؟
-  return nightBase(14) + houseSil(700, 470, 0.8) +
-    adam(370, 486, 'wonder') + catSit(550, 436) + qmarks(390, 230);
+  return artScene('qamar1-1.jpg', 'Where is the moon?');
 }
 function q3() { // هَذَا نَجْم.
-  return nightBase(10) + bigStar(400, 160, 1.5) + sparkle(340, 220, .7, N.starY) +
-    houseSil(90, 470, 0.75) + adam(270, 486, 'down') +
-    maryam(520, 482, 'up') + catSit(660, 438, 0.9, true);
+  return artScene('qamar1-2.jpg', 'Twinkling stars in night sky');
 }
 function q4() { // هَذَا طَيْر.
-  return nightBase(12) + bird(430, 170, 1.15) +
-    adam(300, 486, 'pointup') + maryam(540, 482, 'clap') + catSit(680, 438, 0.9, true);
+  return artScene('qamar1-3.jpg', 'Little bird singing to the crescent moon');
 }
 function q5() { // هَذَا سَحَاب!
-  return nightBase(12) +
-    `<circle cx="420" cy="150" r="72" fill="${N.moon}" opacity=".4"/>` +
-    cloudP(400, 165, 1.5) +
-    adam(240, 486, 'hips') + catSit(560, 436) +
-    `<g ${FONT}><text x="600" y="240" font-size="52" font-weight="800" fill="${N.starY}" transform="rotate(8 600 240)">؟</text></g>`;
+  return artScene('qamar1-4.jpg', 'Soft clouds drifting past the moon');
 }
 function q6() { // الْقَمَر هُنَا!
-  return nightBase(10) + moonFull(400, 150, 62) + cloudP(620, 110, 0.75) +
-    adam(270, 486, 'wonder') + maryam(500, 482, 'clap') + catSit(630, 436, 1, true) +
-    sparkle(250, 120, 1, N.starY) + sparkle(560, 230, 0.8, N.starY);
+  return artScene('qamar1-5.jpg', 'The moon is here, glowing full and bright');
 }
 function q7() { // الْقَمَر جَمِيل!
-  return nightBase(12) + moonFull(430, 140, 56) +
-    houseSil(90, 470, 0.75) + adam(300, 486, 'down') + maryam(400, 482, 'clap') +
-    catSit(510, 438, 0.95) + heart(555, 330, 1, '#F2A5A5') + heart(260, 300, 0.7, '#FFD166');
+  return artScene('qamar1-6.jpg', 'The moon is beautiful in the flower garden');
 }
 function qEnd() {
-  return nightBase(14) + moonFull(620, 130, 46) + basket(380, 468) +
-    catSleep(380, 436, 0.85) + zzz(450, 330, '#AEB9DB', 0.9) + sparkle(200, 200, 0.9, N.starY);
+  return artScene('qamar1-end.jpg', 'Goodnight under the peaceful moon and stars');
 }
 
 /* ————— Mini icons for word cards & game (viewBox 0 0 100 100) ————— */
 function icon(inner) { return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`; }
 const ICONS = {
-  cat: icon(`<g transform="translate(50,58) scale(.75)">${catFace()}</g>`),
-  bed: icon(`<g transform="translate(8,78) scale(.27)">${bed(0, 0)}</g>`),
-  chair: icon(`<g transform="translate(30,86) scale(.4)">${chair(0, 0)}</g>`),
-  box: icon(`<g transform="translate(50,80) scale(.36)">${box(0, 0)}</g>`),
-  where: icon(`
-    <circle cx="44" cy="42" r="26" fill="none" stroke="#2A9D8F" stroke-width="9"/>
-    <line x1="63" y1="61" x2="84" y2="82" stroke="#2A9D8F" stroke-width="11" stroke-linecap="round"/>
-    <text x="44" y="54" font-size="30" font-weight="800" text-anchor="middle" fill="#E76F51" ${FONT}>؟</text>`),
-  under: icon(`
-    <rect x="12" y="30" width="76" height="10" rx="5" fill="${C.wood}"/>
-    <rect x="18" y="40" width="8" height="34" fill="${C.wood}"/>
-    <rect x="74" y="40" width="8" height="34" fill="${C.wood}"/>
-    <circle cx="50" cy="66" r="15" fill="#E15554"/>
-    <path d="M 37,60 q 13,-8 26,0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>`),
-  on: icon(`
-    <rect x="12" y="58" width="76" height="10" rx="5" fill="${C.wood}"/>
-    <rect x="18" y="68" width="8" height="24" fill="${C.wood}"/>
-    <rect x="74" y="68" width="8" height="24" fill="${C.wood}"/>
-    <circle cx="50" cy="42" r="16" fill="#E15554"/>
-    <path d="M 36,36 q 14,-9 28,0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>`),
-  inside: icon(`
-    <rect x="20" y="42" width="60" height="42" rx="5" fill="${C.box}"/>
-    <rect x="24" y="38" width="52" height="12" rx="4" fill="#6E4E2E"/>
-    <circle cx="50" cy="38" r="14" fill="#E15554"/>
-    <path d="M 38,33 q 12,-8 24,0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <rect x="20" y="42" width="60" height="16" rx="5" fill="${C.boxL}"/>`),
+  cat: icon(`<rect width="100" height="100" rx="22" fill="#FFF6EB"/>
+    <path d="M 26,38 L 18,14 L 42,26 Z" fill="${C.cat}"/><path d="M 27,34 L 22,20 L 37,28 Z" fill="${C.pink}"/>
+    <path d="M 74,38 L 82,14 L 58,26 Z" fill="${C.cat}"/><path d="M 73,34 L 78,20 L 63,28 Z" fill="${C.pink}"/>
+    <circle cx="50" cy="50" r="28" fill="${C.cat}"/>
+    <ellipse cx="42" cy="60" rx="11" ry="9" fill="#FFF2E0"/><ellipse cx="58" cy="60" rx="11" ry="9" fill="#FFF2E0"/>
+    <path d="M 42,26 q 2,6 0,10 M 50,24 q 0,7 0,11 M 58,26 q -2,6 0,10" stroke="${C.catD}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="39" cy="48" rx="6.5" ry="7" fill="#48B38A"/><ellipse cx="39" cy="48" rx="4.5" ry="6" fill="#1C4B3A"/><circle cx="37" cy="46" r="2" fill="#FFFFFF"/>
+    <ellipse cx="61" cy="48" rx="6.5" ry="7" fill="#48B38A"/><ellipse cx="61" cy="48" rx="4.5" ry="6" fill="#1C4B3A"/><circle cx="59" cy="46" r="2" fill="#FFFFFF"/>
+    <path d="M 47,56 L 53,56 L 50,60 Z" fill="#E37B9B"/>
+    <path d="M 50,60 q -3,5 -7,2 M 50,60 q 3,5 7,2" stroke="${C.dark}" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M 33,59 h -14 M 34,63 l -13,4 M 67,59 h 14 M 66,63 l 13,4" stroke="${C.dark}" stroke-width="1.8" stroke-linecap="round"/>`),
+  bed: icon(`<rect width="100" height="100" rx="22" fill="#F2E7F6"/>
+    <g transform="translate(8,76) scale(.27)">${bed(0, 0)}</g>`),
+  chair: icon(`<rect width="100" height="100" rx="22" fill="#FEF5E7"/>
+    <g transform="translate(30,86) scale(.4)">${chair(0, 0)}</g>`),
+  box: icon(`<rect width="100" height="100" rx="22" fill="#FEF5E7"/>
+    <g transform="translate(50,80) scale(.36)">${box(0, 0)}</g>`),
+  where: icon(`<rect width="100" height="100" rx="22" fill="#FEF5E7"/>
+    <rect x="22" y="52" width="56" height="34" rx="6" fill="${C.box}"/>
+    <rect x="20" y="48" width="60" height="10" rx="4" fill="${C.boxL}"/>
+    <g transform="translate(46, 36) rotate(-15)">
+      <circle cx="0" cy="0" r="18" fill="#E8F4F8" stroke="#E76F51" stroke-width="5"/>
+      <line x1="12" y1="12" x2="26" y2="26" stroke="#C4574E" stroke-width="6" stroke-linecap="round"/>
+      <text x="0" y="7" font-size="22" font-weight="800" text-anchor="middle" fill="#E76F51" ${FONT}>؟</text>
+    </g>`),
+  under: icon(`<rect width="100" height="100" rx="22" fill="#F6EBD8"/>
+    <rect x="14" y="36" width="72" height="10" rx="4" fill="${C.wood}"/>
+    <rect x="22" y="46" width="8" height="42" rx="2" fill="${C.woodD}"/>
+    <rect x="70" y="46" width="8" height="42" rx="2" fill="${C.woodD}"/>
+    <circle cx="50" cy="68" r="14" fill="#E15554"/>
+    <path d="M 42,62 Q 50,56 58,62" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M 50,50 v 8 M 46,54 l 4,4 4,-4" stroke="#E15554" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`),
+  on: icon(`<rect width="100" height="100" rx="22" fill="#F6EBD8"/>
+    <rect x="14" y="56" width="72" height="10" rx="4" fill="${C.wood}"/>
+    <rect x="22" y="66" width="8" height="24" rx="2" fill="${C.woodD}"/>
+    <rect x="70" y="66" width="8" height="24" rx="2" fill="${C.woodD}"/>
+    <circle cx="50" cy="40" r="15" fill="#E15554"/>
+    <path d="M 42,34 Q 50,28 58,34" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M 50,14 v 8 M 46,18 l 4,4 4,-4" stroke="#E15554" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`),
+  inside: icon(`<rect width="100" height="100" rx="22" fill="#F6EBD8"/>
+    <rect x="22" y="42" width="56" height="42" rx="6" fill="${C.woodD}"/>
+    <circle cx="50" cy="56" r="14" fill="#E15554"/>
+    <path d="M 42,50 Q 50,44 58,50" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 18,52 L 24,84 H 76 L 82,52 Z" fill="${C.wood}"/>
+    <rect x="16" y="48" width="68" height="10" rx="4" fill="${C.box}"/>`),
   moon: icon(`<rect width="100" height="100" rx="22" fill="${N.sky}"/>
     <circle cx="26" cy="26" r="2.5" fill="#fff" opacity=".8"/><circle cx="78" cy="70" r="2.5" fill="#fff" opacity=".8"/>
     ${moonFull(50, 50, 27)}`),
@@ -567,11 +631,22 @@ const ICONS = {
     <circle cx="64" cy="42" r="26" fill="${N.sky}"/>
     <circle cx="70" cy="34" r="3" fill="#fff"/><circle cx="78" cy="56" r="2.4" fill="#fff"/><circle cx="26" cy="28" r="2.4" fill="#fff"/>`),
   bird2: icon(`<rect width="100" height="100" rx="22" fill="${C.sky}"/>${bird(48, 52, 0.85)}`),
-  this_: icon(`<circle cx="50" cy="30" r="14" fill="#E15554"/>
-    <rect x="44" y="52" width="12" height="30" rx="6" fill="${C.skin}"/>
-    <circle cx="50" cy="88" r="13" fill="${C.skin}"/>
-    <path d="M 36,80 q -6,-6 -2,-12" stroke="${C.skin}" stroke-width="8" fill="none" stroke-linecap="round"/>`),
-  jamil: icon(`${heart(50, 34, 1.4, '#E76F51')}${sparkle(24, 26, 0.7, '#FFD166')}${sparkle(78, 30, 0.55, '#2A9D8F')}`),
+  this_: icon(`<rect width="100" height="100" rx="22" fill="#EBF5FB"/>
+    <circle cx="70" cy="38" r="22" fill="#FFEAA7" opacity="0.4"/>
+    <polygon points="70,22 75,33 87,35 78,43 81,55 70,48 59,55 62,43 53,35 65,33" fill="#FFD166"/>
+    <polygon points="70,26 73,34 82,35 75,41 77,50 70,45 63,50 65,41 58,35 67,34" fill="#FFF8DC"/>
+    <g transform="translate(0, 8)">
+      <path d="M 12,62 h 28 q 6,0 10,-4 l 18,-10 q 5,-3 2,-8 q -3,-5 -8,-2 l -16,8 h -8 v -6 q 0,-4 -4,-4 h -22 z" fill="${C.skin}"/>
+      <rect x="10" y="52" width="16" height="26" rx="6" fill="${C.shirt}"/>
+    </g>`),
+  jamil: icon(`<rect width="100" height="100" rx="22" fill="#FFF8F0"/>
+    <circle cx="50" cy="48" r="32" fill="#FADBD8" opacity="0.6"/>
+    <path d="M 50,74 C 20,54 12,32 26,20 C 38,10 46,20 50,26 C 54,20 62,10 74,20 C 88,32 80,54 50,74 Z" fill="#E74C3C"/>
+    <path d="M 50,70 C 24,52 16,34 28,24 C 38,16 46,24 50,30 C 54,24 62,16 72,24 C 84,34 76,52 50,70 Z" fill="#FF6B6B" opacity="0.7"/>
+    <circle cx="34" cy="28" r="4" fill="#FFFFFF" opacity="0.8"/>
+    <path d="M 18,22 l 3,6 6,3 -6,3 -3,6 -3,-6 -6,-3 6,-3 z" fill="#FFD166"/>
+    <path d="M 82,24 l 2.5,5 5,2.5 -5,2.5 -2.5,5 -2.5,-5 -5,-2.5 5,-2.5 z" fill="#FFD166"/>
+    <path d="M 76,68 l 2,4 4,2 -4,2 -2,4 -2,-4 -4,-2 4,-2 z" fill="#2A9D8F"/>`),
 };
 
 /* ================= 3. Levels & books ================= */

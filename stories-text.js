@@ -218,10 +218,93 @@ const SERIES_LULU = [
       { ar: 'وَلِأَوَّلِ مَرَّةٍ، اِتَّفَقَا عَلَى شَيْءٍ.', en: 'And for the first time ever, they agreed about something.' },
     ],
   },
+  {
+    id: 'lg-7', level: 3, series: 'lulu-ghurab', ep: 7,
+    title: 'الْغُرَابُ وَالْكَعْكَة',
+    titleEn: 'The crow and the cake',
+    blurb: 'Episode 7. Cake on the table. What could go wrong?',
+    lines: [
+      { ar: 'وَضَعَ بَابَا كَعْكَةً فَوْقَ الْمَائِدَةِ.', en: 'Baba put a cake on the table.' },
+      { ar: 'جَاءَ الْغُرَابُ وَأَخَذَ الْكَعْكَةَ!', en: 'The crow came and took the cake!' },
+      { ar: 'قَفَزَتْ لُولُو خَلْفَ الْغُرَابِ.', en: 'Lulu jumped after the crow.' },
+      { ar: 'طَارَ الْغُرَابُ فَوْقَ الْمَاءِ.', en: 'The crow flew over the water.' },
+      { ar: 'وَقَعَتْ لُولُو فِي الْمَاءِ!', en: 'Lulu fell into the water!' },
+      { ar: 'أَكَلَ الْغُرَابُ الْكَعْكَةَ كُلَّهَا.', en: 'The crow ate the entire cake.' },
+    ],
+  },
+  {
+    id: 'lg-8', level: 4, series: 'lulu-ghurab', ep: 8,
+    title: 'الْفَخُّ الْكَبِير',
+    titleEn: 'The big trap',
+    blurb: 'Episode 8. A box, a rope, and a cat inside.',
+    lines: [
+      { ar: 'وَضَعَتْ لُولُو صُنْدُوقًا صَغِيرًا فِي الْحَدِيقَةِ.', en: 'Lulu placed a small box in the garden.' },
+      { ar: 'رَبَطَتْ حَبْلًا بِالصُّنْدُوقِ وَانْتَظَرَتْ خَلْفَ الشَّجَرَةِ.', en: 'She tied a rope to the box and waited behind the tree.' },
+      { ar: 'جَاءَ الْغُرَابُ وَوَقَفَ فَوْقَ الصُّنْدُوقِ يَضْحَكُ!', en: 'The crow came and stood on top of the box laughing!' },
+      { ar: 'سَحَبَتْ لُولُو الْحَبْلَ بِسُرْعَةٍ فَوَقَعَ الصُّنْدُوقُ عَلَيْهَا!', en: 'Lulu pulled the rope quickly and the box fell on her!' },
+      { ar: 'طَارَ الْغُرَابُ فِي السَّمَاءِ سَعِيدًا.', en: 'The crow flew into the sky happily.' },
+      { ar: 'بَقِيَتْ لُولُو دَاخِلَ الصُّنْدُوقِ وَحْدَهَا.', en: 'Lulu remained inside the box by herself.' },
+    ],
+  },
 ];
 
 /* the series joins the shelf, in episode order after the standalone stories */
 TEXT_STORIES.push(...SERIES_LULU);
+
+/* ————— نَوَادِر جُحَا — Juha's classic slapstick tales ————————————————————————
+   Juha (جحا) is the legendary Arabic folk comedy hero. His stories are funny,
+   ironic, and have a clear moral punchline that children remember forever.
+   ========================================================================= */
+const JUHA = [
+  {
+    id: 'jh-1', level: 3, series: 'juha', ep: 1,
+    title: 'جُحَا وَالْحِمَار',
+    titleEn: 'Juha and the donkey',
+    blurb: 'Episode 1. A father, a son, and a very confused donkey.',
+    lines: [
+      { ar: 'مَشَى جُحَا وَابْنُهُ مَعَ الْحِمَارِ.', en: 'Juha and his son walked with the donkey.' },
+      { ar: 'قَالَ رَجُلٌ: لِمَاذَا لَا تَرْكَبَان؟', en: 'A man said: why do you not ride?' },
+      { ar: 'رَكِبَ جُحَا وَابْنُهُ فَوْقَ الْحِمَارِ.', en: 'Juha and his son rode on the donkey.' },
+      { ar: 'قَالَ رَجُلٌ: هَذَا ظُلْمٌ لِلْحِمَارِ!', en: 'A man said: this is cruel to the donkey!' },
+      { ar: 'نَزَلَ جُحَا وَرَكِبَ ابْنُهُ فَقَط.', en: 'Juha got down and only his son rode.' },
+      { ar: 'قَالَ رَجُلٌ: أَيْنَ أَدَبُ الْوَلَدِ؟', en: 'A man said: where are the boy’s manners?' },
+      { ar: 'حَمَلَ جُحَا وَابْنُهُ الْحِمَارَ!', en: 'Juha and his son carried the donkey!' },
+      { ar: 'ضَحِكَ الْجَمِيعُ فِي الْقَرْيَةِ كَثِيرًا.', en: 'Everyone in the village laughed a lot.' },
+    ],
+  },
+  {
+    id: 'jh-2', level: 3, series: 'juha', ep: 2,
+    title: 'كِسَاءُ جُحَا',
+    titleEn: "Juha's coat",
+    blurb: 'Episode 2. Eat, my coat, eat!',
+    lines: [
+      { ar: 'ذَهَبَ جُحَا إِلَى وَلِيمَةٍ كَبِيرَةٍ.', en: 'Juha went to a big feast.' },
+      { ar: 'مَا نَظَرَ أَحَدٌ إِلَى جُحَا.', en: 'Nobody looked at Juha.' },
+      { ar: 'رَجَعَ جُحَا وَلَبِسَ كِسَاءً جَمِيلًا.', en: 'Juha went back and put on a fine coat.' },
+      { ar: 'قَالَ الْقَوْمُ: أَهْلًا يَا جُحَا!', en: 'The people said: welcome, Juha!' },
+      { ar: 'وَضَعَ جُحَا الْحِسَاءَ فِي كِسَائِهِ!', en: 'Juha poured the soup into his coat!' },
+      { ar: 'قَالَ جُحَا: كُلْ يَا كِسَائِي!', en: 'Juha said: eat, my coat!' },
+      { ar: 'الْإِكْرَامُ لَكَ لَا لِي!', en: 'The honor is for you, not me!' },
+    ],
+  },
+  {
+    id: 'jh-3', level: 4, series: 'juha', ep: 3,
+    title: 'مِسْمَارُ جُحَا',
+    titleEn: "Juha's nail",
+    blurb: 'Episode 3. The house is sold. One nail is not.',
+    lines: [
+      { ar: 'بَاعَ جُحَا بَيْتَهُ إِلَى رَجُلٍ فِي السُّوقِ.', en: 'Juha sold his house to a man in the market.' },
+      { ar: 'قَالَ جُحَا: هَذَا الْمِسْمَارُ فِي الْحَائِطِ لِي فَقَط.', en: 'Juha said: this nail in the wall belongs only to me.' },
+      { ar: 'وَافَقَ الرَّجُلُ وَسَكَنَ فِي الْبَيْتِ الْجَدِيدِ.', en: 'The man agreed and lived in the new house.' },
+      { ar: 'جَاءَ جُحَا كُلَّ يَوْمٍ لِيَرَى مِسْمَارَهُ.', en: 'Juha came every day to see his nail.' },
+      { ar: 'عَلَّقَ جُحَا سَمَكَةً قَدِيمَةً عَلَى الْمِسْمَارِ!', en: 'Juha hung an old fish on the nail!' },
+      { ar: 'غَضِبَ الرَّجُلُ وَتَرَكَ الْبَيْتَ لِجُحَا وَهَرَبَ.', en: 'The man became angry, left the house to Juha, and ran away.' },
+      { ar: 'ضَحِكَ جُحَا وَأَخَذَ بَيْتَهُ مِنْ جَدِيدٍ.', en: 'Juha laughed and got his house back again.' },
+    ],
+  },
+];
+
+TEXT_STORIES.push(...JUHA);
 
 /* ————— كَلِيلَة وَدِمْنَة — the library, finally chosen ————————————————————————
    Reza has asked twice about adapting books he already owns — Bunny vs Monkey,
@@ -364,12 +447,42 @@ const KALILA = [
       { ar: 'مَنْ لَا يَسْمَعُ النَّصِيحَةَ يَقَعْ.', en: 'Whoever does not listen to good advice falls.' },
     ],
   },
+  {
+    id: 'kd-mutawwaqa', level: 4, series: 'kalila', ep: 6,
+    title: 'الْحَمَامَةُ الْمُطَوَّقَة',
+    titleEn: 'The collared dove',
+    blurb: 'One bird is caught. A hundred birds flying together are free.',
+    lines: [
+      { ar: 'نَصَبَ الصَّيَّادُ شَبَكَتَهُ وَنَثَرَ عَلَيْهَا الْحَبَّ.', en: 'The hunter set his net and scattered grain over it.' },
+      { ar: 'جَاءَتِ الْحَمَامَةُ الْمُطَوَّقَةُ مَعَ صَاحِبَاتِهَا فَوَقَعْنَ فِي الشَّبَكَةِ.', en: 'The collared dove came with her companions and they fell into the net.' },
+      { ar: 'قَالَتِ الْمُطَوَّقَةُ: لَا تَطِرْ كُلُّ وَاحِدَةٍ وَحْدَهَا، بَلْ نَطِيرُ جَمِيعًا مَعًا!', en: 'The collared dove said: let no one fly alone, but let us all fly together!' },
+      { ar: 'قَلَعْنَ الشَّبَكَةَ بِأَجْنِحَتِهِنَّ وَطِرْنَ فِي السَّمَاءِ كَطَائِرٍ وَاحِدٍ.', en: 'They pulled up the net with their wings and flew into the sky like one bird.' },
+      { ar: 'ذَهَبْنَ إِلَى جُرَذٍ صَدِيقٍ فَقَطَعَ الشَّبَكَةَ بِأَسْنَانِهِ.', en: 'They went to a friendly rat who cut the net with his teeth.' },
+      { ar: 'فِي الِاتِّحَادِ قُوَّةٌ وَنَجَاةٌ.', en: 'In unity there is strength and safety.' },
+    ],
+  },
+  {
+    id: 'kd-qird', level: 4, series: 'kalila', ep: 7,
+    title: 'الْقِرْدُ وَالتِّمْسَاح',
+    titleEn: 'The monkey and the crocodile',
+    blurb: 'He was invited for dinner. He was meant to BE dinner.',
+    lines: [
+      { ar: 'كَانَ قِرْدٌ يَعِيشُ فَوْقَ شَجَرَةِ تِينٍ عَلَى شَاطِئِ النَّهْرِ.', en: 'A monkey lived in a fig tree on the river bank.' },
+      { ar: 'صَادَقَ تِمْسَاحًا وَكَانَ يَرْمِي لَهُ مِنَ التِّينِ الْحُلْوِ.', en: 'He befriended a crocodile and threw sweet figs down to him.' },
+      { ar: 'قَالَ التِّمْسَاحُ: تَعَالَ إِلَى بَيْتِي فِي الْجَزِيرَةِ لِتَرَى أَهْلِي.', en: 'The crocodile said: come to my house on the island to see my family.' },
+      { ar: 'وَفِي وَسَطِ النَّهْرِ قَالَ: زَوْجَتِي تُرِيدُ قَلْبَكَ لِتَشْفَى!', en: 'And in the middle of the river he said: my wife needs your heart to be healed!' },
+      { ar: 'قَالَ الْقِرْدُ: تَرَكْتُ قَلْبِي فَوْقَ الشَّجَرَةِ، فَلْنَرْجِعْ لِنَأْخُذَهُ!', en: 'The monkey said: I left my heart up in the tree, let us go back to get it!' },
+      { ar: 'رَجَعَا إِلَى الشَّاطِئِ فَقَفَزَ الْقِرْدُ فَوْقَ الشَّجَرَةِ وَنَجَا.', en: 'They returned to the shore and the monkey jumped into the tree and was saved.' },
+      { ar: 'حُسْنُ التَّصَرُّفِ يُنْقِذُ صَاحِبَهُ مِنَ الْهَلَاكِ.', en: 'Quick thinking saves a person from ruin.' },
+    ],
+  },
 ];
 TEXT_STORIES.push(...KALILA);
 
 /* what a series is called, for the shelf heading */
 const SERIES_META = {
   'lulu-ghurab': { title: 'لُولُو وَالْغُرَاب', titleEn: 'Lulu and the Crow', icon: '🐱🐦‍⬛' },
+  'juha': { title: 'نَوَادِر جُحَا', titleEn: "Juha's Tales", icon: '👳‍♂️🫏', label: 'funny Arabic tales' },
   /* label overrides "a series" — Kalila is a BOOK of separate fables, not six
      episodes of one running joke, and calling it a series would be a small lie
      to a child who later picks the real thing up. */
@@ -377,4 +490,4 @@ const SERIES_META = {
 };
 
 if (typeof module !== 'undefined' && module.exports)
-  module.exports = { TEXT_STORIES, SERIES_LULU, KALILA, SERIES_META };
+  module.exports = { TEXT_STORIES, SERIES_LULU, JUHA, KALILA, SERIES_META };

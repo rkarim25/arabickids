@@ -52,24 +52,12 @@ function l1End() {
 
 /* ---------- small word-card pictures ---------- */
 const L1I = {
-  hadha:  icon(`<circle cx="50" cy="30" r="14" fill="#E15554"/>
-    <rect x="44" y="52" width="12" height="30" rx="6" fill="${C.skin}"/>
-    <circle cx="50" cy="88" r="13" fill="${C.skin}"/>
-    <path d="M 36,80 q -6,-6 -2,-12" stroke="${C.skin}" stroke-width="8" fill="none" stroke-linecap="round"/>`),
-  adam:   icon(`<circle cx="50" cy="52" r="30" fill="${C.skin}"/>
-    <path d="M20 48 a30 30 0 0 1 60 0 q -30,-17 -60,0 Z" fill="${C.hair}"/>
-    <circle cx="39" cy="52" r="4.4" fill="#332A20"/><circle cx="61" cy="52" r="4.4" fill="#332A20"/>
-    <path d="M40 66 q 10,9 20,0" stroke="#332A20" stroke-width="4" fill="none" stroke-linecap="round"/>`),
-  baba:   icon(`<circle cx="50" cy="46" r="26" fill="${C.skin}"/>
-    <path d="M26 44 a24 24 0 0 1 48 0 q -24,-14 -48,0 Z" fill="${C.beard}"/>
-    <path d="M28 52 q 22,34 44,0 q -6,32 -22,32 t -22,-32 Z" fill="${C.beard}"/>
-    <circle cx="41" cy="46" r="4" fill="#332A20"/><circle cx="59" cy="46" r="4" fill="#332A20"/>`),
-  saghira: icon(`<rect width="100" height="100" rx="22" fill="#EFE4F3"/>
-    <circle cx="70" cy="56" r="26" fill="#C9BEDD"/>
-    <circle cx="28" cy="70" r="12" fill="${C.shirt}"/>`),
-  kabir:  icon(`<rect width="100" height="100" rx="22" fill="#EFE4F3"/>
-    <circle cx="38" cy="54" r="30" fill="${C.shirt}"/>
-    <circle cx="80" cy="76" r="11" fill="#C9BEDD"/>`),
+  hadha:   LICONS.rel_this,
+  hadhihi: LICONS.rel_this_f,
+  adam:    LICONS.adam,
+  baba:    LICONS.baba,
+  saghira: LICONS.rel_small,
+  kabir:   LICONS.rel_big,
 };
 
 /* ---------- the book ---------- */
@@ -82,10 +70,10 @@ const BOOK_LULU1 = {
   tag: 'حَرَكَات وَمَدّ فَقَط · harakat and long vowels only',
   words: [
     { ar: 'هَذَا',     en: 'this (boy)',  icon: LICONS.rel_this },
-    { ar: 'هَذِهِ',    en: 'this (girl)', icon: LICONS.rel_this },
-    { ar: 'أَدَم',     en: 'Adam',        icon: L1I.adam },
-    { ar: 'بَابَا',    en: 'Baba',        icon: L1I.baba },
-    { ar: 'لُولُو',    en: 'Lulu',        icon: ICONS.cat },
+    { ar: 'هَذِهِ',    en: 'this (girl)', icon: LICONS.rel_this_f },
+    { ar: 'أَدَم',     en: 'Adam',        icon: LICONS.adam },
+    { ar: 'بَابَا',    en: 'Baba',        icon: LICONS.baba },
+    { ar: 'لُولُو',    en: 'Lulu',        icon: LICONS.cat2 },
     { ar: 'صَغِيرَة',  en: 'small',       icon: LICONS.rel_small },
     { ar: 'كَبِير',    en: 'big',         icon: LICONS.rel_big },
     { ar: 'جَمِيلَة',  en: 'beautiful',   icon: LICONS.heart2 },

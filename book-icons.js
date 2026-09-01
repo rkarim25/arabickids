@@ -21,10 +21,10 @@
 
   /* the relations and the new object pictures need names in the shared kit so
      the listening game can look them up by key */
-  ['rel_in', 'rel_on', 'rel_under', 'rel_and', 'rel_who', 'rel_this',
-   'rel_big', 'rel_small', 'rel_where', 'cat2', 'bed', 'chair', 'box',
+  ['rel_in', 'rel_on', 'rel_under', 'rel_and', 'rel_who', 'rel_this', 'rel_this_f', 'rel_want',
+   'rel_big', 'rel_small', 'rel_where', 'cat2', 'bed', 'chair', 'box', 'adam', 'baba', 'mama', 'maryam', 'sneaker',
    'kitchen', 'room', 'kitab', 'dar', 'qamar', 'najm', 'tayr', 'sahab',
-   'layl', 'heart2'].forEach(k => { if (LICONS[k]) ICONS[k] = LICONS[k]; });
+   'layl', 'heart2', 'arnab', 'qird', 'jazar', 'mawz'].forEach(k => { if (LICONS[k]) ICONS[k] = LICONS[k]; });
 
   /* word card pictures, by book id and Arabic word */
   const FIX = {

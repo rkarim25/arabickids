@@ -115,7 +115,7 @@ def wanted():
         out[f"nam:{l}"] = name
         out[norm(word)] = word
     # every word and sentence in the books
-    for f in ("app.js", "book-lulu1.js", "book-bayt.js"):
+    for f in ("app.js", "book-lulu1.js", "book-bayt.js", "books-more.js"):
         src = open(os.path.join(ROOT, f), encoding="utf-8").read()
         for w in re.findall(r"\{\s*ar:\s*'([^']+)'", src):
             out[norm(w)] = w
@@ -123,6 +123,8 @@ def wanted():
             out[norm(t)] = t
         for t in re.findall(r"say:\s*'([^']+)'", src):
             out[norm(t)] = t
+        for w in re.findall(r"en:\s*'([^']+)'", src):
+            out["en:" + norm_en(w)] = ("EN", w.replace("\\'", "'"))
     # the sentence lessons — Arabic line, plus the ENGLISH meaning and the
     # explanation, because the whole site has to be listenable
     sp = os.path.join(ROOT, "sentences.js")

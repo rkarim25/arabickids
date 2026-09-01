@@ -62,16 +62,17 @@ Shared: `audio.js` (all playback), `sync.js` (Google sign-in + star sync),
 
 - **Qaida**: 9 stages, 592 cells, 469 clips.
 - **Picture books**: 7, one at every band L1–L5.
-- **No-picture stories**: 16 — 5 standalone, the 6-episode series
-  **Lulu vs the Crow** L2 to L4, and 5 **Kalila wa Dimna** fables whose ep
-  numbers follow the LADDER (ep1 = L1 … ep5 = L4).
-  By level: L1 2, L2 4, L3 4, L4 5, L5 1.
+- **No-picture stories**: 23 — 5 standalone, the 8-episode series
+  **Lulu vs the Crow** L2 to L4, the 3-episode slapstick comedy series
+  **Juha's Tales** L3 to L4, and 7 **Kalila wa Dimna** fables whose ep
+  numbers follow the LADDER (ep1 = L1 … ep7 = L4).
+  By level: L1 2, L2 4, L3 7, L4 9, L5 1.
   Level 5 has no fable on purpose — that band is ayat and duas (DESIGN.md §3).
 - **Sentences**: 11 sets, 27 lessons, 10 frames, 10 jokes/riddles.
 - **Surahs**: 11, 51 ayat, all with Alafasy recitation; **all 51** now have a
   bespoke child note, plus child meanings and 175 child word-glosses.
 - **Videos**: 7, across 3 topics, every id verified live 2026-08-31.
-- **Audio**: 1,695 TTS clips + 267 real recitation files. `data/audio-texts.json`
+- **Audio**: 1,919 TTS clips + 267 real recitation files. `data/audio-texts.json`
   records what every clip actually SAYS — see trap 14.
 
 ---
@@ -186,13 +187,8 @@ affected clips** (filenames hash the text, not the voice), re-run.
    channel deletes, an upload goes private. `videos.js` records each one's real
    title and channel so a dead tile is identifiable rather than just grey.
    Re-check by hand every few months.
-4. **Ayah notes: DONE**, all 51 (2026-08-31). Listed only so nobody
-   reintroduces the gap by trusting an old copy of this file.
-5. **Picture books are now the thin shelf** — 7 of them, one each at L3, L4 and
-   L5, against 13 text stories. The text shelf is thin at L1 (1) and L5 (1).
-6. **More كليلة ودمنة.** The library question is settled (the reasoning is in
-   `stories-text.js`) and two fables are in at L4. The obvious next two are
-   the collared dove and the monkey and the crocodile. African Storybook,
-   Global Digital Library and StoryWeaver stay the CC-licensed fallback if he
-   ever wants illustrated source material; **Bunny vs Monkey and Peppa Pig stay
-   refused**, and buying a copy does not change it.
+4. **Ayah notes: DONE**, all 51 (2026-08-31).
+5. **Picture books visual upgrade: DONE**, all 7 picture books (`app.js`, `book-lulu1.js`, `book-bayt.js`, `books-more.js`) upgraded with polished character designs, room atmospheres, props, and lighting.
+6. **No-picture stories: 23 total** across Kalila wa Dimna (7 fables), Lulu vs Crow (8 episodes), Juha's Tales (3 episodes), and standalones (5 stories). All covered with neural TTS audio.
+7. **Master AI Guide**: See `AI_GUIDE.md` for the complete architecture, content ladders, audio workflows, and development traps.
+

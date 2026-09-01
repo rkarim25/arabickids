@@ -15,15 +15,16 @@
    ========================================================================= */
 'use strict';
 
-let MANIFEST = null;
-let manifestP = null;
+let MANIFEST = (typeof window !== 'undefined' && window.AUDIO_MANIFEST) || null;
+let manifestP = MANIFEST ? Promise.resolve(MANIFEST) : null;
 
 function loadManifest() {
+  if (MANIFEST) return Promise.resolve(MANIFEST);
   if (!manifestP) {
     manifestP = fetch('data/audio-manifest.json')
       .then(r => r.json())
       .then(m => (MANIFEST = m))
-      .catch(() => (MANIFEST = {}));       // offline first-run: fall back, don't break
+      .catch(() => (MANIFEST = (typeof window !== 'undefined' && window.AUDIO_MANIFEST) || {}));       // offline first-run: fall back, don't break
   }
   return manifestP;
 }
