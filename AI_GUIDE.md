@@ -56,43 +56,48 @@ Content is strictly banded into 5 distinct pedagogical levels. The test suite au
 
 ---
 
-## 4. The 5 Doors Architecture
+## 4. The 6 Doors Architecture
 
 ```
                                ┌───────────────┐
                                │   HIKAYAT     │
                                │ (index.html)  │
                                └───────┬───────┘
-         ┌──────────────┬──────────────┼──────────────┬──────────────┐
-         ▼              ▼              ▼              ▼              ▼
-   🔊 الأَصْوَات      📖 الكُتُب       💬 جُمَل       📿 سُوَر       🖨 اِطْبَعْ
-  (Sounds & Qaida)   (Storybooks)   (Sentences)     (Surahs)     (Printables)
+         ┌──────────────┬──────────────┼──────────────┬──────────────┬──────────────┐
+         ▼              ▼              ▼              ▼              ▼              ▼
+   🔊 الأَصْوَات      📖 الكُتُب      🗂️ المُفْرَدَات      💬 جُمَل       📿 سُوَر       🖨 اِطْبَعْ
+  (Sounds & Qaida)   (Storybooks)    (Vocab SRS)    (Sentences)     (Surahs)     (Printables)
 ```
 
 ### 1. 🔊 **الأَصْوَات** (*The Sounds & Qaida*)
 * **Files:** `letters.js`, `kids.js`, `qaida-ui.js`, `data/qaida.json`
 * **Features:** 28 alphabet cards with letter forms (isolated, initial, medial, final), listen-and-find interactive sound games, 3 harakat practice grid, and the **9-stage Qaida reading ladder** (Letters → Shapes → Harakat → Tanween → Mudood → Sukoon → Shadda → Sun/Moon Lam → 95 Real Quranic Words).
-* **Audio:** Real reciter audio for Quranic words (`audio/quran/`), exact-match syllable keys (`q:<syllable>`) for practice cells.
+* **Audio:** Real reciter audio for Quranic words (`audio/quran/`), exact-match syllable keys (`q:<syllable>`) for practice cells synthesized as open syllables to prevent Edge-TTS abbreviation expansion.
 
 ### 2. 📖 **الكُتُب** (*The Books*)
 * **Files:** `app.js`, `book-lulu1.js`, `book-bayt.js`, `books-more.js`, `stories-text.js`, `text-story-ui.js`
 * **Features:**
-  * **Shelf 1 (With Pictures - 7 Books):** Level 1 to Level 5 illustrated picture storybooks with interactive sound pages, vocabulary cards, and end-of-book listening games.
+  * **Shelf 1 (With Pictures - 8 Books):** Level 1 to Level 5 illustrated picture storybooks with interactive sound pages, vocabulary cards, end-of-book listening games, and dedicated top navigation bars (`← الرَّفّ · Books` with live progress counter `صفحة ٣ من ٨`).
   * **Shelf 2 (Without Pictures - 23 Stories):** Pure text readers for developing reading fluency across 4 popular series:
     1. «نَوَادِر جُحَا» (*Juha's Tales* - 3 episodes, L3–L4)
     2. «لُولُو وَالْغُرَاب» (*Lulu vs the Crow* - 8 episodes, L2–L4)
     3. «كَلِيلَة وَدِمْنَة» (*Kalila wa Dimna Fables* - 7 episodes, L1–L4)
     4. Standalone stories (*The Big Cat, The Small Fish*, etc.)
 
-### 3. 💬 **جُمَل** (*Sentences*)
+### 3. 🗂️ **المُفْرَدَات** (*Vocabulary & Spaced Repetition SRS*)
+* **Files:** `vocab.js`, `vocab-ui.js`, `scripts/test-vocab.js`
+* **Features:** 43 core vocabulary items drawn from storybooks across 5 thematic categories. Employs a **Leitner 5-Box Spaced Repetition System** (Box 1: daily review, Box 2: 2 days, Box 3: 4 days, Box 4: 7 days, Box 5: 14 days / Mastered).
+* **Interactive Flashcards:** 3D card flip animation with watercolor illustrations on the front (with native audio 🔊) and 52px vowelled Arabic text, English translation, and storybook example sentences on the back. Star rewards (`addStar`) upon session completion.
+
+### 4. 💬 **جُمَل** (*Sentences*)
 * **Files:** `sentences.js`, `sentence-ui.js`
 * **Features:** 11 sentence sets containing 27 picture-free sentence lessons, 10 sentence frames, and 10 jokes/riddles. Each lesson teaches a sentence pattern with one-word variations to reinforce syntax.
 
-### 4. 📿 **سُوَر** (*Surahs*)
+### 5. 📿 **سُوَر** (*Surahs*)
 * **Files:** `surah-ui.js`, `surah-notes.js`, `surah-words.js`, `data/surahs.json`
 * **Features:** Surah Al-Fatiha + 10 shortest Surahs (51 total ayat). Every ayah plays verse-by-verse recitation by **Mishary Rashid Alafasy**, accompanied by child-friendly explanations, word-by-word vocabulary breakdowns (175 words), and interactive comprehension check questions.
 
-### 5. 🖨 **اِطْبَعْ** (*Printables*)
+### 6. 🖨 **اِطْبَعْ** (*Printables*)
 * **Files:** `print.js`, `print.css`
 * **Features:** Print-and-fold mini booklets, alphabet flashcards, cut-out matching games, and classroom posters.
 
@@ -104,21 +109,32 @@ Hikayat is intentionally built with **zero external framework bloat** (pure mode
 
 ```
 kids-books/
-├── index.html               # Single-page shell loading all 19 JavaScript modules
+├── index.html               # Single-page shell with hash routing and module bootstrap
 ├── style.css                # Primary styles, typography, responsive layout
-├── sw.js                    # Offline Service Worker cache manifest (2,300+ assets)
+├── kids.css                 # Kid-friendly buttons, door grids, reader bars, SRS cards
+├── print.css                # Print-optimized styles (cards, booklets, posters)
+├── sw.js                    # Offline Service Worker cache manifest (2,700+ assets)
 │
 ├── audio.js                 # Unified audio playback engine (playKey, playRecitation)
-├── app.js                   # Main application router, shared SVG illustration kit, L2 & L4 books
+├── audio-manifest.js        # Instant offline JS audio manifest (window.AUDIO_MANIFEST)
+├── app.js                   # Main reader engine, shared SVG illustration kit, L2 & L4 books
 ├── kit2.js                  # Secondary illustration primitives (Mama, Masjid, Food)
 ├── letters.js               # 28 Alphabet definitions, letter forms, keyword icons
+├── vocab.js                 # 43 core vocabulary words, categories, example sentences
+├── vocab-ui.js              # Leitner 5-box SRS engine & 3D flip card session controller
 ├── sentences.js             # Sentence sets, sentence frames, jokes, and riddles
+├── sentence-ui.js           # Sentence 5-step learning interface
 ├── stories-text.js          # 23 no-picture text stories with word-level audio
+├── text-story-ui.js         # Decodable text story reader interface
 ├── surah-notes.js           # Child-friendly notes & thinking prompts for all 51 ayat
 ├── surah-words.js           # 175 word glosses for Quranic vocabulary
+├── surah-ui.js              # Recitation player, word-by-word explorer, check quiz
+├── qaida-ui.js              # 9-stage reading ladder drill interface
+├── print.js                 # Printables generator (cards, mini books, posters)
 ├── sync.js                  # Cloudflare Worker / Google OAuth star synchronizer
 ├── record.js                # In-app parent recording booth for custom voiceovers
 ├── videos.js                # Curated privacy-enhanced YouTube video strip (nocookie)
+├── kids.js                  # Kid profiles, doors router, hashchange handler, Lulu companion
 │
 ├── data/
 │   ├── audio-manifest.json  # Manifest mapping text keys to MP3 filenames
@@ -127,26 +143,29 @@ kids-books/
 │   └── surahs.json          # Checked Quranic text & ayah audio metadata
 │
 └── scripts/
-    ├── gen-audio.py         # Automated Edge-TTS neural speech synthesizer
+    ├── gen-audio.py         # Automated Edge-TTS neural speech synthesizer (ar-SA-ZariyahNeural)
     ├── sync-sw.js           # Service Worker cache builder & URL version stamper
-    ├── test-books.js        # Test Suite 1: Books, level bands, SVG rendering
-    ├── test-letters.js      # Test Suite 2: 28 letters, forms, harakat grid
-    ├── test-sentences.js    # Test Suite 3: Sentence lessons & variation rules
-    ├── test-surahs.js       # Test Suite 4: Surah text integrity & recitation mapping
-    ├── test-stories-text.js # Test Suite 5: 23 text stories & audio coverage
-    ├── test-qaida.js        # Test Suite 6: Qaida marks, cells, and clips
-    └── test-videos.js       # Test Suite 7: Video privacy & iframe isolation
+    ├── test-vocab.js        # Test Suite 1: Vocabulary categories, items, and audio keys
+    ├── test-books.js        # Test Suite 2: Books, level bands, SVG rendering
+    ├── test-letters.js      # Test Suite 3: 28 letters, forms, harakat grid
+    ├── test-sentences.js    # Test Suite 4: Sentence lessons & variation rules
+    ├── test-surahs.js       # Test Suite 5: Surah text integrity & recitation mapping
+    ├── test-stories-text.js # Test Suite 6: No-picture stories
+    ├── test-qaida.js        # Test Suite 7: 9 Qaida stages & audio clips
+    └── test-videos.js       # Test Suite 8: Privacy-safe YouTube embed constraints
 ```
 
 ---
 
 ## 6. Audio Generation Pipeline
 
-Hikayat features **100% automated neural voice synthesis** via Microsoft Edge TTS, requiring zero manual parent voiceover recording:
+Hikayat features **100% automated neural voice synthesis** via Microsoft Edge TTS:
 
 * **Engine:** `scripts/gen-audio.py`
-* **Arabic Voice:** `ar-SA-HamedNeural` (clean, expressive classical Arabic)
+* **Arabic Voice:** `ar-SA-ZariyahNeural` (lively, warm female Arabic storyteller, rate: `-4%`, pitch: `+2Hz`)
 * **English Voice:** `en-GB-MaisieNeural` (warm, natural British English for translations)
+* **Dual Manifest Sync:** Writes both `data/audio-manifest.json` and `audio-manifest.js` (`window.AUDIO_MANIFEST = {...}`) to allow instant zero-latency playback across offline and `file://` environments without fetch restrictions.
+* **Isolated Phonetic Syllables:** Synthesizes open phonetic syllables (`ثَا`, `رَا`, `صَا`, `ثَنْ`) for single letter harakat drills to prevent Edge-TTS abbreviation expansion while keeping exact display keys `q:ثَ`, `q:رَ`, `q:صَ`.
 
 ### Running the Generator:
 ```powershell

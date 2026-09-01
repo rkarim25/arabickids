@@ -74,4 +74,5 @@ Every episode on **Kids Arabic TV** follows a clean 2-part structure:
 The website companion site (rkarim25.github.io/arabickids) provides the interactive practice:
 1. **Interactive Tap Soundboard:** Every Arabic word can be tapped to hear pre-rendered native Arabic pronunciation.
 2. **Decodable Storybooks:** 8 illustrated picture books with graduated reading levels (Level 1 to Level 5).
-3. **Listening Games & Phonics Stages:** Multi-sensory reinforcement ensuring passive viewers become active, confident readers.
+3. **Vocabulary & Spaced Repetition (SRS) Flashcards:** 43 core character and storybook words with 3D flip cards, Leitner 5-box daily review, and watercolor art.
+4. **Listening Games & Phonics Stages:** Multi-sensory reinforcement ensuring passive viewers become active, confident readers.

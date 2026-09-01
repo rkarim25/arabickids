@@ -50,26 +50,34 @@ long before they can write a single letter. Everything here follows from that.
 
 ## 2. What the child sees
 
-Four ways in, and no more. The eleven-tab sprawl on the grown-up site happened
-one reasonable addition at a time; this one starts with a hard cap.
+Six purposeful doors with dedicated, full-screen pages and clean back navigation. The modal popup feel and `✕` close buttons have been eliminated across the entire site in favor of clear top headers and bookmarkable URL hash routes (`#home`, `#shelf`, `#sounds`, `#vocab`, `#qaida`, `#sentences`, `#surahs`, `#print`).
 
 | | | |
 |---|---|---|
 | 🔊 **الأَصْوَات** Sounds | the letters, and **القَاعِدَة** — the full 9-step reading ladder | the way in to reading |
 | 📖 **الكُتُب** Books | two shelves on one ladder: **with pictures**, and **without** | the heart of it |
+| 🗂️ **المُفْرَدَات** Vocab | 43 core words, Leitner 5-box spaced repetition, 3D flip cards | making words stick |
 | 💬 **جُمَل** Sentences | one sentence, five steps, **no pictures** | where it becomes language |
 | 📿 **سُوَر** Surahs | Al-Fatiha + the ten shortest, **real recitation** | the reason for all of it |
 | 🖨 **اِطْبَعْ** Print | cards and mini-books to cut out | off the screen entirely |
 
-Five, not three. The cap has moved twice, both times on purpose and both times
-recorded here rather than quietly: Reza asked for picture-free
-sentence work on 2026-08-31 — *"the same concept as the main website, but
-perhaps more child friendly and more explanation"* — and burying it inside
-Books would have hidden the half of the site where the language actually
-assembles. Then سُوَر, because understanding the Qur'an is the reason this
-family is learning Arabic at all, and burying it would have been dishonest
-about what the site is for. **Five is the ceiling. The next addition replaces
-one of these.**
+### Dedicated Pages, Not Popups (2026-09-01)
+Reza: *"rather than pages on the websites, it seems like pop ups which i cross out. things should have dedicated pages. also create a vocabulary section with spaced repetition built in"*.
+Across every section (Shelf, Reader, Sounds, Qaida, Vocab, Sentences, Surahs, Print), modal overlays and cross-out icons (`✕`) are replaced with semantic top navigation headers:
+- Clean back pills: `<button class="nav-back-btn"><span class="back-arr">←</span> <span class="back-lbl">الرَّئِيسِيَّة · Home</span></button>`.
+- Distinct title, subtitle, and live star/progress metrics.
+- Active reader bar displaying `← الرَّفّ · Books` alongside live book title and page counter (`صفحة ٣ من ٨`).
+- Bookmarkable hash routing that supports browser forward/backward history and deep linking.
+
+### Vocabulary & Spaced Repetition (SRS)
+To ensure words encountered in stories are retained long-term without rote memorization:
+- **Leitner 5-Box SRS Engine**: Words progress through 5 intervals (Box 1: daily review, Box 2: 2 days, Box 3: 4 days, Box 4: 7 days, Box 5: 14 days / Mastered).
+- **Daily Due Queues**: Automatically queues words due for review and saves progress per child in `localStorage`.
+- **Interactive 3D Flip Flashcards**:
+  - Front: Watercolor illustration + instant native audio button 🔊.
+  - Back: 52px vowelled Arabic text + English translation + storybook example sentence with audio.
+  - Two intuitive child responses: `🔁 مَرَّة أُخْرَى` (re-tests today) and `⭐ أَعْرِفُهَا!` (promotes to next box).
+  - Positive celebration card on session completion with star rewards.
 
 ### Videos are a strip, not a door (2026-08-31)
 Reza: *"maybe insert youtube videos wherever relevant to learn words and
