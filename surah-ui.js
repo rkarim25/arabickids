@@ -55,9 +55,15 @@ function openSurahs() {
 function renderSurahList() {
   const host = document.getElementById('surahs');
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="qBack">✕</button>
-      <h2>سُوَر <small>Surahs — listen, understand, remember</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="qBack" title="Back to Home">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">الرَّئِيسِيَّة · Home</span>
+      </button>
+      <div class="page-title">
+        <h1>سُوَر</h1>
+        <p class="tag">Surahs — listen, understand, remember</p>
+      </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
     <p class="hint">اِسْتَمِعْ وَافْهَمْ
@@ -79,7 +85,7 @@ function renderSurahList() {
         </button>`;
       }).join('')}
     </div>`;
-  document.getElementById('qBack').addEventListener('click', () => { renderHome(); show('home'); });
+  document.getElementById('qBack').addEventListener('click', () => { location.hash = '#home'; renderHome(); show('home'); });
   host.querySelectorAll('.surah-card').forEach(b => b.addEventListener('click', () => {
     surah = SURAHS.surahs.find(s => s.id === b.dataset.id);
     ayahIdx = 0; sStep = 0; renderAyah();
@@ -169,9 +175,15 @@ function renderAyah() {
   const p = surahProgress(surah);
 
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="qBack">✕</button>
-      <h2>${surah.name} <small>${a.ref}${understood(a) ? ' · ✅ فَهِمْتُهَا' : ''}</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="qBack" title="Back to Surahs">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">سُوَر · Surahs</span>
+      </button>
+      <div class="page-title">
+        <h1>${surah.name}</h1>
+        <p class="tag">${a.ref}${understood(a) ? ' · ✅ فَهِمْتُهَا' : ''}</p>
+      </div>
       <div class="star-count">${p.done}/${p.total}</div>
     </header>
 

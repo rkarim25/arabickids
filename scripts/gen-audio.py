@@ -175,6 +175,24 @@ def wanted():
             for c in st.get("moon", []):
                 add_cell(c)
 
+    # ---- the vocabulary words and examples ----
+    vp = os.path.join(ROOT, "vocab.js")
+    if os.path.exists(vp):
+        src = open(vp, encoding="utf-8").read()
+        JS_STR = r"'((?:[^'\\]|\\.)*)'"
+        for w in re.findall(r"ar:\s*" + JS_STR, src):
+            out[norm(w)] = w
+        for w in re.findall(r"exAr:\s*" + JS_STR, src):
+            out[norm(w)] = w
+            for piece in w.split():
+                k = norm(piece)
+                if k and k not in out:
+                    out[k] = piece
+        for w in re.findall(r"en:\s*" + JS_STR, src):
+            out["en:" + norm_en(w)] = ("EN", w.replace("\\'", "'"))
+        for w in re.findall(r"exEn:\s*" + JS_STR, src):
+            out["en:" + norm_en(w)] = ("EN", w.replace("\\'", "'"))
+
     # ---- the no-picture stories ----
     # These matter more than the picture books: with nothing on the page but
     # words, a line without a clip is a line that says nothing at all.

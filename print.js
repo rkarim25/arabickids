@@ -17,9 +17,15 @@ function openPrint() { printKind = 'cards'; renderPrint(); show('printView'); }
 function renderPrint() {
   const host = document.getElementById('printView');
   host.innerHTML = `
-    <header class="sub-head no-print">
-      <button class="back" id="pBack">✕</button>
-      <h2>اِطْبَعْ <small>Print &amp; play</small></h2>
+    <header class="page-head no-print">
+      <button class="nav-back-btn" id="pBack" title="Back to Home">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">الرَّئِيسِيَّة · Home</span>
+      </button>
+      <div class="page-title">
+        <h1>اِطْبَعْ</h1>
+        <p class="tag">Printables, Cards &amp; Mini Books</p>
+      </div>
       <button class="print-go" id="pGo">🖨️ Print</button>
     </header>
 

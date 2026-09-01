@@ -42,9 +42,15 @@ function renderTextStory() {
   const lv = LEVELS[s.level - 1];
 
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="tsBack">✕</button>
-      <h2>${s.title} <small>${s.titleEn}</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="tsBack" title="Back to Shelf">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">الكُتُب · Books</span>
+      </button>
+      <div class="page-title">
+        <h1>${s.title}</h1>
+        <p class="tag">${s.titleEn}</p>
+      </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
 

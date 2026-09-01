@@ -923,9 +923,10 @@ function openReader(book) {
   renderPage();
 }
 function closeReader() {
-  speechSynthesis.cancel();
+  if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
   $('#reader').classList.add('hidden');
   $('#shelf').classList.remove('hidden');
+  location.hash = '#shelf';
 }
 function go(delta) {
   const n = pageIdx + delta;
@@ -937,8 +938,15 @@ function go(delta) {
 function renderPage() {
   const p = BOOK.pages[pageIdx];
   const host = $('#pageHost');
-  speechSynthesis.cancel();
+  if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
   gameState = null;
+
+  if ($('#readerTitleBar')) {
+    $('#readerTitleBar').innerHTML = `<b>${BOOK.title}</b><small>${BOOK.titleEn}</small>`;
+  }
+  if ($('#readerPageInd')) {
+    $('#readerPageInd').innerHTML = `<span>صفحة ${pageIdx + 1} من ${BOOK.pages.length}</span>`;
+  }
 
   const lv = LEVELS[BOOK.level - 1];
 

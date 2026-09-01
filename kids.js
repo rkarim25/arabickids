@@ -77,10 +77,10 @@ function luluSays(i) {
 }
 
 /* ================= router ================================================
-   Four screens, never more (DESIGN.md §2). Everything is display-toggled so a
-   child never waits for a page load. */
+   Dedicated full-screen pages with clean back-navigation and URL hash routing.
+   ========================================================================= */
 
-const VIEWS = ['home', 'shelf', 'sounds', 'sentences', 'surahs', 'qaida', 'textStory', 'printView', 'reader'];
+const VIEWS = ['home', 'shelf', 'sounds', 'vocab', 'sentences', 'surahs', 'qaida', 'textStory', 'printView', 'reader'];
 function show(id) {
   VIEWS.forEach(v => {
     const el = document.getElementById(v);
@@ -89,6 +89,38 @@ function show(id) {
   if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
   window.scrollTo(0, 0);
 }
+
+function handleHashChange() {
+  const hash = location.hash.replace(/^#/, '');
+  if (!hash || hash === 'home') {
+    renderHome();
+    show('home');
+  } else if (hash === 'shelf' || hash === 'books') {
+    show('shelf');
+  } else if (hash === 'sounds') {
+    openSounds();
+  } else if (hash === 'vocab') {
+    if (typeof openVocab === 'function') openVocab();
+    else show('vocab');
+  } else if (hash === 'qaida') {
+    if (typeof openQaida === 'function') openQaida();
+    else show('qaida');
+  } else if (hash === 'sentences') {
+    if (typeof openSentences === 'function') openSentences();
+    else show('sentences');
+  } else if (hash === 'surahs') {
+    if (typeof openSurahs === 'function') openSurahs();
+    else show('surahs');
+  } else if (hash === 'print') {
+    if (typeof openPrint === 'function') openPrint();
+    else show('printView');
+  } else if (hash.startsWith('story/')) {
+    const sid = hash.replace('story/', '');
+    if (typeof openTextStory === 'function') openTextStory(sid);
+  }
+}
+
+window.addEventListener('hashchange', handleHashChange);
 
 /* ================= home ================================================== */
 
@@ -126,6 +158,11 @@ function renderHome() {
         <span class="door-ar">الكُتُب</span>
         <span class="door-en">Books — with pictures, and without</span>
       </button>
+      <button class="door" id="doorVocab" style="--d:#A98CD0">
+        <span class="door-ic">🗂️</span>
+        <span class="door-ar">المُفْرَدَات</span>
+        <span class="door-en">Vocabulary — flashcards &amp; daily practice</span>
+      </button>
       <button class="door" id="doorSent" style="--d:#E8A33D">
         <span class="door-ic">💬</span>
         <span class="door-ar">جُمَل</span>
@@ -145,11 +182,12 @@ function renderHome() {
     <footer class="site-foot">اِقْرَأْ مَعَ طِفْلِكَ كُلَّ يَوْم · Read with your child every day</footer>`;
 
   document.getElementById('whoBtn').addEventListener('click', renderPicker);
-  document.getElementById('doorSounds').addEventListener('click', () => { openSounds(); });
-  document.getElementById('doorBooks').addEventListener('click', () => { show('shelf'); });
-  document.getElementById('doorSent').addEventListener('click', () => { openSentences(); });
-  document.getElementById('doorQuran').addEventListener('click', () => { openSurahs(); });
-  document.getElementById('doorPrint').addEventListener('click', () => { openPrint(); });
+  document.getElementById('doorSounds').addEventListener('click', () => { location.hash = '#sounds'; openSounds(); });
+  document.getElementById('doorBooks').addEventListener('click', () => { location.hash = '#shelf'; show('shelf'); });
+  document.getElementById('doorVocab').addEventListener('click', () => { location.hash = '#vocab'; if (typeof openVocab === 'function') openVocab(); });
+  document.getElementById('doorSent').addEventListener('click', () => { location.hash = '#sentences'; openSentences(); });
+  document.getElementById('doorQuran').addEventListener('click', () => { location.hash = '#surahs'; openSurahs(); });
+  document.getElementById('doorPrint').addEventListener('click', () => { location.hash = '#print'; openPrint(); });
   document.querySelector('.lulu').addEventListener('click', () => luluSays(0));
   setTimeout(() => luluSays(0), 600);
 }
@@ -186,14 +224,7 @@ function renderPicker() {
   }));
 }
 
-/* ================= Level 0 — الأَصْوَات ==================================
-   Two ways in, both starting with a noise:
-     • مَعَ الحُرُوف — meet the letters: tap a letter, hear its name, its sound
-       and a word that starts with it. The four written forms are SHOWN, never
-       copied — a child sees that a letter changes clothes, which is the thing
-       that actually confuses them later.
-     • اِسْمَعْ وَاخْتَرْ — listen and choose: a sound plays, three pictures
-       wait. Never fails, never ends, only adds stars. */
+/* ================= Level 0 — الأَصْوَات ================================== */
 
 let soundsMode = 'letters';
 let quiz = null;
@@ -203,9 +234,15 @@ function openSounds() { soundsMode = 'letters'; renderSounds(); show('sounds'); 
 function renderSounds() {
   const host = document.getElementById('sounds');
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="sBack">✕</button>
-      <h2>الأَصْوَات <small>Sounds</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="sBack" title="Back to Home">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">الرَّئِيسِيَّة · Home</span>
+      </button>
+      <div class="page-title">
+        <h1>الأَصْوَات</h1>
+        <p class="tag">Sounds &amp; Letters</p>
+      </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
     <nav class="mode-row">
@@ -215,9 +252,9 @@ function renderSounds() {
       <button class="mode ${soundsMode === 'haraka' ? 'on' : ''}" data-m="haraka">✨ الحَرَكَات<small>One letter, three sounds</small></button>
     </nav>
     <div id="soundsBody"></div>`;
-  document.getElementById('sBack').addEventListener('click', () => { renderHome(); show('home'); });
+  document.getElementById('sBack').addEventListener('click', () => { location.hash = '#home'; renderHome(); show('home'); });
   const toQ = document.getElementById('toQaida');
-  if (toQ) toQ.addEventListener('click', openQaida);
+  if (toQ) toQ.addEventListener('click', () => { location.hash = '#qaida'; openQaida(); });
   host.querySelectorAll('.mode[data-m]').forEach(b => b.addEventListener('click', () => {
     soundsMode = b.dataset.m; renderSounds();
   }));

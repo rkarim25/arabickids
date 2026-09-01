@@ -65,9 +65,15 @@ const qStars = st => starsFor('qaida:' + st.id);
 function renderStageList() {
   const host = document.getElementById('qaida');
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="qdBack">✕</button>
-      <h2>القَاعِدَة <small>Learning to read, step by step</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="qdBack" title="Back to Home">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">الرَّئِيسِيَّة · Home</span>
+      </button>
+      <div class="page-title">
+        <h1>القَاعِدَة</h1>
+        <p class="tag">Learning to read, step by step</p>
+      </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
     <p class="hint">مِنَ الحَرْف إِلَى القُرْآن
@@ -84,7 +90,7 @@ function renderStageList() {
           ${qStars(st) ? `<span class="sg-done">⭐ ${qStars(st)}</span>` : ''}
         </button>`).join('')}
     </div>`;
-  document.getElementById('qdBack').addEventListener('click', () => { renderHome(); show('home'); });
+  document.getElementById('qdBack').addEventListener('click', () => { location.hash = '#home'; renderHome(); show('home'); });
   host.querySelectorAll('.stage-card').forEach(b => b.addEventListener('click', () => {
     qStage = QAIDA.stages.find(s => s.id === b.dataset.id);
     renderStage();
@@ -122,9 +128,15 @@ function renderStage() {
   }
 
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="qdBack">✕</button>
-      <h2>${st.title} <small>${st.titleEn}</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="qdBack" title="Back to Stages">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">القَاعِدَة · Stages</span>
+      </button>
+      <div class="page-title">
+        <h1>${st.title}</h1>
+        <p class="tag">${st.titleEn}</p>
+      </div>
       <button class="round" id="qdAuto" title="Read them all">▶️</button>
     </header>
     <p class="q-teach">${st.teaches}</p>

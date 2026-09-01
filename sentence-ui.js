@@ -31,9 +31,15 @@ function openSentences() { sentSet = null; renderSentenceHome(); show('sentences
 function renderSentenceHome() {
   const host = document.getElementById('sentences');
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="jBack">✕</button>
-      <h2>جُمَل <small>Sentences</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="jBack" title="Back to Home">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">الرَّئِيسِيَّة · Home</span>
+      </button>
+      <div class="page-title">
+        <h1>جُمَل</h1>
+        <p class="tag">Sentences — listen &amp; speak</p>
+      </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
     <p class="hint">اِخْتَرْ وَاسْتَمِعْ
@@ -48,7 +54,7 @@ function renderSentenceHome() {
         </button>`;
       }).join('')}
     </div>`;
-  document.getElementById('jBack').addEventListener('click', () => { renderHome(); show('home'); });
+  document.getElementById('jBack').addEventListener('click', () => { location.hash = '#home'; renderHome(); show('home'); });
   host.querySelectorAll('.set-card').forEach(b => b.addEventListener('click', () => {
     sentSet = SENTENCE_SETS.find(s => s.id === b.dataset.s);
     sentIdx = 0; sentStep = 0;
@@ -75,9 +81,15 @@ function renderLesson() {
   const words = L.ar.split(/\s+/);
 
   host.innerHTML = `
-    <header class="sub-head">
-      <button class="back" id="jBack">✕</button>
-      <h2>${sentSet.title} <small>${sentIdx + 1} / ${sentSet.lessons.length}</small></h2>
+    <header class="page-head">
+      <button class="nav-back-btn" id="jBack" title="Back to Sets">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">جُمَل · All Sets</span>
+      </button>
+      <div class="page-title">
+        <h1>${sentSet.title}</h1>
+        <p class="tag">Lesson ${sentIdx + 1} of ${sentSet.lessons.length}</p>
+      </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
 

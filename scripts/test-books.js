@@ -48,7 +48,7 @@ sandbox.window = sandbox;
 const unstamp = u => String(u).split("?")[0];
 const BOOK_FILES = [...src("index.html").matchAll(/<script src="([^"]+)"><\/script>/g)]
   .map(m => unstamp(m[1]))
-  .filter(f => !/^(kids|print)\.js$/.test(f));   // those need a real DOM
+  .filter(f => !/^(kids|print|vocab-ui)\.js$/.test(f));   // those need a real DOM
 
 let BOOKS, LEVELS, LICONS;
 try {
