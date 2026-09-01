@@ -66,8 +66,12 @@ stages.push({
   title: "الحَرَكَات", titleEn: "Fatha, kasra, damma",
   teaches: "One letter, three different noises. This is the whole of early reading.",
   rows: L.map(l => {
-    if (l === ALIF) return [cell("أَ"), cell("إِ"), cell("أُ")];
-    return [cell(l + FATHA), cell(l + KASRA), cell(l + DAMMA)];
+    if (l === ALIF) return [cell("أَ", "أَ"), cell("إِ", "إِ"), cell("أُ", "أُ")];
+    return [
+      cell(l + FATHA, l + FATHA + ALIF),
+      cell(l + KASRA, l + KASRA + YA),
+      cell(l + DAMMA, l + DAMMA + WAW),
+    ];
   }),
 });
 
@@ -77,8 +81,12 @@ stages.push({
   title: "التَّنْوِين", titleEn: "Tanween — the doubled marks",
   teaches: "Two marks instead of one, and an n sound appears at the end: an, in, un.",
   rows: L.map(l => {
-    if (l === ALIF) return [cell("ءً"), cell("ءٍ"), cell("ءٌ")];
-    return [cell(l + FATHATAN + ALIF), cell(l + KASRATAN), cell(l + DAMMATAN)];
+    if (l === ALIF) return [cell("ءً", "أَنْ"), cell("ءٍ", "إِنْ"), cell("ءٌ", "أُنْ")];
+    return [
+      cell(l + FATHATAN + ALIF, l + FATHA + "نْ"),
+      cell(l + KASRATAN, l + KASRA + "نْ"),
+      cell(l + DAMMATAN, l + DAMMA + "نْ"),
+    ];
   }),
 });
 

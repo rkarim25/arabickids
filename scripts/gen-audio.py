@@ -83,6 +83,7 @@ def letters():
 # letters whose sound can be held; the rest get letter+fatha only
 CONTINUANT = set("ث ح خ ذ ر ز س ش ص ض ظ غ ف ل م ن ه و ي".split())
 FATHA = "\u064E"
+ALIF = "\u0627"
 
 def wanted():
     """every string the site will ever ask to say -> the text actually spoken"""
@@ -100,7 +101,8 @@ def wanted():
         # "\u0627\u064e" is not a syllable any engine can say, so alif was coming out as
         # noise — Reza, 2026-08-31: "alif sounds like ba". What a Qaida actually
         # teaches for alif's sound is the hamza carrying the fatha: \u0623\u064e.
-        out[f"snd:{l}"] = ("\u0623" if l == "\u0627" else l) + FATHA
+        # For single consonants, lengthen with Alif to avoid abbreviation dictionary lookup
+        out[f"snd:{l}"] = "\u0623\u064e" if l == "\u0627" else (l + FATHA + ALIF)
         out[f"nam:{l}"] = name
         out[norm(word)] = word
     # every word and sentence in the books
@@ -154,14 +156,15 @@ def wanted():
             if st.get("id") == "kalimat":
                 continue
             def add_cell(c):
-                t = (c or {}).get("say") or (c or {}).get("show")
-                if not t or not t.strip():
+                show = (c or {}).get("show")
+                say = (c or {}).get("say") or show
+                if not show or not show.strip():
                     return
-                # KEY ON THE EXACT TEXT, NOT norm(). norm() strips tashkeel, so
-                # بَ, بِ and بُ all collapse to "ب" and would share one clip —
-                # which destroys the only thing this stage teaches. A Qaida cell
-                # IS its harakat, so the key has to keep them.
-                out["q:" + t.strip()] = t.strip()
+                # KEY ON THE EXACT TEXT SHOWN SO MANIFEST MATCHES UI LOOKUP,
+                # BUT RECORD WHAT SHOULD ACTUALLY BE SPOKEN BY TTS
+                out["q:" + show.strip()] = say.strip()
+                if say.strip() != show.strip():
+                    out["q:" + say.strip()] = say.strip()
             for c in st.get("cells", []):
                 add_cell(c)
             for row in st.get("rows", []):
@@ -291,6 +294,8 @@ async def main():
             manifest.pop(key, None)
     with open(os.path.join(DATA, "audio-manifest.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=0, sort_keys=True)
+    with open(os.path.join(ROOT, "audio-manifest.js"), "w", encoding="utf-8") as f:
+        f.write("window.AUDIO_MANIFEST = " + json.dumps(manifest, ensure_ascii=False, indent=0, sort_keys=True) + ";\n")
     with open(TEXTS, "w", encoding="utf-8") as f:
         json.dump(spoken_now, f, ensure_ascii=False, indent=0, sort_keys=True)
     print(f"\n{made} new ({restated} because their TEXT changed), "
