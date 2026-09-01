@@ -52,12 +52,14 @@ function l1End() {
 
 /* ---------- small word-card pictures ---------- */
 const L1I = {
-  hadha:   LICONS.rel_this,
-  hadhihi: LICONS.rel_this_f,
-  adam:    LICONS.adam,
-  baba:    LICONS.baba,
-  saghira: LICONS.rel_small,
-  kabir:   LICONS.rel_big,
+  hadha:   artIcon('icon-hadha.jpg', 'هَذَا'),
+  hadhihi: artIcon('icon-hadhihi.jpg', 'هَذِهِ'),
+  adam:    artIcon('icon-adam.jpg', 'أَدَم'),
+  baba:    artIcon('icon-baba.jpg', 'بَابَا'),
+  lulu:    artIcon('icon-lulu.jpg', 'لُولُو'),
+  saghira: artIcon('icon-saghira.jpg', 'صَغِيرَة'),
+  kabir:   artIcon('icon-kabir.jpg', 'كَبِير'),
+  jameela: artIcon('icon-jameela.jpg', 'جَمِيلَة'),
 };
 
 /* ---------- the book ---------- */
@@ -69,14 +71,14 @@ const BOOK_LULU1 = {
   titleEn: 'Lulu is small',
   tag: 'حَرَكَات وَمَدّ فَقَط · harakat and long vowels only',
   words: [
-    { ar: 'هَذَا',     en: 'this (boy)',  icon: LICONS.rel_this },
-    { ar: 'هَذِهِ',    en: 'this (girl)', icon: LICONS.rel_this_f },
-    { ar: 'أَدَم',     en: 'Adam',        icon: LICONS.adam },
-    { ar: 'بَابَا',    en: 'Baba',        icon: LICONS.baba },
-    { ar: 'لُولُو',    en: 'Lulu',        icon: LICONS.cat2 },
-    { ar: 'صَغِيرَة',  en: 'small',       icon: LICONS.rel_small },
-    { ar: 'كَبِير',    en: 'big',         icon: LICONS.rel_big },
-    { ar: 'جَمِيلَة',  en: 'beautiful',   icon: LICONS.heart2 },
+    { ar: 'هَذَا',     en: 'this (boy)',  icon: L1I.hadha },
+    { ar: 'هَذِهِ',    en: 'this (girl)', icon: L1I.hadhihi },
+    { ar: 'أَدَم',     en: 'Adam',        icon: L1I.adam },
+    { ar: 'بَابَا',    en: 'Baba',        icon: L1I.baba },
+    { ar: 'لُولُو',    en: 'Lulu',        icon: L1I.lulu },
+    { ar: 'صَغِيرَة',  en: 'small',       icon: L1I.saghira },
+    { ar: 'كَبِير',    en: 'big',         icon: L1I.kabir },
+    { ar: 'جَمِيلَة',  en: 'beautiful',   icon: L1I.jameela },
   ],
   pages: [
     { type: 'cover', svg: l1Cover },
@@ -91,15 +93,16 @@ const BOOK_LULU1 = {
     { type: 'end', svg: l1End },
   ],
   game: [
-    { say: 'لُولُو',  opts: ['cat', 'l1baba', 'l1adam'], ans: 0 },
-    { say: 'بَابَا',  opts: ['l1adam', 'l1baba', 'cat'], ans: 1 },
-    { say: 'أَدَم',   opts: ['cat', 'l1baba', 'l1adam'], ans: 2 },
+    { say: 'لُولُو',  opts: ['l1lulu', 'l1baba', 'l1adam'], ans: 0 },
+    { say: 'بَابَا',  opts: ['l1adam', 'l1baba', 'l1lulu'], ans: 1 },
+    { say: 'أَدَم',   opts: ['l1lulu', 'l1baba', 'l1adam'], ans: 2 },
   ],
 };
 
 /* the game looks pictures up by key, so these need names in the shared kit */
 ICONS.l1adam = L1I.adam;
 ICONS.l1baba = L1I.baba;
+ICONS.l1lulu = L1I.lulu;
 
 if (typeof BOOKS !== 'undefined') {
   BOOKS.push(BOOK_LULU1);

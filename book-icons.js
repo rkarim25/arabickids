@@ -19,6 +19,17 @@
 (function () {
   if (typeof BOOKS === 'undefined' || typeof LICONS === 'undefined') return;
 
+  if (typeof artIcon === 'function') {
+    LICONS.adam = artIcon('icon-adam.jpg', 'أَدَم');
+    LICONS.baba = artIcon('icon-baba.jpg', 'بَابَا');
+    LICONS.cat2 = artIcon('icon-lulu.jpg', 'لُولُو');
+    LICONS.rel_this = artIcon('icon-hadha.jpg', 'هَذَا');
+    LICONS.rel_this_f = artIcon('icon-hadhihi.jpg', 'هَذِهِ');
+    LICONS.rel_small = artIcon('icon-saghira.jpg', 'صَغِيرَة');
+    LICONS.rel_big = artIcon('icon-kabir.jpg', 'كَبِير');
+    LICONS.heart2 = artIcon('icon-jameela.jpg', 'جَمِيلَة');
+  }
+
   /* the relations and the new object pictures need names in the shared kit so
      the listening game can look them up by key */
   ['rel_in', 'rel_on', 'rel_under', 'rel_and', 'rel_who', 'rel_this', 'rel_this_f', 'rel_want',

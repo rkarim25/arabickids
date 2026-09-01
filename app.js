@@ -57,6 +57,14 @@ function artScene(file, alt) {
       preserveAspectRatio="xMidYMid meet"><title>${alt}</title></image>`;
 }
 
+function artIcon(file, alt) {
+  const cid = 'c_' + file.replace(/[^a-z0-9]/gi, '_');
+  return `<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <clipPath id="${cid}"><rect width="100" height="100" rx="16"/></clipPath>
+    <image href="art/${file}" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice" clip-path="url(#${cid})"><title>${alt || ''}</title></image>
+  </svg>`;
+}
+
 function svgWrap(inner) {
   return `<svg viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
 }
