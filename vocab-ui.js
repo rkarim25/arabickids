@@ -89,10 +89,40 @@ let vocabSession = {
 
 let activeVocabCat = 'all';
 
+const VOCAB_FALLBACK_EMOJIS = {
+  // Animals
+  arnab: '🐰', qird: '🐵', cat2: '🐱', feel: '🐘', faar: '🐭',
+  samak: '🐟', dajaj: '🍗', tayr: '🐦', ghurab: '🦅', hoot: '🐋',
+  difda: '🐸', dhib: '🐺',
+  // Home & Objects
+  dar: '🏠', bab: '🚪', kitab: '📖', kitchen: '🍳', room: '🛋️',
+  bed: '🛏️', chair: '🪑', box: '📦', hidhaa: '👟', masjid: '🕌',
+  fursha: '🪥', walad: '👦', bint: '👧',
+  // Food & Drink
+  mawz: '🍌', jazar: '🥕', khubz: '🍞', aseer: '🧃', maa: '💧',
+  zaytoon: '🫒', thamar: '🍇', futur: '🥞', taam: '🍲',
+  // Nature & Sky
+  qamar: '🌙', shams: '☀️', najm: '⭐', sahab: '☁️', layl: '🌃',
+  samaa: '🌌', jabal: '⛰️', ard: '🌍', reeh: '💨',
+  // Core & Adjectives
+  kabir: '🐘', saghir: '🐥', jameel: '🌺', ladheedh: '😋', nazheef: '✨',
+  saree: '⚡', hadha: '👉', hadhihi: '👈', ayna: '🔍', madha: '❓',
+  ureedu: '🙋', fee: '📥', fawqa: '⬆️', tahta: '⬇️'
+};
+
 /* ————— UI Helper ————— */
 function getVocabIcon(iconKey) {
-  if (typeof LICONS !== 'undefined' && LICONS[iconKey]) return LICONS[iconKey];
-  if (typeof ICONS !== 'undefined' && ICONS[iconKey]) return ICONS[iconKey];
+  if (typeof LICONS !== 'undefined' && LICONS[iconKey]) {
+    const v = LICONS[iconKey];
+    return typeof v === 'function' ? v() : v;
+  }
+  if (typeof ICONS !== 'undefined' && ICONS[iconKey]) {
+    const v = ICONS[iconKey];
+    return typeof v === 'function' ? v() : v;
+  }
+  if (VOCAB_FALLBACK_EMOJIS[iconKey]) {
+    return `<span class="vcard-em">${VOCAB_FALLBACK_EMOJIS[iconKey]}</span>`;
+  }
   return '📖';
 }
 

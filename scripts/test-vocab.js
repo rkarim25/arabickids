@@ -17,8 +17,8 @@ console.log("\nTesting Vocabulary Data & SRS Setup...");
 yes(VOCAB_CATEGORIES && VOCAB_CATEGORIES.length >= 5,
   `at least 5 vocabulary categories defined (got ${VOCAB_CATEGORIES.length})`);
 const catIds = new Set(VOCAB_CATEGORIES.map(c => c.id));
-yes(catIds.has("all") && catIds.has("characters") && catIds.has("home") && catIds.has("food") && catIds.has("nature"),
-  "core categories (all, characters, home, food, nature) are all present");
+yes(catIds.has("all") && catIds.has("animals") && catIds.has("home") && catIds.has("food") && catIds.has("nature") && catIds.has("core"),
+  "core categories (all, animals, home, food, nature, core) are all present");
 
 /* ---------- 2. Vocabulary words list is complete and well-formed ---------- */
 yes(VOCAB_WORDS && VOCAB_WORDS.length >= 35,
