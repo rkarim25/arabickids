@@ -88,6 +88,10 @@ const VIDEOS = {
     titleEn: 'Words to listen to',
     note: 'Whole words, said by people. Listening is how the words stick at this age.',
     items: [
+      { id: 'eNMi8NUbjCw', emoji: '🐰',
+        ar: 'أَهْلًا يَا أَرْنَب', en: 'Hello Bunny! — Ahlan and Arnab',
+        channel: 'Hikayat · حكايات',
+        title: 'أَهْلًا يَا أَرْنَب — Hello Bunny! | Arabic for Kids' },
       { id: 'S_UN5O38C4Q', emoji: '🐘',
         ar: 'الحَيَوَانَات', en: 'Animals — names and sounds',
         channel: 'تعلم — Learn',

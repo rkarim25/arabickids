@@ -1,1 +1,6 @@
 _shot.html
+client_secrets.json
+*.pickle
+data/*.pickle
+flow_video.mp4
+flow_thumbnail.jpg
