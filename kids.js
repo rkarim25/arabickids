@@ -92,28 +92,27 @@ function show(id) {
 
 function handleHashChange() {
   const hash = location.hash.replace(/^#/, '');
+  if (!currentKid()) {
+    renderPicker();
+    return;
+  }
   if (!hash || hash === 'home') {
     renderHome();
     show('home');
   } else if (hash === 'shelf' || hash === 'books') {
     show('shelf');
   } else if (hash === 'sounds') {
-    openSounds();
+    if (typeof openSounds === 'function') openSounds();
   } else if (hash === 'vocab') {
     if (typeof openVocab === 'function') openVocab();
-    else show('vocab');
   } else if (hash === 'qaida') {
     if (typeof openQaida === 'function') openQaida();
-    else show('qaida');
   } else if (hash === 'sentences') {
     if (typeof openSentences === 'function') openSentences();
-    else show('sentences');
   } else if (hash === 'surahs') {
     if (typeof openSurahs === 'function') openSurahs();
-    else show('surahs');
   } else if (hash === 'print') {
     if (typeof openPrint === 'function') openPrint();
-    else show('printView');
   } else if (hash.startsWith('story/')) {
     const sid = hash.replace('story/', '');
     if (typeof openTextStory === 'function') openTextStory(sid);
@@ -220,7 +219,12 @@ function renderPicker() {
     const kid = addKid(b.dataset.f);
     setWho(kid.id);
     if (typeof chimeGood === 'function') chimeGood();
-    renderHome();
+    if (location.hash && location.hash !== '#home') {
+      handleHashChange();
+    } else {
+      renderHome();
+      show('home');
+    }
   }));
 }
 
@@ -427,7 +431,16 @@ function renderHaraka() {
 
 /* ================= boot ================================================== */
 window.addEventListener('DOMContentLoaded', () => {
-  if (currentKid()) { renderHome(); show('home'); } else { renderPicker(); }
+  if (currentKid()) {
+    if (location.hash && location.hash !== '#home') {
+      handleHashChange();
+    } else {
+      renderHome();
+      show('home');
+    }
+  } else {
+    renderPicker();
+  }
   const hb = document.getElementById('shelfHome');
-  if (hb) hb.addEventListener('click', () => { renderHome(); show('home'); });
+  if (hb) hb.addEventListener('click', () => { location.hash = '#home'; renderHome(); show('home'); });
 });

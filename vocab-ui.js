@@ -102,9 +102,6 @@ function openVocab(category = 'all') {
   vocabSession.active = false;
   renderVocabHub();
   if (typeof show === 'function') show('vocab');
-  if (location.hash !== '#vocab') {
-    history.pushState(null, '', '#vocab');
-  }
 }
 
 function renderVocabHub() {
