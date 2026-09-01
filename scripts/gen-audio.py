@@ -44,24 +44,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUDIO = os.path.join(ROOT, "audio")
 DATA = os.path.join(ROOT, "data")
 
-# A warm, clear, unhurried voice. Hamed is the one the parent site settled on;
-# for children it is slowed down rather than swapped, so the two sites sound
-# like the same language rather than two different ones.
-VOICE = "ar-SA-HamedNeural"
-# The English is for the CHILD here, not the parent — Reza, 2026-08-31: "the
-# entire website should be auditory", and a four-year-old cannot read the gloss.
-# He then asked for "a female chirpy voice": Maisie is Microsoft's young British
-# voice and is exactly that. Sonia, the previous pick, is a warm adult newsreader
-# and sounded like homework. Swap this one constant to change every English clip
-# on the site (delete audio/ first — the filenames are keyed on text, not voice).
+# Lively, cheerful female storyteller voice for Arabic children's books
+VOICE = "ar-SA-ZariyahNeural"
+# Cheerful British English companion voice
 EN_VOICE = "en-GB-MaisieNeural"
-RATE_WORD = "-25%"     # storybook words: slow enough to copy
-RATE_SOUND = "-15%"    # single letter sounds. Was -35%, which was too far:
-                       # a two-character syllable stretched that much slurs
-                       # rather than clarifies, and Reza reported the letter
-                       # sounds as "really bad and not clear". Slow enough to
-                       # copy, not so slow the vowel smears into the consonant.
-RATE_EN = "+2%"        # chirpy means lively; slowing it made it dreary
+RATE_WORD = "-8%"      # storybook words: lively, expressive, clear
+RATE_SOUND = "-10%"    # single letter sounds: clear without slurring
+RATE_EN = "+2%"        # cheerful British voice
 
 TASHKEEL = re.compile(r"[\u064B-\u0652\u0670\u0640]")
 
@@ -242,9 +231,9 @@ def wanted():
         out[norm(extra)] = extra
     return {k: v for k, v in out.items() if (v[1] if isinstance(v, tuple) else v).strip()}
 
-# ---------------------------------------------------------------------- render
 async def render(text, path, rate, voice=VOICE):
-    await edge_tts.Communicate(text, voice, rate=rate).save(path)
+    pitch = "+5Hz" if voice == VOICE else "+0Hz"
+    await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).save(path)
 
 # THE FILENAME HASHES THE KEY, NOT THE TEXT — and that is a trap, because the
 # render is incremental. Change WHAT a key says (as the alif fix above does) and
@@ -264,6 +253,7 @@ def previous_texts():
         return {}
 
 async def main():
+    force = "--force" in sys.argv
     os.makedirs(AUDIO, exist_ok=True)
     os.makedirs(DATA, exist_ok=True)
     todo = wanted()
@@ -275,11 +265,11 @@ async def main():
         manifest[key] = stem
         said = text[1] if isinstance(text, tuple) else text
         spoken_now[key] = said
-        changed = key in was and was[key] != said
-        if changed:
+        changed = force or (key in was and was[key] != said)
+        if changed and not force:
             restated += 1
         path = os.path.join(AUDIO, stem + ".mp3")
-        if os.path.exists(path) and os.path.getsize(path) > 400 and not changed:
+        if not force and os.path.exists(path) and os.path.getsize(path) > 400 and not changed:
             skipped += 1
             continue
         if isinstance(text, tuple):          # ("EN", "the words")
