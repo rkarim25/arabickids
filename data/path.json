@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "note": "The Path seed. Every ref points at content that already exists; scripts/test-path.js checks all of them. See PATH.md.",
+  "stations": [
+    {
+      "id": "s01",
+      "level": 1,
+      "title": "أَنَا",
+      "titleEn": "Me",
+      "idea": "I can say who I am, who this is, and that I want water.",
+      "anchors": ["lesson:me/0", "lesson:me/1", "lesson:this/0", "lesson:this/1"],
+      "quran": ["1:1", "1:2"],
+      "steps": [
+        { "type": "sentences", "ref": "me" },
+        { "type": "sentences", "ref": "this" },
+        { "type": "story", "ref": "ts-ana" },
+        { "type": "book", "ref": "lulu-l1" },
+        { "type": "video", "ref": "uhP3pEyKPec" },
+        { "type": "play", "ref": "lesson:me/1" }
+      ]
+    },
+    {
+      "id": "s02",
+      "level": 1,
+      "title": "مَاذَا تُرِيدُ؟",
+      "titleEn": "What do you want?",
+      "idea": "I can ask what someone wants and answer with what I want.",
+      "anchors": ["lesson:me/2", "line:kd-feel/0", "line:kd-feel/1"],
+      "quran": ["1:3", "1:4"],
+      "steps": [
+        { "type": "lesson", "ref": "me/2" },
+        { "type": "book", "ref": "madha-1" },
+        { "type": "story", "ref": "kd-feel" },
+        { "type": "qaida", "ref": "harakat" },
+        { "type": "play", "ref": "lesson:me/2" }
+      ]
+    },
+    {
+      "id": "s03",
+      "level": 2,
+      "title": "أَيْنَ؟",
+      "titleEn": "Where?",
+      "idea": "I can ask where something is and say where it is.",
+      "anchors": ["lesson:where/0", "lesson:where/1", "lesson:where/2"],
+      "quran": ["1:5", "1:6", "1:7"],
+      "steps": [
+        { "type": "sentences", "ref": "where" },
+        { "type": "book", "ref": "qamar-1" },
+        { "type": "story", "ref": "ts-yawm" },
+        { "type": "book", "ref": "bayt-2" },
+        { "type": "story", "ref": "lg-1" },
+        { "type": "play", "ref": "lesson:where/0" }
+      ]
+    },
+    {
+      "id": "s04",
+      "level": 2,
+      "title": "مَنْ؟ وَكَيْفَ؟",
+      "titleEn": "Who? And what is it like?",
+      "idea": "I can ask who is there and describe what I see.",
+      "anchors": ["lesson:who/0", "lesson:who/1", "lesson:describe/0", "lesson:describe/1"],
+      "quran": ["112:1", "112:2", "112:3", "112:4"],
+      "steps": [
+        { "type": "sentences", "ref": "who" },
+        { "type": "sentences", "ref": "describe" },
+        { "type": "book", "ref": "arnab-2" },
+        { "type": "story", "ref": "kd-hamama" },
+        { "type": "story", "ref": "lg-2" },
+        { "type": "sentences", "ref": "jokes" }
+      ]
+    },
+    {
+      "id": "s05",
+      "level": 2,
+      "title": "عِنْدِي",
+      "titleEn": "I have",
+      "idea": "I can say what I have, ask if you have it, and ask how you are.",
+      "anchors": ["lesson:have/0", "lesson:have/1", "lesson:ask/0", "lesson:ask/1"],
+      "quran": ["108:1", "108:2", "108:3"],
+      "steps": [
+        { "type": "sentences", "ref": "have" },
+        { "type": "sentences", "ref": "ask" },
+        { "type": "sentences", "ref": "funny" },
+        { "type": "qaida", "ref": "sukoon" },
+        { "type": "play", "ref": "lesson:ask/1" }
+      ]
+    },
+    {
+      "id": "s06",
+      "level": 3,
+      "title": "قَالَ",
+      "titleEn": "He said",
+      "idea": "I can tell what someone said, and say what I love.",
+      "anchors": ["lesson:said/0", "lesson:said/1", "lesson:funny3/0", "lesson:funny3/5"],
+      "quran": ["103:1", "103:2", "103:3"],
+      "steps": [
+        { "type": "sentences", "ref": "said" },
+        { "type": "story", "ref": "ts-khubz" },
+        { "type": "book", "ref": "hidhaa-3" },
+        { "type": "story", "ref": "jh-1" },
+        { "type": "sentences", "ref": "funny3" },
+        { "type": "qaida", "ref": "shadda" },
+        { "type": "story", "ref": "kd-arnabfeel" },
+        { "type": "play", "ref": "lesson:said/0" }
+      ]
+    },
+    {
+      "id": "s07",
+      "level": 4,
+      "title": "فِي السُّوق",
+      "titleEn": "At the market",
+      "idea": "I can follow a whole story with the sun letters in it.",
+      "anchors": ["line:ts-suq/0", "line:ts-suq/1", "line:kd-arnab/0"],
+      "quran": ["110:1", "110:2", "110:3", "113:1", "113:2", "113:3", "113:4", "113:5", "106:1", "106:2", "106:3", "106:4"],
+      "steps": [
+        { "type": "qaida", "ref": "lam" },
+        { "type": "story", "ref": "ts-suq" },
+        { "type": "story", "ref": "lg-3" },
+        { "type": "story", "ref": "kd-arnab" },
+        { "type": "story", "ref": "jh-3" },
+        { "type": "story", "ref": "kd-sulahfa" },
+        { "type": "story", "ref": "lg-5" },
+        { "type": "story", "ref": "kd-mutawwaqa" },
+        { "type": "story", "ref": "lg-6" },
+        { "type": "story", "ref": "kd-qird" },
+        { "type": "story", "ref": "lg-8" },
+        { "type": "play", "ref": "line:ts-suq/0" }
+      ]
+    },
+    {
+      "id": "s08",
+      "level": 5,
+      "title": "يَوْمِي",
+      "titleEn": "My day",
+      "idea": "I can say the duas of my day and hear real ayat in them.",
+      "anchors": ["line:ts-nawm/0", "line:ts-nawm/1"],
+      "quran": ["105:1", "105:2", "105:3", "105:4", "105:5", "114:1", "114:2", "114:3", "114:4", "114:5", "114:6", "109:1", "109:2", "109:3", "109:4", "109:5", "109:6", "111:1", "111:2", "111:3", "111:4", "111:5"],
+      "steps": [
+        { "type": "book", "ref": "yawmi-5" },
+        { "type": "story", "ref": "ts-nawm" },
+        { "type": "qaida", "ref": "kalimat" },
+        { "type": "play", "ref": "line:ts-nawm/0" }
+      ]
+    }
+  ]
+}

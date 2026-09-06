@@ -135,6 +135,32 @@ stence dont think"* — correct, and it is now a rule. A picture can show a moon
 it cannot show "Arabic has no word for is". Word cards get a picture. Sentences
 get the ear: the Arabic spoken, the meaning spoken, and the explanation spoken.
 
+### The Path — the site becomes a sequence (2026-09-06, designed, not yet built)
+Reza: *"there needs to be a flow. i want it to be sentence focused… it needs
+to be in the form of a sequence rather than the child moving back and forth.
+the process needs to be spaced repetition honing in key high vocabulary
+sentences. it needs to be a mix of quranic arabic (the shortest suras) and
+everyday language."*
+
+Four decisions follow, and `PATH.md` carries the design and the build notes:
+
+- **The sentence is the unit.** A small set of high-frequency anchor
+  sentences, met again and again in lessons, stories, books and videos.
+- **The front page is one button, not six doors.** هَيَّا نَمْشِي starts today's
+  walk; the six doors stay underneath as the library. Nothing is removed and
+  rule 6 still holds — one tap to anywhere.
+- **After every stop, three buttons and nothing else:** هَيَّا نُكْمِل *keep
+  going* · مَرَّة أُخْرَى *do it again* · كَفَى لِلْيَوْم *finish for today*.
+  Rule 5 applies: *again* is never a punishment, and *finish* never loses a
+  thing.
+- **Two tracks braided every day.** Every walk has one everyday stop and one
+  ayah of the current surah. A walk is never shortened by dropping the
+  Qur'an stop.
+
+Spaced repetition runs on sentences with the vocab door's Leitner engine;
+the signal is ⭐ *I said it* / 🔁 *again*, a report, not a mark. The data is
+`data/path.json`, references only, checked by `scripts/test-path.js`.
+
 ## 3. The ladder
 
 Colour bands, mirroring how a Qaida progresses — but graded by **what the ear
@@ -212,6 +238,8 @@ node scripts/test-surahs.js     # Qur'an text vs source, right recitation per ay
 node scripts/test-stories-text.js  # the no-picture stories: bands, and a clip for every line
 node scripts/test-qaida.js      # the reading ladder: every mark, and one clip per cell
 node scripts/test-videos.js     # the strip embeds nothing until it is tapped
+node scripts/test-vocab.js      # categories, word integrity, manifest audio keys
+node scripts/test-path.js       # the path only references content that exists, and obeys the ladder
 node scripts/sync-sw.js         # ALWAYS — stamps ?v= urls, or the deploy is invisible
 python scripts/gen-audio.py     # after any new Arabic or English text
 node scripts/sync-sw.js         # after gen-audio, so the offline cache matches

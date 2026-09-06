@@ -18,6 +18,12 @@ already caused real bugs, and what is still open. Read it before touching
 anything. In a fresh chat, run the **`/run-arabic-kids`** skill and it does this
 for you.
 
+**[PATH.md](PATH.md)** is what comes next — the site as a sequence: one walk a
+day, *keep going / again / finish for today* after every stop, spaced
+repetition on sentences, Qur'an and everyday braided. Designed 2026-09-06, not
+yet built; `data/path.json` is the seed and `briefs/` holds the storybook and
+video briefs for other AIs.
+
 **[DESIGN.md](DESIGN.md)** is the contract — six rules, the ladder, dedicated page navigation, and what
 "print" is allowed to mean. Read it before changing anything. The short version:
 

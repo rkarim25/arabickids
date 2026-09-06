@@ -24,9 +24,10 @@ node scripts/test-surahs.js        # Qur'an text vs source, right recitation per
 node scripts/test-stories-text.js  # no-picture stories
 node scripts/test-qaida.js         # every mark, and one clip per cell
 node scripts/test-videos.js        # the strip embeds nothing until it is tapped
+node scripts/test-path.js          # data/path.json references only real content, obeys the ladder
 ```
 
-All eight must pass. Then **always**:
+All nine must pass. Then **always**:
 
 ```bash
 node scripts/sync-sw.js
@@ -120,15 +121,39 @@ Shared: `audio.js` (all playback), `audio-manifest.js` (instant offline map), `s
 17. **Script Load Order in `index.html`**: UI helper modules (`vocab-ui.js`, `sentence-ui.js`, `qaida-ui.js`, etc.) MUST be loaded BEFORE `kids.js`. `kids.js` mounts the router and boot listener on `DOMContentLoaded`, so any UI function referenced during route handling must already be declared.
 18. **Edge-TTS Abbreviation Expansion on Isolated Syllables**: Edge-TTS neural text normalizer expands isolated single letters like `ثَ` to abbreviations ("ya"), `رَ` to currencies ("Riyal"), or `صَ` to ("Safha"). To synthesize clean phonetics, synthesize open phonetic syllables (`ثَا`, `رَا`, `صَا`, `ثَنْ`) while mapping them to exact cell keys `q:ثَ`, `q:رَ`, `q:صَ`.
 19. **Dual Manifest Synchronization**: Always write both `data/audio-manifest.json` AND `audio-manifest.js` (`window.AUDIO_MANIFEST`). `index.html` loads the JS manifest directly so audio works seamlessly in offline and `file://` environments without fetch CORS restrictions.
+20. **A Google pop-up sign-in cannot complete in the installed app or an in-app browser.** It renders, it is tapped, and nothing happens — no error anywhere. Use the redirect flow (`startGoogleRedirect`), which needs the site registered as a redirect URI (§5). Do not spend a session "debugging the button".
+21. **The browser pane's `ref` clicks land in the wrong place on this RTL page** (a bounding-box offset), so a click that "did nothing" may have missed. Verify with `elementFromPoint` or drive the handler through `javascript_tool` instead.
 
 ---
 
 ## 5. Sign-in and sync
 
 Google only, no OTP. `GOOGLE_CLIENT_ID` is compiled into `sync.js`
-(project **Hikayat**, kept in **Testing** with Reza + Saba as test users).
-**The client ID is public and safe to commit** — the worker's `ALLOWED_EMAILS`
-is what controls access.
+(project **Hikayat**, id `hikayat-507218`, kept in **Testing** with Reza +
+Saba as test users). **The client ID is public and safe to commit** — the
+worker's `ALLOWED_EMAILS` is what controls access.
+
+**Two ways in (2026-09-06), one shown at a time.** Google's own button signs
+in through a pop-up, and a pop-up never completes inside the installed
+home-screen app or an in-app browser — that is why Reza "couldn't open sign
+in". So `sync.js` also has a **redirect** sign-in: the page goes to Google,
+comes back with the ID token in the URL fragment, `consumeGoogleRedirect()`
+checks state + nonce, wipes the fragment before the router runs, and posts
+the token to the worker's `/login` exactly as the pop-up did. The redirect is
+the default where a pop-up is unreliable (`popupUnreliable()`), the pop-up in
+a plain tab; one small link swaps them.
+
+**The redirect needs one thing Google will not let a script do:**
+`https://rkarim25.github.io/arabickids/` (trailing slash) must be an
+*Authorised redirect URI* on the web client in Google Cloud → APIs & Services
+→ Credentials. As of 2026-09-06 it is NOT, and Google answers
+`Error 400: redirect_uri_mismatch`. Probe it without a browser:
+
+```bash
+curl -sL -A Mozilla "https://accounts.google.com/o/oauth2/v2/auth?client_id=958505787875-g5nfbudjoembmlfves8c794mvb3udqdr.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Frkarim25.github.io%2Farabickids%2F&response_type=id_token&scope=openid%20email&nonce=x" | grep -o redirect_uri_mismatch
+```
+No output means it is registered. The origin itself IS registered (the
+`gsi/status` probe returns 200), which is why the button always rendered.
 
 Sync rides the grown-up site's worker `arabic-sync` (`/kids` GET+POST). **Stars merge by MAX on both
 client and server** — a child must never lose a star.
@@ -148,8 +173,23 @@ node scripts/sync-sw.js                         # ALWAYS LAST
 
 ## 7. What is still open / Future Work
 
-1. **Sync unverified on two physical devices**: Needs Reza signed in on a phone AND a tablet simultaneously.
-2. **Recorded Parent Letters Audio**: Parent booth available in `record.js` for custom family recordings.
-3. **Episode 2 & Season 1 Video Ingestion**: Integration scripts (`upload-youtube.py`) prepared for incoming Google Flow / NotebookLM video assets.
-4. **Vocabulary & SRS Expansion**: Add story-specific flashcard sets as new storybooks are introduced.
+1. **THE PATH — designed, not built (2026-09-06).** Reza asked for a
+   sequence instead of a menu: after every activity *keep going / do it again
+   / finish for today*, sentence-focused, spaced repetition on high-frequency
+   sentences, Qur'anic and everyday braided daily. Design + build notes in
+   **`PATH.md`**; seed data `data/path.json` (8 stations, all existing
+   content, `scripts/test-path.js` passes); briefs for the content it needs in
+   `briefs/STORYBOOKS.md` (Antigravity) and `briefs/VIDEOS.md` (video AI).
+   Build phase 1 first (engine + choice screen), then let a child use it
+   before touching home.
+2. **Redirect URI not registered** (§5). Reza adds
+   `https://rkarim25.github.io/arabickids/` in Google Cloud; until then the
+   pop-up is the only working sign-in, and only in a plain browser tab.
+3. **Sync unverified on two physical devices**: needs Reza signed in on a
+   phone AND a tablet. Blocked on 2 for the installed app.
+4. **Recorded parent letter audio**: the booth in `record.js` is still empty.
+5. **Episode 2 onwards**: `briefs/VIDEOS.md` has six episodes, one per
+   station; `upload-youtube.py` is ready.
+6. **Picture shelf thin at L3 / L4 / L5** (one book each): `briefs/STORYBOOKS.md`
+   has six books, one per station gap.
 
