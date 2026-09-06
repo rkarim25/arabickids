@@ -1,168 +1,207 @@
-# Storybook briefs — for Antigravity (or any AI building a picture book)
+# Storybook briefs — the text is written; the pictures are not
 
-Six picture books, each written **around the anchor sentences of one
-station** of the path (`PATH.md`, `data/path.json`). A book on the path is
-not decoration: it is the day the child meets a sentence they already heard
-in a lesson, now inside a scene. So the anchor sentences appear **verbatim**,
-tashkeel and all, and the rest of the book is built from words the child
-already has.
+Reza, 2026-09-06: *"for any stories with pictures build it out without the
+pictures and leave notes for AI to complete it."*
 
-Read `DESIGN.md` before writing a word. Then this.
+Done. The six books below exist **as picture-free stories** in
+`stories-text.js` (ids in the headings, each marked `art: 'pending'`), with
+audio, on the site now, and on the path as each station's first step. What
+is left is the art. This file is the brief for whichever AI makes it
+(Antigravity, or any image model), one prompt per line.
 
-## The rules every book obeys
+Read `DESIGN.md` §1 before drawing. The rules that bind pictures:
 
-1. **Ear first.** Every page is spoken. The Arabic on the page is what the
-   clip says, so it must be fully vowelled and exactly what a speech engine
-   can say (trap 16: no typographic apostrophes; trap 7: no bare consonants).
-2. **The picture carries the meaning.** A page's picture must let a child who
-   reads nothing know what the sentence means. If the sentence is *Lulu is
-   in the box*, the picture is Lulu in a box, nothing else competing. Function
-   words get their **relation** drawn (the same ball, the same box, moved).
-3. **No writing, no transliteration.** English is one small line for the
-   grown-up.
-4. **The band is a promise.** Level 1: harakat and long vowels only, **no
-   sukoon, so no اَلْ at all**. Level 2: sukoon arrives, so فِي · مِنْ · وَ and
-   the article. Level 3: shadda and tanween. Level 4: sun-letter اَلْ. Level
-   5: real ayat and duas. `scripts/test-books.js` checks this on the text.
-   If it fails, the text is wrong, not the test.
-5. **Repetition with variation.** The book's own sentences are the anchors
-   with one word swapped. Eight story pages, at most eight new words.
-6. **A joke on the last story page.** Not random — the site's own running
-   gags: Lulu under something, the elephant in the house, a plan that fails.
-7. **Play, never test.** The game page is listen-and-find with three
-   pictures; a wrong tap replays the sound.
+1. **The picture carries the meaning.** A child who reads nothing must get
+   the line from the picture alone. If the line is *Lulu is on a bed*, the
+   picture is Lulu on a bed and nothing competing. Function words (فِي,
+   فَوْقَ, تَحْتَ, مَعَ) get their **relation** drawn: same object, moved.
+2. **Same cast, same clothes, every page.** Character sheets:
+   `NOTEBOOKLM_KIDS_ARABIC.md` §2 — Adam (5, curly dark hair, teal
+   sweater), Maryam (2, twin hair puffs, red bows, pink floral dress), Baba
+   (beard, white thobe), Mama (soft teal hijab, coral collar), Lulu (plump
+   ginger tabby, green eyes), plus the elephant from the fables.
+3. **Style:** warm watercolor, sunny home interiors, like
+   `art/lulu1-cover.jpg`. Landscape 1024 × 768. No text in the image, no
+   Latin letters anywhere, no speech bubbles.
+4. **Nothing scary, nothing loud.** A "no" is a gentle head-shake, never a
+   frown at the child.
 
-## What to deliver
+## How to attach the pictures once they exist
 
-One file `book-<slug>.js` in the shape of `book-lulu1.js`:
+Two ways; the first is less work and keeps the story on the path as it is.
 
-```js
-const BOOK_SLUG = {
-  id: 'slug-<level>',            // e.g. 'jaia-1'
-  level: 1,
-  title: 'أَنَا جَائِع',
-  titleEn: 'I am hungry',
-  tag: 'حَرَكَات وَمَدّ فَقَط · harakat and long vowels only',
-  words: [ { ar: 'مَاء', en: 'water', icon: I.maa }, … ],   // ≤ 8, each with a picture
-  pages: [
-    { type: 'cover', svg: cover },
-    { type: 'words' },
-    { type: 'story', svg: p1, ar: [{ t: 'أَنَا' }, { t: 'جَائِع.' }], en: 'I am hungry.' },
-    …   // 8 story pages
-    { type: 'game' },
-    { type: 'end', svg: end },
-  ],
-  game: [ { say: 'مَاء', opts: ['k_maa', 'k_asir', 'k_khubz'], ans: 0 }, … ],   // 3 rounds
-};
-if (typeof BOOKS !== 'undefined') BOOKS.push(BOOK_SLUG);
-```
+**A. Illustrate the text story in place** (preferred). Put the JPGs in
+`art/<story-id>/01.jpg … NN.jpg` (one per line, numbered from 1) and add to
+the story object `art: { dir: 'art/<story-id>', pages: NN }`. The text-story
+reader will need one small change to show `art/<id>/<n>.jpg` above line *n*
+when present — note it in `text-story-ui.js`; `test-stories-text.js` must
+keep rejecting `<img` **inside** the story object, so the reader builds the
+tag, the data never contains it. Run `node scripts/sync-sw.js`.
 
-- **Art**: one JPG per story page plus a cover, 1024 × 768, warm watercolor
-  like `art/lulu1-cover.jpg`. Put them in `art/`, reference with
-  `artIcon()` / the `art()` helper as `book-lulu1.js` does. Character sheets
-  are in `NOTEBOOKLM_KIDS_ARABIC.md` §2 — same Adam, Maryam, Baba, Mama,
-  Lulu, Bunny and Monkey every time.
-- **Word pictures**: reuse `pic/` Twemoji or `ICONS` where the object exists.
-  Draw only when no emoji is right (a near-miss teaches the wrong animal).
-- **Register it** (trap 10): the file, `index.html` before `kids.js`, `sw.js`.
-- **Audio**: `python scripts/gen-audio.py` renders every new string.
-- **Then**: `node scripts/test-books.js`, all other suites,
-  `node scripts/sync-sw.js`, and add `{ "type": "book", "ref": "<id>" }` to
-  the station's `steps` in `data/path.json`; `node scripts/test-path.js`.
+**B. Make it a picture book** on the other shelf: a `book-<id>.js` in the
+shape of `book-lulu1.js` (`words`, `pages`, `game`), art via `artIcon()`,
+then the three edits (file, `index.html` before `kids.js`, `sw.js`), and add
+`{ "type": "book", "ref": "<id>" }` as a later step of the same station in
+`data/path.json`. Keep the text story too; the path wants both.
+
+Either way, finish with all nine suites and `node scripts/sync-sw.js`.
 
 ---
 
-## Book 1 · «أَنَا جَائِع» *I am hungry* — Level 1 · station s01
+## 1 · «لُولُو جَائِعَة» *Lulu is hungry* — L1 · `lulu-jaia` · station s01
 
-**Anchors to include verbatim:** أَنَا هُنَا. · أُرِيدُ مَاء. · هَذَا بَابَا. · هَذِهِ لُولُو.
-**Words (≤ 8):** أَنَا · هُنَا · أُرِيدُ · مَاء · عَصِير · لَبَن · جَائِع · لَذِيذ
-**Band:** no sukoon, no اَلْ. That rules out most food words — مَوْز, خُبْز,
-تَمْر all carry a sukoon, رُزّ and تُفَّاح a shadda — so the drinks carry the
-book: **مَاء · عَصِير · لَبَن**. Check every word before drawing it.
-**Pages:** Adam in the kitchen doorway (أَنَا هُنَا.) → Adam holding his tummy
-(أَنَا جَائِع.) → Mama at the table (هَذِهِ مَامَا.) → Adam pointing at the
-jug (أُرِيدُ مَاء.) → Adam with a cup, happy (مَاء لَذِيذ.) → Adam pointing
-again (أُرِيدُ عَصِير.) → Baba arrives with juice (هَذَا بَابَا.) → **joke**:
-Lulu drinking the juice first (هَذِهِ لُولُو!).
-**Game:** say مَاء · عَصِير · لَبَن, three cups.
+Setting: the kitchen, morning light. Adam is the one talking to Lulu.
 
-## Book 2 · «مَاذَا تُرِيدُ يَا فِيل؟» *What do you want, elephant?* — Level 1 · s02
+| line | Arabic | picture prompt |
+|---|---|---|
+| 1 | هَذِهِ لُولُو. | Lulu sitting on the kitchen rug, looking up, tail curled. |
+| 2 | لُولُو جَائِعَة. | Lulu beside an empty bowl, one paw on its rim, hopeful. |
+| 3 | أَنَا هُنَا. | Adam in the kitchen doorway, hand raised in a small wave. |
+| 4 | هَذَا أَدَم. | Adam kneeling to Lulu, pointing at himself. |
+| 5 | مَاذَا تُرِيدُ؟ | Adam palms up, asking; Lulu looking at the fridge. |
+| 6 | أُرِيدُ لَبَن. | Lulu with both paws on a milk carton. |
+| 7 | هَذَا لَبَن يَا لُولُو. | Adam pouring milk into the bowl. |
+| 8 | لَبَن لَذِيذ! | Lulu lapping, milk drops on her whiskers, eyes closed happily. |
+| 9 | أُرِيدُ مَاء. | Lulu pawing at the tap over the sink. |
+| 10 | هَذَا مَاء. | Adam holding a small bowl of water down to her. |
+| 11 | وَأُرِيدُ عَصِير! | Lulu stretching up towards a jug of orange juice on the table. |
+| 12 | لَا يَا لُولُو! | Adam gently shaking his head, hand over the jug. |
+| 13 | لَا عَصِير هُنَا. | The jug moved to a high shelf; Lulu below looking up. |
+| 14 | هَذَا بَابَا. | Baba entering, tall, smiling, morning light behind him. |
+| 15 | بَابَا كَبِير. | Baba standing full height beside the tiny Lulu, same frame. |
+| 16 | لُولُو صَغِيرَة. | Close on Lulu looking very small next to one of Baba's feet. |
+| 17 | أُرِيدُ بَابَا! | Lulu leaping up at Baba, paws out. |
+| 18 | لُولُو مَعَ بَابَا. | Baba holding Lulu against his shoulder, both content. Cover image. |
 
-**Anchors:** مَاذَا تُرِيدُ؟ · أُرِيدُ مَاء. · plus the first two lines of the text
-story `kd-feel` (read them from `stories-text.js`; they are the anchors).
-**Cast:** the elephant from the Kalila wa Dimna fable, Adam, Lulu.
-**Words:** فِيل · كَبِير · صَغِير · مَاذَا · تُرِيدُ · أُرِيدُ · مَاء · دَار
-**Band:** no sukoon, no اَلْ — so **دَار**, not بَيْت (sukoon on the ي), and
-never الْفِيل. The Level 2 gag line الْفِيل فِي الْبَيْت cannot appear here;
-its Level 1 cousin is **فِيل فِي دَار!**
-**Pages:** an elephant at the door (هَذَا فِيل.); Adam asks مَاذَا تُرِيدُ؟;
-the elephant wants water (أُرِيدُ مَاء.), then a house (أُرِيدُ دَار.), then
-Lulu's cushion — each request a page with the same frame (repetition with
-variation); Adam: فِيل كَبِير! Lulu: لُولُو صَغِيرَة. **Joke**: the elephant
-squeezed into the house with Lulu on his head (فِيل فِي دَار!).
-**Game:** big / small / elephant.
+## 2 · «فِيل فِي دَار» *An elephant in a house* — L1 · `feel-dar` · station s02
 
-## Book 3 · «أَيْنَ مَامَا؟» *Where is Mama?* — Level 2 · s03
+Setting: the front door and the small living room. The elephant is gentle
+and slightly embarrassed to be so big.
 
-**Anchors:** لُولُو فِي الْبَيْت. · الْكِتَاب فَوْقَ الْمَائِدَة. · أَيْنَ لُولُو؟
-**Words:** أَيْنَ · فِي · فَوْقَ · تَحْتَ · مَطْبَخ · غُرْفَة · سَرِير · مَامَا
-**Band:** sukoon and اَلْ allowed; no shadda, no tanween, no sun-letter ال
-(الْمَطْبَخ is fine — م is a moon letter; **السَّرِير is sun-letter, Level 4,
-so say سَرِير without the article**).
-**Pages:** Maryam wakes and asks أَيْنَ مَامَا؟; looks فِي الْمَطْبَخ (no);
-فِي الْغُرْفَة (no); فَوْقَ سَرِير (no — Lulu is there: هَذِهِ لُولُو!); تَحْتَ
-الْمَائِدَة (no — the book is there: الْكِتَاب فَوْقَ الْمَائِدَة.); Baba:
-مَامَا فِي الْبَيْت!; last page **joke**: Mama was behind the door the whole
-time, with Lulu.
-**Game:** in / on / under with the same ball and box.
+| line | Arabic | picture prompt |
+|---|---|---|
+| 1 | هَذَا فِيل. | An elephant standing at the open front door, filling it. |
+| 2 | فِيل كَبِير! | Adam looking up at the elephant, mouth open, tiny by comparison. |
+| 3 | فِيل هُنَا. | The elephant has stepped inside; trunk curled politely. |
+| 4 | مَاذَا تُرِيدُ يَا فِيل؟ | Adam palms up, asking the elephant. |
+| 5 | أُرِيدُ مَاء. | The elephant pointing with its trunk at a jug. |
+| 6 | هَذَا مَاء يَا فِيل. | Adam holding up a bucket of water. |
+| 7 | مَاء كَثِير! | The elephant spraying water from its trunk, Adam laughing, puddles. |
+| 8 | أُرِيدُ دَار. | The elephant pointing at the house's roof, hopeful. |
+| 9 | هَذِهِ دَار. | Adam gesturing at the small living room. |
+| 10 | فِيل فِي دَار! | The elephant squeezed into the room, ceiling on its head, sofa pushed aside. |
+| 11 | دَار صَغِيرَة. | Same room, the elephant's back bending the ceiling lamp. |
+| 12 | فِيل كَبِير. | Its rump still sticking out of the front door. |
+| 13 | هَذِهِ لُولُو. | Lulu appearing between the elephant's legs. |
+| 14 | لُولُو صَغِيرَة. | Lulu beside one elephant foot, the foot bigger than her. |
+| 15 | مَاذَا تُرِيدُ يَا لُولُو؟ | Adam kneeling to Lulu, asking. |
+| 16 | أُرِيدُ فِيل! | Lulu stretching up at the elephant, wanting to climb. |
+| 17 | فِيل مَعَ لُولُو. | Lulu asleep on top of the elephant's head; the elephant smiling. Cover. |
 
-## Book 4 · «مَنْ قَالَ مِيَاو؟» *Who said miaow?* — Level 3 · s06
+## 3 · «أَيْنَ مَامَا؟» *Where is Mama?* — L2 · `ayna-mama` · station s03
 
-The Level 3 shelf has one book. This is the second.
-**Anchors:** قَالَ بَابَا: هَيَّا. · أُحِبُّ أُمِّي. · قَالَ الْفِيل: أُرِيدُ عَصِير!
-**Words:** قَالَ · قَالَتْ · مِيَاو · هَيَّا · أُحِبُّ · قِطَّة · بِنْت · وَلَد
-**Band:** shadda and tanween now allowed (قِطَّة, أُحِبُّ, أُمِّي); still no
-sun-letter اَلْ.
-**Pages:** a sound in the night; each family member is asked and answers with
-قَالَ / قَالَتْ; the elephant is asked and says he wants juice (the anchor,
-verbatim); Baba says هَيَّا; **joke**: it was Maryam, saying miaow to Lulu.
-Last line: أُحِبُّ أُمِّي.
-**Game:** who said it — three faces.
+Setting: four rooms of the house; the same table appears twice (lines 6 and
+17) so the child can recognise it.
 
-## Book 5 · «الشَّمْسُ وَالْقَمَر» *The sun and the moon* — Level 4 · s07
+| line | Arabic | picture prompt |
+|---|---|---|
+| 1 | مَرْيَم فِي الْبَيْت. | Maryam in the hallway, holding her bear. |
+| 2 | أَيْنَ مَامَا؟ | Maryam looking around, hand shading her eyes. |
+| 3 | مَامَا فِي الْمَطْبَخ؟ | Maryam peeking round the kitchen door. |
+| 4 | لَا. أَدَم فِي الْمَطْبَخ. | Adam at the kitchen table, alone, waving. |
+| 5 | عِنْدِي كِتَاب. | Adam holding up a picture book. |
+| 6 | الْكِتَاب فَوْقَ الْمَائِدَة. | The book lying on the table, Adam's hands off it. |
+| 7 | مَامَا فِي الْغُرْفَة؟ | Maryam peeking into the bedroom. |
+| 8 | لَا. لُولُو فِي الْغُرْفَة. | The bedroom, only Lulu in it. |
+| 9 | أَيْنَ لُولُو؟ | Maryam looking left and right in the bedroom. |
+| 10 | لُولُو فَوْقَ سَرِير. | Lulu curled on top of the bed. |
+| 11 | لُولُو فِي الْبَيْت. | Wide shot: the house cut-away, Lulu on the bed, Maryam in the hall. |
+| 12 | هَلْ عِنْدَكَ مَاء؟ | Maryam holding an empty cup out to Adam. |
+| 13 | مَا عِنْدِي مَاء. | Adam turning his empty hands out. |
+| 14 | مَامَا عِنْدَهَا مَاء! | Maryam brightening, pointing off-frame. |
+| 15 | مَامَا! أَيْنَ أَنْتِ؟ | Maryam calling, hands cupped at her mouth. |
+| 16 | هَذَا بَابَا. | Baba in the doorway, finger to his lips, smiling, pointing down. |
+| 17 | مَامَا تَحْتَ الْمَائِدَة! | Mama crouched under the kitchen table with a jug of water, giggling. |
+| 18 | وَلُولُو تَحْتَ الْمَائِدَة! | Same, Lulu now under the table too, Maryam crawling in to join. Cover. |
 
-The Level 4 shelf has one book. This is the second, and it exists to teach
-the sun-letter article by ear: الشَّمْس · السَّمَاء · النَّجْم against الْقَمَر ·
-الْبَيْت.
-**Anchors:** the first two lines of `ts-suq` and the first line of `kd-arnab`
-(read from `stories-text.js`).
-**Words:** شَمْس · قَمَر · نَجْم · سَمَاء · لَيْل · صَبَاح · جَمِيل · كَبِير
-**Pages:** morning, the sun (الشَّمْسُ فِي السَّمَاء.); the day at the market
-(anchor lines); evening, the moon (الْقَمَرُ جَمِيل.); stars; **joke**: Lulu
-asleep in the market basket the whole way home.
-**Game:** sun / moon / star.
+## 4 · «مَنْ قَالَ مِيَاو؟» *Who said miaow?* — L3 · `man-qala` · station s05
 
-## Book 6 · «قَبْلَ النَّوْم» *Before sleep* — Level 5 · s08
+Setting: evening, warm lamps. The mystery is gentle; everyone is amused.
 
-The Level 5 shelf has one book (`yawmi-5`). This is the bedtime companion.
-**Anchors:** the first two lines of `ts-nawm`, plus the duas already in
-`yawmi-5` (reuse their exact text and clips: بِسْمِ اللَّه, الْحَمْدُ لِلَّه).
-**Ayat:** the last page is Al-Ikhlas 112:1 with the **real recitation clip**
-(`data/surahs.json` → `audio`), never TTS — this is the one place the rules
-are broken on purpose, see `DESIGN.md`.
-**Pages:** brushing teeth, pyjamas, Baba reads, Mama says the dua, the light
-goes off, the moon in the window, Lulu on the bed, sleep. **Joke:** Lulu
-snoring.
-**Game:** the three bedtime objects.
+| line | Arabic | picture prompt |
+|---|---|---|
+| 1 | أَدَم فِي الْبَيْت. | Adam on the sofa with a book, lamp lit. |
+| 2 | كَيْفَ حَالُكَ؟ | Mama leaning in the doorway, asking. |
+| 3 | أَنَا سَعِيد. | Adam grinning, thumbs up. |
+| 4 | مِيَاو! | Adam's ears pricked; a sound line drawn as a small curl from off-frame. |
+| 5 | مَنْ قَالَ مِيَاو؟ | Adam standing, looking round the room, finger up. |
+| 6 | قَالَ بَابَا: لَيْسَ أَنَا. | Baba shrugging, palms up, newspaper on his lap. |
+| 7 | قَالَتْ مَامَا: لَيْسَ أَنَا. | Mama shaking her head, holding a tea tray. |
+| 8 | مِيَاو! مِيَاو! | Two sound curls from the hallway. |
+| 9 | أَيْنَ لُولُو؟ | Adam looking under the sofa. |
+| 10 | لُولُو فِي صُنْدُوق؟ لَا. | An empty cardboard box, Adam peering in. |
+| 11 | قَالَ الْفِيل: أُرِيدُ عَصِير! | The elephant's head at the window, trunk pointing at a juice jug. |
+| 12 | لَيْسَ الْفِيل! | Adam laughing, waving the elephant off. |
+| 13 | قَالَ بَابَا: هَيَّا. | Baba up, beckoning Adam towards the hallway. |
+| 14 | هَيَّا إِلَى الْغُرْفَة. | Baba and Adam tiptoeing to the bedroom door. |
+| 15 | مِيَاو! هَذِهِ مَرْيَم! | Maryam on the bed on all fours, saying miaow to Lulu. |
+| 16 | مَرْيَم قَالَتْ مِيَاو! | Everyone in the doorway laughing; Maryam pleased. |
+| 17 | وَلُولُو قَالَتْ: مِيَاو. | Lulu answering Maryam nose to nose. |
+| 18 | أُحِبُّ أُمِّي. | Adam hugging Mama round the waist. |
+| 19 | وَأُحِبُّ لُولُو! | Adam holding Lulu up, cheek to cheek. Cover. |
+
+## 5 · «الشَّمْسُ وَالْقَمَر» *The sun and the moon* — L4 · `shams-qamar` · station s06
+
+Setting: the market by day, the house by night. The sun and moon should be
+drawn the same size and place in the sky, so the child sees the swap.
+
+| line | Arabic | picture prompt |
+|---|---|---|
+| 1 | فِي الصَّبَاحِ الشَّمْسُ فِي السَّمَاءِ. | A big warm sun over the rooftops, morning. |
+| 2 | قَالَ أَدَم: الشَّمْسُ كَبِيرَةٌ وَجَمِيلَةٌ. | Adam at the window, arms wide at the sun. |
+| 3 | ذَهَبَ أَدَم مَعَ بَابَا إِلَى السُّوقِ. | Adam and Baba walking hand in hand towards market stalls. |
+| 4 | اِشْتَرَى بَابَا الْخُبْزَ وَالتُّفَّاحَ. | Baba at a stall taking bread and red apples. |
+| 5 | قَالَ أَدَم: أُرِيدُ الْمَوْزَ! | Adam pointing at a hanging bunch of bananas. |
+| 6 | قَالَ بَابَا: هَذَا الْمَوْزُ لَكَ يَا أَدَم. | Baba handing Adam the bananas, Adam delighted. |
+| 7 | رَجَعَا إِلَى الْبَيْتِ وَالشَّمْسُ فَوْقَ الْجَبَلِ. | The two walking home, sun low over a mountain, long shadows. |
+| 8 | جَاءَ اللَّيْلُ وَذَهَبَتِ الشَّمْسُ. | The same skyline, now dark blue, the sun gone. |
+| 9 | نَظَرَ أَدَم مِنَ الْبَابِ. | Adam at the open front door looking up. |
+| 10 | الْقَمَر جَمِيل. | A full moon where the sun was in line 1. |
+| 11 | النُّجُومُ فِي السَّمَاءِ وَالْقَمَرُ مَعَهَا. | The moon among many stars. |
+| 12 | قَالَتْ مَرْيَم: أَيْنَ لُولُو؟ | Maryam in pyjamas looking behind the door. |
+| 13 | لُولُو فِي السَّلَّةِ مَعَ الْمَوْزِ! | Lulu asleep in the market basket, bananas around her. |
+| 14 | نَامَ الْبَيْتُ تَحْتَ الْقَمَرِ. | The house from outside, one window lit, moon above. Cover. |
+
+## 6 · «يَوْم مَرْيَم» *A day with Maryam* — L5 · `yawm-maryam` · station s07
+
+Setting: one full day. Lines 3, 6 and 8 are the duas; draw the mouth
+closed and the hands still, a quiet moment, not a performance. Line 12 is
+an ayah: draw the open page and the lamp, never the text.
+
+| line | Arabic | picture prompt |
+|---|---|---|
+| 1 | فِي الصَّبَاحِ قَامَتْ مَرْيَم مِنَ النَّوْمِ. | Maryam sitting up in bed, sun through the curtain. |
+| 2 | قَالَتْ مَامَا: مَاذَا نَقُولُ فِي الصَّبَاحِ؟ | Mama at the bedside, asking gently. |
+| 3 | قَالَتْ مَرْيَم: الْحَمْدُ لِلَّهِ. | Maryam, hands in her lap, calm smile. |
+| 4 | جَلَسَتْ مَرْيَم مَعَ أَدَم لِلْفُطُورِ. | Breakfast table, Maryam in a high chair beside Adam. |
+| 5 | قَالَ أَدَم: مَاذَا نَقُولُ قَبْلَ الطَّعَامِ؟ | Adam pausing with bread in hand, looking at Maryam. |
+| 6 | قَالَتْ مَرْيَم: بِسْمِ اللَّهِ. | Maryam, plate in front, hands still, about to eat. |
+| 7 | أَكَلَتْ مَرْيَم الْخُبْزَ وَشَرِبَتِ اللَّبَنَ. | Maryam eating bread, a cup of milk. |
+| 8 | وَبَعْدَ الطَّعَامِ قَالَتْ: الْحَمْدُ لِلَّهِ. | Empty plate, Maryam content. |
+| 9 | ذَهَبَ بَابَا إِلَى الْمَسْجِدِ وَقَالَ: هَيَّا يَا أَدَم. | Baba at the door in his thobe, beckoning Adam, masjid dome down the street. |
+| 10 | لَعِبَتْ مَرْيَم مَعَ لُولُو فِي الْبَيْتِ. | Maryam and Lulu with a ball on the rug. |
+| 11 | جَاءَ اللَّيْلُ وَقَالَتْ مَامَا: قَبْلَ النَّوْمِ نَقْرَأُ. | Evening, Mama with a small book at the bedside. |
+| 12 | قَرَأَتْ مَرْيَم: قُلْ هُوَ اللَّهُ أَحَدٌ. | Maryam looking at the open book, lamp lit; no text visible. |
+| 13 | نَامَتْ مَرْيَم وَنَامَتْ لُولُو فَوْقَ السَّرِيرِ. | Maryam asleep, Lulu curled on the blanket. |
+| 14 | وَفِي الصَّبَاحِ قَالَتْ: الْحَمْدُ لِلَّهِ. | Morning again, same bed, Maryam sitting up smiling. Cover. |
 
 ---
 
-## Checklist before saying a book is done
+## Checklist before saying a book is illustrated
 
-- [ ] every anchor sentence appears verbatim, tashkeel identical to the source
-- [ ] `node scripts/test-books.js` passes (band, pictures, offline, module loaded)
-- [ ] every page picture shows the meaning without the text
-- [ ] the last story page is a joke the child can get from the picture
-- [ ] `gen-audio.py` run; no clip falls through to `speechSynthesis`
-- [ ] `sync-sw.js` run; `data/path.json` step added; `test-path.js` passes
-- [ ] `HANDOVER.md` §3 counts updated
+- [ ] one picture per line, numbered, same cast and clothes throughout
+- [ ] every picture shows the line's meaning with the text hidden
+- [ ] no letters of any alphabet in any image
+- [ ] attached by method A or B above; `art: 'pending'` removed or replaced
+- [ ] all nine suites pass; `node scripts/sync-sw.js` run
+- [ ] `build-status.js`: the story leaves *waiting*; `HANDOVER.md` §3 counts updated

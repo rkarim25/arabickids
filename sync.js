@@ -257,6 +257,31 @@ function syncSoon() {
 
 /* ================= the grown-ups' screen ================================= */
 
+/* Reza, 2026-09-06: "always summarise what needs to be built and what has
+   been built. Keep it in the grown up section." The lists live in
+   build-status.js; the stories still waiting for pictures are counted from
+   the data itself so that line cannot go stale. */
+function renderBuildStatus() {
+  if (typeof BUILD_STATUS === 'undefined') return '';
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const li = xs => xs.map(x => `<li>${esc(x)}</li>`).join('');
+  const noArt = (typeof TEXT_STORIES !== 'undefined' ? TEXT_STORIES : []).filter(s => s.art === 'pending');
+  return `
+    <details class="pb-build">
+      <summary>🛠 What is built, what is next <small>updated ${esc(BUILD_STATUS.updated)}</small></summary>
+      <p class="pb-b-h">Built</p>
+      <ul class="pb-b-list">${li(BUILD_STATUS.built)}</ul>
+      <p class="pb-b-h">Next, in order</p>
+      <ol class="pb-b-list">${li(BUILD_STATUS.next)}</ol>
+      <p class="pb-b-h">Waiting on content from another AI</p>
+      <ul class="pb-b-list">${BUILD_STATUS.waiting.map(w =>
+        `<li><b>${esc(w.what)}</b> — ${esc(w.who)} · <code>${esc(w.brief)}</code></li>`).join('')}</ul>
+      ${noArt.length ? `<p class="pb-b-h">Stories written, pictures pending (${noArt.length})</p>
+      <ul class="pb-b-list">${noArt.map(s => `<li>${esc(s.title)} · ${esc(s.titleEn)} · L${s.level} · <code>${esc(s.id)}</code></li>`).join('')}</ul>` : ''}
+      <p class="pb-b-foot">Design: <code>PATH.md</code> · briefs: <code>briefs/</code> · this list: <code>build-status.js</code></p>
+    </details>`;
+}
+
 function renderParent(note) {
   const host = document.getElementById('home');
   const s = session();
@@ -312,6 +337,8 @@ function renderParent(note) {
       `}
       <p class="pb-msg" id="pMsg"></p>
       <button class="big-btn alt" id="pRec">🎙 Record your voice <small>the letters, in a voice they know</small></button>
+      ${typeof renderDiagnostics === 'function' ? renderDiagnostics() : ''}
+      ${renderBuildStatus()}
       <p class="pb-priv">Only a face and a star count ever leave this device — no name,
         no photo, no recording.</p>
     </div>`;

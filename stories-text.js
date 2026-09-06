@@ -479,6 +479,186 @@ const KALILA = [
 ];
 TEXT_STORIES.push(...KALILA);
 
+/* ————— the Path stories (2026-09-06) ——————————————————————————————————————
+   Reza: "these sentences first need to appear in a story to help build
+   context" and "for any stories with pictures build it out without the
+   pictures and leave notes for AI to complete it."
+
+   Six stories, one per station of the path (PATH.md §2), each carrying that
+   station's core sentences VERBATIM so the child hears them in a scene the
+   day before the lesson drills them. They were briefed as picture books
+   (briefs/STORYBOOKS.md); the text is here now, on the no-picture shelf, and
+   `art: 'pending'` marks each one until the pictures arrive. The per-line
+   picture prompts are in the brief, not here, so gen-audio does not render
+   them as clips.
+
+   Long on purpose (Reza: "stories can be long") — the path reader pauses on
+   a checkpoint every six lines with KEEP GOING as the big button.
+   ========================================================================= */
+const PATH_STORIES = [
+  {
+    id: 'lulu-jaia',
+    level: 1,
+    art: 'pending',
+    title: 'لُولُو جَائِعَة',
+    titleEn: 'Lulu is hungry',
+    blurb: 'Lulu wants milk, then water, then juice, then Baba.',
+    lines: [
+      { ar: 'هَذِهِ لُولُو.', en: 'This is Lulu.' },
+      { ar: 'لُولُو جَائِعَة.', en: 'Lulu is hungry.' },
+      { ar: 'أَنَا هُنَا.', en: 'I am here.' },
+      { ar: 'هَذَا أَدَم.', en: 'This is Adam.' },
+      { ar: 'مَاذَا تُرِيدُ؟', en: 'What do you want?' },
+      { ar: 'أُرِيدُ لَبَن.', en: 'I want milk.' },
+      { ar: 'هَذَا لَبَن يَا لُولُو.', en: 'Here is milk, Lulu.' },
+      { ar: 'لَبَن لَذِيذ!', en: 'Milk is tasty!' },
+      { ar: 'أُرِيدُ مَاء.', en: 'I want water.' },
+      { ar: 'هَذَا مَاء.', en: 'Here is water.' },
+      { ar: 'وَأُرِيدُ عَصِير!', en: 'And I want juice!' },
+      { ar: 'لَا يَا لُولُو!', en: 'No, Lulu!' },
+      { ar: 'لَا عَصِير هُنَا.', en: 'There is no juice here.' },
+      { ar: 'هَذَا بَابَا.', en: 'This is Baba.' },
+      { ar: 'بَابَا كَبِير.', en: 'Baba is big.' },
+      { ar: 'لُولُو صَغِيرَة.', en: 'Lulu is small.' },
+      { ar: 'أُرِيدُ بَابَا!', en: 'I want Baba!' },
+      { ar: 'لُولُو مَعَ بَابَا.', en: 'Lulu is with Baba.' },
+    ],
+  },
+  {
+    id: 'feel-dar',
+    level: 1,
+    art: 'pending',
+    title: 'فِيل فِي دَار',
+    titleEn: 'An elephant in a house',
+    blurb: 'A big elephant wants a lot. Lulu wants an elephant.',
+    lines: [
+      { ar: 'هَذَا فِيل.', en: 'This is an elephant.' },
+      { ar: 'فِيل كَبِير!', en: 'A big elephant!' },
+      { ar: 'فِيل هُنَا.', en: 'The elephant is here.' },
+      { ar: 'مَاذَا تُرِيدُ يَا فِيل؟', en: 'What do you want, elephant?' },
+      { ar: 'أُرِيدُ مَاء.', en: 'I want water.' },
+      { ar: 'هَذَا مَاء يَا فِيل.', en: 'Here is water, elephant.' },
+      { ar: 'مَاء كَثِير!', en: 'A lot of water!' },
+      { ar: 'أُرِيدُ دَار.', en: 'I want a house.' },
+      { ar: 'هَذِهِ دَار.', en: 'This is a house.' },
+      { ar: 'فِيل فِي دَار!', en: 'An elephant in a house!' },
+      { ar: 'دَار صَغِيرَة.', en: 'A small house.' },
+      { ar: 'فِيل كَبِير.', en: 'A big elephant.' },
+      { ar: 'هَذِهِ لُولُو.', en: 'This is Lulu.' },
+      { ar: 'لُولُو صَغِيرَة.', en: 'Lulu is small.' },
+      { ar: 'مَاذَا تُرِيدُ يَا لُولُو؟', en: 'What do you want, Lulu?' },
+      { ar: 'أُرِيدُ فِيل!', en: 'I want an elephant!' },
+      { ar: 'فِيل مَعَ لُولُو.', en: 'The elephant is with Lulu.' },
+    ],
+  },
+  {
+    id: 'ayna-mama',
+    level: 2,
+    art: 'pending',
+    title: 'أَيْنَ مَامَا؟',
+    titleEn: 'Where is Mama?',
+    blurb: 'Maryam looks in every room. Mama is somewhere silly.',
+    lines: [
+      { ar: 'مَرْيَم فِي الْبَيْت.', en: 'Maryam is in the house.' },
+      { ar: 'أَيْنَ مَامَا؟', en: 'Where is Mama?' },
+      { ar: 'مَامَا فِي الْمَطْبَخ؟', en: 'Is Mama in the kitchen?' },
+      { ar: 'لَا. أَدَم فِي الْمَطْبَخ.', en: 'No. Adam is in the kitchen.' },
+      { ar: 'عِنْدِي كِتَاب.', en: 'I have a book.' },
+      { ar: 'الْكِتَاب فَوْقَ الْمَائِدَة.', en: 'The book is on the table.' },
+      { ar: 'مَامَا فِي الْغُرْفَة؟', en: 'Is Mama in the room?' },
+      { ar: 'لَا. لُولُو فِي الْغُرْفَة.', en: 'No. Lulu is in the room.' },
+      { ar: 'أَيْنَ لُولُو؟', en: 'Where is Lulu?' },
+      { ar: 'لُولُو فَوْقَ سَرِير.', en: 'Lulu is on a bed.' },
+      { ar: 'لُولُو فِي الْبَيْت.', en: 'Lulu is in the house.' },
+      { ar: 'هَلْ عِنْدَكَ مَاء؟', en: 'Do you have water?' },
+      { ar: 'مَا عِنْدِي مَاء.', en: 'I do not have water.' },
+      { ar: 'مَامَا عِنْدَهَا مَاء!', en: 'Mama has water!' },
+      { ar: 'مَامَا! أَيْنَ أَنْتِ؟', en: 'Mama! Where are you?' },
+      { ar: 'هَذَا بَابَا.', en: 'This is Baba.' },
+      { ar: 'مَامَا تَحْتَ الْمَائِدَة!', en: 'Mama is under the table!' },
+      { ar: 'وَلُولُو تَحْتَ الْمَائِدَة!', en: 'And Lulu is under the table!' },
+    ],
+  },
+  {
+    id: 'man-qala',
+    level: 3,
+    art: 'pending',
+    title: 'مَنْ قَالَ مِيَاو؟',
+    titleEn: 'Who said miaow?',
+    blurb: 'A miaow in the house, and nobody did it. Somebody did it.',
+    lines: [
+      { ar: 'أَدَم فِي الْبَيْت.', en: 'Adam is in the house.' },
+      { ar: 'كَيْفَ حَالُكَ؟', en: 'How are you?' },
+      { ar: 'أَنَا سَعِيد.', en: 'I am happy.' },
+      { ar: 'مِيَاو!', en: 'Miaow!' },
+      { ar: 'مَنْ قَالَ مِيَاو؟', en: 'Who said miaow?' },
+      { ar: 'قَالَ بَابَا: لَيْسَ أَنَا.', en: 'Baba said: not me.' },
+      { ar: 'قَالَتْ مَامَا: لَيْسَ أَنَا.', en: 'Mama said: not me.' },
+      { ar: 'مِيَاو! مِيَاو!', en: 'Miaow! Miaow!' },
+      { ar: 'أَيْنَ لُولُو؟', en: 'Where is Lulu?' },
+      { ar: 'لُولُو فِي صُنْدُوق؟ لَا.', en: 'Is Lulu in a box? No.' },
+      { ar: 'قَالَ الْفِيل: أُرِيدُ عَصِير!', en: 'The elephant said: I want juice!' },
+      { ar: 'لَيْسَ الْفِيل!', en: 'Not the elephant!' },
+      { ar: 'قَالَ بَابَا: هَيَّا.', en: 'Baba said: come on.' },
+      { ar: 'هَيَّا إِلَى الْغُرْفَة.', en: 'Come on, to the room.' },
+      { ar: 'مِيَاو! هَذِهِ مَرْيَم!', en: 'Miaow! It is Maryam!' },
+      { ar: 'مَرْيَم قَالَتْ مِيَاو!', en: 'Maryam said miaow!' },
+      { ar: 'وَلُولُو قَالَتْ: مِيَاو.', en: 'And Lulu said: miaow.' },
+      { ar: 'أُحِبُّ أُمِّي.', en: 'I love my mother.' },
+      { ar: 'وَأُحِبُّ لُولُو!', en: 'And I love Lulu!' },
+    ],
+  },
+  {
+    id: 'shams-qamar',
+    level: 4,
+    art: 'pending',
+    title: 'الشَّمْسُ وَالْقَمَر',
+    titleEn: 'The sun and the moon',
+    blurb: 'A day at the market under the sun, and a night under the moon.',
+    lines: [
+      { ar: 'فِي الصَّبَاحِ الشَّمْسُ فِي السَّمَاءِ.', en: 'In the morning the sun is in the sky.' },
+      { ar: 'قَالَ أَدَم: الشَّمْسُ كَبِيرَةٌ وَجَمِيلَةٌ.', en: 'Adam said: the sun is big and beautiful.' },
+      { ar: 'ذَهَبَ أَدَم مَعَ بَابَا إِلَى السُّوقِ.', en: 'Adam went with Baba to the market.' },
+      { ar: 'اِشْتَرَى بَابَا الْخُبْزَ وَالتُّفَّاحَ.', en: 'Baba bought the bread and the apples.' },
+      { ar: 'قَالَ أَدَم: أُرِيدُ الْمَوْزَ!', en: 'Adam said: I want the bananas!' },
+      { ar: 'قَالَ بَابَا: هَذَا الْمَوْزُ لَكَ يَا أَدَم.', en: 'Baba said: these bananas are for you, Adam.' },
+      { ar: 'رَجَعَا إِلَى الْبَيْتِ وَالشَّمْسُ فَوْقَ الْجَبَلِ.', en: 'They went home, and the sun was over the mountain.' },
+      { ar: 'جَاءَ اللَّيْلُ وَذَهَبَتِ الشَّمْسُ.', en: 'Night came and the sun went away.' },
+      { ar: 'نَظَرَ أَدَم مِنَ الْبَابِ.', en: 'Adam looked out from the door.' },
+      { ar: 'الْقَمَر جَمِيل.', en: 'The moon is beautiful.' },
+      { ar: 'النُّجُومُ فِي السَّمَاءِ وَالْقَمَرُ مَعَهَا.', en: 'The stars are in the sky and the moon is with them.' },
+      { ar: 'قَالَتْ مَرْيَم: أَيْنَ لُولُو؟', en: 'Maryam said: where is Lulu?' },
+      { ar: 'لُولُو فِي السَّلَّةِ مَعَ الْمَوْزِ!', en: 'Lulu is in the basket with the bananas!' },
+      { ar: 'نَامَ الْبَيْتُ تَحْتَ الْقَمَرِ.', en: 'The house slept under the moon.' },
+    ],
+  },
+  {
+    id: 'yawm-maryam',
+    level: 5,
+    art: 'pending',
+    title: 'يَوْم مَرْيَم',
+    titleEn: 'A day with Maryam',
+    blurb: 'Morning, breakfast, play and bed, and the words that go with each.',
+    lines: [
+      { ar: 'فِي الصَّبَاحِ قَامَتْ مَرْيَم مِنَ النَّوْمِ.', en: 'In the morning Maryam got up from sleep.' },
+      { ar: 'قَالَتْ مَامَا: مَاذَا نَقُولُ فِي الصَّبَاحِ؟', en: 'Mama said: what do we say in the morning?' },
+      { ar: 'قَالَتْ مَرْيَم: الْحَمْدُ لِلَّهِ.', en: 'Maryam said: all praise is for Allah.' },
+      { ar: 'جَلَسَتْ مَرْيَم مَعَ أَدَم لِلْفُطُورِ.', en: 'Maryam sat with Adam for breakfast.' },
+      { ar: 'قَالَ أَدَم: مَاذَا نَقُولُ قَبْلَ الطَّعَامِ؟', en: 'Adam said: what do we say before food?' },
+      { ar: 'قَالَتْ مَرْيَم: بِسْمِ اللَّهِ.', en: 'Maryam said: in the name of Allah.' },
+      { ar: 'أَكَلَتْ مَرْيَم الْخُبْزَ وَشَرِبَتِ اللَّبَنَ.', en: 'Maryam ate the bread and drank the milk.' },
+      { ar: 'وَبَعْدَ الطَّعَامِ قَالَتْ: الْحَمْدُ لِلَّهِ.', en: 'And after the food she said: all praise is for Allah.' },
+      { ar: 'ذَهَبَ بَابَا إِلَى الْمَسْجِدِ وَقَالَ: هَيَّا يَا أَدَم.', en: 'Baba went to the masjid and said: come on, Adam.' },
+      { ar: 'لَعِبَتْ مَرْيَم مَعَ لُولُو فِي الْبَيْتِ.', en: 'Maryam played with Lulu in the house.' },
+      { ar: 'جَاءَ اللَّيْلُ وَقَالَتْ مَامَا: قَبْلَ النَّوْمِ نَقْرَأُ.', en: 'Night came and Mama said: before sleep we read.' },
+      { ar: 'قَرَأَتْ مَرْيَم: قُلْ هُوَ اللَّهُ أَحَدٌ.', en: 'Maryam read: say, He is Allah, the One.' },
+      { ar: 'نَامَتْ مَرْيَم وَنَامَتْ لُولُو فَوْقَ السَّرِيرِ.', en: 'Maryam slept, and Lulu slept on top of the bed.' },
+      { ar: 'وَفِي الصَّبَاحِ قَالَتْ: الْحَمْدُ لِلَّهِ.', en: 'And in the morning she said: all praise is for Allah.' },
+    ],
+  },
+];
+TEXT_STORIES.push(...PATH_STORIES);
+
 /* what a series is called, for the shelf heading */
 const SERIES_META = {
   'lulu-ghurab': { title: 'لُولُو وَالْغُرَاب', titleEn: 'Lulu and the Crow', icon: '🐱🐦‍⬛' },
@@ -490,4 +670,4 @@ const SERIES_META = {
 };
 
 if (typeof module !== 'undefined' && module.exports)
-  module.exports = { TEXT_STORIES, SERIES_LULU, JUHA, KALILA, SERIES_META };
+  module.exports = { TEXT_STORIES, SERIES_LULU, JUHA, KALILA, PATH_STORIES, SERIES_META };

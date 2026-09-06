@@ -39,7 +39,7 @@ video briefs for other AIs.
 | | |
 |---|---|
 | 🔊 **الأَصْوَات** | 28 letters with Qur'anic keywords, listen-and-find, harakat — **and القَاعِدَة**, the full nine-step reading ladder: letters → shapes → harakat → tanween → mudood → sukoon → shadda → the two lams → real Qur'anic words read by Alafasy. |
-| 📖 **الكُتُب** | Two shelves on one ladder: eight **picture books**, and **قِصَص بِلَا صُوَر** — 23 no-picture stories at every level, including the series «لُولُو وَالْغُرَاب», «نَوَادِر جُحَا», and «كَلِيلَة وَدِمْنَة». |
+| 📖 **الكُتُب** | Two shelves on one ladder: eight **picture books**, and **قِصَص بِلَا صُوَر** — 29 no-picture stories at every level, including the series «لُولُو وَالْغُرَاب», «نَوَادِر جُحَا», «كَلِيلَة وَدِمْنَة», and the six path stories that carry the twenty core sentences. |
 | 🗂️ **المُفْرَدَات** | **Vocabulary & Spaced Repetition (SRS)**: 43 core words from storybooks with 3D flip flashcards, Leitner 5-box daily review queues, watercolor art, and native audio pronunciation. |
 | 💬 **جُمَل** | Picture-free sentence lessons: hear it, what it means, how it works, say it, change a word — plus frames that let a child slot an English word in, and ten jokes and riddles. |
 | 📿 **سُوَر** | Al-Fatiha and the ten shortest, 51 ayat, **real recitation** ayah and word by word, with child-written meanings and a counted comprehension check. |

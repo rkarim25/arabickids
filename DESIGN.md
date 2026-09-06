@@ -42,9 +42,17 @@ long before they can write a single letter. Everything here follows from that.
 4. **Repetition with variation.** The same small set of words comes back across
    books, in new pictures. That is what makes a word stick at this age — not a
    longer word list.
-5. **Play, never test.** Nothing is marked wrong in a way that stops the child.
-   A wrong tap replays the sound and lets them try again, forever. There is no
-   score to lose, only stars to collect.
+5. **Test everything, punish nothing.** *(Amended 2026-09-06.)* Reza: *"i
+   want the site to be highly focused on activating recall so everything
+   needs to be test based."* So every stop asks the child to **retrieve**
+   before it shows — pick the picture the sentence names, pick the word that
+   is missing, say it back — and every answer is recorded for the grown-up
+   (`diagnostics.js`). What has not changed is what the child sees: nothing
+   is marked wrong in a way that stops her. A wrong tap replays the sound and
+   lets her try again, forever; there is no score to lose, only stars to
+   collect. The test is real; the child only ever meets the game side of it.
+   (Until 2026-09-06 this rule read *play, never test*; the play stays, the
+   measuring is new.)
 6. **One tap to anywhere.** A four-year-old navigates by picture and colour.
    No menus of words, no small targets, no typing, ever.
 

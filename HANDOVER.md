@@ -54,6 +54,8 @@ Six dedicated doors with clean URL hash routing (`#home`, `#shelf`, `#sounds`, `
 | 📿 **سُوَر** | Al-Fatiha + 10 shortest, **real reciter** | `surah-ui.js`, `surah-notes.js`, `surah-words.js`, `data/surahs.json` |
 | 🖨 **اِطْبَعْ** | cut-out cards, mini books, poster | `print.js`, `print.css` |
 
+Grown-ups screen (`sync.js` → `renderParent`): sign-in, 📊 **diagnostics per child** (`diagnostics.js`, from tested data only), 🛠 **built / next / waiting** (`build-status.js` — update it in the same commit as the work), the 🎙 booth.
+
 Shared: `audio.js` (all playback), `audio-manifest.js` (instant offline map), `sync.js` (Google sign-in + star sync),
 `kit2.js` (extra figures), `book-icons.js` (picture corrections),
 `record.js` (the parent recording booth, behind the grown-ups screen),
@@ -71,7 +73,9 @@ Shared: `audio.js` (all playback), `audio-manifest.js` (instant offline map), `s
   - L4: *Where is Lulu?*
   - L5: *My Day (يَوْمِي)*
 - **Vocabulary & SRS**: 43 core vocabulary items across 5 categories with Leitner 5-box intervals (1d, 2d, 4d, 7d, 14d) and interactive 3D flip flashcards.
-- **No-picture stories**: 23 — 5 standalone, the 8-episode series
+- **No-picture stories**: 29 — 5 standalone, **6 path stories** (2026-09-06,
+  `PATH_STORIES`, each `art: 'pending'` until illustrated — see
+  `briefs/STORYBOOKS.md`), the 8-episode series
   **Lulu vs the Crow** L2 to L4, the 3-episode slapstick comedy series
   **Juha's Tales** L3 to L4, and 7 **Kalila wa Dimna** fables whose ep
   numbers follow the LADDER (ep1 = L1 … ep7 = L4).

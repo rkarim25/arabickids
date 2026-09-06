@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "note": "The Path seed. Every ref points at content that already exists; scripts/test-path.js checks all of them. See PATH.md.",
+  "version": 2,
+  "note": "The Path seed. Every ref points at content that exists; a station's first step is always a story so the sentences are met in context before they are drilled. scripts/test-path.js checks all of it. See PATH.md.",
   "stations": [
     {
       "id": "s01",
@@ -8,15 +8,17 @@
       "title": "أَنَا",
       "titleEn": "Me",
       "idea": "I can say who I am, who this is, and that I want water.",
-      "anchors": ["lesson:me/0", "lesson:me/1", "lesson:this/0", "lesson:this/1"],
+      "anchors": ["lesson:me/0", "lesson:this/0", "lesson:this/1", "lesson:me/1"],
       "quran": ["1:1", "1:2"],
       "steps": [
-        { "type": "sentences", "ref": "me" },
-        { "type": "sentences", "ref": "this" },
         { "type": "story", "ref": "ts-ana" },
+        { "type": "sentences", "ref": "me" },
+        { "type": "play", "ref": "lesson:me/1" },
+        { "type": "vocab", "ref": "maa,aseer,qitta" },
+        { "type": "story", "ref": "lulu-jaia" },
+        { "type": "sentences", "ref": "this" },
         { "type": "book", "ref": "lulu-l1" },
-        { "type": "video", "ref": "uhP3pEyKPec" },
-        { "type": "play", "ref": "lesson:me/1" }
+        { "type": "video", "ref": "uhP3pEyKPec" }
       ]
     },
     {
@@ -24,15 +26,17 @@
       "level": 1,
       "title": "مَاذَا تُرِيدُ؟",
       "titleEn": "What do you want?",
-      "idea": "I can ask what someone wants and answer with what I want.",
-      "anchors": ["lesson:me/2", "line:kd-feel/0", "line:kd-feel/1"],
+      "idea": "I can ask what someone wants, and say what is big and small.",
+      "anchors": ["lesson:me/2", "line:feel-dar/13", "line:feel-dar/0"],
       "quran": ["1:3", "1:4"],
       "steps": [
+        { "type": "story", "ref": "feel-dar" },
         { "type": "lesson", "ref": "me/2" },
-        { "type": "book", "ref": "madha-1" },
+        { "type": "play", "ref": "lesson:me/2" },
+        { "type": "vocab", "ref": "feel,kabir,saghir" },
         { "type": "story", "ref": "kd-feel" },
-        { "type": "qaida", "ref": "harakat" },
-        { "type": "play", "ref": "lesson:me/2" }
+        { "type": "book", "ref": "madha-1" },
+        { "type": "qaida", "ref": "harakat" }
       ]
     },
     {
@@ -41,105 +45,112 @@
       "title": "أَيْنَ؟",
       "titleEn": "Where?",
       "idea": "I can ask where something is and say where it is.",
-      "anchors": ["lesson:where/0", "lesson:where/1", "lesson:where/2"],
+      "anchors": ["lesson:where/2", "lesson:where/0", "lesson:where/1", "lesson:have/0"],
       "quran": ["1:5", "1:6", "1:7"],
       "steps": [
+        { "type": "story", "ref": "ayna-mama" },
         { "type": "sentences", "ref": "where" },
-        { "type": "book", "ref": "qamar-1" },
+        { "type": "play", "ref": "lesson:where/0" },
+        { "type": "vocab", "ref": "matbakh,ghurfa,fee,fawqa" },
         { "type": "story", "ref": "ts-yawm" },
-        { "type": "book", "ref": "bayt-2" },
-        { "type": "story", "ref": "lg-1" },
-        { "type": "play", "ref": "lesson:where/0" }
+        { "type": "book", "ref": "qamar-1" },
+        { "type": "lesson", "ref": "have/0" },
+        { "type": "book", "ref": "bayt-2" }
       ]
     },
     {
       "id": "s04",
       "level": 2,
-      "title": "مَنْ؟ وَكَيْفَ؟",
-      "titleEn": "Who? And what is it like?",
-      "idea": "I can ask who is there and describe what I see.",
-      "anchors": ["lesson:who/0", "lesson:who/1", "lesson:describe/0", "lesson:describe/1"],
+      "title": "مَنْ؟ وَعِنْدِي",
+      "titleEn": "Who? And I have",
+      "idea": "I can ask who is there, say what I have, and say what I do not have.",
+      "anchors": ["lesson:who/0", "lesson:have/1", "lesson:ask/1", "lesson:who/1"],
       "quran": ["112:1", "112:2", "112:3", "112:4"],
       "steps": [
+        { "type": "story", "ref": "lg-1" },
         { "type": "sentences", "ref": "who" },
-        { "type": "sentences", "ref": "describe" },
-        { "type": "book", "ref": "arnab-2" },
+        { "type": "play", "ref": "lesson:ask/1" },
+        { "type": "vocab", "ref": "kitab,bayt,ghurab" },
         { "type": "story", "ref": "kd-hamama" },
+        { "type": "sentences", "ref": "have" },
+        { "type": "book", "ref": "arnab-2" },
+        { "type": "sentences", "ref": "ask" },
         { "type": "story", "ref": "lg-2" },
+        { "type": "sentences", "ref": "funny" },
+        { "type": "qaida", "ref": "sukoon" },
         { "type": "sentences", "ref": "jokes" }
       ]
     },
     {
       "id": "s05",
-      "level": 2,
-      "title": "عِنْدِي",
-      "titleEn": "I have",
-      "idea": "I can say what I have, ask if you have it, and ask how you are.",
-      "anchors": ["lesson:have/0", "lesson:have/1", "lesson:ask/0", "lesson:ask/1"],
-      "quran": ["108:1", "108:2", "108:3"],
+      "level": 3,
+      "title": "قَالَ وَقَالَتْ",
+      "titleEn": "He said, she said",
+      "idea": "I can tell what someone said, ask how you are, and say what I love.",
+      "anchors": ["lesson:said/0", "line:man-qala/6", "lesson:said/1", "lesson:ask/0"],
+      "quran": ["108:1", "108:2", "108:3", "103:1", "103:2", "103:3"],
       "steps": [
-        { "type": "sentences", "ref": "have" },
-        { "type": "sentences", "ref": "ask" },
-        { "type": "sentences", "ref": "funny" },
-        { "type": "qaida", "ref": "sukoon" },
-        { "type": "play", "ref": "lesson:ask/1" }
+        { "type": "story", "ref": "man-qala" },
+        { "type": "sentences", "ref": "said" },
+        { "type": "play", "ref": "lesson:said/0" },
+        { "type": "vocab", "ref": "qitta,walad,bint" },
+        { "type": "story", "ref": "ts-khubz" },
+        { "type": "sentences", "ref": "funny3" },
+        { "type": "book", "ref": "hidhaa-3" },
+        { "type": "qaida", "ref": "shadda" },
+        { "type": "story", "ref": "jh-1" },
+        { "type": "play", "ref": "lesson:said/1" },
+        { "type": "story", "ref": "kd-arnabfeel" }
       ]
     },
     {
       "id": "s06",
-      "level": 3,
-      "title": "قَالَ",
-      "titleEn": "He said",
-      "idea": "I can tell what someone said, and say what I love.",
-      "anchors": ["lesson:said/0", "lesson:said/1", "lesson:funny3/0", "lesson:funny3/5"],
-      "quran": ["103:1", "103:2", "103:3"],
+      "level": 4,
+      "title": "الشَّمْسُ وَالْقَمَر",
+      "titleEn": "The sun and the moon",
+      "idea": "I can hear the sun letters swallow the lam, and follow a whole story.",
+      "anchors": ["line:shams-qamar/0", "lesson:describe/0", "line:shams-qamar/7"],
+      "quran": ["110:1", "110:2", "110:3", "113:1", "113:2", "113:3", "113:4", "113:5", "106:1", "106:2", "106:3", "106:4"],
       "steps": [
-        { "type": "sentences", "ref": "said" },
-        { "type": "story", "ref": "ts-khubz" },
-        { "type": "book", "ref": "hidhaa-3" },
-        { "type": "story", "ref": "jh-1" },
-        { "type": "sentences", "ref": "funny3" },
-        { "type": "qaida", "ref": "shadda" },
-        { "type": "story", "ref": "kd-arnabfeel" },
-        { "type": "play", "ref": "lesson:said/0" }
+        { "type": "story", "ref": "shams-qamar" },
+        { "type": "sentences", "ref": "describe" },
+        { "type": "qaida", "ref": "lam" },
+        { "type": "vocab", "ref": "shams,qamar,najm,samaa" },
+        { "type": "story", "ref": "ts-suq" },
+        { "type": "play", "ref": "line:shams-qamar/0" },
+        { "type": "story", "ref": "kd-arnab" },
+        { "type": "book", "ref": "lulu-1" },
+        { "type": "story", "ref": "lg-3" },
+        { "type": "play", "ref": "lesson:describe/0" },
+        { "type": "story", "ref": "jh-3" },
+        { "type": "vocab", "ref": "layl,sahab,jabal" },
+        { "type": "story", "ref": "kd-sulahfa" },
+        { "type": "play", "ref": "line:shams-qamar/7" },
+        { "type": "story", "ref": "lg-5" }
       ]
     },
     {
       "id": "s07",
-      "level": 4,
-      "title": "فِي السُّوق",
-      "titleEn": "At the market",
-      "idea": "I can follow a whole story with the sun letters in it.",
-      "anchors": ["line:ts-suq/0", "line:ts-suq/1", "line:kd-arnab/0"],
-      "quran": ["110:1", "110:2", "110:3", "113:1", "113:2", "113:3", "113:4", "113:5", "106:1", "106:2", "106:3", "106:4"],
-      "steps": [
-        { "type": "qaida", "ref": "lam" },
-        { "type": "story", "ref": "ts-suq" },
-        { "type": "story", "ref": "lg-3" },
-        { "type": "story", "ref": "kd-arnab" },
-        { "type": "story", "ref": "jh-3" },
-        { "type": "story", "ref": "kd-sulahfa" },
-        { "type": "story", "ref": "lg-5" },
-        { "type": "story", "ref": "kd-mutawwaqa" },
-        { "type": "story", "ref": "lg-6" },
-        { "type": "story", "ref": "kd-qird" },
-        { "type": "story", "ref": "lg-8" },
-        { "type": "play", "ref": "line:ts-suq/0" }
-      ]
-    },
-    {
-      "id": "s08",
       "level": 5,
       "title": "يَوْمِي",
       "titleEn": "My day",
-      "idea": "I can say the duas of my day and hear real ayat in them.",
-      "anchors": ["line:ts-nawm/0", "line:ts-nawm/1"],
+      "idea": "I can say the words of my day, and hear that they are in the Qur'an.",
+      "anchors": ["line:yawm-maryam/2", "line:yawm-maryam/5", "line:ts-nawm/5"],
       "quran": ["105:1", "105:2", "105:3", "105:4", "105:5", "114:1", "114:2", "114:3", "114:4", "114:5", "114:6", "109:1", "109:2", "109:3", "109:4", "109:5", "109:6", "111:1", "111:2", "111:3", "111:4", "111:5"],
       "steps": [
+        { "type": "story", "ref": "yawm-maryam" },
+        { "type": "play", "ref": "line:yawm-maryam/2" },
         { "type": "book", "ref": "yawmi-5" },
+        { "type": "vocab", "ref": "futur,taam,masjid" },
         { "type": "story", "ref": "ts-nawm" },
         { "type": "qaida", "ref": "kalimat" },
-        { "type": "play", "ref": "line:ts-nawm/0" }
+        { "type": "story", "ref": "kd-mutawwaqa" },
+        { "type": "play", "ref": "line:yawm-maryam/5" },
+        { "type": "story", "ref": "kd-qird" },
+        { "type": "vocab", "ref": "sarir,layl,samak" },
+        { "type": "story", "ref": "lg-6" },
+        { "type": "play", "ref": "line:ts-nawm/5" },
+        { "type": "story", "ref": "lg-8" }
       ]
     }
   ]
