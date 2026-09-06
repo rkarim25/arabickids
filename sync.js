@@ -110,6 +110,101 @@ async function mountGoogleButton(host, onDone, onError) {
   } catch (e) { return false; }
 }
 
+/* ---- Sign in with Google, the redirect way ------------------------------
+   Reza, 2026-09-06: "i couldnt open sign in with my google account."
+
+   Google's own button opens a POP-UP window and waits for it to post the
+   token back. That works in an ordinary browser tab and fails, silently, in
+   the two places a phone actually opens this site: the installed home-screen
+   app (standalone mode either has no pop-ups or opens one in the browser,
+   and the app never hears back) and any in-app browser (Google refuses OAuth
+   inside web views outright). Nothing appears and nothing errors, which is
+   exactly what he reported.
+
+   The fix is the oldest trick in OAuth: do not open anything. Send the whole
+   page to Google, let Google send it back with the ID token in the URL
+   fragment, and finish the sign-in on the way in. The fragment never reaches
+   a server (GitHub Pages sees only the path) and is wiped before the router
+   runs. Nonce and state are checked so a pasted URL cannot sign anyone in.
+
+   ONE-TIME SETUP in Google Cloud (project "Hikayat", id hikayat-507218):
+   APIs & Services -> Credentials -> the Web client -> Authorised redirect
+   URIs -> add  https://rkarim25.github.io/arabickids/  (trailing slash).
+   Until that is done Google answers "Error 400: redirect_uri_mismatch"
+   instead of the account picker, so the pop-up button stays one tap away. */
+const GAUTH_KEY = 'hikayat-gauth';
+
+function redirectUri() {
+  return location.origin + location.pathname.replace(/index\.html$/, '');
+}
+
+function randomToken() {
+  const a = new Uint8Array(16); crypto.getRandomValues(a);
+  return Array.from(a, b => b.toString(16).padStart(2, '0')).join('');
+}
+
+/* Installed app or in-app browser: the pop-up cannot complete here, so the
+   redirect is the default. In a plain tab either can work; the pop-up stays
+   the default there until the redirect URI is registered with Google. */
+function popupUnreliable() {
+  const ua = navigator.userAgent || '';
+  const standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches)
+    || navigator.standalone === true;
+  const webview = /\bwv\b|FBAN|FBAV|Instagram|Line\/|WhatsApp|GSA\//.test(ua)
+    || (/iPhone|iPad/.test(ua) && !/Safari/.test(ua));
+  return standalone || webview;
+}
+
+function googleAuthUrl(clientId) {
+  const nonce = randomToken(), state = randomToken();
+  writeJSON(GAUTH_KEY, { nonce, state, t: Date.now() });
+  const p = new URLSearchParams({
+    client_id: clientId, redirect_uri: redirectUri(), response_type: 'id_token',
+    scope: 'openid email', nonce, state, prompt: 'select_account',
+  });
+  return 'https://accounts.google.com/o/oauth2/v2/auth?' + p.toString();
+}
+
+async function startGoogleRedirect() {
+  const id = await discoverClientId();
+  if (!id) throw new Error('no-client-id');
+  location.assign(googleAuthUrl(id));
+}
+
+function jwtPayload(t) {
+  try { return JSON.parse(atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))); }
+  catch (e) { return null; }
+}
+
+/* Runs before the router on every load. Returns null on an ordinary visit;
+   otherwise a promise resolving to {ok:true} or {error}. */
+function consumeGoogleRedirect() {
+  const h = location.hash.replace(/^#/, '');
+  if (!/(^|&)(id_token|error)=/.test(h)) return null;
+  const q = new URLSearchParams(h);
+  /* wipe the token from the URL before anything else can see it */
+  history.replaceState(null, '', location.pathname + location.search);
+  const expect = readJSON(GAUTH_KEY, null);
+  try { localStorage.removeItem(GAUTH_KEY); } catch (e) {}
+  return (async () => {
+    if (q.get('error')) return { error: q.get('error') };
+    const tok = q.get('id_token') || '';
+    const pl = jwtPayload(tok);
+    if (!expect || !pl || q.get('state') !== expect.state || pl.nonce !== expect.nonce
+        || Date.now() - expect.t > 15 * 60 * 1000) return { error: 'state-mismatch' };
+    try { await signInWithGoogle(tok); await syncNow().catch(() => {}); return { ok: true }; }
+    catch (e) { return { error: e.message || 'sign-in-failed' }; }
+  })();
+}
+
+function googleErrorText(code) {
+  return code === 'email-not-allowed' ? 'That Google account is not enabled on this site.'
+    : code === 'aud-mismatch' ? 'That client ID does not match the one already in use.'
+    : code === 'state-mismatch' ? 'That sign-in link has expired. Tap the button again.'
+    : code === 'access_denied' ? 'Google did not let that account in. Check it is one of the test users.'
+    : 'Google sign-in did not finish. Try the other way, or the sync code.';
+}
+
 const session = () => readJSON(SESS_KEY, null);
 const syncedAt = () => readJSON(SYNC_AT, 0);
 
@@ -162,15 +257,17 @@ function syncSoon() {
 
 /* ================= the grown-ups' screen ================================= */
 
-function renderParent() {
+function renderParent(note) {
   const host = document.getElementById('home');
   const s = session();
   show('home');
   host.innerHTML = `
     <header class="sub-head">
-      <button class="back" id="pBack2">✕</button>
+      <button class="nav-back-btn" id="pBack2" title="Back to Home">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">الرَّئِيسِيَّة · Home</span>
+      </button>
       <h2>لِلْكِبَار <small>For grown-ups</small></h2>
-      <span style="width:48px"></span>
     </header>
     <div class="parent-box">
       ${s ? `
@@ -183,7 +280,11 @@ function renderParent() {
         <p class="pb-note">Sign in once on each device and the children's stars follow
           them around. <b>The children never sign in and never type anything.</b></p>
 
-        <div id="gbtn" class="gbtn-host"></div>
+        <button class="big-btn gsi-btn" id="gGo">
+          <span class="gsi-g">G</span> Sign in with Google
+        </button>
+        <div id="gbtn" class="gbtn-host" hidden></div>
+        <button class="pb-out pb-swap" id="gSwap"></button>
 
         <div id="gFallback" hidden>
           <label class="pb-l">Email
@@ -215,7 +316,10 @@ function renderParent() {
         no photo, no recording.</p>
     </div>`;
 
-  document.getElementById('pBack2').addEventListener('click', () => { renderHome(); show('home'); });
+  document.getElementById('pBack2').addEventListener('click', () => {
+    if (typeof handleHashChange === 'function') { location.hash = '#home'; handleHashChange(); }
+    else { renderHome(); show('home'); }
+  });
   /* The booth sits here rather than behind sign-in: recording your own voice is
      nothing to do with syncing stars, and a parent with no Google account
      should still be able to give their children a real voice. */
@@ -228,15 +332,34 @@ function renderParent() {
     m.textContent = t; m.className = 'pb-msg ' + (good ? 'good' : 'bad');
   };
 
+  if (note) msg(note.text, !!note.good);
+
   if (!s) {
-    /* Google first. The sync code stays, folded away, for when Google is
-       blocked or not yet configured. */
+    /* Two ways in, one visible at a time. The redirect is the default where a
+       pop-up cannot complete (installed app, in-app browser); Google's own
+       pop-up button is the default in a plain tab. One tap swaps them. */
+    const go = document.getElementById('gGo');
+    const gb = document.getElementById('gbtn');
+    const swap = document.getElementById('gSwap');
+    let useRedirect = popupUnreliable();
+    const paint = () => {
+      go.hidden = !useRedirect; gb.hidden = useRedirect;
+      swap.textContent = useRedirect ? "Prefer a pop-up? Use Google's own button"
+                                     : 'Sign-in window did not open? Try the other way';
+    };
+    paint();
+    go.addEventListener('click', () => {
+      msg('Off to Google. You will come straight back here.');
+      startGoogleRedirect().catch(() => msg('Could not start Google sign-in. Check the connection.'));
+    });
+    swap.addEventListener('click', () => { useRedirect = !useRedirect; paint(); });
+
+    /* The sync code stays, folded away, for when Google is blocked or not yet
+       configured at all. */
     mountGoogleButton(
-      document.getElementById('gbtn'),
+      gb,
       () => { msg('Signed in - stars will now follow you.', true); renderParent(); },
-      e => msg(e.message === 'email-not-allowed' ? 'That Google account is not enabled on this site.'
-             : e.message === 'aud-mismatch' ? 'That client ID does not match the one already in use.'
-             : 'Google sign-in did not finish. You can use the sync code instead.')
+      e => msg(googleErrorText(e.message))
     ).then(okGoogle => {
       /* When Google IS configured the screen is one button and nothing else —
          which is what Reza asked for: "i want an option like sign in with google
@@ -284,5 +407,16 @@ function renderParent() {
 
 /* pull on load, so a device that was used elsewhere catches up before play */
 window.addEventListener('DOMContentLoaded', () => {
+  /* Back from Google? Finish the sign-in and land on the grown-ups screen.
+     This listener is registered before kids.js's, and the hash is already
+     wiped, so the router paints the picker or home first and this paints
+     over it once the worker has answered. */
+  const back = consumeGoogleRedirect();
+  if (back) {
+    back.then(r => renderParent(r.ok
+      ? { text: 'Signed in - stars will now follow you.', good: true }
+      : { text: googleErrorText(r.error) }));
+    return;
+  }
   if (session()) syncNow().then(() => { if (currentKid()) renderHome(); }).catch(() => {});
 });
