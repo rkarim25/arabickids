@@ -246,11 +246,14 @@ def wanted():
                  "Now you say it.", "Change one word.", "Well done!",
                  "Tap a word to hear it."]:
         out["en:" + norm_en(line)] = ("EN", line)
-    # Lulu's lines and the praise words
+    # Lulu's lines, the praise words, and the Path
     for extra in ["مَرْحَبًا! هَيَّا نَقْرَأ", "أَحْسَنْت", "اِسْمَعْ جَيِّدًا",
-                  "مُمْتَاز", "مَرَّة أُخْرَى", "النِّهَايَة"]:
+                  "مُمْتَاز", "مَرَّة أُخْرَى", "النِّهَايَة",
+                  "هَيَّا نُكْمِل", "كَفَى لِلْيَوْم", "نُكْمِل!", "نُكْمِل",
+                  "شَيْء آخَر", "هَيَّا نَمْشِي", "مَعَ السَّلَامَة"]:
         out[norm(extra)] = extra
     return {k: v for k, v in out.items() if (v[1] if isinstance(v, tuple) else v).strip()}
+
 
 async def render(text, path, rate, voice=VOICE, pitch="+0Hz"):
     await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).save(path)

@@ -62,16 +62,17 @@ function renderSentenceHome() {
   }));
 }
 
-/* ---------- one sentence, five steps ---------- */
 const STEPS = [
   { ic: '🔊', ar: 'اِسْتَمِعْ',        en: 'Listen' },
   { ic: '💭', ar: 'مَا مَعْنَاهَا؟',   en: 'What does it mean?' },
   { ic: '✨', ar: 'كَيْفَ تَعْمَل؟',   en: 'How it works' },
   { ic: '🎤', ar: 'قُلْهَا أَنْتَ',    en: 'Now you say it' },
+  { ic: '🧩', ar: 'اِخْتَبِرْ نَفْسَك', en: 'Challenge' },
   { ic: '🔁', ar: 'غَيِّرْ كَلِمَة',   en: 'Change one word' },
   { ic: '🗝️', ar: 'قُلْ أَيَّ شَيْء',  en: 'Say ANYTHING', frameOnly: true },
   { ic: '😂', ar: 'النُّكْتَة',        en: 'The joke', jokeOnly: true },
 ];
+
 /* the last step only exists where the lesson has a frame to drill */
 const stepsFor = L => STEPS.filter(s => (!s.frameOnly || L.frame) && (!s.jokeOnly || L.joke));
 
@@ -202,6 +203,65 @@ function renderStep() {
     return;
   }
 
+  /* ---- 5. CHALLENGE — Cloze retrieval for sentence recall ---- */
+  if ((stepsFor(L)[sentStep] || {}).en === 'Challenge') {
+    const words = L.ar.split(/\s+/).filter(Boolean);
+    const targetIdx = words.length - 1;
+    const correctWord = words[targetIdx];
+    const maskedWords = words.map((w, i) => i === targetIdx ? '____' : w).join(' ');
+
+    const otherWords = sentSet.lessons
+      .flatMap(l => l.ar.split(/\s+/))
+      .filter(w => w && w !== correctWord);
+    const pool = [...new Set(otherWords)].filter(w => w !== correctWord);
+    const d1 = pool[0] || 'مَاء';
+    const d2 = pool[1] || 'لُولُو';
+    const opts = [correctWord, d1, d2].sort(() => Math.random() - 0.5);
+    let attempted = false;
+
+    body.innerHTML = `<div class="sb">
+      <p class="sb-lead">مَا هِيَ الْكَلِمَةُ النَّاقِصَة؟
+        <span class="hint-en">Which word is missing? Tap to choose.</span></p>
+      <div class="cloze-box">
+        <p class="cloze-line">${maskedWords}</p>
+        <button class="sb-big" id="clozeHear">🔊<small>Hear the full sentence</small></button>
+        <div class="cloze-opts">
+          ${opts.map(opt => `<button class="cloze-opt" data-word="${opt}">${opt}</button>`).join('')}
+        </div>
+      </div>
+    </div>`;
+
+    document.getElementById('clozeHear').addEventListener('click', () => say(L.ar));
+    body.querySelectorAll('.cloze-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selected = btn.dataset.word;
+        const isOk = (selected === correctWord);
+        if (!attempted) {
+          attempted = true;
+          if (typeof logRecall === 'function') {
+            logRecall('lesson:' + sentSet.id + '/' + sentIdx, isOk);
+          }
+        }
+        if (isOk) {
+          btn.classList.add('correct');
+          chimeGood();
+          addStar('sent:' + sentSet.id);
+          say(correctWord);
+          setTimeout(() => say('مُمْتَاز'), 800);
+          document.querySelector('.star-count b').textContent = totalStars();
+        } else {
+          btn.classList.add('wrong');
+          chimeBad();
+          say(selected);
+          setTimeout(() => { btn.classList.remove('wrong'); say(L.ar); }, 1000);
+        }
+      });
+    });
+    setTimeout(() => say(L.ar), 300);
+    return;
+  }
+
+
   /* ---- 6. SAY ANYTHING — the frame, and permission to use an English word ----
      Reza's idea, and the most useful thing here: "if you dont know the word for
      pen just say urid pen… this should remove some barriers to speaking more."
@@ -293,7 +353,11 @@ function renderStep() {
 function finishSet() {
   addStar('sent:' + sentSet.id, 2);
   chimeGood();
+  if (typeof pathStopDone === 'function' && pathStopDone('sentences:' + sentSet.id)) {
+    return;
+  }
   const host = document.getElementById('sentences');
+
   host.innerHTML = `<div class="set-done">
     <div class="sd-star">🌟</div>
     <h2>مُمْتَاز!</h2>

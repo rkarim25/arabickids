@@ -47,14 +47,15 @@ Six dedicated doors with clean URL hash routing (`#home`, `#shelf`, `#sounds`, `
 
 | Door | What it is | Files |
 |---|---|---|
+| 👣 **هَيَّا نَمْشِي** | **The Path (Phase 1)**: Daily 5-stop guided adventure, 5-min timer, 3-button choice cards | `path.js`, `path-ui.js`, `data/path.json` |
 | 🔊 **الأَصْوَات** | 28 letters, listen-and-find, harakat — **and القَاعِدَة**, the 9-step reading ladder | `letters.js`, `kids.js`, `qaida-ui.js`, `data/qaida.json` |
-| 📖 **الكُتُب** | two shelves: **with pictures (8 books)** and **بِلَا صُوَر (23 stories)** | `app.js`, `book-*.js`, `books-more.js`, `stories-text.js`, `text-story-ui.js` |
+| 📖 **الكُتُب** | two shelves: **with pictures (14 books)** and **بِلَا صُوَر (23 stories)** | `app.js`, `book-*.js`, `books-more.js`, `stories-text.js`, `text-story-ui.js` |
 | 🗂️ **المُفْرَدَات** | **Vocabulary & Spaced Repetition (SRS)**: 43 core words, Leitner 5-box daily queues, 3D flip cards | `vocab.js`, `vocab-ui.js` |
-| 💬 **جُمَل** | sentence lessons, picture-free, frames + jokes | `sentences.js`, `sentence-ui.js` |
+| 💬 **جُمَل** | sentence lessons, picture-free, frames + jokes + **cloze test** | `sentences.js`, `sentence-ui.js` |
 | 📿 **سُوَر** | Al-Fatiha + 10 shortest, **real reciter** | `surah-ui.js`, `surah-notes.js`, `surah-words.js`, `data/surahs.json` |
 | 🖨 **اِطْبَعْ** | cut-out cards, mini books, poster | `print.js`, `print.css` |
 
-Grown-ups screen (`sync.js` → `renderParent`): sign-in, 📊 **diagnostics per child** (`diagnostics.js`, from tested data only), 🛠 **built / next / waiting** (`build-status.js` — update it in the same commit as the work), the 🎙 booth.
+Grown-ups screen (`sync.js` → `renderParent`): sign-in, 📊 **diagnostics per child v2** (`diagnostics.js`, tested accuracy matrix, weak-3 prioritization list, 14-day activity streaks), 🛠 **built / next / waiting** (`build-status.js` — update it in the same commit as the work), the 🎙 booth.
 
 Shared: `audio.js` (all playback), `audio-manifest.js` (instant offline map), `sync.js` (Google sign-in + star sync),
 `kit2.js` (extra figures), `book-icons.js` (picture corrections),
@@ -65,25 +66,21 @@ Shared: `audio.js` (all playback), `audio-manifest.js` (instant offline map), `s
 
 ## 3. Content inventory
 
+- **The Path (Phase 1)**: Full daily 5-stop loop (`hello` → `review` → `step` → `quran` → `bye`), 5-min cap timer (`PATH_CAP_MS`), mid-step checkpoint overlays, and 3-button child choice cards.
 - **Qaida**: 9 stages, 592 cells, 469 clips. Phonetic syllable mapping for isolated Harakat and Tanween.
-- **Picture books**: 8 books, covering bands L1–L5:
-  - L1: *Lulu is Small*, *What Do You Want?*
-  - L2: *Where is the Moon?*, *Who is in the House?*, *The Rabbit & The Monkey*
-  - L3: *Where is My Shoe?*
+- **Picture books**: 14 books total (8 original L1–L5 + **6 illustrated path stories**):
+  - L1: *Lulu is Small*, *What Do You Want?*, *Lulu is Hungry (لُولُو جَائِعَة)*, *An Elephant in the House (فِيل فِي دَار)*
+  - L2: *Where is the Moon?*, *Who is in the House?*, *The Rabbit & The Monkey*, *Where is Mama? (أَيْنَ مَامَا؟)*, *Who Said Meow? (مَنْ قَالَ مِيَاو؟)*
+  - L3: *Where is My Shoe?*, *The Sun and the Moon (الشَّمْسُ وَالْقَمَر)*, *Maryam's Day (يَوْم مَرْيَم)*
   - L4: *Where is Lulu?*
   - L5: *My Day (يَوْمِي)*
 - **Vocabulary & SRS**: 43 core vocabulary items across 5 categories with Leitner 5-box intervals (1d, 2d, 4d, 7d, 14d) and interactive 3D flip flashcards.
-- **No-picture stories**: 29 — 5 standalone, **6 path stories** (2026-09-06,
-  `PATH_STORIES`, each `art: 'pending'` until illustrated — see
-  `briefs/STORYBOOKS.md`), the 8-episode series
-  **Lulu vs the Crow** L2 to L4, the 3-episode slapstick comedy series
-  **Juha's Tales** L3 to L4, and 7 **Kalila wa Dimna** fables whose ep
-  numbers follow the LADDER (ep1 = L1 … ep7 = L4).
-  By level: L1 2, L2 4, L3 7, L4 9, L5 1.
-- **Sentences**: 11 sets, 27 lessons, 10 frames, 10 jokes/riddles.
+- **No-picture stories**: 23 standalone reading stories — the 8-episode series **Lulu vs the Crow** (L2–L4), the 3-episode slapstick comedy series **Juha's Tales** (L3–L4), and 7 **Kalila wa Dimna** fables (ep1 = L1 … ep7 = L4) plus 5 standalone stories.
+- **Sentences**: 11 sets, 27 lessons, 10 frames, 10 jokes/riddles, and cloze retrieval challenges.
 - **Surahs**: 11, 51 ayat, all with Alafasy recitation; **all 51** with bespoke child notes and child meanings.
 - **Videos**: 8 curated videos across Letters, Harakat, and Words.
-- **Audio**: 2,312 pre-rendered neural clips (`ar-SA-ZariyahNeural` for Arabic, `en-GB-MaisieNeural` for English) + 267 real recitation files. `data/audio-texts.json` and `audio-manifest.js` kept strictly synchronized.
+- **Audio**: 2,319 pre-rendered neural clips (`ar-SA-ZariyahNeural` for Arabic, `en-GB-MaisieNeural` for English) + 267 real recitation files.
+- **Diagnostics v2**: Live first-try accuracy tracking across games, Qaida, sentences, surahs, and vocab reviews; sentence mastery matrix, weak-word target list, and 14-day activity streaks.
 
 ---
 

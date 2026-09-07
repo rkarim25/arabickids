@@ -499,7 +499,7 @@ const PATH_STORIES = [
   {
     id: 'lulu-jaia',
     level: 1,
-    art: 'pending',
+    art: { dir: 'art/lulu-jaia', pages: 18 },
     title: 'لُولُو جَائِعَة',
     titleEn: 'Lulu is hungry',
     blurb: 'Lulu wants milk, then water, then juice, then Baba.',
@@ -527,7 +527,7 @@ const PATH_STORIES = [
   {
     id: 'feel-dar',
     level: 1,
-    art: 'pending',
+    art: { dir: 'art/feel-dar', pages: 17 },
     title: 'فِيل فِي دَار',
     titleEn: 'An elephant in a house',
     blurb: 'A big elephant wants a lot. Lulu wants an elephant.',
@@ -554,7 +554,7 @@ const PATH_STORIES = [
   {
     id: 'ayna-mama',
     level: 2,
-    art: 'pending',
+    art: { dir: 'art/ayna-mama', pages: 18 },
     title: 'أَيْنَ مَامَا؟',
     titleEn: 'Where is Mama?',
     blurb: 'Maryam looks in every room. Mama is somewhere silly.',
@@ -582,7 +582,7 @@ const PATH_STORIES = [
   {
     id: 'man-qala',
     level: 3,
-    art: 'pending',
+    art: { dir: 'art/man-qala', pages: 19 },
     title: 'مَنْ قَالَ مِيَاو؟',
     titleEn: 'Who said miaow?',
     blurb: 'A miaow in the house, and nobody did it. Somebody did it.',
@@ -611,7 +611,7 @@ const PATH_STORIES = [
   {
     id: 'shams-qamar',
     level: 4,
-    art: 'pending',
+    art: { dir: 'art/shams-qamar', pages: 14 },
     title: 'الشَّمْسُ وَالْقَمَر',
     titleEn: 'The sun and the moon',
     blurb: 'A day at the market under the sun, and a night under the moon.',
@@ -635,7 +635,7 @@ const PATH_STORIES = [
   {
     id: 'yawm-maryam',
     level: 5,
-    art: 'pending',
+    art: { dir: 'art/yawm-maryam', pages: 14 },
     title: 'يَوْم مَرْيَم',
     titleEn: 'A day with Maryam',
     blurb: 'Morning, breakfast, play and bed, and the words that go with each.',
@@ -657,6 +657,7 @@ const PATH_STORIES = [
     ],
   },
 ];
+
 TEXT_STORIES.push(...PATH_STORIES);
 
 /* what a series is called, for the shelf heading */

@@ -80,7 +80,7 @@ function luluSays(i) {
    Dedicated full-screen pages with clean back-navigation and URL hash routing.
    ========================================================================= */
 
-const VIEWS = ['home', 'shelf', 'sounds', 'vocab', 'sentences', 'surahs', 'qaida', 'textStory', 'printView', 'reader'];
+const VIEWS = ['home', 'shelf', 'sounds', 'vocab', 'sentences', 'surahs', 'qaida', 'textStory', 'printView', 'pathView', 'reader'];
 function show(id) {
   VIEWS.forEach(v => {
     const el = document.getElementById(v);
@@ -99,6 +99,8 @@ function handleHashChange() {
   if (!hash || hash === 'home') {
     renderHome();
     show('home');
+  } else if (hash === 'walk' || hash === 'path') {
+    if (typeof startWalk === 'function') startWalk();
   } else if (hash === 'shelf' || hash === 'books') {
     show('shelf');
   } else if (hash === 'sounds') {
@@ -146,6 +148,14 @@ function renderHome() {
       <div class="lulu-bubble" id="luluBubble"><b>مَرْحَبًا! هَيَّا نَقْرَأ</b><small>Hello! Let's read</small></div>
     </div>
 
+    <div class="path-hero-wrap" style="width:100%;max-width:540px;margin:0 auto 20px">
+      <button class="big-btn" id="startPathHeroBtn" style="width:100%;font-size:22px;padding:16px 24px;background:var(--teal);box-shadow:0 6px 0 #1F7A6F;border-radius:24px;display:flex;align-items:center;justify-content:center;gap:12px">
+        <span style="font-size:28px">🚶‍♀️</span>
+        <span><b>هَيَّا نَمْشِي</b> · Start Today's Walk</span>
+        <span style="font-size:18px;opacity:.9">🔁📖📿</span>
+      </button>
+    </div>
+
     <main class="doors">
       <button class="door" id="doorSounds" style="--d:#F09CB1">
         <span class="door-ic">🔊</span>
@@ -179,6 +189,14 @@ function renderHome() {
       </button>
     </main>
     <footer class="site-foot">اِقْرَأْ مَعَ طِفْلِكَ كُلَّ يَوْم · Read with your child every day</footer>`;
+
+  const heroBtn = document.getElementById('startPathHeroBtn');
+  if (heroBtn) {
+    heroBtn.addEventListener('click', () => {
+      if (typeof startWalk === 'function') startWalk();
+    });
+  }
+
 
   document.getElementById('whoBtn').addEventListener('click', renderPicker);
   document.getElementById('doorSounds').addEventListener('click', () => { location.hash = '#sounds'; openSounds(); });
@@ -373,8 +391,16 @@ function nextQuiz() {
   document.getElementById('qSay').addEventListener('click', speak);
   setTimeout(speak, 400);
 
+  let quizFirstTry = true;
   body.querySelectorAll('.quiz-card').forEach(c => c.addEventListener('click', () => {
-    if (c.dataset.l === answer.l) {
+    const isOk = (c.dataset.l === answer.l);
+    if (quizFirstTry) {
+      quizFirstTry = false;
+      if (typeof logRecall === 'function') {
+        logRecall('sound:' + answer.l, isOk);
+      }
+    }
+    if (isOk) {
       c.classList.add('correct');
       chimeGood();
       quiz.streak++;

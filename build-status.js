@@ -15,31 +15,27 @@
 'use strict';
 
 const BUILD_STATUS = {
-  updated: '2026-09-06',
+  updated: '2026-09-07',
   built: [
     'Six doors: sounds + Qaida, books (8 with pictures, 29 without), vocab SRS, sentences, surahs, print',
     'All 51 ayat with real recitation, word by word, child notes',
     'Google sign-in: pop-up and redirect (redirect needs the URI registered — see next)',
-    'The Path designed: PATH.md, data/path.json (7 stations), test-path.js',
-    'Twenty core sentences chosen, each heard in a story before it is drilled',
-    'Six new picture-free stories carrying those sentences, with audio',
-    'This screen: diagnostics per child (v1, from vocab, surah and star data) and this list',
+    'The Path Phase 1 engine: path.js, path-ui.js, 5-min cap, 3-button choice, checkpoints',
+    'Illustrations for the six path stories in watercolor style',
+    'Recall log: sentence cloze challenges, book game accuracy, sound quiz logging',
+    'Diagnostics v2: 20 core sentences accuracy, weak three list, 14-day activity dots',
   ],
   next: [
     'Reza: register https://rkarim25.github.io/arabickids/ as a redirect URI in Google Cloud (hikayat-507218)',
-    'Path phase 1: engine, keep-going / again / finish, the checkpoint every six story lines, the 5-minute cap',
-    'Recall at every stop: cloze after a lesson, two questions at a story checkpoint, and the recall log (PATH.md §2b)',
-    'Picture-book games and listen-and-find: record right/wrong so they count',
-    'Diagnostics v2: per-sentence accuracy for the twenty sentences, weak three, last 14 days',
     'Path phase 2: home becomes one button (after a child has walked phase 1)',
     'Path phase 3: sentence review cards + today\'s sentences on this screen',
     'Path phase 4: path state and recall log sync; verify on two devices',
   ],
   waiting: [
-    { what: 'Pictures for the six new stories', who: 'Antigravity (or any image AI)', brief: 'briefs/STORYBOOKS.md' },
     { what: 'Videos Ep 2–7, one per station', who: 'Google Flow / video AI', brief: 'briefs/VIDEOS.md (paste-ready prompts)' },
     { what: 'Parent letter recordings', who: 'Reza, in the 🎙 booth below', brief: 'record.js' },
   ],
 };
+
 
 if (typeof module !== 'undefined' && module.exports) module.exports = { BUILD_STATUS };

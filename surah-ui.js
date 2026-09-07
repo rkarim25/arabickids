@@ -330,7 +330,7 @@ function renderQStep() {
     if (!picks.includes(c)) picks.push(c);
   }
   const opts = [a, ...picks].sort((x, y) => (x.ref + seed).localeCompare(y.ref + seed));
-  checkState = { answered: false };
+  checkState = { answered: false, firstTry: true };
 
   body.innerHTML = `<div class="sb">
     <p class="sb-lead">مَاذَا تَعْنِي هَذِهِ الْآيَة؟
@@ -349,12 +349,22 @@ function renderQStep() {
     const chosen = opts[+b.dataset.i];
     sayEn(kidEn(chosen));
     if (checkState.answered) return;
-    if (chosen.ref === a.ref) {
+    const isOk = (chosen.ref === a.ref);
+    if (checkState.firstTry) {
+      checkState.firstTry = false;
+      if (typeof logRecall === 'function') {
+        logRecall('q:' + a.ref, isOk);
+      }
+    }
+    if (isOk) {
       checkState.answered = true;
       b.classList.add('correct');
       chimeGood();
       addStar(UKEY(a));
       addStar('surah:' + surah.id);
+      if (typeof pathStopDone === 'function' && pathStopDone('quran:' + a.ref)) {
+        return;
+      }
       setTimeout(() => renderQStep(), 1400);
     } else {
       b.classList.add('wrong');

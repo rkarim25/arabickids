@@ -1063,9 +1063,17 @@ function renderRound() {
     `<button class="game-card" data-i="${i}">${pic(k)}</button>`).join('');
   $('#gameProg').innerHTML = BOOK.game.map((_, i) =>
     `<span class="${i < gameState.stars ? 'got' : 'not'}">★</span>`).join('');
+  gameState.firstTry = true;
   cards.querySelectorAll('.game-card').forEach(card => {
     card.addEventListener('click', () => {
-      if (+card.dataset.i === r.ans) {
+      const isRight = (+card.dataset.i === r.ans);
+      if (gameState.firstTry) {
+        gameState.firstTry = false;
+        if (typeof logRecall === 'function') {
+          logRecall('book:' + BOOK.id + '/' + gameState.round, isRight);
+        }
+      }
+      if (isRight) {
         card.classList.add('correct');
         chimeGood();
         gameState.stars++;
@@ -1095,8 +1103,12 @@ function finishGame() {
   $('#pageHost').appendChild(done);
   say('مُمْتَاز');
   chimeGood();
+  if (typeof pathStopDone === 'function' && pathStopDone('book:' + BOOK.id)) {
+    return;
+  }
   setTimeout(() => go(1), 2200);
 }
+
 
 /* ————— navigation events ————— */
 if ($('#reader')) {

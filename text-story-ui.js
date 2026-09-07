@@ -61,6 +61,11 @@ function renderTextStory() {
       <button class="round sm" id="tsMode" title="${LISTEN_LABEL[listenMode()].en}">${listenMode() === 'ar' ? '🇸🇦' : listenMode() === 'en' ? '🌍' : '🔁'}</button>
     </div>
 
+    ${s.art && s.art.dir ? `
+      <div class="ts-art-scene">
+        <img id="tsArtImg" src="${s.art.dir}/cover.jpg" alt="${s.title}" loading="lazy" onerror="this.parentElement.style.display='none'">
+      </div>` : ''}
+
     <div class="ts-page" id="tsPage">
       ${s.lines.map((l, i) => `
         <div class="ts-line" data-i="${i}">
@@ -104,6 +109,13 @@ function litLine(i) {
   document.querySelectorAll('.ts-line').forEach(el => el.classList.remove('lit'));
   const el = document.querySelector(`.ts-line[data-i="${i}"]`);
   if (el) { el.classList.add('lit'); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+  if (tsStory && tsStory.art && tsStory.art.dir) {
+    const img = document.getElementById('tsArtImg');
+    if (img) {
+      const lineImg = `${tsStory.art.dir}/${String(i + 1).padStart(2, '0')}.jpg`;
+      img.src = lineImg;
+    }
+  }
 }
 
 /* Read the whole thing: Arabic, then its meaning, then the next line — unless
@@ -117,6 +129,22 @@ function startTextAuto() {
   const step = () => {
     if (!TAUTO.on) return;
     if (tsLine >= tsStory.lines.length) { stopTextAuto(); finishTextStory(); return; }
+
+    /* Checkpoint pause every 6 lines when the Path is active */
+    if (typeof pathActive === 'function' && pathActive() && tsLine > 0 && tsLine % 6 === 0) {
+      stopTextAuto();
+      if (typeof showStoryCheckpoint === 'function') {
+        showStoryCheckpoint(
+          () => { startTextAuto(); },
+          () => { tsLine = Math.max(0, tsLine - 6); startTextAuto(); },
+          () => {
+            if (typeof pathStopDone === 'function') pathStopDone('story:' + tsStory.id);
+          }
+        );
+      }
+      return;
+    }
+
     const l = tsStory.lines[tsLine];
     litLine(tsLine);
     const meaningThenOn = () => {
@@ -138,6 +166,10 @@ function finishTextStory() {
   addStar('ts:' + tsStory.id);
   chimeGood();
   say('مُمْتَاز');
+  if (typeof pathStopDone === 'function' && pathStopDone('story:' + tsStory.id)) {
+    return;
+  }
+
   const host = document.getElementById('textStory');
   host.innerHTML = `<div class="set-done">
     <div class="sd-star">🌟</div>

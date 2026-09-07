@@ -75,8 +75,14 @@ function recordWordReview(wordId, passed) {
   card.nextReview = Date.now() + (SRS_INTERVALS[card.box] || 0);
   state[wordId] = card;
   saveSrsState(state);
+
+  if (typeof logRecall === 'function') {
+    logRecall('word:' + wordId, passed);
+  }
+
   return card;
 }
+
 
 /* ————— Session State ————— */
 let vocabSession = {
