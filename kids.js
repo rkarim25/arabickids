@@ -103,6 +103,7 @@ function handleHashChange() {
     if (typeof startWalk === 'function') startWalk();
   } else if (hash === 'shelf' || hash === 'books') {
     show('shelf');
+    if (typeof renderShelf === 'function') renderShelf();
   } else if (hash === 'sounds') {
     if (typeof openSounds === 'function') openSounds();
   } else if (hash === 'vocab') {

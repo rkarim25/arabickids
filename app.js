@@ -806,11 +806,19 @@ const $ = sel => document.querySelector(sel);
 
 let shelfLevel = 1;
 
-/* Two kinds of book on the same ladder. Reza, 2026-08-31: "expand with stories
-   which are non picture as well in each of the reading levels." They share the
-   colour bands because they are the same reading skill — the difference is only
-   whether an illustration is there to help. */
-let shelfKind = 'pic';        // 'pic' | 'text'
+const PATH_STORY_IDS = ['lulu-jaia', 'feel-dar', 'ayna-mama', 'man-qala', 'shams-qamar', 'yawm-maryam'];
+
+function getStoryCover(s) {
+  if (!s) return 'art/bayt1-cover.jpg';
+  if (s.art) {
+    if (s.art.file) return `${s.art.dir}/${s.art.file}`;
+    if (s.art.dir) return `${s.art.dir}/cover.jpg`;
+  }
+  if (s.series === 'lulu-ghurab') return 'art/lulu-ghurab.jpg';
+  if (s.series === 'juha') return 'art/juha.jpg';
+  if (s.series === 'kalila') return 'art/kalila.jpg';
+  return 'art/bayt1-cover.jpg';
+}
 
 function renderShelf() {
   const lv = LEVELS[shelfLevel - 1];
@@ -824,7 +832,6 @@ function renderShelf() {
   $('#levels').querySelectorAll('.level-pill').forEach(p =>
     p.addEventListener('click', () => { shelfLevel = +p.dataset.n; renderShelf(); }));
 
-  const books = BOOKS.filter(b => b.level === shelfLevel);
   $('#levelInfo').innerHTML = `
     <div class="level-info" style="--band:${lv.color}">
       <div class="li-head">
@@ -836,78 +843,98 @@ function renderShelf() {
       <div class="skills">${lv.skills.map(s => `<span class="skill-chip">${s}</span>`).join('')}</div>
     </div>`;
 
-  /* the picture / no-picture switch */
   const kindRow = document.getElementById('shelfKind');
-  if (kindRow) {
-    kindRow.innerHTML = `
-      <button class="mode ${shelfKind === 'pic' ? 'on' : ''}" data-k="pic">🖼️ مَعَ صُوَر<small>With pictures</small></button>
-      <button class="mode ${shelfKind === 'text' ? 'on' : ''}" data-k="text">📄 بِلَا صُوَر<small>No pictures — just reading</small></button>`;
-    kindRow.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => {
-      shelfKind = b.dataset.k; renderShelf();
-    }));
-  }
+  if (kindRow) kindRow.style.display = 'none';
 
-  if (shelfKind === 'text') return renderTextShelf(lv);
+  const books = BOOKS.filter(b => b.level === shelfLevel);
+  const allStories = (typeof TEXT_STORIES !== 'undefined' ? TEXT_STORIES : [])
+    .filter(s => s.level === shelfLevel);
 
-  $('#bookGrid').innerHTML = books.length ? books.map((b, i) => `
-    <button class="book-card" data-i="${BOOKS.indexOf(b)}">
+  /* Thoughtful ordering:
+     1. Interactive Books (scaffolded interactive readers with practice words and matching games)
+     2. Path Stories (companion stories reinforcing station sentences with scene art)
+     3. Standalone Stories (everyday home & family reading)
+     4. Series Episodes & Fables (Lulu vs Crow, Juha, Kalila wa Dimna) */
+  const pathStories = allStories.filter(s => PATH_STORY_IDS.includes(s.id));
+  const soloStories = allStories.filter(s => !s.series && !PATH_STORY_IDS.includes(s.id));
+  const seriesStories = allStories.filter(s => !!s.series)
+    .sort((a, b) => (a.series === b.series ? (a.ep || 0) - (b.ep || 0) : a.series.localeCompare(b.series)));
+
+  const renderBookCard = b => `
+    <button class="book-card" data-type="book" data-idx="${BOOKS.indexOf(b)}">
       <span class="spine" style="background:${lv.color}"></span>
       <div class="thumb">${svgWrap(b.pages[0].svg())}</div>
       <div class="meta">
         <div class="t">${b.title}</div>
         <div class="s s-en">${b.titleEn}</div>
-        <div class="s">${b.tag}</div>
-        <span class="chip" style="background:${lv.color};color:${lv.ink}">المستوى ${AR_NUM[b.level]} · ${lv.name}</span>
+        <div class="s">${b.tag || ''}</div>
+        <div class="card-badges">
+          <span class="chip format-badge" style="background:#e8f4fd;color:#1e6091">📖 كِتَاب تَفَاعُلِي</span>
+          <span class="chip" style="background:${lv.color};color:${lv.ink}">المستوى ${AR_NUM[b.level]}</span>
+        </div>
       </div>
-    </button>`).join('')
-    : `<div class="coming-soon">📚 كُتُب هَذَا الْمُسْتَوَى قَرِيبًا!<small>Books for this level are coming soon — finish the earlier shelves first!</small></div>`;
-  $('#bookGrid').querySelectorAll('.book-card').forEach(card =>
-    card.addEventListener('click', () => openReader(BOOKS[+card.dataset.i])));
-}
-
-/* The no-picture shelf. Deliberately typographic: a card here shows the title,
-   what the story is about, and nothing else, because there is no cover art and
-   pretending otherwise with a big empty box would look broken. */
-function renderTextShelf(lv) {
-  const all = (typeof TEXT_STORIES !== 'undefined' ? TEXT_STORIES : [])
-    .filter(s => s.level === shelfLevel);
-  const meta = (typeof SERIES_META !== 'undefined') ? SERIES_META : {};
-
-  /* Standalone stories first, then each SERIES under its own heading with the
-     episodes numbered. A series only works if it looks like one — a child has
-     to be able to see that there is an episode 4 and that they have not read
-     it yet. */
-  const solo = all.filter(s => !s.series);
-  const bySeries = new Map();
-  for (const s of all.filter(x => x.series)) {
-    if (!bySeries.has(s.series)) bySeries.set(s.series, []);
-    bySeries.get(s.series).push(s);
-  }
-
-  const card = s => `
-    <button class="text-card" data-id="${s.id}" style="border-right-color:${lv.color}">
-      ${s.ep ? `<span class="tc-ep">${s.ep}</span>` : ''}
-      <div class="tc-t">${s.title}</div>
-      <div class="tc-en">${s.titleEn}</div>
-      <div class="tc-blurb">${s.blurb}</div>
-      <div class="tc-meta">${s.lines.length} سُطُور · no pictures</div>
     </button>`;
 
-  let html = solo.map(card).join('');
-  for (const [key, eps] of bySeries) {
-    const m = meta[key] || { title: key, titleEn: '', icon: '📚' };
-    eps.sort((a, b) => (a.ep || 0) - (b.ep || 0));
-    html += `<div class="series-head">
-        <span class="sh-ic">${m.icon}</span>
-        <span class="sh-t">${m.title}</span>
-        <span class="sh-en">${m.titleEn} · ${m.label || 'a series'}</span>
-      </div>` + eps.map(card).join('');
+  const renderStoryCard = s => {
+    let fmtLabel = '🎨 قِصَّة مُصَوَّرَة';
+    let fmtBg = '#f0fdf4', fmtColor = '#15803d';
+    if (s.series === 'lulu-ghurab') {
+      fmtLabel = `🐱 لُولُو وَالْغُرَاب ${s.ep ? `· ح${s.ep}` : ''}`;
+      fmtBg = '#fff3e0'; fmtColor = '#e65100';
+    } else if (s.series === 'juha') {
+      fmtLabel = `👳‍♂️ جُحَا ${s.ep ? `· ح${s.ep}` : ''}`;
+      fmtBg = '#f3e5f5'; fmtColor = '#6a1b9a';
+    } else if (s.series === 'kalila') {
+      fmtLabel = `🦁 كَلِيلَة وَدِمْنَة ${s.ep ? `· ح${s.ep}` : ''}`;
+      fmtBg = '#e8f5e9'; fmtColor = '#2e7d32';
+    } else if (PATH_STORY_IDS.includes(s.id)) {
+      fmtLabel = '⭐ قِصَّة الْمَسَار';
+      fmtBg = '#fce4ec'; fmtColor = '#c2185b';
+    }
+
+    return `
+    <button class="book-card" data-type="story" data-id="${s.id}">
+      <span class="spine" style="background:${lv.color}"></span>
+      <div class="thumb"><img src="${getStoryCover(s)}" alt="${s.title}" loading="lazy"></div>
+      <div class="meta">
+        <div class="t">${s.title}</div>
+        <div class="s s-en">${s.titleEn}</div>
+        <div class="s">${s.blurb || ''}</div>
+        <div class="card-badges">
+          <span class="chip format-badge" style="background:${fmtBg};color:${fmtColor}">${fmtLabel}</span>
+          <span class="chip" style="background:${lv.color};color:${lv.ink}">المستوى ${AR_NUM[s.level]}</span>
+        </div>
+      </div>
+    </button>`;
+  };
+
+  const totalItems = books.length + pathStories.length + soloStories.length + seriesStories.length;
+
+  if (!totalItems) {
+    $('#bookGrid').innerHTML = `<div class="coming-soon">📚 كُتُب هَذَا الْمُسْتَوَى قَرِيبًا!<small>Books for this level are coming soon — finish the earlier shelves first!</small></div>`;
+    return;
   }
 
-  $('#bookGrid').innerHTML = html ||
-    `<div class="coming-soon">📄 قِصَص بِلَا صُوَر قَرِيبًا!<small>No-picture stories for this level are coming soon.</small></div>`;
-  $('#bookGrid').querySelectorAll('.text-card').forEach(c =>
-    c.addEventListener('click', () => openTextStory(c.dataset.id)));
+  let html = '';
+  html += books.map(renderBookCard).join('');
+  html += pathStories.map(renderStoryCard).join('');
+  html += soloStories.map(renderStoryCard).join('');
+  html += seriesStories.map(renderStoryCard).join('');
+
+  $('#bookGrid').innerHTML = html;
+  $('#bookGrid').querySelectorAll('.book-card').forEach(card => {
+    card.addEventListener('click', () => {
+      if (card.dataset.type === 'book') {
+        openReader(BOOKS[+card.dataset.idx]);
+      } else {
+        openTextStory(card.dataset.id);
+      }
+    });
+  });
+}
+
+function renderTextShelf(lv) {
+  return renderShelf();
 }
 
 /* ================= 6. Reader ================= */

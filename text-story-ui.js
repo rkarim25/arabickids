@@ -61,10 +61,9 @@ function renderTextStory() {
       <button class="round sm" id="tsMode" title="${LISTEN_LABEL[listenMode()].en}">${listenMode() === 'ar' ? '🇸🇦' : listenMode() === 'en' ? '🌍' : '🔁'}</button>
     </div>
 
-    ${s.art && s.art.dir ? `
-      <div class="ts-art-scene">
-        <img id="tsArtImg" src="${s.art.dir}/cover.jpg" alt="${s.title}" loading="lazy" onerror="this.parentElement.style.display='none'">
-      </div>` : ''}
+    <div class="ts-art-scene">
+      <img id="tsArtImg" src="${typeof getStoryCover === 'function' ? getStoryCover(s) : (s.art && s.art.file ? `${s.art.dir}/${s.art.file}` : `${s.art ? s.art.dir : 'art'}/cover.jpg`)}" alt="${s.title}" loading="lazy" onerror="this.parentElement.style.display='none'">
+    </div>
 
     <div class="ts-page" id="tsPage">
       ${s.lines.map((l, i) => `

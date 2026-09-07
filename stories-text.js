@@ -27,6 +27,7 @@ const TEXT_STORIES = [
   {
     id: 'ts-ana',
     level: 1,
+    art: { dir: 'art', file: 'ana-adam.jpg' },
     title: 'أَنَا أَدَم',
     titleEn: 'I am Adam',
     blurb: 'A boy, his family, and one drink too many.',
@@ -47,6 +48,7 @@ const TEXT_STORIES = [
   {
     id: 'ts-yawm',
     level: 2,
+    art: { dir: 'art', file: 'bayt1-cover.jpg' },
     title: 'يَوْم فِي الْبَيْت',
     titleEn: 'A day in the house',
     blurb: 'Everybody is somewhere. Lulu is somewhere else.',
@@ -64,6 +66,7 @@ const TEXT_STORIES = [
   {
     id: 'ts-khubz',
     level: 3,
+    art: { dir: 'art', file: 'lulu-cover.jpg' },
     title: 'مَنْ أَكَلَ الْخُبْز؟',
     titleEn: 'Who ate the bread?',
     blurb: 'Nobody did it. Somebody did it.',
@@ -80,6 +83,7 @@ const TEXT_STORIES = [
   {
     id: 'ts-suq',
     level: 4,
+    art: { dir: 'art', file: 'madha1-cover.jpg' },
     title: 'يَوْم فِي السُّوق',
     titleEn: 'A day at the market',
     blurb: 'Mama said no to the chocolate. Mama bought the chocolate.',
@@ -96,6 +100,7 @@ const TEXT_STORIES = [
   {
     id: 'ts-nawm',
     level: 5,
+    art: { dir: 'art', file: 'qamar1-cover.jpg' },
     title: 'قَبْلَ النَّوْم',
     titleEn: 'Before sleep',
     blurb: 'The words they already know, said at the right moment.',
@@ -660,6 +665,23 @@ const PATH_STORIES = [
 
 TEXT_STORIES.push(...PATH_STORIES);
 
+/* Assign rich watercolor covers to all series and fables */
+for (const s of SERIES_LULU) if (!s.art) s.art = { dir: 'art', file: 'lulu-ghurab.jpg' };
+for (const s of JUHA) if (!s.art) s.art = { dir: 'art', file: 'juha.jpg' };
+for (const s of KALILA) if (!s.art) s.art = { dir: 'art', file: 'kalila.jpg' };
+
+function getStoryCover(s) {
+  if (!s) return 'art/bayt1-cover.jpg';
+  if (s.art) {
+    if (s.art.file) return `${s.art.dir}/${s.art.file}`;
+    if (s.art.dir) return `${s.art.dir}/cover.jpg`;
+  }
+  if (s.series === 'lulu-ghurab') return 'art/lulu-ghurab.jpg';
+  if (s.series === 'juha') return 'art/juha.jpg';
+  if (s.series === 'kalila') return 'art/kalila.jpg';
+  return 'art/bayt1-cover.jpg';
+}
+
 /* what a series is called, for the shelf heading */
 const SERIES_META = {
   'lulu-ghurab': { title: 'لُولُو وَالْغُرَاب', titleEn: 'Lulu and the Crow', icon: '🐱🐦‍⬛' },
@@ -670,5 +692,9 @@ const SERIES_META = {
   'kalila': { title: 'كَلِيلَة وَدِمْنَة', titleEn: 'Kalila wa Dimna', icon: '🦁🐇', label: 'old fables, retold' },
 };
 
+if (typeof renderShelf === 'function' && typeof document !== 'undefined'
+    && document.querySelector && document.querySelector('#bookGrid')) renderShelf();
+
 if (typeof module !== 'undefined' && module.exports)
-  module.exports = { TEXT_STORIES, SERIES_LULU, JUHA, KALILA, PATH_STORIES, SERIES_META };
+  module.exports = { TEXT_STORIES, SERIES_LULU, JUHA, KALILA, PATH_STORIES, SERIES_META, getStoryCover };
+
