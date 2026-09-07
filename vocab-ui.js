@@ -99,21 +99,53 @@ const VOCAB_FALLBACK_EMOJIS = {
   // Animals
   arnab: '🐰', qird: '🐵', cat2: '🐱', feel: '🐘', faar: '🐭',
   samak: '🐟', dajaj: '🍗', tayr: '🐦', ghurab: '🦅', hoot: '🐋',
-  difda: '🐸', dhib: '🐺',
+  difda: '🐸', dhib: '🐺', asad: '🦁', sulahfah: '🐢', jardh: '🐀',
   // Home & Objects
   dar: '🏠', bab: '🚪', kitab: '📖', kitchen: '🍳', room: '🛋️',
   bed: '🛏️', chair: '🪑', box: '📦', hidhaa: '👟', masjid: '🕌',
-  fursha: '🪥', walad: '👦', bint: '👧',
+  fursha: '🪥', walad: '👦', bint: '👧', maidah: '🪑', kisaa: '🧥',
+  yad: '✋', ayn: '👁️',
   // Food & Drink
   mawz: '🍌', jazar: '🥕', khubz: '🍞', aseer: '🧃', maa: '💧',
   zaytoon: '🫒', thamar: '🍇', futur: '🥞', taam: '🍲',
+  laban: '🥛', kaka: '🎂', teen: '🫐', burteqaal: '🍊', huboob: '🌾',
   // Nature & Sky
   qamar: '🌙', shams: '☀️', najm: '⭐', sahab: '☁️', layl: '🌃',
   samaa: '🌌', jabal: '⛰️', ard: '🌍', reeh: '💨',
+  shajarah: '🌳', birkah: '🌊',
   // Core & Adjectives
   kabir: '🐘', saghir: '🐥', jameel: '🌺', ladheedh: '😋', nazheef: '✨',
   saree: '⚡', hadha: '👉', hadhihi: '👈', ayna: '🔍', madha: '❓',
-  ureedu: '🙋', fee: '📥', fawqa: '⬆️', tahta: '⬇️'
+  ureedu: '🙋', fee: '📥', fawqa: '⬆️', tahta: '⬇️', dhahab: '🪙'
+};
+
+const VOCAB_PALETTES = {
+  animals: { bg: 'linear-gradient(145deg, #EAF4FB 0%, #D8EAF7 100%)', border: '#B8D9F2', ink: '#1F5A82' },
+  home:    { bg: 'linear-gradient(145deg, #FFF6EA 0%, #FDE9D2 100%)', border: '#F6D5AC', ink: '#8A531B' },
+  food:    { bg: 'linear-gradient(145deg, #EFF9F2 0%, #DCF2E3 100%)', border: '#BAE4C6', ink: '#206E3F' },
+  nature:  { bg: 'linear-gradient(145deg, #F3F1FA 0%, #E2DCF4 100%)', border: '#C8BEE8', ink: '#554284' },
+  core:    { bg: 'linear-gradient(145deg, #FFF0F4 0%, #FDE0E7 100%)', border: '#F7BFCE', ink: '#8C2E4B' },
+};
+
+const VOCAB_ART_MAP = {
+  asad: 'art/icon-asad.jpg',
+  shajarah: 'art/icon-shajarah.jpg',
+  kaka: 'art/icon-kaka.jpg',
+  qitta: 'art/icon-lulu.jpg',
+  walad: 'art/icon-adam.jpg',
+  hadha: 'art/icon-hadha.jpg',
+  hadhihi: 'art/icon-hadhihi.jpg',
+  jameel: 'art/icon-jameela.jpg',
+  kabir: 'art/icon-kabir.jpg',
+  saghir: 'art/icon-saghira.jpg',
+  arnab: 'art/arnab1-cover.jpg',
+  bayt: 'art/bayt1-cover.jpg',
+  hidaa: 'art/hidhaa1-cover.jpg',
+  qamar: 'art/qamar1-cover.jpg',
+  khubz: 'art/lulu-cover.jpg',
+  aseer: 'art/madha1-cover.jpg',
+  taam: 'art/madha1-1.jpg',
+  layl: 'art/qamar1-end.jpg',
 };
 
 /* ————— UI Helper ————— */
@@ -130,6 +162,26 @@ function getVocabIcon(iconKey) {
     return `<span class="vcard-em">${VOCAB_FALLBACK_EMOJIS[iconKey]}</span>`;
   }
   return '📖';
+}
+
+function renderVocabPicture(w, isLarge = false) {
+  const cat = w.cat || 'core';
+  const pal = VOCAB_PALETTES[cat] || VOCAB_PALETTES.core;
+  const artFile = VOCAB_ART_MAP[w.id];
+
+  let inner = '';
+  if (artFile) {
+    inner = `<img src="${artFile}" class="vcard-art-img ${isLarge ? 'large' : ''}" alt="${w.en}" loading="lazy">`;
+  } else {
+    const iconContent = getVocabIcon(w.icon);
+    inner = `<div class="vcard-art-inner ${isLarge ? 'large' : ''}">${iconContent}</div>`;
+  }
+
+  return `
+    <div class="vcard-pastel-art ${isLarge ? 'is-large' : ''}" style="background:${pal.bg};border-color:${pal.border}">
+      <div class="vcard-aura"></div>
+      ${inner}
+    </div>`;
 }
 
 /* ————— View Controller ————— */
@@ -240,7 +292,7 @@ function renderVocabHub() {
         return `
           <div class="vocab-card-tile ${isDue ? 'is-due' : ''}" data-id="${w.id}">
             <div class="vcard-badge" style="background:${b.color}">${b.emoji} ${b.label}</div>
-            <div class="vcard-art">${getVocabIcon(w.icon)}</div>
+            <div class="vcard-art">${renderVocabPicture(w, false)}</div>
             <div class="vcard-ar">${w.ar}</div>
             <div class="vcard-en">${w.en}</div>
             <button class="vcard-audio-btn" data-say="${w.ar}" title="Listen">🔊</button>
@@ -367,7 +419,7 @@ function renderFlashcardSession() {
             <span class="srs-badge" style="background:${box.color}">${box.emoji} ${box.label}</span>
             <button class="sound-icon-btn" id="frontSoundBtn" title="Hear sound">🔊</button>
           </div>
-          <div class="card-art-large">${getVocabIcon(word.icon)}</div>
+          <div class="card-art-large">${renderVocabPicture(word, true)}</div>
           <div class="card-hint">اِنْقُر لِقَلْبِ الْبِطَاقَة · Tap card to flip ↺</div>
         </div>
 
