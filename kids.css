@@ -61,16 +61,30 @@
 }
 .who-btn:active { transform: scale(.94); }
 .star-count {
-  background: #fff; border-radius: 999px; padding: 8px 14px; font-weight: 800;
-  color: var(--coral); box-shadow: 0 2px 0 #0001; font-size: 16px; flex: none;
+  background: linear-gradient(135deg, #FFF9EB 0%, #FFF3D1 100%);
+  border: 2px solid #F6D365; border-radius: 999px; padding: 8px 16px; font-weight: 800;
+  color: #B26A00; box-shadow: 0 3px 10px rgba(246, 211, 101, 0.35); font-size: 16px;
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
 }
 
-.lulu-row { display: flex; align-items: center; gap: 12px; margin: 14px 0 22px; }
-.lulu { width: 76px; height: 76px; flex: none; cursor: pointer; }
-.lulu svg { width: 100%; height: 100%; }
-.lulu:active { transform: scale(.92) rotate(-4deg); }
+@keyframes luluFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.lulu-row { display: flex; align-items: center; gap: 14px; margin: 16px 0 24px; }
+.lulu {
+  width: 78px; height: 78px; flex: none; cursor: pointer;
+  animation: luluFloat 3.6s ease-in-out infinite;
+  transition: transform .2s ease;
+}
+.lulu svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08)); }
+.lulu:hover { transform: scale(1.08) rotate(3deg); }
+.lulu:active { transform: scale(.92) rotate(-6deg); }
 .lulu-bubble {
-  background: #fff; border-radius: 20px; padding: 12px 18px; box-shadow: 0 3px 0 #0001; flex: 1;
+  background: #fff; border-radius: 22px; padding: 14px 20px;
+  border: 2px solid #F1E4CC; box-shadow: 0 4px 14px rgba(0,0,0,0.05), 0 3px 0 #E7D8BC;
+  flex: 1; position: relative;
 }
 .lulu-bubble b { display: block; font-size: 24px; color: var(--teal); }
 .lulu-bubble small { color: var(--muted); font-size: 14px; }
@@ -80,12 +94,26 @@
   border: none; font-family: inherit; cursor: pointer; text-align: right;
   background: var(--d); border-radius: 26px; padding: 22px 24px; color: #fff;
   display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 18px;
-  box-shadow: 0 5px 0 #0002; transition: transform .12s;
+  box-shadow: 0 5px 0 #0002; transition: transform .15s ease, box-shadow .15s ease;
 }
-.door:active { transform: translateY(3px); box-shadow: 0 2px 0 #0002; }
-.door-ic { font-size: 46px; grid-row: span 2; }
-.door-ar { font-size: 32px; font-weight: 800; text-shadow: 0 2px 3px #0002; }
-.door-en { font-size: 15px; opacity: .92; grid-column: 2; }
+.door:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.12), 0 5px 0 #0002; }
+.door:active { transform: translateY(3px) scale(0.98); box-shadow: 0 2px 0 #0002; }
+.door-ic { font-size: 46px; grid-row: span 2; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
+.door-ar { font-size: 32px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.18); }
+.door-en { font-size: 15px; opacity: .95; grid-column: 2; font-weight: 600; }
+
+#doorSounds { background: linear-gradient(135deg, #FF6B8B 0%, #FF8E53 100%); box-shadow: 0 6px 16px rgba(255, 107, 139, 0.25), 0 5px 0 #D9486A; }
+#doorBooks { background: linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%); box-shadow: 0 6px 16px rgba(91, 134, 229, 0.25), 0 5px 0 #3A62B8; }
+#doorVocab { background: linear-gradient(135deg, #A18CD1 0%, #FBC2EB 100%); box-shadow: 0 6px 16px rgba(161, 140, 209, 0.25), 0 5px 0 #856DB8; color: #3A2352; }
+#doorVocab .door-ar { text-shadow: none; color: #3A2352; }
+#doorVocab .door-en { color: #533E6E; }
+#doorSent { background: linear-gradient(135deg, #F6D365 0%, #FDA085 100%); box-shadow: 0 6px 16px rgba(253, 160, 133, 0.25), 0 5px 0 #D8826B; color: #573318; }
+#doorSent .door-ar { text-shadow: none; color: #573318; }
+#doorSent .door-en { color: #6E4424; }
+#doorQuran { background: linear-gradient(135deg, #42E695 0%, #3BB2B8 100%); box-shadow: 0 6px 16px rgba(59, 178, 184, 0.25), 0 5px 0 #288F94; }
+#doorPrint { background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%); box-shadow: 0 6px 16px rgba(255, 154, 158, 0.25), 0 5px 0 #D97579; color: #5C2738; }
+#doorPrint .door-ar { text-shadow: none; color: #5C2738; }
+#doorPrint .door-en { color: #78384D; }
 
 /* ————— sub screens ————— */
 .sub-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }

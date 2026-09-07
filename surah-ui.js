@@ -187,6 +187,16 @@ function renderAyah() {
       <div class="star-count">${p.done}/${p.total}</div>
     </header>
 
+    <div class="sent-top-nav">
+      <button class="sent-btn-mini" id="qPrevTop" ${ayahIdx === 0 ? 'disabled' : ''} title="Previous Ayah">
+        <span class="sn-ar">← السَّابِق</span>
+      </button>
+      <span class="sent-pos-pill">آية ${ayahIdx + 1} / ${surah.ayat.length}</span>
+      <button class="sent-btn-mini primary" id="qNextTop" title="Next Ayah">
+        <span class="sn-ar">${ayahIdx === surah.ayat.length - 1 ? 'السُّورَة التَّالِيَة →' : 'التَّالِي →'}</span>
+      </button>
+    </div>
+
     <div class="ayah-card">
       <p class="ayah-ar" id="ayahAr">${ayahWordsHTML(a)}</p>
       <p class="ayah-en" id="ayahEn">${kidEn(a)}</p>
@@ -209,9 +219,15 @@ function renderAyah() {
 
     <div class="step-body" id="qBody"></div>
 
-    <div class="lesson-nav">
-      <button class="round" id="qPrev" ${ayahIdx === 0 ? 'disabled' : ''} aria-label="Back">→</button>
-      <button class="round big" id="qNext" aria-label="Next">${ayahIdx === surah.ayat.length - 1 ? '🏁' : '←'}</button>
+    <div class="sent-nav-bar" style="margin-top:22px;">
+      <button class="sent-btn-nav" id="qPrev" ${ayahIdx === 0 ? 'disabled' : ''} aria-label="Previous Ayah">
+        <span class="sn-en">← Previous</span>
+        <span class="sn-ar">السَّابِق</span>
+      </button>
+      <button class="sent-btn-nav primary" id="qNext" aria-label="Next Ayah">
+        <span class="sn-ar">${ayahIdx === surah.ayat.length - 1 ? 'السُّورَة التَّالِيَة 🎉' : 'الْآيَة التَّالِيَة'}</span>
+        <span class="sn-en">${ayahIdx === surah.ayat.length - 1 ? 'Next Surah →' : 'Next Ayah →'}</span>
+      </button>
     </div>`;
 
   document.getElementById('qBack').addEventListener('click', () => { stopAuto(); renderSurahList(); });
@@ -237,13 +253,31 @@ function renderAyah() {
     host.querySelectorAll('.step').forEach(x => x.classList.toggle('on', x === b));
     renderQStep();
   }));
-  document.getElementById('qPrev').addEventListener('click', () => {
+  
+  const goAyahNext = () => {
+    if (ayahIdx < surah.ayat.length - 1) {
+      ayahIdx++; sStep = 0; renderAyah();
+    } else {
+      const sIdx = SURAHS.surahs.findIndex(s => s.id === surah.id);
+      if (sIdx >= 0 && sIdx < SURAHS.surahs.length - 1) {
+        surah = SURAHS.surahs[sIdx + 1];
+        ayahIdx = 0; sStep = 0; renderAyah();
+      } else {
+        renderSurahList();
+      }
+    }
+  };
+  const goAyahPrev = () => {
     if (ayahIdx > 0) { ayahIdx--; sStep = 0; renderAyah(); }
-  });
-  document.getElementById('qNext').addEventListener('click', () => {
-    if (ayahIdx < surah.ayat.length - 1) { ayahIdx++; sStep = 0; renderAyah(); }
-    else renderSurahList();
-  });
+  };
+
+  document.getElementById('qPrev').addEventListener('click', goAyahPrev);
+  const qPrevTop = document.getElementById('qPrevTop');
+  if (qPrevTop) qPrevTop.addEventListener('click', goAyahPrev);
+
+  document.getElementById('qNext').addEventListener('click', goAyahNext);
+  const qNextTop = document.getElementById('qNextTop');
+  if (qNextTop) qNextTop.addEventListener('click', goAyahNext);
 
   renderQStep();
   if (AUTO.on) autoPlayThis(); else setTimeout(() => playAyah(a), 400);

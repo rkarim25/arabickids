@@ -149,44 +149,47 @@ function renderHome() {
       <div class="lulu-bubble" id="luluBubble"><b>مَرْحَبًا! هَيَّا نَقْرَأ</b><small>Hello! Let's read</small></div>
     </div>
 
-    <div class="path-hero-wrap" style="width:100%;max-width:540px;margin:0 auto 20px">
-      <button class="big-btn" id="startPathHeroBtn" style="width:100%;font-size:22px;padding:16px 24px;background:var(--teal);box-shadow:0 6px 0 #1F7A6F;border-radius:24px;display:flex;align-items:center;justify-content:center;gap:12px">
-        <span style="font-size:28px">🚶‍♀️</span>
-        <span><b>هَيَّا نَمْشِي</b> · Start Today's Walk</span>
-        <span style="font-size:18px;opacity:.9">🔁📖📿</span>
+    <div class="path-hero-wrap">
+      <button class="path-hero-btn" id="startPathHeroBtn">
+        <span style="font-size:36px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2))">🚶‍♀️✨</span>
+        <span class="ph-title">
+          <b>هَيَّا نَمْشِي · Start Today's Adventure</b>
+          <small>5 quick stops: Letters, words, stories &amp; Surahs 🌟</small>
+        </span>
+        <span style="font-size:24px;background:rgba(255,255,255,0.2);border-radius:50%;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center">→</span>
       </button>
     </div>
 
     <main class="doors">
-      <button class="door" id="doorSounds" style="--d:#F09CB1">
+      <button class="door" id="doorSounds">
         <span class="door-ic">🔊</span>
         <span class="door-ar">الأَصْوَات</span>
-        <span class="door-en">Sounds &amp; the Qaida — learning to read</span>
+        <span class="door-en">Sounds &amp; the Qaida — 28 letters &amp; reading ladder</span>
       </button>
-      <button class="door" id="doorBooks" style="--d:#7FB0D6">
+      <button class="door" id="doorBooks">
         <span class="door-ic">📖</span>
         <span class="door-ar">الكُتُب</span>
-        <span class="door-en">Books — with pictures, and without</span>
+        <span class="door-en">Story Library — 47 books &amp; decodable fables</span>
       </button>
-      <button class="door" id="doorVocab" style="--d:#A98CD0">
+      <button class="door" id="doorVocab">
         <span class="door-ic">🗂️</span>
         <span class="door-ar">المُفْرَدَات</span>
-        <span class="door-en">Vocabulary — flashcards &amp; daily practice</span>
+        <span class="door-en">Vocabulary — 3D flashcards &amp; spaced repetition</span>
       </button>
-      <button class="door" id="doorSent" style="--d:#E8A33D">
+      <button class="door" id="doorSent">
         <span class="door-ic">💬</span>
         <span class="door-ar">جُمَل</span>
-        <span class="door-en">Sentences — listen, and hear how they work</span>
+        <span class="door-en">Sentences — 45 continuous audio sentence lessons</span>
       </button>
-      <button class="door" id="doorQuran" style="--d:#5B8C7B">
+      <button class="door" id="doorQuran">
         <span class="door-ic">📿</span>
         <span class="door-ar">سُوَر</span>
-        <span class="door-en">Surahs — real recitation, word by word</span>
+        <span class="door-en">Surahs — 11 Surahs with Alafasy recitation</span>
       </button>
-      <button class="door" id="doorPrint" style="--d:#7BC08F">
+      <button class="door" id="doorPrint">
         <span class="door-ic">🖨️</span>
         <span class="door-ar">اِطْبَعْ</span>
-        <span class="door-en">Print — cards and mini books to cut out</span>
+        <span class="door-en">Printables — cut-out cards, posters &amp; mini books</span>
       </button>
     </main>
     <footer class="site-foot">اِقْرَأْ مَعَ طِفْلِكَ كُلَّ يَوْم · Read with your child every day</footer>`;
@@ -198,6 +201,17 @@ function renderHome() {
     });
   }
 
+  let luluTapCount = 0;
+  const luluEl = document.querySelector('.lulu');
+  if (luluEl) {
+    luluEl.addEventListener('click', () => {
+      luluTapCount++;
+      luluSays(luluTapCount % LULU_LINES.length);
+      luluEl.style.animation = 'none';
+      void luluEl.offsetWidth;
+      luluEl.style.animation = 'floaty 2s ease-in-out infinite';
+    });
+  }
 
   document.getElementById('whoBtn').addEventListener('click', renderPicker);
   document.getElementById('doorSounds').addEventListener('click', () => { location.hash = '#sounds'; openSounds(); });
@@ -206,7 +220,6 @@ function renderHome() {
   document.getElementById('doorSent').addEventListener('click', () => { location.hash = '#sentences'; openSentences(); });
   document.getElementById('doorQuran').addEventListener('click', () => { location.hash = '#surahs'; openSurahs(); });
   document.getElementById('doorPrint').addEventListener('click', () => { location.hash = '#print'; openPrint(); });
-  document.querySelector('.lulu').addEventListener('click', () => luluSays(0));
   setTimeout(() => luluSays(0), 600);
 }
 

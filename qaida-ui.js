@@ -127,6 +127,10 @@ function renderStage() {
       `<button class="q-cell ${st.wide ? 'w' : ''}" data-k="c${i}">${c.show}</button>`).join('')}</div>`;
   }
 
+  const curIdx = QAIDA.stages.findIndex(s => s.id === st.id);
+  const hasPrev = curIdx > 0;
+  const hasNext = curIdx < QAIDA.stages.length - 1;
+
   host.innerHTML = `
     <header class="page-head">
       <button class="nav-back-btn" id="qdBack" title="Back to Stages">
@@ -140,10 +144,38 @@ function renderStage() {
       <button class="round" id="qdAuto" title="Read them all">▶️</button>
     </header>
     <p class="q-teach">${st.teaches}</p>
-    ${body}`;
+    ${body}
+    <div class="sent-nav-bar" style="margin-top:28px;">
+      <button class="sent-btn-nav" id="qdPrev" ${!hasPrev ? 'disabled' : ''} aria-label="Previous Stage">
+        <span class="sn-en">← Previous Stage</span>
+        <span class="sn-ar">${hasPrev ? QAIDA.stages[curIdx - 1].title : 'البِدَايَة'}</span>
+      </button>
+      <button class="sent-btn-nav primary" id="qdNext" aria-label="Next Stage">
+        <span class="sn-ar">${hasNext ? QAIDA.stages[curIdx + 1].title : 'القَاعِدَة 🏁'}</span>
+        <span class="sn-en">${hasNext ? 'Next Stage →' : 'Complete Ladder →'}</span>
+      </button>
+    </div>`;
 
   document.getElementById('qdBack').addEventListener('click', () => { stopQAuto(); renderStageList(); });
   document.getElementById('qdAuto').addEventListener('click', () => QAUTO.on ? stopQAuto() : startQAuto());
+
+  document.getElementById('qdPrev').addEventListener('click', () => {
+    if (hasPrev) {
+      stopQAuto();
+      qStage = QAIDA.stages[curIdx - 1];
+      renderStage();
+    }
+  });
+
+  document.getElementById('qdNext').addEventListener('click', () => {
+    stopQAuto();
+    if (hasNext) {
+      qStage = QAIDA.stages[curIdx + 1];
+      renderStage();
+    } else {
+      renderStageList();
+    }
+  });
 
   host.querySelectorAll('.q-cell').forEach(b => b.addEventListener('click', () => {
     b.classList.add('said'); setTimeout(() => b.classList.remove('said'), 700);
