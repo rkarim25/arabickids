@@ -605,6 +605,187 @@ const SENTENCE_SETS = [
       },
     ],
   },
+  {
+    id: 'where_i_am',
+    level: 1,
+    title: 'أَنَا مَعَ...',
+    titleEn: 'Who I am with',
+    lessons: [
+      {
+        ar: 'أَنَا مَعَ مَامَا.',
+        en: 'I am with Mama.',
+        why: 'Maa means with. Say ana, then maa, and then who you are with. Two small words and you are together.',
+        pic: 'mama-adam',
+        frame: {
+          pattern: 'أَنَا مَعَ ___',
+          say: 'I am with ___',
+          bridge: 'Maa means with. Say maa and whoever is right next to you. Maa Baba, maa my friend. It works every time.',
+          slots: [
+            { ar: 'أَنَا مَعَ مَامَا', en: 'I am with Mama' },
+            { ar: 'أَنَا مَعَ بَابَا', en: 'I am with Baba' },
+            { en: 'ana maa my brother', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'أَنَا مَعَ بَابَا.', en: 'I am with Baba.' },
+          { ar: 'أَنَا مَعَ لُولُو.', en: 'I am with Lulu.' },
+        ],
+      },
+      {
+        ar: 'أَنَا مَعَ أَدَم.',
+        en: 'I am with Adam.',
+        why: 'Adam is here too. Put ana maa and your friends name to say who is playing with you.',
+        pic: 'adam-lulu',
+        vary: [
+          { ar: 'أَنَا مَعَ لُولُو.', en: 'I am with Lulu.' },
+          { ar: 'بَابَا مَعَ أَدَم.', en: 'Baba is with Adam.' },
+        ],
+      },
+      {
+        ar: 'أَنَا فِي دَارِي.',
+        en: 'I am in my home.',
+        why: 'Daar is a home. Dari means my home. In Level 1 without sukoon, daari is the cozy word for home.',
+        pic: 'dar-cozy',
+        frame: {
+          pattern: 'أَنَا فِي ___',
+          say: 'I am in ___',
+          bridge: 'Fee means in. Say ana fee and where you are right now. Ana fee room, ana fee car.',
+          slots: [
+            { ar: 'أَنَا فِي دَارِي', en: 'I am in my home' },
+            { en: 'ana fee car', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'أَدَم فِي دَارِي.', en: 'Adam is in my home.' },
+          { ar: 'لُولُو فِي دَارِي.', en: 'Lulu is in my home.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'mine',
+    level: 1,
+    title: 'هَذَا لِي',
+    titleEn: 'This is mine',
+    lessons: [
+      {
+        ar: 'هَذَا لِي.',
+        en: 'This is mine.',
+        why: 'Lee means for me, or mine. Hadha lee: this is for me. Two words, and you have claimed your toy!',
+        pic: 'toy-mine',
+        frame: {
+          pattern: 'هَذَا لِي يَا ___',
+          say: 'This is mine, ___',
+          bridge: 'Hadha lee means this is mine. You can say it when holding your book or your apple.',
+          slots: [
+            { ar: 'هَذَا لِي يَا مَامَا', en: 'This is mine, Mama' },
+            { ar: 'هَذَا لِي يَا بَابَا', en: 'This is mine, Baba' },
+            { en: 'hadha lee my toy', english: true },
+          ],
+        },
+        vary: [
+          { ar: 'هَذَا لَكَ.', en: 'This is yours.' },
+          { ar: 'هَذَا لَهُ.', en: 'This is his.' },
+        ],
+      },
+      {
+        ar: 'هَذَا كِتَابِي.',
+        en: 'This is my book.',
+        why: 'Put a little ee sound on the end of kitab and it becomes my book. Kitabee: my book.',
+        pic: 'kitab-boy',
+        vary: [
+          { ar: 'هَذَا قَلَمِي.', en: 'This is my pen.' },
+          { ar: 'هَذَا وَلَدِي.', en: 'This is my boy.' },
+        ],
+      },
+      {
+        ar: 'هَذِهِ دَارِي.',
+        en: 'This is my home.',
+        why: 'Daar is feminine in Arabic. So you use hadhihi for it: hadhihi daari.',
+        pic: 'ball-girl',
+        vary: [
+          { ar: 'هَذِهِ لُولُو.', en: 'This is Lulu.' },
+          { ar: 'هَذِهِ مَامَا.', en: 'This is Mama.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'big_small',
+    level: 2,
+    title: 'كَبِير وَصَغِير',
+    titleEn: 'Big and small',
+    lessons: [
+      {
+        ar: 'الْفِيل كَبِير.',
+        en: 'The elephant is big.',
+        why: 'Kabeer means big. Notice the sukoon on al-feel: you pause on the lam. The elephant… big.',
+        pic: 'feel-kabir',
+        vary: [
+          { ar: 'الْبَيْت كَبِير.', en: 'The house is big.' },
+          { ar: 'الْبَاب كَبِير.', en: 'The door is big.' },
+        ],
+      },
+      {
+        ar: 'الْفَأْر صَغِير.',
+        en: 'The mouse is small.',
+        why: 'Sagheer means small. An elephant is kabeer, but a little mouse is sagheer.',
+        pic: 'faar-saghir',
+        vary: [
+          { ar: 'الْقِرْد صَغِير.', en: 'The monkey is small.' },
+          { ar: 'الْكِتَاب صَغِير.', en: 'The book is small.' },
+        ],
+      },
+      {
+        ar: 'الْكِتَاب كَبِير.',
+        en: 'The book is big.',
+        why: 'You can describe anything in the room. Just say the thing, and then say kabeer or sagheer.',
+        pic: 'kitab-kabir',
+        vary: [
+          { ar: 'الْكِتَاب صَغِير.', en: 'The book is small.' },
+          { ar: 'الْكِتَاب جَمِيل.', en: 'The book is beautiful.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'gratitude',
+    level: 4,
+    title: 'الْحَمْدُ لِلَّهِ',
+    titleEn: 'Thanking Allah',
+    lessons: [
+      {
+        ar: 'الْحَمْدُ لِلَّهِ.',
+        en: 'Praise be to Allah.',
+        why: 'You say this after eating, after sneezing, and whenever you are happy. It is the first word of the Quran.',
+        pic: 'alhamd-dua',
+        vary: [
+          { ar: 'الشُّكْرُ لِلَّهِ.', en: 'Thanks be to Allah.' },
+          { ar: 'الْمُلْكُ لِلَّهِ.', en: 'The kingdom belongs to Allah.' },
+        ],
+      },
+      {
+        ar: 'بِسْمِ اللَّهِ.',
+        en: 'In the name of Allah.',
+        why: 'You say Bismillah before you start anything: before eating, drinking, or opening a storybook.',
+        pic: 'bismillah-meal',
+        vary: [
+          { ar: 'بِإِذْنِ اللَّهِ.', en: 'By Allahs leave.' },
+          { ar: 'لِوَجْهِ اللَّهِ.', en: 'For the sake of Allah.' },
+        ],
+      },
+      {
+        ar: 'أَنَا أَحْمَدُ اللَّهَ.',
+        en: 'I praise Allah.',
+        why: 'Ahmadu means I praise. You can say it with your own heart every single day.',
+        pic: 'boy-dua',
+        vary: [
+          { ar: 'أَنَا أَعْبُدُ اللَّهَ.', en: 'I worship Allah.' },
+          { ar: 'أَنَا أَرْجُو اللَّهَ.', en: 'I hope in Allah.' },
+        ],
+      },
+    ],
+  },
 ];
 
 /* flat list, for the engine and the tests */

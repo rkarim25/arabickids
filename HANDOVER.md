@@ -76,10 +76,10 @@ Shared: `audio.js` (all playback), `audio-manifest.js` (instant offline map), `s
   - L5: *My Day (يَوْمِي)*
 - **Vocabulary & SRS**: 43 core vocabulary items across 5 categories with Leitner 5-box intervals (1d, 2d, 4d, 7d, 14d) and interactive 3D flip flashcards.
 - **No-picture stories**: 23 standalone reading stories — the 8-episode series **Lulu vs the Crow** (L2–L4), the 3-episode slapstick comedy series **Juha's Tales** (L3–L4), and 7 **Kalila wa Dimna** fables (ep1 = L1 … ep7 = L4) plus 5 standalone stories.
-- **Sentences**: 11 sets, 27 lessons, 10 frames, 10 jokes/riddles, and cloze retrieval challenges.
+- **Sentences & Leitner SRS**: 15 sets, 45 lessons, 12 frames, 10 jokes/riddles, cloze retrieval challenges, and dedicated Leitner 5-box daily review system with soft watercolor artwork headers on each card.
 - **Surahs**: 11, 51 ayat, all with Alafasy recitation; **all 51** with bespoke child notes and child meanings.
 - **Videos**: 8 curated videos across Letters, Harakat, and Words.
-- **Audio**: 2,319 pre-rendered neural clips (`ar-SA-ZariyahNeural` for Arabic, `en-GB-MaisieNeural` for English) + 267 real recitation files.
+- **Audio**: 2,382 pre-rendered neural clips (`ar-SA-ZariyahNeural` for Arabic, `en-GB-MaisieNeural` for English) + 267 real recitation files.
 - **Diagnostics v2**: Live first-try accuracy tracking across games, Qaida, sentences, surahs, and vocab reviews; sentence mastery matrix, weak-word target list, and 14-day activity streaks.
 
 ---

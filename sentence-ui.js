@@ -21,15 +21,141 @@
    ========================================================================= */
 'use strict';
 
+/* ————— Leitner 5-box Spaced Repetition for Sentences ————— */
+const SENT_SRS_INTERVALS = {
+  1: 0,                   // Box 1: Review today / immediate
+  2: 2 * 24 * 3600 * 1000, // Box 2: 2 days
+  3: 4 * 24 * 3600 * 1000, // Box 3: 4 days
+  4: 7 * 24 * 3600 * 1000, // Box 4: 7 days
+  5: 14 * 24 * 3600 * 1000, // Box 5: 14 days (Mastered!)
+};
+
+const SENT_BOX_INFO = {
+  1: { label: 'جَدِيد', labelEn: 'New', emoji: '🌱', color: '#F09CB1' },
+  2: { label: 'نَتَعَلَّم', labelEn: 'Learning', emoji: '🌿', color: '#7FB0D6' },
+  3: { label: 'مَأْلُوف', labelEn: 'Familiar', emoji: '🌸', color: '#E8A33D' },
+  4: { label: 'قَوِيّ', labelEn: 'Strong', emoji: '⭐', color: '#7BC08F' },
+  5: { label: 'مُتْقَن', labelEn: 'Mastered', emoji: '🏆', color: '#5B8C7B' },
+};
+
+function getSentSrsKey() {
+  const kid = (typeof currentKid === 'function' && currentKid()) || { id: 'default' };
+  return `hikayat-sent-srs-${kid.id}`;
+}
+
+function loadSentSrsState() {
+  try {
+    const raw = localStorage.getItem(getSentSrsKey());
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveSentSrsState(state) {
+  try {
+    localStorage.setItem(getSentSrsKey(), JSON.stringify(state));
+    if (typeof syncSoon === 'function') syncSoon();
+  } catch (e) {}
+}
+
+function getLessonKey(set, idx) {
+  return `${set.id}/${idx}`;
+}
+
+function getSentCardState(state, key) {
+  return state[key] || {
+    key,
+    box: 1,
+    reviews: 0,
+    correct: 0,
+    lastReview: 0,
+    nextReview: 0,
+  };
+}
+
+function isSentDue(cs) {
+  if (!cs || !cs.lastReview) return true;
+  return Date.now() >= (cs.nextReview || 0);
+}
+
+function recordSentReview(key, passed) {
+  const state = loadSentSrsState();
+  const card = getSentCardState(state, key);
+  card.reviews = (card.reviews || 0) + 1;
+  card.lastReview = Date.now();
+  if (passed) {
+    card.correct = (card.correct || 0) + 1;
+    card.box = Math.min(5, (card.box || 1) + 1);
+  } else {
+    card.box = 1;
+  }
+  card.nextReview = Date.now() + (SENT_SRS_INTERVALS[card.box] || 0);
+  state[key] = card;
+  saveSentSrsState(state);
+  if (typeof logRecall === 'function') logRecall('sent:' + key, passed);
+}
+
+/* Map sentence theme or pic to authentic story watercolor illustrations */
+function getSentenceArt(L, set) {
+  const p = L.pic || '';
+  if (p === 'mama-adam' || p === 'dar-cozy') {
+    return `<div class="sent-art-wrap"><img src="art/ayna-mama/cover.jpg" alt="Mama & Adam" class="sent-art-img"/></div>`;
+  }
+  if (p === 'adam-lulu') {
+    return `<div class="sent-art-wrap"><img src="art/yawm-maryam/cover.jpg" alt="Adam & Lulu" class="sent-art-img"/></div>`;
+  }
+  if (p === 'toy-mine' || p === 'kitab-boy' || p === 'ball-girl') {
+    return `<div class="sent-art-wrap"><img src="art/lulu-jaia/cover.jpg" alt="Story" class="sent-art-img"/></div>`;
+  }
+  if (p === 'feel-kabir' || p === 'faar-saghir' || p === 'kitab-kabir') {
+    return `<div class="sent-art-wrap"><img src="art/feel-dar/cover.jpg" alt="Elephant & House" class="sent-art-img"/></div>`;
+  }
+  if (p === 'alhamd-dua' || p === 'bismillah-meal' || p === 'boy-dua') {
+    return `<div class="sent-art-wrap"><img src="art/shams-qamar/cover.jpg" alt="Sun & Moon" class="sent-art-img"/></div>`;
+  }
+  if (set && (set.id === 'this' || set.id === 'me')) {
+    return `<div class="sent-art-wrap"><img src="art/lulu-jaia/cover.jpg" alt="Lulu" class="sent-art-img"/></div>`;
+  }
+  if (set && (set.id === 'where' || set.id === 'who')) {
+    return `<div class="sent-art-wrap"><img src="art/ayna-mama/cover.jpg" alt="Where is Mama" class="sent-art-img"/></div>`;
+  }
+  if (set && set.id === 'describe') {
+    return `<div class="sent-art-wrap"><img src="art/shams-qamar/cover.jpg" alt="Sun & Moon" class="sent-art-img"/></div>`;
+  }
+  if (set && (set.id === 'funny' || set.id === 'funny3')) {
+    return `<div class="sent-art-wrap"><img src="art/feel-dar/cover.jpg" alt="Elephant in house" class="sent-art-img"/></div>`;
+  }
+  if (set && (set.id === 'ask' || set.id === 'said' || set.id === 'have')) {
+    return `<div class="sent-art-wrap"><img src="art/man-qala/cover.jpg" alt="Who said meow" class="sent-art-img"/></div>`;
+  }
+  return `<div class="sent-art-wrap"><img src="art/yawm-maryam/cover.jpg" alt="Scene" class="sent-art-img"/></div>`;
+}
+
 let sentSet = null;      // the set being worked through
 let sentIdx = 0;         // which lesson within it
 let sentStep = 0;        // which of the five steps
+let sentSrsSession = { active: false, deck: [], at: 0 };
 
-function openSentences() { sentSet = null; renderSentenceHome(); show('sentences'); }
+function openSentences() { sentSet = null; sentSrsSession.active = false; renderSentenceHome(); show('sentences'); }
 
-/* ---------- choosing a set ---------- */
+/* ---------- choosing a set & Leitner SRS Hub ---------- */
 function renderSentenceHome() {
   const host = document.getElementById('sentences');
+  const state = loadSentSrsState();
+  const allLessons = typeof ALL_LESSONS !== 'undefined' ? ALL_LESSONS : [];
+
+  let dueCount = 0;
+  const boxCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  SENTENCE_SETS.forEach(s => {
+    s.lessons.forEach((l, idx) => {
+      const k = getLessonKey(s, idx);
+      const cs = getSentCardState(state, k);
+      boxCounts[cs.box] = (boxCounts[cs.box] || 0) + 1;
+      if (isSentDue(cs)) dueCount++;
+    });
+  });
+
   host.innerHTML = `
     <header class="page-head">
       <button class="nav-back-btn" id="jBack" title="Back to Home">
@@ -38,12 +164,40 @@ function renderSentenceHome() {
       </button>
       <div class="page-title">
         <h1>جُمَل</h1>
-        <p class="tag">Sentences — listen &amp; speak</p>
+        <p class="tag">Sentences — Spaced Repetition &amp; Practice</p>
       </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
-    <p class="hint">اِخْتَرْ وَاسْتَمِعْ
-      <span class="hint-en">Pick a set. Everything talks — nothing to read.</span></p>
+
+    <!-- Sentences Leitner Dashboard -->
+    <section class="vocab-dash" style="margin-bottom:20px">
+      <div class="vocab-hero">
+        <div class="hero-text">
+          <h2>${dueCount > 0 ? `عِنْدَكَ ${dueCount} جُمَل لِلْمُرَاجَعَة الْيَوْم! 💬` : 'أَحْسَنْت! أَتْمَمْتَ جَمِيعَ الْجُمَل الْيَوْم! 🌟'}</h2>
+          <p>${dueCount > 0 ? `${dueCount} sentences ready for spaced repetition review` : 'All caught up! Choose any set below to practice.'}</p>
+        </div>
+        <button class="start-srs-btn ${dueCount > 0 ? 'pulse' : ''}" id="startSentSrsBtn">
+          <span class="srs-btn-ic">🚀</span>
+          <span class="srs-btn-text">
+            <b>${dueCount > 0 ? 'هَيَّا نَتَمَرَّنْ' : 'تَمْرِين حُرّ'}</b>
+            <small>${dueCount > 0 ? `Review (${dueCount} Due)` : 'Practice All'}</small>
+          </span>
+        </button>
+      </div>
+
+      <div class="srs-meters">
+        ${[1, 2, 3, 4, 5].map(b => `
+          <div class="meter-box" style="--bcolor:${SENT_BOX_INFO[b].color}">
+            <span class="m-ic">${SENT_BOX_INFO[b].emoji}</span>
+            <span class="m-val">${boxCounts[b] || 0}</span>
+            <span class="m-lbl">${SENT_BOX_INFO[b].label}</span>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+
+    <p class="hint">اِخْتَرْ مَجْمُوعَة لِلتَّدْرِيب
+      <span class="hint-en">Or choose a set below. Everything talks — nothing to read.</span></p>
     <div class="set-list">
       ${SENTENCE_SETS.map(s => {
         const done = starsFor('sent:' + s.id);
@@ -54,12 +208,141 @@ function renderSentenceHome() {
         </button>`;
       }).join('')}
     </div>`;
+
   document.getElementById('jBack').addEventListener('click', () => { location.hash = '#home'; renderHome(); show('home'); });
+  document.getElementById('startSentSrsBtn').addEventListener('click', startSentSrsQueue);
   host.querySelectorAll('.set-card').forEach(b => b.addEventListener('click', () => {
     sentSet = SENTENCE_SETS.find(s => s.id === b.dataset.s);
     sentIdx = 0; sentStep = 0;
     renderLesson();
   }));
+}
+
+/* ---------- Sentences Daily SRS Practice Mode ---------- */
+function startSentSrsQueue() {
+  const state = loadSentSrsState();
+  const queue = [];
+  SENTENCE_SETS.forEach(s => {
+    s.lessons.forEach((l, idx) => {
+      const k = getLessonKey(s, idx);
+      const cs = getSentCardState(state, k);
+      if (isSentDue(cs)) queue.push({ key: k, lesson: l, set: s, cs });
+    });
+  });
+
+  // If none due, practice a random batch of 5
+  if (!queue.length) {
+    SENTENCE_SETS.forEach(s => {
+      s.lessons.forEach((l, idx) => {
+        const k = getLessonKey(s, idx);
+        queue.push({ key: k, lesson: l, set: s, cs: getSentCardState(state, k) });
+      });
+    });
+  }
+
+  queue.sort((a, b) => (a.cs.lastReview || 0) - (b.cs.lastReview || 0));
+  sentSrsSession = {
+    active: true,
+    deck: queue.slice(0, 10),
+    at: 0,
+  };
+  renderSentSrsCard();
+}
+
+function renderSentSrsCard() {
+  const host = document.getElementById('sentences');
+  if (sentSrsSession.at >= sentSrsSession.deck.length) {
+    // Session complete
+    host.innerHTML = `
+      <div class="set-done">
+        <div class="sd-star">🌟</div>
+        <h2>مُمْتَاز!</h2>
+        <p class="hint-en">You completed today's sentence review!</p>
+        <button class="big-btn" id="srsDoneBack">↩ عَوْدَة · Back to Sentences</button>
+      </div>`;
+    addStar('sent:srs', 2);
+    chimeGood();
+    say('مُمْتَاز');
+    document.getElementById('srsDoneBack').addEventListener('click', openSentences);
+    return;
+  }
+
+  const item = sentSrsSession.deck[sentSrsSession.at];
+  const L = item.lesson;
+  const cs = item.cs;
+  const bInfo = SENT_BOX_INFO[cs.box] || SENT_BOX_INFO[1];
+  let revealed = false;
+
+  host.innerHTML = `
+    <header class="page-head">
+      <button class="nav-back-btn" id="srsExitBtn" title="Exit Practice">
+        <span class="back-arr">←</span>
+        <span class="back-lbl">جُمَل · Back</span>
+      </button>
+      <div class="page-title">
+        <h1>تَدْرِيب الْجُمَل</h1>
+        <p class="tag">${sentSrsSession.at + 1} of ${sentSrsSession.deck.length} · ${bInfo.emoji} ${bInfo.label}</p>
+      </div>
+      <div class="star-count">⭐ <b>${totalStars()}</b></div>
+    </header>
+
+    <div class="sent-card" id="srsFlipCard" style="cursor:pointer;max-width:540px;margin:0 auto 16px">
+      ${getSentenceArt(L, item.set)}
+      <p class="sent-ar" style="font-size:38px;margin:16px 0">${L.ar}</p>
+      <button class="sent-play" id="srsCardHear">🔊 <span>اِسْمَعْ</span></button>
+      <div id="srsBackSection" style="display:none;margin-top:16px;border-top:2px dashed #E7D8BC;padding-top:14px">
+        <p class="sent-en" style="font-size:22px;color:var(--ink);font-weight:700">${L.en}</p>
+        <p style="font-size:14px;color:var(--muted);margin-top:6px">${L.why}</p>
+      </div>
+    </div>
+
+    <div id="srsActionRow" style="display:none;justify-content:center;gap:12px;margin-top:16px">
+      <button class="big-btn" id="srsAgainBtn" style="background:#E8A33D;box-shadow:0 6px 0 #B2751E">
+        🔁 مَرَّة أُخْرَى · Again
+      </button>
+      <button class="big-btn" id="srsSaidBtn" style="background:var(--teal);box-shadow:0 6px 0 #1F7A6F">
+        ⭐ قُلْتُهَا! · I said it!
+      </button>
+    </div>
+
+    <p class="hint" id="srsHintText">
+      اِسْتَمِعْ ثُمَّ قُلِ الْجُمْلَة! اِلْمَسِ الْبِطَاقَة لِتَرَى الْمَعْنَى
+      <span class="hint-en">Listen and say it! Tap card to reveal meaning.</span>
+    </p>`;
+
+  document.getElementById('srsExitBtn').addEventListener('click', openSentences);
+  document.getElementById('srsCardHear').addEventListener('click', e => {
+    e.stopPropagation();
+    say(L.ar);
+  });
+  document.getElementById('srsFlipCard').addEventListener('click', () => {
+    if (!revealed) {
+      revealed = true;
+      document.getElementById('srsBackSection').style.display = 'block';
+      document.getElementById('srsActionRow').style.display = 'flex';
+      document.getElementById('srsHintText').style.display = 'none';
+      sayEn(L.en);
+    } else {
+      say(L.ar);
+    }
+  });
+
+  document.getElementById('srsSaidBtn').addEventListener('click', () => {
+    recordSentReview(item.key, true);
+    addStar('sent:' + item.set.id);
+    chimeGood();
+    sentSrsSession.at++;
+    renderSentSrsCard();
+  });
+
+  document.getElementById('srsAgainBtn').addEventListener('click', () => {
+    recordSentReview(item.key, false);
+    chimeBad();
+    sentSrsSession.at++;
+    renderSentSrsCard();
+  });
+
+  setTimeout(() => say(L.ar), 350);
 }
 
 const STEPS = [
@@ -95,6 +378,7 @@ function renderLesson() {
     </header>
 
     <div class="sent-card">
+      ${getSentenceArt(L, sentSet)}
       <p class="sent-ar" id="sentAr">
         ${words.map((w, i) => `<span class="sw" data-i="${i}">${w}</span>`).join(' ')}
       </p>
@@ -121,9 +405,6 @@ function renderLesson() {
 
   document.getElementById('jBack').addEventListener('click', renderSentenceHome);
   document.getElementById('sentPlay').addEventListener('click', () => say(L.ar));
-  /* the meaning is on the card now, not hidden behind step 2 — Reza, looking at
-     a lesson: "where is the english here?" It was two taps away, which on an
-     ear-first site may as well be nowhere. */
   document.getElementById('sentEn').addEventListener('click', () => sayEn(L.en));
   host.querySelectorAll('.sw').forEach(el => el.addEventListener('click', ev => {
     ev.stopPropagation();
