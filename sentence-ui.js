@@ -359,10 +359,66 @@ const STEPS = [
 /* the last step only exists where the lesson has a frame to drill */
 const stepsFor = L => STEPS.filter(s => (!s.frameOnly || L.frame) && (!s.jokeOnly || L.joke));
 
+function getGlobalSentenceInfo(set, idx) {
+  let passed = 0;
+  let currentNum = 1;
+  let totalSentences = 0;
+  for (let i = 0; i < SENTENCE_SETS.length; i++) {
+    const s = SENTENCE_SETS[i];
+    if (s.id === set.id) {
+      currentNum = passed + idx + 1;
+    }
+    passed += s.lessons.length;
+    totalSentences += s.lessons.length;
+  }
+  return { currentNum, totalSentences };
+}
+
+function nextSentence() {
+  if (sentIdx < sentSet.lessons.length - 1) {
+    sentIdx++;
+    sentStep = 0;
+    renderLesson();
+  } else {
+    const setIdx = SENTENCE_SETS.findIndex(s => s.id === sentSet.id);
+    if (setIdx >= 0 && setIdx < SENTENCE_SETS.length - 1) {
+      addStar('sent:' + sentSet.id, 2);
+      chimeGood();
+      sentSet = SENTENCE_SETS[setIdx + 1];
+      sentIdx = 0;
+      sentStep = 0;
+      renderLesson();
+    } else {
+      finishSet();
+    }
+  }
+}
+
+function prevSentence() {
+  if (sentIdx > 0) {
+    sentIdx--;
+    sentStep = 0;
+    renderLesson();
+  } else {
+    const setIdx = SENTENCE_SETS.findIndex(s => s.id === sentSet.id);
+    if (setIdx > 0) {
+      sentSet = SENTENCE_SETS[setIdx - 1];
+      sentIdx = sentSet.lessons.length - 1;
+      sentStep = 0;
+      renderLesson();
+    }
+  }
+}
+
 function renderLesson() {
   const L = sentSet.lessons[sentIdx];
   const host = document.getElementById('sentences');
   const words = L.ar.split(/\s+/);
+  const { currentNum, totalSentences } = getGlobalSentenceInfo(sentSet, sentIdx);
+  const setIdx = SENTENCE_SETS.findIndex(s => s.id === sentSet.id);
+  const hasPrev = (sentIdx > 0) || (setIdx > 0);
+  const isLastOfSet = (sentIdx === sentSet.lessons.length - 1);
+  const nextSet = setIdx >= 0 && setIdx < SENTENCE_SETS.length - 1 ? SENTENCE_SETS[setIdx + 1] : null;
 
   host.innerHTML = `
     <header class="page-head">
@@ -372,10 +428,26 @@ function renderLesson() {
       </button>
       <div class="page-title">
         <h1>${sentSet.title}</h1>
-        <p class="tag">Lesson ${sentIdx + 1} of ${sentSet.lessons.length}</p>
+        <p class="tag">Lesson ${sentIdx + 1} of ${sentSet.lessons.length} · ${currentNum}/${totalSentences}</p>
       </div>
       <div class="star-count">⭐ <b>${totalStars()}</b></div>
     </header>
+
+    <!-- Top Continuous Sentence Navigation -->
+    <div class="sent-nav-bar" style="direction:ltr;">
+      <button class="sent-nav-btn prev-btn" id="jPrev" ${!hasPrev ? 'disabled' : ''} aria-label="Previous Sentence">
+        <span class="nav-arr">←</span>
+        <span class="sent-nav-txt"><b>السَّابِق</b><small>Previous</small></span>
+      </button>
+      <div class="sent-nav-mid">
+        <span class="sent-num-pill">جُمْلَة ${currentNum} مِنْ ${totalSentences}</span>
+        <span class="sent-set-pill">${sentSet.title} (${sentIdx + 1}/${sentSet.lessons.length})</span>
+      </div>
+      <button class="sent-nav-btn next-btn" id="jNext" aria-label="Next Sentence">
+        <span class="sent-nav-txt"><b>${isLastOfSet && nextSet ? nextSet.title : 'الجُمْلَة التَّالِيَة'}</b><small>${isLastOfSet && nextSet ? 'Next Set →' : 'Next →'}</small></span>
+        <span class="nav-arr">→</span>
+      </button>
+    </div>
 
     <div class="sent-card">
       ${getSentenceArt(L, sentSet)}
@@ -398,9 +470,12 @@ function renderLesson() {
 
     <div class="step-body" id="stepBody"></div>
 
-    <div class="lesson-nav">
-      <button class="round" id="jPrev" ${sentIdx === 0 ? 'disabled' : ''} aria-label="Back">→</button>
-      <button class="round big" id="jNext" aria-label="Next">${sentIdx === sentSet.lessons.length - 1 ? '🏁' : '←'}</button>
+    <!-- Bottom Continuous Navigation Button -->
+    <div class="sent-bottom-bar" style="direction:ltr;">
+      <button class="big-next-sentence-btn" id="jNextBottom" aria-label="Next Sentence">
+        <span>${isLastOfSet && nextSet ? `المَجْمُوعَة التَّالِيَة: ${nextSet.title} · Next Set` : 'الجُمْلَة التَّالِيَة · Next Sentence'}</span>
+        <span class="arr-ic">→</span>
+      </button>
     </div>`;
 
   document.getElementById('jBack').addEventListener('click', renderSentenceHome);
@@ -417,13 +492,18 @@ function renderLesson() {
     host.querySelectorAll('.step').forEach(x => x.classList.toggle('on', x === b));
     renderStep();
   }));
-  document.getElementById('jPrev').addEventListener('click', () => {
-    if (sentIdx > 0) { sentIdx--; sentStep = 0; renderLesson(); }
-  });
-  document.getElementById('jNext').addEventListener('click', () => {
-    if (sentIdx < sentSet.lessons.length - 1) { sentIdx++; sentStep = 0; renderLesson(); }
-    else finishSet();
-  });
+
+  const prevHandler = () => prevSentence();
+  const nextHandler = () => nextSentence();
+
+  const prevBtn = document.getElementById('jPrev');
+  if (prevBtn) prevBtn.addEventListener('click', prevHandler);
+
+  const nextBtn = document.getElementById('jNext');
+  if (nextBtn) nextBtn.addEventListener('click', nextHandler);
+
+  const bottomNextBtn = document.getElementById('jNextBottom');
+  if (bottomNextBtn) bottomNextBtn.addEventListener('click', nextHandler);
 
   renderStep();
   setTimeout(() => say(L.ar), 350);       // ear first: it says itself
@@ -637,14 +717,29 @@ function finishSet() {
   if (typeof pathStopDone === 'function' && pathStopDone('sentences:' + sentSet.id)) {
     return;
   }
+  const setIdx = SENTENCE_SETS.findIndex(s => s.id === sentSet.id);
+  const nextSet = setIdx >= 0 && setIdx < SENTENCE_SETS.length - 1 ? SENTENCE_SETS[setIdx + 1] : null;
   const host = document.getElementById('sentences');
 
   host.innerHTML = `<div class="set-done">
     <div class="sd-star">🌟</div>
     <h2>مُمْتَاز!</h2>
-    <p class="hint-en">You finished ${sentSet.titleEn}</p>
-    <button class="big-btn" id="sdBack">↩ جُمَل أُخْرَى · More sentences</button>
+    <p class="hint-en">You finished ${sentSet.titleEn} (${sentSet.title})</p>
+    ${nextSet ? `
+      <button class="big-btn pulse" id="sdNextSet" style="margin-bottom:12px;background:linear-gradient(135deg, var(--coral), #E05370);color:#fff">
+        ➡️ اسْتَمِرّ · Next Set: ${nextSet.title} (${nextSet.titleEn})
+      </button>
+    ` : ''}
+    <button class="big-btn" id="sdBack">↩ جُمَل أُخْرَى · All Sets</button>
   </div>`;
   say('مُمْتَاز');
+  if (nextSet) {
+    document.getElementById('sdNextSet').addEventListener('click', () => {
+      sentSet = nextSet;
+      sentIdx = 0;
+      sentStep = 0;
+      renderLesson();
+    });
+  }
   document.getElementById('sdBack').addEventListener('click', renderSentenceHome);
 }

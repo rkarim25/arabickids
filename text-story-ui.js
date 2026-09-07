@@ -169,14 +169,28 @@ function finishTextStory() {
     return;
   }
 
+  const stories = (typeof TEXT_STORIES !== 'undefined' ? TEXT_STORIES : []);
+  const curIdx = stories.findIndex(x => x.id === tsStory.id);
+  const nextStory = curIdx >= 0 && curIdx < stories.length - 1 ? stories[curIdx + 1] : null;
+
   const host = document.getElementById('textStory');
   host.innerHTML = `<div class="set-done">
     <div class="sd-star">🌟</div>
     <h2>قَرَأْتَهَا!</h2>
-    <p class="hint-en">You read ${tsStory.titleEn} — with no pictures at all.</p>
+    <p class="hint-en">You read ${tsStory.titleEn} (${tsStory.title})</p>
+    ${nextStory ? `
+      <button class="big-btn pulse" id="tsNextStory" style="margin-bottom:12px;background:linear-gradient(135deg, var(--coral), #E05370);color:#fff">
+        📖 القِصَّة التَّالِيَة · Next Story: ${nextStory.titleEn} →
+      </button>
+    ` : ''}
     <button class="big-btn" id="tsAgain">🔁 مَرَّة أُخْرَى · Read it again</button>
-    <button class="big-btn" id="tsShelf">📖 قِصَّة أُخْرَى · Another story</button>
+    <button class="big-btn" id="tsShelf">📚 الرَّفّ · Book Shelf</button>
   </div>`;
+  if (nextStory) {
+    document.getElementById('tsNextStory').addEventListener('click', () => {
+      openTextStory(nextStory.id);
+    });
+  }
   document.getElementById('tsAgain').addEventListener('click', () => { tsLine = 0; renderTextStory(); });
   document.getElementById('tsShelf').addEventListener('click', () => show('shelf'));
 }

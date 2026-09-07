@@ -361,13 +361,16 @@ function startVocabSession(category = null) {
 }
 
 function startSingleCardSession(wordId) {
-  const word = (VOCAB_WORDS || []).find(w => w.id === wordId);
-  if (!word) return;
+  const all = VOCAB_WORDS || [];
+  const list = (activeVocabCat && activeVocabCat !== 'all')
+    ? all.filter(w => w.cat === activeVocabCat)
+    : all;
+  const targetIdx = list.findIndex(w => w.id === wordId);
 
   vocabSession = {
     active: true,
-    queue: [word],
-    idx: 0,
+    queue: list,
+    idx: targetIdx >= 0 ? targetIdx : 0,
     flipped: false,
     results: { correct: 0, repeat: 0 },
   };
@@ -404,6 +407,22 @@ function renderFlashcardSession() {
       </div>
       <div class="star-count" title="Your stars">⭐ <b>${typeof totalStars === 'function' ? totalStars() : 0}</b></div>
     </header>
+
+    <!-- Top Continuous Word Navigation -->
+    <div class="sent-nav-bar" style="direction:ltr;max-width:540px;margin:0 auto 12px">
+      <button class="sent-nav-btn prev-btn" id="wordNavPrev" ${idx === 0 ? 'disabled' : ''} aria-label="Previous Word">
+        <span class="nav-arr">←</span>
+        <span class="sent-nav-txt"><b>السَّابِقَة</b><small>Previous</small></span>
+      </button>
+      <div class="sent-nav-mid">
+        <span class="sent-num-pill">كَلِمَة ${idx + 1} مِنْ ${q.length}</span>
+        <span class="sent-set-pill">${word.en}</span>
+      </div>
+      <button class="sent-nav-btn next-btn" id="wordNavNext" ${idx >= q.length - 1 ? 'disabled' : ''} aria-label="Next Word">
+        <span class="sent-nav-txt"><b>الكَلِمَة التَّالِيَة</b><small>Next Word →</small></span>
+        <span class="nav-arr">→</span>
+      </button>
+    </div>
 
     <!-- Session Progress -->
     <div class="srs-prog-bar">
@@ -501,6 +520,31 @@ function renderFlashcardSession() {
     });
   }
 
+  // Word Next/Prev Navigation
+  const prevWordBtn = document.getElementById('wordNavPrev');
+  if (prevWordBtn) {
+    prevWordBtn.addEventListener('click', () => {
+      if (vocabSession.idx > 0) {
+        vocabSession.idx--;
+        vocabSession.flipped = false;
+        renderFlashcardSession();
+      }
+    });
+  }
+
+  const nextWordBtn = document.getElementById('wordNavNext');
+  if (nextWordBtn) {
+    nextWordBtn.addEventListener('click', () => {
+      if (vocabSession.idx < q.length - 1) {
+        vocabSession.idx++;
+        vocabSession.flipped = false;
+        renderFlashcardSession();
+      } else {
+        renderSessionDone();
+      }
+    });
+  }
+
   // Back button
   document.getElementById('srsExitBtn').addEventListener('click', () => {
     vocabSession.active = false;
@@ -567,6 +611,9 @@ function renderSessionDone() {
       </div>
 
       <div class="done-actions">
+        <button class="big-btn pulse" id="doneMoreBtn" style="margin-bottom:12px;background:linear-gradient(135deg, var(--coral), #E05370);color:#fff">
+          🚀 اسْتَمِرّ · Continue Practicing All Words
+        </button>
         <button class="big-btn" id="doneReturnBtn">الْعَوْدَة إِلَى الْمُفْرَدَات · Return to Words</button>
       </div>
     </div>
@@ -574,6 +621,9 @@ function renderSessionDone() {
 
   if (typeof say === 'function') say('مُمْتَاز! أَحْسَنْت');
 
+  document.getElementById('doneMoreBtn').addEventListener('click', () => {
+    startVocabSession(null);
+  });
   document.getElementById('srsDoneBack').addEventListener('click', () => {
     vocabSession.active = false;
     renderVocabHub();

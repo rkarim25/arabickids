@@ -1059,15 +1059,25 @@ function renderPage() {
   }
 
   else if (p.type === 'end') {
+    const curBookIdx = BOOKS.findIndex(b => b.id === BOOK.id);
+    const nextBook = curBookIdx >= 0 && curBookIdx < BOOKS.length - 1 ? BOOKS[curBookIdx + 1] : null;
     host.innerHTML = `
       <div class="page end">
         <div class="scene">${svgWrap(p.svg())}</div>
         <div class="textbar">
           <p class="ar-line big">النِّهَايَة 🌟</p>
           <p class="en">The End — Talk together: where was Lulu hiding?</p>
+          ${nextBook ? `
+            <button class="big-btn pulse" id="nextBookBtn" style="margin-bottom:10px;background:linear-gradient(135deg, var(--coral), #E05370);color:#fff">
+              📖 الكِتَاب التَّالِي · Next Book: ${nextBook.titleEn} →
+            </button>
+          ` : ''}
           <button class="big-btn" id="againBtn">🔁 مَرَّة أُخْرَى · Read again</button>
         </div>
       </div>`;
+    if (nextBook) {
+      $('#nextBookBtn').addEventListener('click', () => { openReader(nextBook); });
+    }
     $('#againBtn').addEventListener('click', () => { pageIdx = 0; renderPage(); });
     setTimeout(() => say('النِّهَايَة'), 400);
   }
