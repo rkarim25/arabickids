@@ -74,24 +74,26 @@ Content is strictly banded into 5 distinct pedagogical levels. The test suite au
 * **Features:** 28 alphabet cards with letter forms (isolated, initial, medial, final), listen-and-find interactive sound games, 3 harakat practice grid, and the **9-stage Qaida reading ladder** (Letters → Shapes → Harakat → Tanween → Mudood → Sukoon → Shadda → Sun/Moon Lam → 95 Real Quranic Words).
 * **Audio:** Real reciter audio for Quranic words (`audio/quran/`), exact-match syllable keys (`q:<syllable>`) for practice cells synthesized as open syllables to prevent Edge-TTS abbreviation expansion.
 
-### 2. 📖 **الكُتُب** (*The Books*)
+### 2. 📖 **الكُتُب** (*The Books & Stories*)
 * **Files:** `app.js`, `book-lulu1.js`, `book-bayt.js`, `books-more.js`, `stories-text.js`, `text-story-ui.js`
 * **Features:**
-  * **Shelf 1 (With Pictures - 8 Books):** Level 1 to Level 5 illustrated picture storybooks with interactive sound pages, vocabulary cards, end-of-book listening games, and dedicated top navigation bars (`← الرَّفّ · Books` with live progress counter `صفحة ٣ من ٨`).
-  * **Shelf 2 (Without Pictures - 23 Stories):** Pure text readers for developing reading fluency across 4 popular series:
-    1. «نَوَادِر جُحَا» (*Juha's Tales* - 3 episodes, L3–L4)
-    2. «لُولُو وَالْغُرَاب» (*Lulu vs the Crow* - 8 episodes, L2–L4)
-    3. «كَلِيلَة وَدِمْنَة» (*Kalila wa Dimna Fables* - 7 episodes, L1–L4)
-    4. Standalone stories (*The Big Cat, The Small Fish*, etc.)
+  * **Unified Progressive Shelf (47 Books & Stories):** Ordered thoughtfully from Level 1 to Level 5. All books and stories display soft watercolor cover art, clear level badges, and direct reading launchers:
+    * **14 Illustrated Picture Books:** Level 1 to Level 5 illustrated picture books with interactive sound pages, vocabulary cards, end-of-book listening games, and dedicated top navigation bars (`← الرَّفّ · Books` with live progress counter). Includes the 6 illustrated path stories.
+    * **33 Decodable Reading Stories:** Full stories across levels with rich grammar progression and full cover art:
+      1. High-frequency grammar series: *Lulu and a Fish* (L1), *Where is My Bag?* (L2), *The Crow and the Cheese* (L3), *The Race in the Forest* (L4).
+      2. «نَوَادِر جُحَا» (*Juha's Tales* - 3 episodes, L3–L4)
+      3. «لُولُو وَالْغُرَاب» (*Lulu vs the Crow* - 8 episodes, L2–L4)
+      4. «كَلِيلَة وَدِمْنَة» (*Kalila wa Dimna Fables* - 7 episodes, L1–L4)
+      5. Core path stories and standalone fables.
 
 ### 3. 🗂️ **المُفْرَدَات** (*Vocabulary & Spaced Repetition SRS*)
 * **Files:** `vocab.js`, `vocab-ui.js`, `scripts/test-vocab.js`
 * **Features:** 43 core vocabulary items drawn from storybooks across 5 thematic categories. Employs a **Leitner 5-Box Spaced Repetition System** (Box 1: daily review, Box 2: 2 days, Box 3: 4 days, Box 4: 7 days, Box 5: 14 days / Mastered).
-* **Interactive Flashcards:** 3D card flip animation with watercolor illustrations on the front (with native audio 🔊) and 52px vowelled Arabic text, English translation, and storybook example sentences on the back. Star rewards (`addStar`) upon session completion.
+* **Interactive Flashcards:** 3D card flip animation with soft pastel watercolor illustrations on the front (with native audio 🔊) and vowelled Arabic text, English translation, and storybook example sentences on the back. Star rewards (`addStar`) upon session completion.
 
-### 4. 💬 **جُمَل** (*Sentences*)
+### 4. 💬 **جُمَل** (*Sentences & Leitner Review*)
 * **Files:** `sentences.js`, `sentence-ui.js`
-* **Features:** 11 sentence sets containing 27 picture-free sentence lessons, 10 sentence frames, and 10 jokes/riddles. Each lesson teaches a sentence pattern with one-word variations to reinforce syntax.
+* **Features:** 15 sentence sets containing 45 sentence lessons, 12 sentence frames, 10 jokes/riddles, cloze retrieval challenges, and a dedicated Leitner 5-box daily sentence review system with soft watercolor artwork headers on each card. Each lesson teaches a sentence pattern with one-word variations to reinforce syntax.
 
 ### 5. 📿 **سُوَر** (*Surahs*)
 * **Files:** `surah-ui.js`, `surah-notes.js`, `surah-words.js`, `data/surahs.json`
@@ -210,7 +212,8 @@ python scripts/gen-audio.py
 Whenever any code, content, or asset is touched, execute this verification sequence:
 
 ```powershell
-# 1. Run all 7 test suites
+# 1. Run all 9 test suites
+node scripts/test-vocab.js
 node scripts/test-books.js
 node scripts/test-letters.js
 node scripts/test-sentences.js
@@ -218,6 +221,7 @@ node scripts/test-surahs.js
 node scripts/test-stories-text.js
 node scripts/test-qaida.js
 node scripts/test-videos.js
+node scripts/test-path.js
 
 # 2. Re-sync Service Worker cache and stamp index.html versions
 node scripts/sync-sw.js

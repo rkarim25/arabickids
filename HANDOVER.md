@@ -49,9 +49,9 @@ Six dedicated doors with clean URL hash routing (`#home`, `#shelf`, `#sounds`, `
 |---|---|---|
 | 👣 **هَيَّا نَمْشِي** | **The Path (Phase 1)**: Daily 5-stop guided adventure, 5-min timer, 3-button choice cards | `path.js`, `path-ui.js`, `data/path.json` |
 | 🔊 **الأَصْوَات** | 28 letters, listen-and-find, harakat — **and القَاعِدَة**, the 9-step reading ladder | `letters.js`, `kids.js`, `qaida-ui.js`, `data/qaida.json` |
-| 📖 **الكُتُب** | two shelves: **with pictures (14 books)** and **بِلَا صُوَر (23 stories)** | `app.js`, `book-*.js`, `books-more.js`, `stories-text.js`, `text-story-ui.js` |
-| 🗂️ **المُفْرَدَات** | **Vocabulary & Spaced Repetition (SRS)**: 43 core words, Leitner 5-box daily queues, 3D flip cards | `vocab.js`, `vocab-ui.js` |
-| 💬 **جُمَل** | sentence lessons, picture-free, frames + jokes + **cloze test** | `sentences.js`, `sentence-ui.js` |
+| 📖 **الكُتُب** | unified shelf: **47 stories & books** ordered L1–L5, all with watercolor cover art | `app.js`, `book-*.js`, `books-more.js`, `stories-text.js`, `text-story-ui.js` |
+| 🗂️ **المُفْرَدَات** | **Vocabulary & Spaced Repetition (SRS)**: 43 core words, soft pastel cards, Leitner 5-box daily queues, 3D flip cards | `vocab.js`, `vocab-ui.js` |
+| 💬 **جُمَل** | sentence lessons, frames + jokes + **cloze test**, Leitner 5-box review with watercolor headers | `sentences.js`, `sentence-ui.js` |
 | 📿 **سُوَر** | Al-Fatiha + 10 shortest, **real reciter** | `surah-ui.js`, `surah-notes.js`, `surah-words.js`, `data/surahs.json` |
 | 🖨 **اِطْبَعْ** | cut-out cards, mini books, poster | `print.js`, `print.css` |
 
@@ -68,18 +68,25 @@ Shared: `audio.js` (all playback), `audio-manifest.js` (instant offline map), `s
 
 - **The Path (Phase 1)**: Full daily 5-stop loop (`hello` → `review` → `step` → `quran` → `bye`), 5-min cap timer (`PATH_CAP_MS`), mid-step checkpoint overlays, and 3-button child choice cards.
 - **Qaida**: 9 stages, 592 cells, 469 clips. Phonetic syllable mapping for isolated Harakat and Tanween.
-- **Picture books**: 14 books total (8 original L1–L5 + **6 illustrated path stories**):
-  - L1: *Lulu is Small*, *What Do You Want?*, *Lulu is Hungry (لُولُو جَائِعَة)*, *An Elephant in the House (فِيل فِي دَار)*
-  - L2: *Where is the Moon?*, *Who is in the House?*, *The Rabbit & The Monkey*, *Where is Mama? (أَيْنَ مَامَا؟)*, *Who Said Meow? (مَنْ قَالَ مِيَاو؟)*
-  - L3: *Where is My Shoe?*, *The Sun and the Moon (الشَّمْسُ وَالْقَمَر)*, *Maryam's Day (يَوْم مَرْيَم)*
-  - L4: *Where is Lulu?*
-  - L5: *My Day (يَوْمِي)*
-- **Vocabulary & SRS**: 43 core vocabulary items across 5 categories with Leitner 5-box intervals (1d, 2d, 4d, 7d, 14d) and interactive 3D flip flashcards.
-- **No-picture stories**: 23 standalone reading stories — the 8-episode series **Lulu vs the Crow** (L2–L4), the 3-episode slapstick comedy series **Juha's Tales** (L3–L4), and 7 **Kalila wa Dimna** fables (ep1 = L1 … ep7 = L4) plus 5 standalone stories.
+- **Unified Story Shelf**: 47 total books and stories ordered thoughtfully on a single progressive shelf (L1 to L5) with soft watercolor cover art:
+  - **14 Illustrated Picture Books** (8 original L1–L5 + 6 illustrated path stories):
+    - L1: *Lulu is Small*, *What Do You Want?*, *Lulu is Hungry (لُولُو جَائِعَة)*, *An Elephant in the House (فِيل فِي دَار)*
+    - L2: *Where is the Moon?*, *Who is in the House?*, *The Rabbit & The Monkey*, *Where is Mama? (أَيْنَ مَامَا؟)*, *Who Said Meow? (مَنْ قَالَ مِيَاو؟)*
+    - L3: *Where is My Shoe?*, *The Sun and the Moon (الشَّمْسُ وَالْقَمَر)*, *Maryam's Day (يَوْم مَرْيَم)*
+    - L4: *Where is Lulu?*
+    - L5: *My Day (يَوْمِي)*
+  - **33 Decodable Reading Stories** (all with watercolor cover art):
+    - 4 new high-frequency grammar stories: *Lulu and a Fish* (L1 demonstratives), *Where is My Bag?* (L2 spatial prepositions), *The Crow and the Cheese* (L3 shadda adjectives & dialogue), *The Race in the Forest* (L4 sun letters & past narrative).
+    - 8 episodes of *Lulu vs the Crow* (L2–L4)
+    - 3 episodes of *Juha's Tales* (L3–L4)
+    - 7 episodes of *Kalila wa Dimna* fables (L1–L4)
+    - 6 path stories carrying core sentences
+    - 5 standalone animal and adventure fables
+- **Vocabulary & SRS**: 43 core vocabulary items across 5 categories with soft pastel watercolor illustrations, Leitner 5-box intervals (1d, 2d, 4d, 7d, 14d) and interactive 3D flip flashcards.
 - **Sentences & Leitner SRS**: 15 sets, 45 lessons, 12 frames, 10 jokes/riddles, cloze retrieval challenges, and dedicated Leitner 5-box daily review system with soft watercolor artwork headers on each card.
 - **Surahs**: 11, 51 ayat, all with Alafasy recitation; **all 51** with bespoke child notes and child meanings.
 - **Videos**: 8 curated videos across Letters, Harakat, and Words.
-- **Audio**: 2,382 pre-rendered neural clips (`ar-SA-ZariyahNeural` for Arabic, `en-GB-MaisieNeural` for English) + 267 real recitation files.
+- **Audio**: 2,817 pre-rendered neural clips (`ar-SA-ZariyahNeural` for Arabic, `en-GB-MaisieNeural` for English) + 267 real recitation files.
 - **Diagnostics v2**: Live first-try accuracy tracking across games, Qaida, sentences, surahs, and vocab reviews; sentence mastery matrix, weak-word target list, and 14-day activity streaks.
 
 ---

@@ -17,7 +17,10 @@
 const BUILD_STATUS = {
   updated: '2026-09-07',
   built: [
-    'Six doors: sounds + Qaida, books (8 with pictures, 29 without), vocab SRS, sentences, surahs, print',
+    'Six doors: sounds + Qaida, unified shelf (47 stories & books), vocab SRS, sentences, surahs, print',
+    'Unified shelf: 14 picture books + 33 reading stories across L1–L5 with watercolor cover art',
+    'Added 4 high-frequency grammar stories (Lulu fish, bag prepositions, crow cheese, forest race)',
+    'Soft pastel watercolor art for vocabulary cards and sentence SRS headers',
     'All 51 ayat with real recitation, word by word, child notes',
     'Google sign-in: pop-up and redirect (redirect needs the URI registered — see next)',
     'The Path Phase 1 engine: path.js, path-ui.js, 5-min cap, 3-button choice, checkpoints',

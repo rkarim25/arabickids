@@ -39,9 +39,9 @@ video briefs for other AIs.
 | | |
 |---|---|
 | 🔊 **الأَصْوَات** | 28 letters with Qur'anic keywords, listen-and-find, harakat — **and القَاعِدَة**, the full nine-step reading ladder: letters → shapes → harakat → tanween → mudood → sukoon → shadda → the two lams → real Qur'anic words read by Alafasy. |
-| 📖 **الكُتُب** | Two shelves on one ladder: eight **picture books**, and **قِصَص بِلَا صُوَر** — 29 no-picture stories at every level, including the series «لُولُو وَالْغُرَاب», «نَوَادِر جُحَا», «كَلِيلَة وَدِمْنَة», and the six path stories that carry the twenty core sentences. |
-| 🗂️ **المُفْرَدَات** | **Vocabulary & Spaced Repetition (SRS)**: 43 core words from storybooks with 3D flip flashcards, Leitner 5-box daily review queues, watercolor art, and native audio pronunciation. |
-| 💬 **جُمَل** | Picture-free sentence lessons: hear it, what it means, how it works, say it, change a word — plus frames that let a child slot an English word in, and ten jokes and riddles. |
+| 📖 **الكُتُب** | Unified progressive shelf: **47 books and stories** across Level 1 to Level 5, all with soft watercolor cover art (14 illustrated picture books + 33 decodable reading stories including Lulu vs Crow, Juha, Kalila wa Dimna, and high-frequency grammar fables). |
+| 🗂️ **المُفْرَدَات** | **Vocabulary & Spaced Repetition (SRS)**: 43 core words from storybooks with 3D flip flashcards, Leitner 5-box daily review queues, soft pastel watercolor art, and native audio pronunciation. |
+| 💬 **جُمَل** | Sentence lessons, frames + jokes + **cloze test**, and Leitner 5-box review with soft watercolor header art. |
 | 📿 **سُوَر** | Al-Fatiha and the ten shortest, 51 ayat, **real recitation** ayah and word by word, with child-written meanings and a counted comprehension check. |
 | 🖨 **اِطْبَعْ** | Picture-word cards (two of each, for pairs), a fold-and-staple mini book of any story, and a wall poster of all 28 sounds. |
 | 🦊 **Children** | Tap a face to be you. Stars are per-child, on the device, and can never be lost. Nothing is uploaded; there is no account. |
@@ -59,7 +59,7 @@ vocab-ui.js     Leitner 5-box SRS engine & 3D flip flashcard session controller
 book-lulu1.js   «لُولُو صَغِيرَة»    Level 1
 book-bayt.js    «مَنْ فِي الْبَيْت؟»  Level 2
 books-more.js   «أَيْنَ الْقَمَر؟», «مَاذَا تُرِيدُ؟», «أَيْنَ حِذَائِي؟», «يَوْمِي», «الْأَرْنَبُ وَالْقِرْد», «أَيْنَ لُولُو؟»
-stories-text.js 23 decodable no-picture stories (Kalila wa Dimna, Juha, Lulu vs Crow)
+stories-text.js 33 decodable reading stories (Kalila wa Dimna, Juha, Lulu vs Crow, grammar series)
 kids.js         children, home, sounds screens, router, Lulu the companion
 print.js        printables, flashcards, mini books
 style.css / kids.css / print.css
@@ -74,13 +74,14 @@ node scripts/test-books.js         # bands, pictures, offline cache, orphan modu
 node scripts/test-letters.js       # 28 letters, forms, keywords, arc geometry
 node scripts/test-sentences.js     # bands, one-word swaps, a clip for every line
 node scripts/test-surahs.js        # Qur'an text vs source, right recitation per ayah
-node scripts/test-stories-text.js  # the no-picture stories
+node scripts/test-stories-text.js  # the decodable reading stories
 node scripts/test-qaida.js         # every mark, and one clip per cell
 node scripts/test-videos.js        # youtube strip embeds nothing until tapped
+node scripts/test-path.js          # The Path data and step integrity
 node scripts/sync-sw.js            # ALWAYS — or the deploy is invisible
 ```
 
-All eight must pass, then look at it in a real browser at phone width.
+All nine must pass, then look at it in a real browser at phone width.
 
 **`sync-sw.js` is not optional.** GitHub Pages caches assets for ten minutes, so
 without the `?v=` stamp it writes, your fix is live on the server and invisible
