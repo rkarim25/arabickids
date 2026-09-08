@@ -150,13 +150,20 @@ function renderHome() {
     </div>
 
     <div class="path-hero-wrap">
-      <button class="path-hero-btn" id="startPathHeroBtn">
-        <span style="font-size:36px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2))">🚶‍♀️✨</span>
-        <span class="ph-title">
-          <b>هَيَّا نَمْشِي · Start Today's Adventure</b>
-          <small>5 quick stops: Letters, words, stories &amp; Surahs 🌟</small>
-        </span>
-        <span style="font-size:24px;background:rgba(255,255,255,0.2);border-radius:50%;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center">→</span>
+      <button class="path-hero-btn" id="startPathHeroBtn" type="button">
+        <div class="ph-badge">
+          <span class="ph-icon">🚶‍♀️</span>
+          <span class="ph-spark">✨</span>
+        </div>
+        <div class="ph-info">
+          <div class="ph-head">
+            <span class="ph-ar">هَيَّا نَمْشِي</span>
+            <span class="ph-dot">·</span>
+            <span class="ph-en">Start Today's Adventure</span>
+          </div>
+          <div class="ph-sub">5 quick stops: Letters, words, stories &amp; Surahs 🌟</div>
+        </div>
+        <div class="ph-arrow" aria-hidden="true">←</div>
       </button>
     </div>
 

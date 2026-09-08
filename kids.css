@@ -89,6 +89,118 @@
 .lulu-bubble b { display: block; font-size: 24px; color: var(--teal); }
 .lulu-bubble small { color: var(--muted); font-size: 14px; }
 
+/* ————— The Path Hero Button (هَيَّا نَمْشِي) ————— */
+.path-hero-wrap {
+  width: 100%;
+  margin: 0 0 26px 0;
+  display: block;
+}
+.path-hero-btn {
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #168172 0%, #0D5C51 100%);
+  border: 3px solid #36B3A0;
+  border-radius: 26px;
+  padding: 16px 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 22px rgba(22, 129, 114, 0.28), 0 5px 0 #083E37;
+  transition: transform .15s ease, box-shadow .15s ease;
+  text-align: right;
+}
+.path-hero-btn:hover {
+  transform: translateY(-3px) scale(1.005);
+  box-shadow: 0 12px 28px rgba(22, 129, 114, 0.36), 0 5px 0 #083E37;
+}
+.path-hero-btn:active {
+  transform: translateY(3px) scale(0.99);
+  box-shadow: 0 2px 0 #083E37;
+}
+.ph-badge {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: none;
+}
+.ph-icon { font-size: 32px; line-height: 1; }
+.ph-spark {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  font-size: 16px;
+  animation: starTwinkle 2.5s infinite ease-in-out;
+}
+.ph-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ph-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ph-ar {
+  font-size: 26px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.ph-dot {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.ph-en {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFE699;
+}
+.ph-sub {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+}
+.ph-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  flex: none;
+  transition: transform .15s ease, background .15s ease;
+}
+.path-hero-btn:hover .ph-arrow {
+  transform: translateX(-3px);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+@media (max-width: 520px) {
+  .path-hero-btn { padding: 14px 14px; gap: 12px; }
+  .ph-badge { width: 44px; height: 44px; border-radius: 14px; }
+  .ph-icon { font-size: 26px; }
+  .ph-ar { font-size: 22px; }
+  .ph-en { font-size: 14px; }
+  .ph-sub { font-size: 12px; }
+  .ph-arrow { width: 34px; height: 34px; font-size: 18px; }
+}
+
 .doors { display: grid; gap: 16px; }
 .door {
   border: none; font-family: inherit; cursor: pointer; text-align: right;
