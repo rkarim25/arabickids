@@ -780,25 +780,34 @@ function getStoryPageImage(s, idx) {
 
   // --- Story-specific handlers ---
   if (s.id === 'lulu-jaia') {
-    if (idx === 0) return 'art/lulu-jaia/cover.jpg';
+    if (ar.includes('هذه لولو') || ar === 'هذه لولو') return 'art/icon-lulu.jpg';
+    if (ar.includes('جائعه')) return 'art/lulu-cover.jpg';
+    if (ar.includes('انا هنا') || ar.includes('ادم')) return 'art/icon-adam.jpg';
+    if (ar.includes('ماذا تريد')) return 'art/icon-madha.jpg';
     if (ar.includes('لبن')) return 'art/lulu-jaia/02.jpg';
-    if (ar.includes('ماء')) return 'art/madha1-2.jpg';
-    if (ar.includes('عصير')) return 'art/madha1-4.jpg';
+    if (ar.includes('ماء')) return 'art/icon-maa.jpg';
+    if (ar.includes('عصير')) return 'art/icon-aseer.jpg';
     if (ar.includes('بابا كبير')) return 'art/baba-couch.webp';
-    if (ar.includes('مع بابا') || ar.includes('بابا')) return 'art/bayt1-4.jpg';
-    if (ar.includes('ادم')) return 'art/icon-adam.jpg';
+    if (ar.includes('مع بابا')) return 'art/lulu-jaia/cover.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
     if (ar.includes('صغيره')) return 'art/icon-saghira.jpg';
-    if (idx % 2 === 0) return 'art/lulu-2.jpg';
-    return 'art/lulu-3.jpg';
+    if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
+    return 'art/lulu-jaia/cover.jpg';
   }
 
   if (s.id === 'feel-dar') {
-    if (idx === 0 || idx === 1 || ar.includes('فيل في دار')) return 'art/feel-dar/02.jpg';
-    if (ar.includes('ماء')) return 'art/madha1-2.jpg';
-    if (ar.includes('دار صغيره') || ar.includes('صغيره')) return 'art/icon-saghira.jpg';
-    if (ar.includes('فيل كبير') || ar.includes('كبير')) return 'art/icon-kabir.jpg';
+    if (ar.includes('فيل في دار')) return 'art/feel-dar/02.jpg';
+    if (ar.includes('هذا فيل') || ar === 'فيل هنا') return 'art/icon-feel.jpg';
+    if (ar.includes('ماء')) return 'art/icon-maa.jpg';
+    if (ar.includes('هذه دار') || ar.includes('اريد دار')) return 'art/icon-bayt.jpg';
+    if (ar.includes('دار صغيره')) return 'art/icon-bayt.jpg';
+    if (ar.includes('فيل كبير') || ar.includes('اريد فيل')) return 'art/icon-feel.jpg';
+    if (ar.includes('هذه لولو') || ar === 'هذه لولو') return 'art/icon-lulu.jpg';
+    if (ar.includes('لولو صغيره')) return 'art/icon-saghira.jpg';
+    if (ar.includes('ماذا تريد يا لولو')) return 'art/icon-lulu.jpg';
+    if (ar.includes('فيل مع لولو')) return 'art/feel-dar/02.jpg';
+    if (ar.includes('فيل')) return 'art/icon-feel.jpg';
     if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
-    if (ar.includes('دار')) return 'art/bayt1-1.jpg';
     return 'art/feel-dar/cover.jpg';
   }
 
@@ -878,8 +887,9 @@ function getStoryPageImage(s, idx) {
     if (ar.includes('باب')) return 'art/icon-bab.jpg';
     if (ar.includes('سماء')) return 'art/icon-samaa.jpg';
     if (ar.includes('غراب')) return 'art/icon-ghurab.jpg';
+    if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
     if (idx % 2 === 0) return 'art/lulu-ghurab.jpg';
-    return 'art/lulu-2.jpg';
+    return 'art/icon-lulu.jpg';
   }
 
   // --- Series: Juha ---
