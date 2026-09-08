@@ -751,13 +751,137 @@ function getStoryCover(s) {
   return 'art/bayt1-cover.jpg';
 }
 
+function getStoryPageImage(s, idx) {
+  if (!s) return 'art/bayt1-cover.jpg';
+  const line = (s.lines && s.lines[idx]) ? s.lines[idx].ar : '';
+
+  if (s.id === 'lulu-jaia') {
+    if (idx === 1) return 'art/bayt1-1.jpg';
+    if (idx === 3 || line.includes('لَبَن')) return 'art/lulu-jaia/02.jpg';
+    if (line.includes('مَاء')) return 'art/madha1-2.jpg';
+    if (line.includes('عَصِير')) return 'art/madha1-4.jpg';
+    if (line.includes('بَابَا كَبِير')) return 'art/baba-couch.webp';
+    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
+    if (line.includes('صَغِيرَة')) return 'art/lulu1-1.jpg';
+    if (line.includes('مَعَ بَابَا')) return 'art/bayt1-6.jpg';
+    if (idx % 2 === 0) return 'art/lulu-2.jpg';
+    return 'art/lulu-3.jpg';
+  }
+  if (s.id === 'feel-dar') {
+    if (idx === 0 || idx === 1 || line.includes('فِيل فِي دَار')) return 'art/feel-dar/02.jpg';
+    if (line.includes('مَاء')) return 'art/madha1-2.jpg';
+    if (line.includes('دَار صَغِيرَة') || line.includes('صَغِيرَة')) return 'art/icon-saghira.jpg';
+    if (line.includes('فِيل كَبِير') || line.includes('كَبِير')) return 'art/icon-kabir.jpg';
+    if (line.includes('لُولُو')) return 'art/lulu1-1.jpg';
+    if (line.includes('دَار')) return 'art/bayt1-1.jpg';
+    return 'art/feel-dar/cover.jpg';
+  }
+  if (s.id === 'ayna-mama') {
+    if (idx === 0 || line.includes('مَرْيَم فِي الْبَيْت')) return 'art/bayt1-3.jpg';
+    if (line.includes('مَطْبَخ')) return 'art/bayt1-2.jpg';
+    if (line.includes('كِتَاب')) return 'art/bayt1-5.jpg';
+    if (line.includes('بَابَا')) return 'art/baba-couch.webp';
+    if (line.includes('حَدِيقَة')) return 'art/bayt1-1.jpg';
+    if (line.includes('شَجَرَة')) return 'art/icon-shajarah.jpg';
+    if (line.includes('غُرَاب')) return 'art/lulu-ghurab.jpg';
+    if (line.includes('مَرْيَم')) return 'art/ayna-mama/02.jpg';
+    return 'art/ayna-mama/cover.jpg';
+  }
+  if (s.id === 'shams-qamar') {
+    if (line.includes('شَمْس') && line.includes('قَمَر')) return 'art/shams-qamar/02.jpg';
+    if (line.includes('قَمَر')) return 'art/qamar1-1.jpg';
+    if (line.includes('نُور')) return 'art/qamar1-4.jpg';
+    if (line.includes('سَمَاء')) return 'art/qamar1-5.jpg';
+    if (line.includes('نَوْم')) return 'art/qamar1-6.jpg';
+    return 'art/shams-qamar/cover.jpg';
+  }
+  if (s.id === 'man-qala') {
+    if (line.includes('مِيَاو') || line.includes('قِطَّة')) return 'art/lulu-1.jpg';
+    if (line.includes('كَلْب')) return 'art/man-qala/cover.jpg';
+    if (line.includes('بَطَّة') || line.includes('دِيك')) return 'art/arnab1-2.jpg';
+    if (line.includes('ضِفْدَع')) return 'art/arnab1-5.jpg';
+    if (line.includes('فَأْر')) return 'art/kalila.jpg';
+    return 'art/man-qala/cover.jpg';
+  }
+  if (s.id === 'yawm-maryam') {
+    if (idx === 0 || line.includes('صَبَاح')) return 'art/yawmi1-1.jpg';
+    if (line.includes('مَطْبَخ') || line.includes('أَكَلَ')) return 'art/bayt1-2.jpg';
+    if (line.includes('لَعِبَ') || line.includes('مَرْيَم')) return 'art/bayt1-3.jpg';
+    if (line.includes('كِتَاب') || line.includes('بَابَا')) return 'art/baba-couch.webp';
+    if (line.includes('نَوْم') || line.includes('لَيْل')) return 'art/yawmi1-4.jpg';
+    return 'art/yawm-maryam/cover.jpg';
+  }
+
+  if (s.id === 'ts-ana') {
+    if (idx === 0) return 'art/ana-adam.jpg';
+    if (line.includes('مَامَا')) return 'art/ayna-mama/cover.jpg';
+    if (line.includes('بَابَا')) return 'art/icon-baba.jpg';
+    if (line.includes('لُولُو صَغِيرَة')) return 'art/icon-saghira.jpg';
+    if (line.includes('لُولُو')) return 'art/icon-lulu.jpg';
+    if (line.includes('جَائِع')) return 'art/bayt1-2.jpg';
+    if (line.includes('مَاء')) return 'art/madha1-2.jpg';
+    if (line.includes('عَصِير')) return 'art/madha1-4.jpg';
+    if (line.includes('سَعِيد')) return 'art/icon-adam.jpg';
+    return 'art/ana-adam.jpg';
+  }
+  if (s.id === 'ts-yawm') {
+    if (line.includes('مَطْبَخ')) return 'art/bayt1-2.jpg';
+    if (line.includes('مَرْيَم')) return 'art/bayt1-3.jpg';
+    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
+    if (line.includes('كِتَاب')) return 'art/bayt1-5.jpg';
+    if (line.includes('مَائِدَة')) return 'art/bayt1-2.jpg';
+    if (line.includes('لُولُو')) return 'art/lulu1-1.jpg';
+    return 'art/bayt1-cover.jpg';
+  }
+  if (s.id === 'ts-khubz') {
+    if (line.includes('أُمِّي') || line.includes('مَامَا')) return 'art/ayna-mama/cover.jpg';
+    if (line.includes('أَدَم')) return 'art/icon-adam.jpg';
+    if (line.includes('مَرْيَم')) return 'art/bayt1-3.jpg';
+    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
+    if (line.includes('لُولُو') || line.includes('خُبْز')) return 'art/lulu-cover.jpg';
+    return 'art/lulu-cover.jpg';
+  }
+  if (s.id === 'ts-suq') {
+    if (line.includes('سُوق')) return 'art/madha1-cover.jpg';
+    if (line.includes('شُوكُولَاتَة')) return 'art/madha1-4.jpg';
+    if (line.includes('حَقِيبَة')) return 'art/haqiba.jpg';
+    return 'art/madha1-cover.jpg';
+  }
+  if (s.id === 'ts-samak') {
+    if (idx === 0) return 'art/samak.jpg';
+    if (line.includes('سَمَك')) return 'art/samak.jpg';
+    if (line.includes('نَهْر') || line.includes('مَاء')) return 'art/arnab1-7.jpg';
+    if (line.includes('لُولُو')) return 'art/lulu-1.jpg';
+    return 'art/samak.jpg';
+  }
+  if (s.id === 'ts-haqiba') {
+    if (line.includes('حَقِيبَة')) return 'art/haqiba.jpg';
+    if (line.includes('غُرْفَة')) return 'art/bayt1-3.jpg';
+    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
+    return 'art/haqiba.jpg';
+  }
+  if (s.series === 'lulu-ghurab') {
+    if (line.includes('شَجَرَة')) return 'art/icon-shajarah.jpg';
+    if (idx % 2 === 0) return 'art/lulu-ghurab.jpg';
+    return 'art/lulu-2.jpg';
+  }
+  if (s.series === 'juha') {
+    return 'art/juha.jpg';
+  }
+  if (s.series === 'kalila') {
+    if (line.includes('أَسَد')) return 'art/icon-asad.jpg';
+    if (line.includes('أَرْنَب')) return 'art/arnab1-1.jpg';
+    if (line.includes('قِرْد')) return 'art/arnab1-2.jpg';
+    return 'art/kalila.jpg';
+  }
+
+  return getStoryCover(s);
+}
+
 /* what a series is called, for the shelf heading */
 const SERIES_META = {
   'lulu-ghurab': { title: 'لُولُو وَالْغُرَاب', titleEn: 'Lulu and the Crow', icon: '🐱🐦‍⬛' },
   'juha': { title: 'نَوَادِر جُحَا', titleEn: "Juha's Tales", icon: '👳‍♂️🫏', label: 'funny Arabic tales' },
-  /* label overrides "a series" — Kalila is a BOOK of separate fables, not six
-     episodes of one running joke, and calling it a series would be a small lie
-     to a child who later picks the real thing up. */
   'kalila': { title: 'كَلِيلَة وَدِمْنَة', titleEn: 'Kalila wa Dimna', icon: '🦁🐇', label: 'old fables, retold' },
 };
 
@@ -765,5 +889,5 @@ if (typeof renderShelf === 'function' && typeof document !== 'undefined'
     && document.querySelector && document.querySelector('#bookGrid')) renderShelf();
 
 if (typeof module !== 'undefined' && module.exports)
-  module.exports = { TEXT_STORIES, SERIES_LULU, JUHA, KALILA, PATH_STORIES, SERIES_META, getStoryCover };
+  module.exports = { TEXT_STORIES, SERIES_LULU, JUHA, KALILA, PATH_STORIES, SERIES_META, getStoryCover, getStoryPageImage };
 

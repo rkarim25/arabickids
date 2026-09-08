@@ -1,29 +1,17 @@
-/* ————— Hikayat · reading a story with no pictures ————————————————————————
-   The reader for stories-text.js. It is deliberately plainer than the picture
-   reader: no scene, no page-turn animation, nothing moving. On this shelf the
-   words are the only thing on the page, and anything else competing with them
-   is working against the point.
-
-   What replaces the illustration:
-     · every LINE plays, and every WORD in it is its own tap;
-     · the meaning sits under the Arabic with a gap, spoken on tap;
-     · ▶️ reads the whole story aloud, line by line, highlighting as it goes —
-       the same autoplay the surahs got, because a child who wants to follow
-       along rather than work should be able to;
-     · finishing earns a star, and the story can be read again forever.
-
-   Lives inside 📖 الكُتُب as a second shelf rather than a new door: the site is
-   at its five-door ceiling (DESIGN.md §2) and a sixth would be the beginning of
-   the sprawl that rule exists to prevent.
+/* ————— Hikayat · قِرَاءَة الْقِصَص — Illustrated Children's Book Reader ————————
+   Every book now features rich watercolor scene illustrations on EVERY page,
+   not just the cover. Children can read page-by-page with audio highlighting,
+   autoplay, and seamless forward book navigation.
    ========================================================================= */
 'use strict';
 
-let tsStory = null, tsLine = 0;
+let tsStory = null, tsPage = 0;
+let tsViewMode = 'pages'; // 'pages' (default child-friendly picture book) or 'list'
 const TAUTO = { on: false, timer: null };
 
 function openTextStory(id) {
   tsStory = TEXT_STORIES.find(s => s.id === id);
-  tsLine = 0;
+  tsPage = 0;
   stopTextAuto();
   renderTextStory();
   show('textStory');
@@ -38,8 +26,67 @@ function stopTextAuto() {
 
 function renderTextStory() {
   const s = tsStory;
+  if (!s) return;
   const host = document.getElementById('textStory');
   const lv = LEVELS[s.level - 1];
+  const totalPages = s.lines.length;
+  const curLine = s.lines[tsPage] || s.lines[0];
+
+  let contentHtml = '';
+
+  if (tsViewMode === 'pages') {
+    const lineImg = typeof getStoryPageImage === 'function' ? getStoryPageImage(s, tsPage) : getStoryCover(s);
+    contentHtml = `
+      <div class="ts-page-card">
+        <div class="ts-page-scene" id="tsPageScene">
+          <img id="tsPageImg" src="${lineImg}" alt="${s.title}" loading="lazy" onerror="this.src='${getStoryCover(s)}'">
+        </div>
+        <div class="ts-textbar">
+          <p class="ts-ar-lead" id="tsLineAr">
+            ${curLine.ar.split(/\s+/).filter(Boolean)
+              .map((w, j) => `<span class="tw-w" data-l="${tsPage}" data-w="${j}">${w}</span>`).join(' ')}
+          </p>
+          <p class="ts-en-lead" id="tsLineEn">${curLine.en}</p>
+          <div class="ts-audio-row">
+            <button class="ts-play-btn" id="tsPlayLine">🔊 <span>اِسْمَعْ · Listen</span></button>
+            <button class="round" id="tsSlowLine" title="Slowly">🐢</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sent-nav-bar" style="margin-top:20px;">
+        <button class="sent-btn-nav" id="tsPrevPage" ${tsPage === 0 ? 'disabled' : ''} aria-label="Previous Page">
+          <span class="sn-en">← Previous</span>
+          <span class="sn-ar">السَّابِق</span>
+        </button>
+        <button class="sent-btn-nav primary" id="tsNextPage" aria-label="Next Page">
+          <span class="sn-ar">${tsPage === totalPages - 1 ? '🎉 النِّهَايَة' : 'الصَّفْحَة التَّالِيَة'}</span>
+          <span class="sn-en">${tsPage === totalPages - 1 ? 'Finish Book →' : 'Next Page →'}</span>
+        </button>
+      </div>`;
+  } else {
+    // List view: all lines with illustrated thumbnail for every single page
+    contentHtml = `
+      <div class="ts-list-wrap" id="tsPage">
+        ${s.lines.map((l, i) => {
+          const thumbImg = typeof getStoryPageImage === 'function' ? getStoryPageImage(s, i) : getStoryCover(s);
+          return `
+          <div class="ts-line-card ${i === tsPage ? 'lit' : ''}" data-i="${i}">
+            <div class="ts-line-thumb">
+              <img src="${thumbImg}" alt="${s.title}" loading="lazy" onerror="this.src='${getStoryCover(s)}'">
+            </div>
+            <div class="ts-line-body">
+              <p class="ts-ar">${l.ar.split(/\s+/).filter(Boolean)
+                .map((w, j) => `<span class="tw-w" data-l="${i}" data-w="${j}">${w}</span>`).join(' ')}</p>
+              <p class="ts-en" data-i="${i}">${l.en}</p>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="lesson-nav" style="margin-top:24px;">
+        <button class="round big" id="tsDone" aria-label="Finished">🏁</button>
+      </div>`;
+  }
 
   host.innerHTML = `
     <header class="page-head">
@@ -57,26 +104,13 @@ function renderTextStory() {
     <div class="ts-bar">
       <span class="band-chip" style="background:${lv.color};color:${lv.ink}">
         المستوى ${AR_NUM[s.level]} · ${lv.nameEn}</span>
-      <button class="round" id="tsAuto" title="Read the whole story">▶️</button>
+      <div class="ts-page-pill">${tsViewMode === 'pages' ? `صفحة ${tsPage + 1} من ${totalPages}` : `${totalPages} صَفَحَات`}</div>
+      <button class="round ${TAUTO.on ? 'on' : ''}" id="tsAuto" title="Read the whole story">${TAUTO.on ? '⏸' : '▶️'}</button>
       <button class="round sm" id="tsMode" title="${LISTEN_LABEL[listenMode()].en}">${listenMode() === 'ar' ? '🇸🇦' : listenMode() === 'en' ? '🌍' : '🔁'}</button>
+      <button class="round sm" id="tsViewToggle" title="Toggle Page or List view">${tsViewMode === 'pages' ? '📜' : '📖'}</button>
     </div>
 
-    <div class="ts-art-scene">
-      <img id="tsArtImg" src="${typeof getStoryCover === 'function' ? getStoryCover(s) : (s.art && s.art.file ? `${s.art.dir}/${s.art.file}` : `${s.art ? s.art.dir : 'art'}/cover.jpg`)}" alt="${s.title}" loading="lazy" onerror="this.parentElement.style.display='none'">
-    </div>
-
-    <div class="ts-page" id="tsPage">
-      ${s.lines.map((l, i) => `
-        <div class="ts-line" data-i="${i}">
-          <p class="ts-ar">${l.ar.split(/\s+/).filter(Boolean)
-            .map((w, j) => `<span class="tw-w" data-l="${i}" data-w="${j}">${w}</span>`).join(' ')}</p>
-          <p class="ts-en" data-i="${i}">${l.en}</p>
-        </div>`).join('')}
-    </div>
-
-    <div class="lesson-nav">
-      <button class="round big" id="tsDone" aria-label="Finished">🏁</button>
-    </div>`;
+    ${contentHtml}`;
 
   document.getElementById('tsBack').addEventListener('click', () => { stopTextAuto(); show('shelf'); });
   document.getElementById('tsAuto').addEventListener('click', () => TAUTO.on ? stopTextAuto() : startTextAuto());
@@ -86,56 +120,84 @@ function renderTextStory() {
     stopTextAuto(); renderTextStory();
     if (was) startTextAuto();
   });
-  document.getElementById('tsDone').addEventListener('click', finishTextStory);
+  document.getElementById('tsViewToggle').addEventListener('click', () => {
+    tsViewMode = (tsViewMode === 'pages' ? 'list' : 'pages');
+    renderTextStory();
+  });
 
-  /* a whole line */
-  host.querySelectorAll('.ts-ar').forEach((el, i) =>
-    el.addEventListener('click', () => { litLine(i); say(s.lines[i].ar); }));
-  /* one word inside it — the tap that matters when there is no picture */
+  if (tsViewMode === 'pages') {
+    const speakPage = (slow = false) => {
+      if (slow) saySlow(curLine.ar);
+      else say(curLine.ar);
+    };
+    document.getElementById('tsPlayLine').addEventListener('click', () => speakPage(false));
+    document.getElementById('tsSlowLine').addEventListener('click', () => speakPage(true));
+    document.getElementById('tsLineEn').addEventListener('click', () => sayEn(curLine.en));
+    document.getElementById('tsPageScene').addEventListener('click', () => speakPage(false));
+
+    document.getElementById('tsPrevPage').addEventListener('click', () => {
+      if (tsPage > 0) { tsPage--; renderTextStory(); }
+    });
+    document.getElementById('tsNextPage').addEventListener('click', () => {
+      if (tsPage < totalPages - 1) {
+        tsPage++; renderTextStory();
+      } else {
+        finishTextStory();
+      }
+    });
+
+    if (!TAUTO.on) {
+      setTimeout(() => speakPage(false), 350);
+    }
+  } else {
+    const doneBtn = document.getElementById('tsDone');
+    if (doneBtn) doneBtn.addEventListener('click', finishTextStory);
+
+    host.querySelectorAll('.ts-line-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const i = +card.dataset.i;
+        tsPage = i;
+        litLine(i);
+        say(s.lines[i].ar);
+      });
+    });
+    host.querySelectorAll('.ts-en').forEach((el, i) =>
+      el.addEventListener('click', ev => { ev.stopPropagation(); sayEn(s.lines[i].en); }));
+  }
+
+  /* tap individual words in either mode */
   host.querySelectorAll('.tw-w').forEach(el => el.addEventListener('click', ev => {
     ev.stopPropagation();
     const line = s.lines[+el.dataset.l];
-    const word = line.ar.split(/\s+/).filter(Boolean)[+el.dataset.w];
+    const words = line.ar.split(/\s+/).filter(Boolean);
+    const word = words[+el.dataset.w];
     el.classList.add('said'); setTimeout(() => el.classList.remove('said'), 800);
     saySlow(word);
   }));
-  /* the meaning */
-  host.querySelectorAll('.ts-en').forEach((el, i) =>
-    el.addEventListener('click', () => sayEn(s.lines[i].en)));
 }
 
 function litLine(i) {
-  document.querySelectorAll('.ts-line').forEach(el => el.classList.remove('lit'));
-  const el = document.querySelector(`.ts-line[data-i="${i}"]`);
+  document.querySelectorAll('.ts-line-card').forEach(el => el.classList.remove('lit'));
+  const el = document.querySelector(`.ts-line-card[data-i="${i}"]`);
   if (el) { el.classList.add('lit'); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
-  if (tsStory && tsStory.art && tsStory.art.dir) {
-    const img = document.getElementById('tsArtImg');
-    if (img) {
-      const lineImg = `${tsStory.art.dir}/${String(i + 1).padStart(2, '0')}.jpg`;
-      img.src = lineImg;
-    }
-  }
 }
 
-/* Read the whole thing: Arabic, then its meaning, then the next line — unless
-   the 🌍 button says otherwise. Reza asked for Arabic only and English only
-   (2026-08-31); the setting is shared with the surah reader and lives in
-   audio.js, because a family that wants Arabic only wants it everywhere. */
 function startTextAuto() {
-  TAUTO.on = true; tsLine = 0;
+  TAUTO.on = true;
   const b = document.getElementById('tsAuto');
   if (b) { b.textContent = '⏸'; b.classList.add('on'); }
+
   const step = () => {
     if (!TAUTO.on) return;
-    if (tsLine >= tsStory.lines.length) { stopTextAuto(); finishTextStory(); return; }
+    if (tsPage >= tsStory.lines.length) { stopTextAuto(); finishTextStory(); return; }
 
     /* Checkpoint pause every 6 lines when the Path is active */
-    if (typeof pathActive === 'function' && pathActive() && tsLine > 0 && tsLine % 6 === 0) {
+    if (typeof pathActive === 'function' && pathActive() && tsPage > 0 && tsPage % 6 === 0) {
       stopTextAuto();
       if (typeof showStoryCheckpoint === 'function') {
         showStoryCheckpoint(
           () => { startTextAuto(); },
-          () => { tsLine = Math.max(0, tsLine - 6); startTextAuto(); },
+          () => { tsPage = Math.max(0, tsPage - 6); startTextAuto(); },
           () => {
             if (typeof pathStopDone === 'function') pathStopDone('story:' + tsStory.id);
           }
@@ -144,19 +206,26 @@ function startTextAuto() {
       return;
     }
 
-    const l = tsStory.lines[tsLine];
-    litLine(tsLine);
+    const l = tsStory.lines[tsPage];
+    renderTextStory();
+
     const meaningThenOn = () => {
       if (!TAUTO.on) return;
-      if (!sayEnglishToo()) { tsLine++; return step(); }
+      if (!sayEnglishToo()) {
+        tsPage++;
+        TAUTO.timer = setTimeout(step, 1400);
+        return;
+      }
       sayEn(l.en);
-      TAUTO.timer = setTimeout(() => { tsLine++; step(); }, 3200);
+      TAUTO.timer = setTimeout(() => { tsPage++; step(); }, 3200);
     };
+
     if (sayArabicToo()) {
       say(l.ar);
       TAUTO.timer = setTimeout(meaningThenOn, 3200);
     } else meaningThenOn();
   };
+
   step();
 }
 
@@ -191,6 +260,6 @@ function finishTextStory() {
       openTextStory(nextStory.id);
     });
   }
-  document.getElementById('tsAgain').addEventListener('click', () => { tsLine = 0; renderTextStory(); });
+  document.getElementById('tsAgain').addEventListener('click', () => { tsPage = 0; renderTextStory(); });
   document.getElementById('tsShelf').addEventListener('click', () => show('shelf'));
 }
