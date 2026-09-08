@@ -96,40 +96,76 @@ function recordSentReview(key, passed) {
   if (typeof logRecall === 'function') logRecall('sent:' + key, passed);
 }
 
-/* Map sentence theme or pic to authentic story watercolor illustrations */
+/* Map sentence text and meaning accurately to dedicated soft watercolor art */
+function normArSent(s) {
+  return (s || '')
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .trim();
+}
+
+function getSentenceArtSrc(L, set) {
+  const ar = normArSent(L.ar);
+  const en = (L.en || '').toLowerCase();
+  const pic = L.pic || '';
+
+  // 1. Explicit curriculum pic tags
+  if (pic === 'mama-adam') return 'art/ayna-mama/cover.jpg';
+  if (pic === 'adam-lulu') return 'art/icon-adam.jpg';
+  if (pic === 'dar-cozy') return 'art/icon-bayt.jpg';
+  if (pic === 'toy-mine') return 'art/icon-hadha.jpg';
+  if (pic === 'kitab-boy' || pic === 'kitab-kabir') return 'art/icon-kitab.jpg';
+  if (pic === 'ball-girl') return 'art/icon-bayt.jpg';
+  if (pic === 'feel-kabir') return 'art/icon-feel.jpg';
+  if (pic === 'faar-saghir') return 'art/icon-faar.jpg';
+  if (pic === 'alhamd-dua') return 'art/icon-futur.jpg';
+  if (pic === 'bismillah-meal') return 'art/icon-taam.jpg';
+  if (pic === 'boy-dua') return 'art/icon-masjid.jpg';
+
+  // 2. Specific exact sentences
+  if (ar.includes('لولو فوق بابا')) return 'art/baba-couch.webp';
+  if (ar.includes('فيل في البيت')) return 'art/feel-dar/02.jpg';
+  if (ar.includes('ادم ومريم في البيت')) return 'art/bayt1-3.jpg';
+  if (ar.includes('الكتاب فوق المائده')) return 'art/icon-fawqa.jpg';
+  if (ar.includes('لولو في البيت')) return 'art/icon-fee.jpg';
+  if (ar.includes('لولو صغيره')) return 'art/icon-saghira.jpg';
+  if (ar.includes('القمر جميل')) return 'art/icon-qamar.jpg';
+  if (ar.includes('احب امي') || en.includes('mother')) return 'art/ayna-mama/cover.jpg';
+  if (ar.includes('عصير')) return 'art/icon-aseer.jpg';
+  if (ar.includes('فيل')) return 'art/icon-feel.jpg';
+  if (ar.includes('فار')) return 'art/icon-faar.jpg';
+
+  // 3. Riddles and vocabulary
+  if (ar.includes('ماء')) return 'art/icon-maa.jpg';
+  if (ar.includes('مطبخ')) return 'art/icon-matbakh.jpg';
+  if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+  if (ar.includes('كتاب') || ar.includes('اوراق') || ar.includes('يكتب')) return 'art/icon-kitab.jpg';
+  if (ar.includes('يبكي') || ar.includes('سحاب')) return 'art/icon-sahab.jpg';
+  if (ar.includes('عين')) return 'art/icon-ayn.jpg';
+  if (ar.includes('اسنان')) return 'art/icon-fursha.jpg';
+  if (ar.includes('باب')) return 'art/icon-bab.jpg';
+  if (ar.includes('بيت') || ar.includes('دار')) return 'art/icon-bayt.jpg';
+  if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
+  if (ar.includes('قمر')) return 'art/icon-qamar.jpg';
+  if (ar.includes('شمس')) return 'art/icon-shams.jpg';
+  if (ar.includes('مسجد') || ar.includes('احمد الله')) return 'art/icon-masjid.jpg';
+  if (ar.includes('طعام') || ar.includes('بسم الله')) return 'art/icon-taam.jpg';
+  if (ar.includes('الحمد لله')) return 'art/icon-futur.jpg';
+  if (ar.includes('ادم')) return 'art/icon-adam.jpg';
+  if (ar.includes('مريم')) return 'art/icon-bint.jpg';
+
+  if (en.includes('how are you') || ar.includes('كيف حالك')) return 'art/icon-adam.jpg';
+  if (en.includes('what do you want') || ar.includes('ماذا تريد')) return 'art/icon-madha.jpg';
+  if (en.includes('i am here') || ar.includes('انا هنا')) return 'art/icon-adam.jpg';
+
+  return 'art/icon-bayt.jpg';
+}
+
 function getSentenceArt(L, set) {
-  const p = L.pic || '';
-  if (p === 'mama-adam' || p === 'dar-cozy') {
-    return `<div class="sent-art-wrap"><img src="art/ayna-mama/cover.jpg" alt="Mama & Adam" class="sent-art-img"/></div>`;
-  }
-  if (p === 'adam-lulu') {
-    return `<div class="sent-art-wrap"><img src="art/yawm-maryam/cover.jpg" alt="Adam & Lulu" class="sent-art-img"/></div>`;
-  }
-  if (p === 'toy-mine' || p === 'kitab-boy' || p === 'ball-girl') {
-    return `<div class="sent-art-wrap"><img src="art/lulu-jaia/cover.jpg" alt="Story" class="sent-art-img"/></div>`;
-  }
-  if (p === 'feel-kabir' || p === 'faar-saghir' || p === 'kitab-kabir') {
-    return `<div class="sent-art-wrap"><img src="art/feel-dar/cover.jpg" alt="Elephant & House" class="sent-art-img"/></div>`;
-  }
-  if (p === 'alhamd-dua' || p === 'bismillah-meal' || p === 'boy-dua') {
-    return `<div class="sent-art-wrap"><img src="art/shams-qamar/cover.jpg" alt="Sun & Moon" class="sent-art-img"/></div>`;
-  }
-  if (set && (set.id === 'this' || set.id === 'me')) {
-    return `<div class="sent-art-wrap"><img src="art/lulu-jaia/cover.jpg" alt="Lulu" class="sent-art-img"/></div>`;
-  }
-  if (set && (set.id === 'where' || set.id === 'who')) {
-    return `<div class="sent-art-wrap"><img src="art/ayna-mama/cover.jpg" alt="Where is Mama" class="sent-art-img"/></div>`;
-  }
-  if (set && set.id === 'describe') {
-    return `<div class="sent-art-wrap"><img src="art/shams-qamar/cover.jpg" alt="Sun & Moon" class="sent-art-img"/></div>`;
-  }
-  if (set && (set.id === 'funny' || set.id === 'funny3')) {
-    return `<div class="sent-art-wrap"><img src="art/feel-dar/cover.jpg" alt="Elephant in house" class="sent-art-img"/></div>`;
-  }
-  if (set && (set.id === 'ask' || set.id === 'said' || set.id === 'have')) {
-    return `<div class="sent-art-wrap"><img src="art/man-qala/cover.jpg" alt="Who said meow" class="sent-art-img"/></div>`;
-  }
-  return `<div class="sent-art-wrap"><img src="art/yawm-maryam/cover.jpg" alt="Scene" class="sent-art-img"/></div>`;
+  const src = getSentenceArtSrc(L, set);
+  return `<div class="sent-art-wrap"><img src="${src}" alt="${L.en || ''}" class="sent-art-img"/></div>`;
 }
 
 let sentSet = null;      // the set being worked through

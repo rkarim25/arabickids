@@ -751,128 +751,238 @@ function getStoryCover(s) {
   return 'art/bayt1-cover.jpg';
 }
 
+function normArStory(s) {
+  return (s || '')
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .trim();
+}
+
+function hasArWord(ar, ...targets) {
+  const words = ar.replace(/[.,!؟،؛:]/g, ' ').split(/\s+/).filter(Boolean);
+  return targets.some(t => {
+    return words.some(w => {
+      if (w === t) return true;
+      if (w === 'ال' + t) return true;
+      if (w === 'و' + t || w === 'ف' + t || w === 'ل' + t || w === 'ب' + t) return true;
+      if (w === 'وال' + t || w === 'فال' + t || w === 'بال' + t) return true;
+      return false;
+    });
+  });
+}
+
 function getStoryPageImage(s, idx) {
   if (!s) return 'art/bayt1-cover.jpg';
   const line = (s.lines && s.lines[idx]) ? s.lines[idx].ar : '';
+  const ar = normArStory(line);
 
+  // --- Story-specific handlers ---
   if (s.id === 'lulu-jaia') {
-    if (idx === 1) return 'art/bayt1-1.jpg';
-    if (idx === 3 || line.includes('لَبَن')) return 'art/lulu-jaia/02.jpg';
-    if (line.includes('مَاء')) return 'art/madha1-2.jpg';
-    if (line.includes('عَصِير')) return 'art/madha1-4.jpg';
-    if (line.includes('بَابَا كَبِير')) return 'art/baba-couch.webp';
-    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
-    if (line.includes('صَغِيرَة')) return 'art/lulu1-1.jpg';
-    if (line.includes('مَعَ بَابَا')) return 'art/bayt1-6.jpg';
+    if (idx === 0) return 'art/lulu-jaia/cover.jpg';
+    if (ar.includes('لبن')) return 'art/lulu-jaia/02.jpg';
+    if (ar.includes('ماء')) return 'art/madha1-2.jpg';
+    if (ar.includes('عصير')) return 'art/madha1-4.jpg';
+    if (ar.includes('بابا كبير')) return 'art/baba-couch.webp';
+    if (ar.includes('مع بابا') || ar.includes('بابا')) return 'art/bayt1-4.jpg';
+    if (ar.includes('ادم')) return 'art/icon-adam.jpg';
+    if (ar.includes('صغيره')) return 'art/icon-saghira.jpg';
     if (idx % 2 === 0) return 'art/lulu-2.jpg';
     return 'art/lulu-3.jpg';
   }
+
   if (s.id === 'feel-dar') {
-    if (idx === 0 || idx === 1 || line.includes('فِيل فِي دَار')) return 'art/feel-dar/02.jpg';
-    if (line.includes('مَاء')) return 'art/madha1-2.jpg';
-    if (line.includes('دَار صَغِيرَة') || line.includes('صَغِيرَة')) return 'art/icon-saghira.jpg';
-    if (line.includes('فِيل كَبِير') || line.includes('كَبِير')) return 'art/icon-kabir.jpg';
-    if (line.includes('لُولُو')) return 'art/lulu1-1.jpg';
-    if (line.includes('دَار')) return 'art/bayt1-1.jpg';
+    if (idx === 0 || idx === 1 || ar.includes('فيل في دار')) return 'art/feel-dar/02.jpg';
+    if (ar.includes('ماء')) return 'art/madha1-2.jpg';
+    if (ar.includes('دار صغيره') || ar.includes('صغيره')) return 'art/icon-saghira.jpg';
+    if (ar.includes('فيل كبير') || ar.includes('كبير')) return 'art/icon-kabir.jpg';
+    if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
+    if (ar.includes('دار')) return 'art/bayt1-1.jpg';
     return 'art/feel-dar/cover.jpg';
   }
+
   if (s.id === 'ayna-mama') {
-    if (idx === 0 || line.includes('مَرْيَم فِي الْبَيْت')) return 'art/bayt1-3.jpg';
-    if (line.includes('مَطْبَخ')) return 'art/bayt1-2.jpg';
-    if (line.includes('كِتَاب')) return 'art/bayt1-5.jpg';
-    if (line.includes('بَابَا')) return 'art/baba-couch.webp';
-    if (line.includes('حَدِيقَة')) return 'art/bayt1-1.jpg';
-    if (line.includes('شَجَرَة')) return 'art/icon-shajarah.jpg';
-    if (line.includes('غُرَاب')) return 'art/lulu-ghurab.jpg';
-    if (line.includes('مَرْيَم')) return 'art/ayna-mama/02.jpg';
+    if (idx === 0 || ar.includes('مريم في البيت')) return 'art/bayt1-3.jpg';
+    if (ar.includes('مطبخ')) return 'art/bayt1-2.jpg';
+    if (ar.includes('كتاب')) return 'art/bayt1-5.jpg';
+    if (ar.includes('سرير')) return 'art/icon-sarir.jpg';
+    if (ar.includes('تحت المائده')) return 'art/icon-tahta.jpg';
+    if (ar.includes('ماء')) return 'art/icon-maa.jpg';
+    if (ar.includes('بابا')) return 'art/baba-couch.webp';
+    if (ar.includes('حديقه')) return 'art/bayt1-1.jpg';
+    if (ar.includes('شجره')) return 'art/icon-shajarah.jpg';
+    if (ar.includes('غراب')) return 'art/lulu-ghurab.jpg';
+    if (ar.includes('غرفه')) return 'art/icon-ghurfa.jpg';
+    if (ar.includes('مريم')) return 'art/ayna-mama/02.jpg';
     return 'art/ayna-mama/cover.jpg';
   }
+
   if (s.id === 'shams-qamar') {
-    if (line.includes('شَمْس') && line.includes('قَمَر')) return 'art/shams-qamar/02.jpg';
-    if (line.includes('قَمَر')) return 'art/qamar1-1.jpg';
-    if (line.includes('نُور')) return 'art/qamar1-4.jpg';
-    if (line.includes('سَمَاء')) return 'art/qamar1-5.jpg';
-    if (line.includes('نَوْم')) return 'art/qamar1-6.jpg';
+    if (idx === 0 || (ar.includes('شمس') && ar.includes('سماء'))) return 'art/shams-qamar/02.jpg';
+    if (ar.includes('سوق')) return 'art/madha1-cover.jpg';
+    if (ar.includes('موز')) return 'art/icon-mawz.jpg';
+    if (ar.includes('خبز') || ar.includes('تفاح')) return 'art/icon-khubz.jpg';
+    if (ar.includes('جبل')) return 'art/icon-jabal.jpg';
+    if (ar.includes('ليل')) return 'art/icon-layl.jpg';
+    if (ar.includes('باب')) return 'art/icon-bab.jpg';
+    if (ar.includes('نجوم')) return 'art/icon-najm.jpg';
+    if (ar.includes('سله')) return 'art/icon-fee.jpg';
+    if (ar.includes('قمر')) return 'art/qamar1-1.jpg';
+    if (ar.includes('نوم')) return 'art/qamar1-6.jpg';
     return 'art/shams-qamar/cover.jpg';
   }
+
   if (s.id === 'man-qala') {
-    if (line.includes('مِيَاو') || line.includes('قِطَّة')) return 'art/lulu-1.jpg';
-    if (line.includes('كَلْب')) return 'art/man-qala/cover.jpg';
-    if (line.includes('بَطَّة') || line.includes('دِيك')) return 'art/arnab1-2.jpg';
-    if (line.includes('ضِفْدَع')) return 'art/arnab1-5.jpg';
-    if (line.includes('فَأْر')) return 'art/kalila.jpg';
+    if (ar.includes('مياو') && ar.includes('مريم')) return 'art/icon-bint.jpg';
+    if (ar.includes('مياو') || ar.includes('قطه')) return 'art/lulu-1.jpg';
+    if (ar.includes('كلب')) return 'art/man-qala/cover.jpg';
+    if (ar.includes('فيل')) return 'art/icon-feel.jpg';
+    if (ar.includes('صندوق')) return 'art/icon-sundooq.jpg';
+    if (ar.includes('غرفه')) return 'art/icon-ghurfa.jpg';
+    if (ar.includes('بطه') || ar.includes('ديك')) return 'art/icon-dajaj.jpg';
+    if (ar.includes('ضفدع')) return 'art/icon-difda.jpg';
+    if (ar.includes('فار')) return 'art/icon-faar.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+    if (ar.includes('ماما')) return 'art/ayna-mama/cover.jpg';
+    if (ar.includes('ادم')) return 'art/icon-adam.jpg';
     return 'art/man-qala/cover.jpg';
   }
+
   if (s.id === 'yawm-maryam') {
-    if (idx === 0 || line.includes('صَبَاح')) return 'art/yawmi1-1.jpg';
-    if (line.includes('مَطْبَخ') || line.includes('أَكَلَ')) return 'art/bayt1-2.jpg';
-    if (line.includes('لَعِبَ') || line.includes('مَرْيَم')) return 'art/bayt1-3.jpg';
-    if (line.includes('كِتَاب') || line.includes('بَابَا')) return 'art/baba-couch.webp';
-    if (line.includes('نَوْم') || line.includes('لَيْل')) return 'art/yawmi1-4.jpg';
+    if (idx === 0 || (ar.includes('صباح') && ar.includes('نوم'))) return 'art/yawmi1-1.jpg';
+    if (ar.includes('مسجد')) return 'art/icon-masjid.jpg';
+    if (ar.includes('فطور')) return 'art/icon-futur.jpg';
+    if (ar.includes('طعام') || ar.includes('قبل الطعام')) return 'art/icon-taam.jpg';
+    if (ar.includes('خبز') || ar.includes('لبن')) return 'art/icon-khubz.jpg';
+    if (ar.includes('سرير') || ar.includes('نامت')) return 'art/icon-sarir.jpg';
+    if (ar.includes('ماما')) return 'art/ayna-mama/cover.jpg';
+    if (ar.includes('ليل')) return 'art/icon-layl.jpg';
+    if (ar.includes('قرا') || ar.includes('احد')) return 'art/icon-kitab.jpg';
+    if (ar.includes('لعب') || ar.includes('لولو')) return 'art/bayt1-3.jpg';
+    if (ar.includes('مريم')) return 'art/icon-bint.jpg';
     return 'art/yawm-maryam/cover.jpg';
   }
 
-  if (s.id === 'ts-ana') {
-    if (idx === 0) return 'art/ana-adam.jpg';
-    if (line.includes('مَامَا')) return 'art/ayna-mama/cover.jpg';
-    if (line.includes('بَابَا')) return 'art/icon-baba.jpg';
-    if (line.includes('لُولُو صَغِيرَة')) return 'art/icon-saghira.jpg';
-    if (line.includes('لُولُو')) return 'art/icon-lulu.jpg';
-    if (line.includes('جَائِع')) return 'art/bayt1-2.jpg';
-    if (line.includes('مَاء')) return 'art/madha1-2.jpg';
-    if (line.includes('عَصِير')) return 'art/madha1-4.jpg';
-    if (line.includes('سَعِيد')) return 'art/icon-adam.jpg';
-    return 'art/ana-adam.jpg';
-  }
-  if (s.id === 'ts-yawm') {
-    if (line.includes('مَطْبَخ')) return 'art/bayt1-2.jpg';
-    if (line.includes('مَرْيَم')) return 'art/bayt1-3.jpg';
-    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
-    if (line.includes('كِتَاب')) return 'art/bayt1-5.jpg';
-    if (line.includes('مَائِدَة')) return 'art/bayt1-2.jpg';
-    if (line.includes('لُولُو')) return 'art/lulu1-1.jpg';
-    return 'art/bayt1-cover.jpg';
-  }
-  if (s.id === 'ts-khubz') {
-    if (line.includes('أُمِّي') || line.includes('مَامَا')) return 'art/ayna-mama/cover.jpg';
-    if (line.includes('أَدَم')) return 'art/icon-adam.jpg';
-    if (line.includes('مَرْيَم')) return 'art/bayt1-3.jpg';
-    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
-    if (line.includes('لُولُو') || line.includes('خُبْز')) return 'art/lulu-cover.jpg';
-    return 'art/lulu-cover.jpg';
-  }
-  if (s.id === 'ts-suq') {
-    if (line.includes('سُوق')) return 'art/madha1-cover.jpg';
-    if (line.includes('شُوكُولَاتَة')) return 'art/madha1-4.jpg';
-    if (line.includes('حَقِيبَة')) return 'art/haqiba.jpg';
-    return 'art/madha1-cover.jpg';
-  }
-  if (s.id === 'ts-samak') {
-    if (idx === 0) return 'art/samak.jpg';
-    if (line.includes('سَمَك')) return 'art/samak.jpg';
-    if (line.includes('نَهْر') || line.includes('مَاء')) return 'art/arnab1-7.jpg';
-    if (line.includes('لُولُو')) return 'art/lulu-1.jpg';
-    return 'art/samak.jpg';
-  }
-  if (s.id === 'ts-haqiba') {
-    if (line.includes('حَقِيبَة')) return 'art/haqiba.jpg';
-    if (line.includes('غُرْفَة')) return 'art/bayt1-3.jpg';
-    if (line.includes('بَابَا')) return 'art/bayt1-4.jpg';
-    return 'art/haqiba.jpg';
-  }
+  // --- Series: Lulu & Crow ---
   if (s.series === 'lulu-ghurab') {
-    if (line.includes('شَجَرَة')) return 'art/icon-shajarah.jpg';
+    if (ar.includes('كعك')) return 'art/icon-kaka.jpg';
+    if (ar.includes('خبز')) return 'art/icon-khubz.jpg';
+    if (ar.includes('شجره')) return 'art/icon-shajarah.jpg';
+    if (ar.includes('صندوق')) return 'art/icon-sundooq.jpg';
+    if (ar.includes('ماء')) return 'art/icon-maa.jpg';
+    if (ar.includes('مطبخ')) return 'art/icon-matbakh.jpg';
+    if (ar.includes('مائده')) return 'art/icon-maidah.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+    if (ar.includes('ادم')) return 'art/icon-adam.jpg';
+    if (ar.includes('باب')) return 'art/icon-bab.jpg';
+    if (ar.includes('سماء')) return 'art/icon-samaa.jpg';
+    if (ar.includes('غراب')) return 'art/icon-ghurab.jpg';
     if (idx % 2 === 0) return 'art/lulu-ghurab.jpg';
     return 'art/lulu-2.jpg';
   }
+
+  // --- Series: Juha ---
   if (s.series === 'juha') {
+    if (ar.includes('حمار')) return 'art/juha.jpg';
+    if (ar.includes('كساء') || ar.includes('حساء')) return 'art/icon-kisaa.jpg';
+    if (ar.includes('وليمه') || ar.includes('طعام')) return 'art/icon-maidah.jpg';
+    if (ar.includes('مسمار') || ar.includes('حائط')) return 'art/icon-bayt.jpg';
+    if (ar.includes('سمك')) return 'art/samak.jpg';
+    if (ar.includes('سوق')) return 'art/madha1-cover.jpg';
     return 'art/juha.jpg';
   }
+
+  // --- Series: Kalila wa Dimna ---
   if (s.series === 'kalila') {
-    if (line.includes('أَسَد')) return 'art/icon-asad.jpg';
-    if (line.includes('أَرْنَب')) return 'art/arnab1-1.jpg';
-    if (line.includes('قِرْد')) return 'art/arnab1-2.jpg';
+    if (hasArWord(ar, 'قرد')) return 'art/icon-qird.jpg';
+    if (hasArWord(ar, 'سلحفاه')) return 'art/icon-sulahfah.jpg';
+    if (hasArWord(ar, 'بركه')) return 'art/icon-birkah.jpg';
+    if (hasArWord(ar, 'جرذ')) return 'art/icon-jardh.jpg';
+    if (hasArWord(ar, 'فار')) return 'art/icon-faar.jpg';
+    if (hasArWord(ar, 'حمامه', 'حمامات', 'مطوقه', 'طائر')) return 'art/icon-tayr.jpg';
+    if (hasArWord(ar, 'حبوب', 'حب')) return 'art/icon-huboob.jpg';
+    if (hasArWord(ar, 'تين')) return 'art/icon-teen.jpg';
+    if (hasArWord(ar, 'اسد')) return 'art/icon-asad.jpg';
+    if (hasArWord(ar, 'ارنب', 'ارانب')) return 'art/icon-arnab.jpg';
+    if (hasArWord(ar, 'فيل', 'فيله')) return 'art/icon-feel.jpg';
+    if (hasArWord(ar, 'ذئب')) return 'art/icon-dhib.jpg';
+    if (hasArWord(ar, 'دجاج', 'ديك', 'بطه', 'بطتان', 'بطتين')) return 'art/icon-dajaj.jpg';
+    if (hasArWord(ar, 'قمر')) return 'art/icon-qamar.jpg';
+    if (hasArWord(ar, 'نهر', 'ماء', 'بئر')) return 'art/arnab1-7.jpg';
+    if (hasArWord(ar, 'سماء')) return 'art/icon-samaa.jpg';
+    if (hasArWord(ar, 'ارض')) return 'art/icon-ard.jpg';
     return 'art/kalila.jpg';
+  }
+
+  // --- Standalone stories (ts-ana, ts-yawm, ts-khubz, ts-suq, ts-nawm, ts-samak, ts-haqiba, ts-jubn) ---
+  if (s.id === 'ts-ana') {
+    if (idx === 0) return 'art/ana-adam.jpg';
+    if (ar.includes('ماما')) return 'art/ayna-mama/cover.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+    if (ar.includes('لولو صغيره')) return 'art/icon-saghira.jpg';
+    if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
+    if (ar.includes('جائع')) return 'art/bayt1-2.jpg';
+    if (ar.includes('ماء')) return 'art/icon-maa.jpg';
+    if (ar.includes('عصير')) return 'art/icon-aseer.jpg';
+    if (ar.includes('سعيد')) return 'art/icon-adam.jpg';
+    return 'art/ana-adam.jpg';
+  }
+  if (s.id === 'ts-yawm') {
+    if (ar.includes('مطبخ')) return 'art/icon-matbakh.jpg';
+    if (ar.includes('غرفه')) return 'art/icon-ghurfa.jpg';
+    if (ar.includes('مريم')) return 'art/icon-bint.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+    if (ar.includes('كتاب')) return 'art/icon-kitab.jpg';
+    if (ar.includes('مائده')) return 'art/icon-maidah.jpg';
+    if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
+    return 'art/bayt1-cover.jpg';
+  }
+  if (s.id === 'ts-khubz') {
+    if (ar.includes('امي') || ar.includes('ماما')) return 'art/ayna-mama/cover.jpg';
+    if (ar.includes('ادم')) return 'art/icon-adam.jpg';
+    if (ar.includes('مريم')) return 'art/icon-bint.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+    if (ar.includes('مائده')) return 'art/icon-maidah.jpg';
+    if (ar.includes('لولو') || ar.includes('خبز')) return 'art/lulu-cover.jpg';
+    return 'art/lulu-cover.jpg';
+  }
+  if (s.id === 'ts-suq') {
+    if (ar.includes('شوكولاته')) return 'art/madha1-4.jpg';
+    if (ar.includes('حقيبه')) return 'art/haqiba.jpg';
+    if (ar.includes('خبز')) return 'art/icon-khubz.jpg';
+    if (ar.includes('سمك')) return 'art/samak.jpg';
+    if (ar.includes('سوق')) return 'art/madha1-cover.jpg';
+    return 'art/madha1-cover.jpg';
+  }
+  if (s.id === 'ts-nawm') {
+    if (ar.includes('ليل')) return 'art/icon-layl.jpg';
+    if (ar.includes('نوم') || ar.includes('نام')) return 'art/icon-sarir.jpg';
+    if (ar.includes('قرا') || ar.includes('احد')) return 'art/icon-kitab.jpg';
+    if (ar.includes('صباح') || ar.includes('الحمد لله')) return 'art/yawmi1-1.jpg';
+    return 'art/qamar1-cover.jpg';
+  }
+  if (s.id === 'ts-samak') {
+    if (ar.includes('سمك')) return 'art/samak.jpg';
+    if (ar.includes('نهر') || ar.includes('ماء')) return 'art/arnab1-7.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+    if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
+    return 'art/samak.jpg';
+  }
+  if (s.id === 'ts-haqiba') {
+    if (ar.includes('حقيبه')) return 'art/haqiba.jpg';
+    if (ar.includes('غرفه')) return 'art/icon-ghurfa.jpg';
+    if (ar.includes('مطبخ')) return 'art/icon-matbakh.jpg';
+    if (ar.includes('مائده')) return 'art/icon-maidah.jpg';
+    if (ar.includes('بابا')) return 'art/icon-baba.jpg';
+    if (ar.includes('لولو')) return 'art/icon-lulu.jpg';
+    return 'art/haqiba.jpg';
+  }
+  if (s.id === 'ts-jubn') {
+    if (ar.includes('غراب')) return 'art/icon-ghurab.jpg';
+    if (ar.includes('شجره')) return 'art/icon-shajarah.jpg';
+    if (ar.includes('جبن')) return 'art/lulu-ghurab.jpg';
+    return 'art/lulu-ghurab.jpg';
   }
 
   return getStoryCover(s);
